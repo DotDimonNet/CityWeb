@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CityWeb.Common\CityWeb.Common.csproj" />
+    <ProjectReference Include="..\CityWeb.Entities\CityWeb.Entities.csproj" />
+    <ProjectReference Include="..\CityWeb.Infrastructure\CityWeb.Infrastructure.csproj" />
+    <ProjectReference Include="..\CityWeb\CityWeb.csproj" />
+  </ItemGroup>
+
+</Project>
