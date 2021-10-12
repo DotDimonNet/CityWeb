@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure
 {
-    interface IService
+    public interface IService
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
