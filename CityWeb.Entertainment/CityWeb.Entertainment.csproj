@@ -4,4 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CityWeb.Common\CityWeb.Common.csproj" />
+    <ProjectReference Include="..\CityWeb.Entities\CityWeb.Entities.csproj" />
+    <ProjectReference Include="..\CityWeb.Food\CityWeb.Food.csproj" />
+    <ProjectReference Include="..\CityWeb.HousePay\CityWeb.HousePay.csproj" />
+    <ProjectReference Include="..\CityWeb.Infrastructure\CityWeb.Infrastructure.csproj" />
+    <ProjectReference Include="..\CityWeb.RentHouse\CityWeb.RentHouse.csproj" />
+    <ProjectReference Include="..\CityWeb.Transport\CityWeb.Transport.csproj" />
+    <ProjectReference Include="..\CityWeb\CityWeb.csproj" />
+  </ItemGroup>
+
 </Project>
