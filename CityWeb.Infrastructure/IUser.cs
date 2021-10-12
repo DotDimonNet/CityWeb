@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure
 {
-    interface IUser
+    public interface IUser
     {
         public Guid ID { get; set; }
         public string FirstName { get; set; }
