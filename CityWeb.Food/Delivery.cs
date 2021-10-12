@@ -8,7 +8,7 @@ using CityWeb.Infrastructure;
 
 namespace CityWeb.Food
 {
-    public class Delivery<T> : IService 
+    public class Delivery<T> 
     {
         public Guid ID { get ; set ; }
         public string Title { get ; set ; }

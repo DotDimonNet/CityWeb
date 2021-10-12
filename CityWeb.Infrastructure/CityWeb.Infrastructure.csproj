@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CityWeb.Common\CityWeb.Common.csproj" />
-    <ProjectReference Include="..\CityWeb.Entities\CityWeb.Entities.csproj" />
   </ItemGroup>
 
 </Project>

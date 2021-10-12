@@ -8,7 +8,7 @@ using CityWeb.Infrastructure;
 
 namespace CityWeb.HousePay
 {
-    public class MnicipallBill : IService
+    public class MnicipallBill 
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
