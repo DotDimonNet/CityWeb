@@ -8,7 +8,7 @@ using CityWeb.Entities;
 
 namespace CityWeb.Food
 {
-    public class Restaurant : IService
+    public class Restaurant 
     {
         public Guid ID { get; set; }
         public string Title { get; set; }

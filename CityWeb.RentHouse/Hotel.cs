@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Infrastructure;
 using CityWeb.Entities;
+using CityWeb.Infrastructure.Interfaces;
 
 namespace CityWeb.RentHouse
 {
-    class Hotel : IService
+    class Hotel 
     {
         //interface props
         public Guid ID { get ; set ; }

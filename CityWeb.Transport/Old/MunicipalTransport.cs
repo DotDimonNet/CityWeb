@@ -7,7 +7,7 @@ using CityWeb.Infrastructure;
 
 namespace CityWeb.Transport
 {
-    class MunicipalTransport : CityWeb.Infrastructure.IService
+    class MunicipalTransport
     {
         public Guid ID { get; set; }
         public double CurrentDiscount { get; set; }
@@ -18,11 +18,11 @@ namespace CityWeb.Transport
         public double Rating  {get; set; }
         public string Title { get; set; }
         public double Price { get; set; }
-        public MunicipalTransportType MunicipalTransportType { get; set; }
-        public IEnumerable<Route> Routes { get; set; }
-        public void BuyTicket(Route route)
+        //public TransportType MunicipalTransportType { get; set; }
+        //public IEnumerable<Route> Routes { get; set; }
+        /*public void BuyTicket(Route route)
         {
 
-        }
+        }*/
     }
 }
