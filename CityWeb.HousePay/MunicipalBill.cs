@@ -23,6 +23,10 @@ namespace CityWeb.HousePay
         public double SpentMoney { get; set; }
         public Rating Rating { get; set; }
 
+        public Payment Payments { get; set; }
+
+        public Counter CounterofValue { get; set; }
+
         public void Buy()
         {
             throw new NotImplementedException();

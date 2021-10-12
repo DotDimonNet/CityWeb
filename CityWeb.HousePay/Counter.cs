@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 namespace CityWeb.HousePay
 { 
 
-/*    class public Counter
+   public enum Counter
     {
-          StartIndicator,
+         StartIndicator,
          Endindicator,
          Price,
     }
-
-    */
 }
