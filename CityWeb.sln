@@ -7,6 +7,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityWeb", "CityWeb\CityWeb.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.Entertainment", "CityWeb.Entertainment\CityWeb.Entertainment.csproj", "{EF37AC76-8A46-498B-A682-7DAD29420957}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.Common", "CityWeb.Common\CityWeb.Common.csproj", "{FC002294-FBAF-4CD0-9EB6-33FB05656EE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.Infrastructure", "CityWeb.Infrastructure\CityWeb.Infrastructure.csproj", "{E132C6FF-DA5C-49EA-85BE-828B4A1BCA72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.Entities", "CityWeb.Entities\CityWeb.Entities.csproj", "{2DD3C287-5A5F-4845-B4B0-1919CF43F6D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.Transport", "CityWeb.Transport\CityWeb.Transport.csproj", "{882798B3-EBD7-4BF0-82A7-5B02614BFD0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.Food", "CityWeb.Food\CityWeb.Food.csproj", "{A5D37B05-E3FE-4644-ACD4-9214FC1F2178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.HousePay", "CityWeb.HousePay\CityWeb.HousePay.csproj", "{B003F0EC-B1E2-48CD-8008-0286F1F684A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityWeb.RentHouse", "CityWeb.RentHouse\CityWeb.RentHouse.csproj", "{5EFBAB62-1816-4EB3-86FA-8648E51C46D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +35,34 @@ Global
 		{EF37AC76-8A46-498B-A682-7DAD29420957}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF37AC76-8A46-498B-A682-7DAD29420957}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF37AC76-8A46-498B-A682-7DAD29420957}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC002294-FBAF-4CD0-9EB6-33FB05656EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC002294-FBAF-4CD0-9EB6-33FB05656EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC002294-FBAF-4CD0-9EB6-33FB05656EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC002294-FBAF-4CD0-9EB6-33FB05656EE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E132C6FF-DA5C-49EA-85BE-828B4A1BCA72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E132C6FF-DA5C-49EA-85BE-828B4A1BCA72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E132C6FF-DA5C-49EA-85BE-828B4A1BCA72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E132C6FF-DA5C-49EA-85BE-828B4A1BCA72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DD3C287-5A5F-4845-B4B0-1919CF43F6D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DD3C287-5A5F-4845-B4B0-1919CF43F6D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DD3C287-5A5F-4845-B4B0-1919CF43F6D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DD3C287-5A5F-4845-B4B0-1919CF43F6D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{882798B3-EBD7-4BF0-82A7-5B02614BFD0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882798B3-EBD7-4BF0-82A7-5B02614BFD0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882798B3-EBD7-4BF0-82A7-5B02614BFD0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882798B3-EBD7-4BF0-82A7-5B02614BFD0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5D37B05-E3FE-4644-ACD4-9214FC1F2178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5D37B05-E3FE-4644-ACD4-9214FC1F2178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5D37B05-E3FE-4644-ACD4-9214FC1F2178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5D37B05-E3FE-4644-ACD4-9214FC1F2178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B003F0EC-B1E2-48CD-8008-0286F1F684A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B003F0EC-B1E2-48CD-8008-0286F1F684A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B003F0EC-B1E2-48CD-8008-0286F1F684A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B003F0EC-B1E2-48CD-8008-0286F1F684A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EFBAB62-1816-4EB3-86FA-8648E51C46D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EFBAB62-1816-4EB3-86FA-8648E51C46D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EFBAB62-1816-4EB3-86FA-8648E51C46D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EFBAB62-1816-4EB3-86FA-8648E51C46D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
