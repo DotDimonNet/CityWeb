@@ -26,7 +26,7 @@ namespace CityWeb.Food
         public IEnumerable<Dish> Order { get; set; }
         public double DeliveryPrice { get; set; }
         public Address DeliveryAddress { get; set; }
-        public double MinPrice { get; set; }
+        public double FreeDeliveryPrice { get; set; }
 
         public void Buy()
         {
@@ -40,7 +40,7 @@ namespace CityWeb.Food
                 Price += item.DishPrice * item.DishCount;
                
             }
-            if(MinPrice <= Price)
+            if (FreeDeliveryPrice < Price)
             Price += DeliveryPrice;
         }
     }
