@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Common
+namespace CityWeb.Entities
 {
-    class Address
+    public class Address
     {
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
