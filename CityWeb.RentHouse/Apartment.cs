@@ -1,23 +1,26 @@
-﻿using System;
+﻿using CityWeb.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Infrastructure
+namespace CityWeb.RentHouse
 {
-    public interface IService
+    class Apartment : IService
     {
+        //interface props
         public Guid ID { get; set; }
         public string Title { get; set; }
         public double Price { get; set; }
-        public double CurrentDiscount { get; set; } //int?
+        public double CurrentDiscount { get; set; }
         public double MaxDiscount { get; set; }
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
-        public double SpentMoney  { get; set; }
+        public double SpentMoney { get; set; }
         public double Rating { get; set; }
-        
-    }   
-}
+        //class props
 
+
+    }
+}
