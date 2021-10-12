@@ -1,4 +1,5 @@
-﻿using CityWeb.Infrastructure;
+﻿using CityWeb.Entities;
+using CityWeb.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,19 @@ namespace CityWeb.RentHouse
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
-        public double Rating { get; set; }
         //class props
+        Address Address { get; set; }
+        public Rating Rating { get; set; }
+
+        public void Buy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetPrice()
+        {
+            throw new NotImplementedException();
+        }
 
 
     }

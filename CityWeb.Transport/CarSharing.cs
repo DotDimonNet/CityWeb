@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Entities;
 using CityWeb.Infrastructure;
 
 namespace CityWeb.Transport
 {
-    class CarSharing : CityWeb.Infrastructure.IService
+    class CarSharing : IService
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -17,7 +18,18 @@ namespace CityWeb.Transport
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate {get; set; }
         public double SpentMoney {get; set; }
-        public double Rating {get; set; }
+        public Rating Rating { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void Buy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetPrice()
+        {
+            throw new NotImplementedException();
+        }
+
         public void PayRent()
         {
 

@@ -21,6 +21,17 @@ namespace CityWeb.RentHouse
         public double SpentMoney { get ; set ; }
         public double Rating { get ; set ; }
         //class props
-        Address address { get; set; }
+        Address Address { get; set; }
+        public Rating Rating { get; set; }
+
+        public void Buy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetPrice()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

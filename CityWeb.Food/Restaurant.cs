@@ -18,7 +18,6 @@ namespace CityWeb.Food
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
-        public double Rating { get; set; }
 
         // Restaurant
         public string RestaurantName { get; set; }
@@ -31,6 +30,17 @@ namespace CityWeb.Food
         public DeliveryServiceType DeliveryService { get ; set ; }
         public double DeliveryPrise { get ; set; }
         public Address DeliveryAddress { get ; set ; }
+        public Rating Rating { get; set; }
+
+        public void Buy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetPrice()
+        {
+            throw new NotImplementedException();
+        }
         // Method
         public void OrderPlace()
         {

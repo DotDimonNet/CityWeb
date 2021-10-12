@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Entities;
 using CityWeb.Infrastructure;
 
 namespace CityWeb.HousePay
 {
-    class IndividualBill : CityWeb.Infrastructure.IService
+    class IndividualBill : IService
 
     {
         public Guid ID { get; set; }
@@ -18,6 +19,16 @@ namespace CityWeb.HousePay
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
-        public double Rating { get; set; }
+        public Rating Rating { get; set; }
+
+        public void Buy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetPrice()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Entities;
 
 namespace CityWeb.Infrastructure
 {
@@ -16,7 +17,10 @@ namespace CityWeb.Infrastructure
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney  { get; set; }
-        public double Rating { get; set; }
+        public Rating Rating { get; set; }
+        public void GetPrice();
+        public void Buy();
+
         
     }   
 }
