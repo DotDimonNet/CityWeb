@@ -19,5 +19,25 @@ namespace CityWeb.Entertainment
         public double SpentMoney { get; set; }
         public double Rating { get; set; }
         public EventType Types { get; set; }
+
+
+
+
+        public void GetDiscount(double Price, double CurrentDiscount, double MaxDiscount, double DiscountMoneyStep)
+        {
+
+        }
+
+        public void GetPrice(double Price, double CurrentDiscount)
+        {
+
+        }
+
+        public void Payment()
+        {
+            
+        }
+
+        
     }
 }

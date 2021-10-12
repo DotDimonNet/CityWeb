@@ -9,5 +9,6 @@ namespace CityWeb.Entertainment.Events
     class Cinemas : Event
     {
         EventType CinemaType = EventType.Permanent;
+        
     }
 }
