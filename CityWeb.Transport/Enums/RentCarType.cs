@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Food
+namespace CityWeb.Transport
 {
-     public enum DeliveryServiceType
+    enum RentCarType
     {
-        Torpedo,
-        Rocket,
-        FirstDelivery,
+        Car,
+        Bycicle,
+        KickScooter
     }
 }

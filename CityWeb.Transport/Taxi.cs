@@ -8,7 +8,7 @@ using CityWeb.Entities;
 
 namespace CityWeb.Transport 
 {
-    public class Taxi : IService
+    public class Taxi : CityWeb.Infrastructure.IService
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -18,20 +18,11 @@ namespace CityWeb.Transport
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
+        public double Rating { get; set; }
         public Address StartAddress { get; set; }
         public Address EndAddress { get; set; }
         public double TripRange { get; set; }
-        public Rating Rating { get; set; }
-
-        public void Buy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetPrice()
-        {
-            throw new NotImplementedException();
-        }
+        //public TaxiType TypeTaxi { get; set; }
         public void PayTrip()
         {
             

@@ -11,5 +11,6 @@ namespace CityWeb.Food
         public string DishName { get; set; }
         public int DishCount { get; set; }
         public double DishPrice { get; set; }
+ 
     }
 }
