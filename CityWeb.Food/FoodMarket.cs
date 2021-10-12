@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Infrastructure;
 using CityWeb.Entities;
+using CityWeb.Infrastructure;
+
 
 namespace CityWeb.Food
 {
-    public class Restaurant : IService, IDelivery
+    public class FoodMarket : IService, IDelivery
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -19,30 +20,14 @@ namespace CityWeb.Food
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
         public double Rating { get; set; }
-
-        // Restaurant
-        public string RestaurantName { get; set; }
-        public IEnumerable<Dish> Order { get; set; }
-        public Address RestaurantAdress { get; set; }
-        public int FreePlaces { get; set; }
+        //FoodMarket
+        public string MarketName { get; set; }
+        public Address MarketAddress { get; set; }
         public DateTime OpenTime { get; set; }
         public DateTime CloseTime { get; set; }
-        // Delivery
+        //Delivery
         public DeliveryServiceType DeliveryService { get ; set ; }
-        public double DeliveryPrise { get ; set; }
+        public double DeliveryPrise { get ; set ; }
         public Address DeliveryAddress { get ; set ; }
-        // Method
-        public void OrderPlace()
-        {
-            if (FreePlaces != 0)
-            {
-                FreePlaces--;
-            }
-            else
-            {
-                Console.WriteLine("All places are busy");
-            }
-        }
-
     }
 }

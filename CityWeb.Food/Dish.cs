@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Food
 {
-     public enum TypeOfDeliveryService
+    public class Dish
     {
-        Torpeda,
-        Raceta,
-        Second,
+        public string DishName { get; set; }
+        public int DishCount { get; set; }
+        public double DishPrice { get; set; }
     }
 }
