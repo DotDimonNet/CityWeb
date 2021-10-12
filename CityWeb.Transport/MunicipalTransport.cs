@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Entities;
 using CityWeb.Infrastructure;
 
 namespace CityWeb.Transport
 {
-    class MunicipalTransport : IService
+    class MunicipalTransport : CityWeb.Infrastructure.IService
     {
         public Guid ID { get; set; }
         public double CurrentDiscount { get; set; }
@@ -16,22 +15,12 @@ namespace CityWeb.Transport
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate  {get; set; }
         public double SpentMoney  {get; set; }
+        public double Rating  {get; set; }
         public string Title { get; set; }
         public double Price { get; set; }
         public MunicipalTransportType MunicipalTransportType { get; set; }
-        public int Route { get; set; }
-        public Rating Rating { get; set ; }
-
-        public void Buy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetPrice()
-        {
-            throw new NotImplementedException();
-        }
-        public void BuyTicket()
+        public IEnumerable<Route> Routes { get; set; }
+        public void BuyTicket(Route route)
         {
 
         }

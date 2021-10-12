@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Transport
 {
-    enum MunicipalTransportType
+    enum TaxiType
     {
-        Bus,
-        Trum,
-        Trolleybus
+        Econom,
+        Standart,
+        Buisness
     }
 }

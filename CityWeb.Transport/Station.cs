@@ -9,6 +9,9 @@ namespace CityWeb.Transport
     class Station
     {
         public string Titlte { get; set; }
+        /// <summary>
+        /// Minutes to move frome previouse station to current, if first station, minutes = 0
+        /// </summary>
         public double MinutesToStation { get; set; }
         public Station(string stationTitle, double minutesToStation)
         {
