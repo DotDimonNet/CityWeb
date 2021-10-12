@@ -7,8 +7,16 @@ using CityWeb.Infrastructure;
 
 namespace CityWeb.Transport 
 {
-    class Taxi
+    public class Taxi : CityWeb.Infrastructure.IService
     {
-       
+        public Guid ID { get; set; }
+        public string Title { get; set; }
+        public double Price { get; set; }
+        public double CurrentDiscount { get; set; }
+        public double MaxDiscount { get; set; }
+        public double DiscountMoneyStep { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime RealizationDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double SpentMoney { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double Rating { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
