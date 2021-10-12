@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Infrastructure;
+using CityWeb.Entities;
 
 namespace CityWeb.Transport 
 {
@@ -14,9 +15,16 @@ namespace CityWeb.Transport
         public double Price { get; set; }
         public double CurrentDiscount { get; set; }
         public double MaxDiscount { get; set; }
-        public double DiscountMoneyStep { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime RealizationDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double SpentMoney { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double Rating { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double DiscountMoneyStep { get; set; }
+        public DateTime RealizationDate { get; set; }
+        public double SpentMoney { get; set; }
+        public double Rating { get; set; }
+        public Address StartAddress { get; set; }
+        public Address EndAddress { get; set; }
+        public double TripRange { get; set; }
+        public void PayTrip()
+        {
+            
+        }
     }
 }
