@@ -13,12 +13,16 @@ namespace CityWeb.Transport
         public double CurrentDiscount { get; set; }
         public double MaxDiscount { get; set; }
         public double DiscountMoneyStep { get; set; }
-        public DateTime RealizationDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double SpentMoney { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double Rating { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime RealizationDate  {get; set; }
+        public double SpentMoney  {get; set; }
+        public double Rating  {get; set; }
         public string Title { get; set; }
         public double Price { get; set; }
         public MunicipalTransportType MunicipalTransportType { get; set; }
-        public int Route { get; set; }
+        public IEnumerable<Route> Routes { get; set; }
+        public void BuyTicket(Route route)
+        {
+
+        }
     }
 }

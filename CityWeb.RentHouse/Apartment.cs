@@ -1,19 +1,17 @@
-﻿using System;
+﻿using CityWeb.Entities;
+using CityWeb.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Entities;
-using CityWeb.Infrastructure;
-using CityWeb.Entities;
 
-namespace CityWeb.HousePay
+namespace CityWeb.RentHouse
 {
-    class IndividualBill : IService
-
+    class Apartment : IService
     {
+        //interface props
         public Guid ID { get; set; }
-        public Address HouseAddress { get; set; }
         public string Title { get; set; }
         public double Price { get; set; }
         public double CurrentDiscount { get; set; }
@@ -21,6 +19,8 @@ namespace CityWeb.HousePay
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
+        //class props
+        Address Address { get; set; }
         public Rating Rating { get; set; }
 
         public void Buy()
@@ -32,5 +32,7 @@ namespace CityWeb.HousePay
         {
             throw new NotImplementedException();
         }
+
+
     }
 }
