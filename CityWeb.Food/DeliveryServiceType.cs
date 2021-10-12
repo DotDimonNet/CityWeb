@@ -8,8 +8,8 @@ namespace CityWeb.Food
 {
      public enum DeliveryServiceType
     {
-        Torpeda,
-        Raceta,
-        Second,
+        Torpedo,
+        Rocket,
+        FirstDelivery,
     }
 }

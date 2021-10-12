@@ -8,7 +8,7 @@ using CityWeb.Entities;
 
 namespace CityWeb.Food
 {
-    public class Restaurant : IService, IDelivery
+    public class Restaurant : IService
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -18,6 +18,7 @@ namespace CityWeb.Food
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
+        public Rating Rating { get; set; }
 
         // Restaurant
         public string RestaurantName { get; set; }
@@ -26,12 +27,8 @@ namespace CityWeb.Food
         public int FreePlaces { get; set; }
         public DateTime OpenTime { get; set; }
         public DateTime CloseTime { get; set; }
-        // Delivery
-        public DeliveryServiceType DeliveryService { get ; set ; }
-        public double DeliveryPrise { get ; set; }
-        public Address DeliveryAddress { get ; set ; }
-        public Rating Rating { get; set; }
 
+       
         public void Buy()
         {
             throw new NotImplementedException();
@@ -39,8 +36,12 @@ namespace CityWeb.Food
 
         public void GetPrice()
         {
-            throw new NotImplementedException();
+            foreach (var item in Order)
+            {
+                Price += item.DishPrice * item.DishCount;
+            }
         }
+
         // Method
         public void OrderPlace()
         {
