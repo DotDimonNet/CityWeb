@@ -8,6 +8,6 @@ namespace CityWeb.RentHouse.Interfaces
 {
     public interface IApartment : IRentHouseService
     {
-        Apa
+        
     }
 }
