@@ -9,7 +9,7 @@ namespace CityWeb.Infrastructure.Interfaces
     public interface IBalance : IBaseDBO
     {
         public double Balance { get; set; }
-        public string AccountProfileId { get; set; }
+        public string AccountProfileId { get; set; } // Guid? Login?
         public string CardNumber { get; set; }
         public string CardCode { get; set; }
         public DateTime ExpirationDate { get; set; }
