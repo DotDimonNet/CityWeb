@@ -1,36 +1,36 @@
-﻿using CityWeb.Infrastructure.Interfaces;
-using CityWeb.Transport.Enums;
-using CityWeb.Transport.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Entertainment.Enums;
+using CityWeb.Entertainment.Interfaces;
+using CityWeb.Infrastructure.Interfaces;
 
-namespace CityWeb.Transport
+namespace CityWeb.Entertainment
 {
-    public class TransportJourney : ITransportJourney
+    public class EventPayment : IEventPayment
     {
         public Guid RatingId { get; set; }
         public Guid PaymentId { get; set; }
         public Guid OwnerId { get; set; }
-        public IVehicle Vehicle { get; set; }
-        public IEnumerable<IAddress> Visited { get; set; }
+        public EventType EventType { get; set; }
         public Guid Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
 
-        public TransportJourney(Guid userId, IVehicle vehicle, IEnumerable<IAddress> addresses, Guid paymentId, Guid ratingId = default)
+        public EventPayment(Guid userId, EventType type, Guid paymentId, Guid ratingId = default)
         {
             OwnerId = userId;
-            Vehicle = vehicle;
-            Visited = addresses;
+            EventType = type;
             PaymentId = paymentId;
             RatingId = ratingId;
         }
 
         public string ShortInfo =>
             $"JourneyId: {Id}\tPaymentId: {PaymentId}\t{nameof(OwnerId)}: {OwnerId}\t{nameof(Created)}: {Created}";
+
         
     }
 }
+

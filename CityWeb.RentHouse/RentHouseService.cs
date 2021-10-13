@@ -1,20 +1,17 @@
-﻿using System;
+﻿using CityWeb.Infrastructure.Interfaces;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Infrastructure;
-using CityWeb.Entities;
-using CityWeb.Infrastructure.Interfaces;
-using CityWeb.RentHouse.Interfaces;
 
 namespace CityWeb.RentHouse
 {
-    public class Hotel : IHotel
+    public class RentHouseService : IRentHouseService
     {
-        public HotelRoomType RoomType { get ; set ; }
-        public IDictionary<HotelRoomType, int> RoomsQuantity { get ; set ; }
-        public IAddress Address { get ; set ; }
+        private readonly IServiceContext _context;
+        private readonly ILogger<IRentHouseService> _logger;
         public IEnumerable<IPrice> Pricelist { get ; set ; }
         public bool IsActive { get ; set ; }
         public string Version { get ; set ; }
@@ -23,11 +20,20 @@ namespace CityWeb.RentHouse
         public DateTime Modified { get ; set ; }
         public string Title { get ; set ; }
         public string Description { get ; set ; }
+        public IAddress Address { get ; set ; }
 
-        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage(RentHouseType x, int quantetydays)
+        public RentHouseService(IServiceContext context, ILogger<IRentHouseService> logger)
         {
-            var prices = new List<IPrice>();
-            foreach (var type in Enum.GetValues(typeof(HotelRoomType)).Cast<HotelRoomType>())
+            _context = context;
+            _logger = logger;
+            Pricelist = GetInitialPricesForServiceUsage();
+        }
+        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage()
+        {
+           
+            throw new NotImplementedException();
+            /*var prices = new List<IPrice>();
+            foreach (var type in Enum.GetValues(typeof(TransportType)).Cast<TransportType>())
             {
                 prices.Add(new FullPrice()
                 {
@@ -38,8 +44,9 @@ namespace CityWeb.RentHouse
                     Description = $"Paid for usage transport service with {type} type."
                 });
             }
-            return prices;
+            return prices;*/
         }
+
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end)
         {
             throw new NotImplementedException();

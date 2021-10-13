@@ -18,7 +18,7 @@ namespace CityWeb.Infrastructure.Interfaces
         public PaymentStatus DiscardPayment(Guid paymentId);
         public bool RemovePayment(Guid paymentId);
         public IEnumerable<IPayment> GetPaymentsByIds(Guid paymentId);
-        public bool CreateTestPaymentForUser(Guid balanceId, IPrice price);
+        public bool CreateTestPaymentForUser(Guid balanceId, IPrice price); //???
     }   
 }
 

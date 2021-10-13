@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Entertainment.Events
+namespace CityWeb.RentHouse.Interfaces
 {
-    class Cinemas : Event
+    public interface IApartment : IRentHouseService
     {
-        EventType CinemaType = EventType.Permanent;
-        
+        Apa
     }
 }
