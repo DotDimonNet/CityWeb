@@ -19,7 +19,6 @@ namespace CityWeb.Infrastructure.Interfaces
         public IUser GetUserByEmail(string email);
 
         //public bool BlockUser(Guid userId);
-        //public bool CreateUser(Guid userId);
     }
 }
 

@@ -24,7 +24,7 @@ namespace CityWeb.RentHouse
         public string Title { get ; set ; }
         public string Description { get ; set ; }
 
-        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage(RentHouseType x, int quantetydays)
+        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage()
         {
             var prices = new List<IPrice>();
             foreach (var type in Enum.GetValues(typeof(HotelRoomType)).Cast<HotelRoomType>())
