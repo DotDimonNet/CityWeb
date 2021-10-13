@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using CityWeb.Entities;
 using CityWeb.Infrastructure;
 
-namespace CityWeb.HousePay
-{
-    class IndividualBill
 
+namespace CityWeb.Food
+{
+    public class FoodMarket 
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -21,6 +21,14 @@ namespace CityWeb.HousePay
         public double SpentMoney { get; set; }
         public Rating Rating { get; set; }
 
+        //FoodMarket
+        public string MarketName { get; set; }
+        public Address MarketAddress { get; set; }
+        public DateTime OpenTime { get; set; }
+        public DateTime CloseTime { get; set; }
+        public IEnumerable<Dish> Order { get; set; }
+
+        
         public void Buy()
         {
             throw new NotImplementedException();
@@ -28,7 +36,10 @@ namespace CityWeb.HousePay
 
         public void GetPrice()
         {
-            throw new NotImplementedException();
+            foreach (var item in Order)
+            {
+                Price += item.DishPrice * item.DishCount;
+            }
         }
     }
 }

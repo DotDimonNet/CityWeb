@@ -8,7 +8,7 @@ using CityWeb.Entities;
 
 namespace CityWeb.Transport 
 {
-    public class Taxi : CityWeb.Infrastructure.IService
+    public class Taxi 
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -22,6 +22,7 @@ namespace CityWeb.Transport
         public Address StartAddress { get; set; }
         public Address EndAddress { get; set; }
         public double TripRange { get; set; }
+        //public TaxiType TypeTaxi { get; set; }
         public void PayTrip()
         {
             

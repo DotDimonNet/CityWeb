@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Infrastructure;
+using CityWeb.Entities;
 
 namespace CityWeb.Transport
 {
-    class CarSharing : CityWeb.Infrastructure.IService
+    public class CarSharingService
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -18,6 +19,8 @@ namespace CityWeb.Transport
         public DateTime RealizationDate {get; set; }
         public double SpentMoney {get; set; }
         public double Rating {get; set; }
+        //public RentCarType RentCarType { get; set; }
+        public IEnumerable<Address> Addresses { get; set; }
         public void PayRent()
         {
 

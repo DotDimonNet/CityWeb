@@ -1,4 +1,5 @@
-﻿using CityWeb.Infrastructure;
+﻿using CityWeb.Entities;
+using CityWeb.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.RentHouse
 {
-    class Apartment : IService
+    class Apartment
     {
         //interface props
         public Guid ID { get; set; }
@@ -18,8 +19,24 @@ namespace CityWeb.RentHouse
         public double DiscountMoneyStep { get; set; }
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
-        public double Rating { get; set; }
         //class props
+        Address HotelAddress { get; set; }
+        public DateTime OpenTime { get; set; }
+        public DateTime CloseTime { get; set; }
+        public Rating Rating { get; set; }
+        public Address Address { get; set; }
+        public double PricePerMonth { get; set; }
+        public int MonthCount { get; set; }
+
+        public void Buy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetPrice()
+        {
+            Price = MonthCount * PricePerMonth;
+        }
 
 
     }

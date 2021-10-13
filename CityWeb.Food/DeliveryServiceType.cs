@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Transport
+namespace CityWeb.Food
 {
-    enum MunicipalTransportType
+     public enum DeliveryServiceType
     {
-        Bus,
-        Trum,
-        Trolleybus
+        Torpedo,
+        Rocket,
+        FirstDelivery,
     }
 }
