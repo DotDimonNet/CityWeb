@@ -80,7 +80,6 @@ namespace CityWeb.Transport
                 _logger.LogError(ex, "Error on TransportService.RateService method.");
                 return false;
             }
-            
         }
 
         public ITransportJourney Run(Guid userId, IVehicle vehicle, DateTime time, params IAddress[] addresses)
