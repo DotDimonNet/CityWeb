@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CityWeb.Infrastructure\CityWeb.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Classes\" />
+  </ItemGroup>
+
 </Project>
