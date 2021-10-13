@@ -9,7 +9,7 @@ using CityWeb.Infrastructure;
 
 namespace CityWeb.Food
 {
-    public class FoodMarket : IService
+    public class FoodMarket 
     {
         public Guid ID { get; set; }
         public string Title { get; set; }

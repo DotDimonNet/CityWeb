@@ -9,7 +9,7 @@ using CityWeb.Entities;
 
 namespace CityWeb.HousePay
 {
-    class IndividualBill : IService
+    class IndividualBill
 
     {
         public Guid ID { get; set; }

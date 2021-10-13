@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.RentHouse
 {
-    class Apartment : IService
+    class Apartment
     {
         //interface props
         public Guid ID { get; set; }
@@ -20,8 +20,13 @@ namespace CityWeb.RentHouse
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
         //class props
-        Address Address { get; set; }
+        Address HotelAddress { get; set; }
+        public DateTime OpenTime { get; set; }
+        public DateTime CloseTime { get; set; }
         public Rating Rating { get; set; }
+        public Address Address { get; set; }
+        public double PricePerMonth { get; set; }
+        public int MonthCount { get; set; }
 
         public void Buy()
         {
@@ -30,7 +35,7 @@ namespace CityWeb.RentHouse
 
         public void GetPrice()
         {
-            throw new NotImplementedException();
+            Price = MonthCount * PricePerMonth;
         }
 
 

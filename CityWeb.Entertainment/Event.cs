@@ -8,7 +8,7 @@ using CityWeb.Infrastructure;
 
 namespace CityWeb.Entertainment
 {
-    class Event : IService
+    class Event 
     {
         public Guid ID { get; set; }
         public string Title { get; set; }

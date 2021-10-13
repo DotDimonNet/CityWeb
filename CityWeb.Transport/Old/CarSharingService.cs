@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using CityWeb.Infrastructure;
 using CityWeb.Entities;
 
-namespace CityWeb.Transport 
+namespace CityWeb.Transport
 {
-    public class Taxi : CityWeb.Infrastructure.IService
+    public class CarSharingService
     {
         public Guid ID { get; set; }
         public string Title { get; set; }
@@ -16,16 +16,14 @@ namespace CityWeb.Transport
         public double CurrentDiscount { get; set; }
         public double MaxDiscount { get; set; }
         public double DiscountMoneyStep { get; set; }
-        public DateTime RealizationDate { get; set; }
-        public double SpentMoney { get; set; }
-        public double Rating { get; set; }
-        public Address StartAddress { get; set; }
-        public Address EndAddress { get; set; }
-        public double TripRange { get; set; }
-        //public TaxiType TypeTaxi { get; set; }
-        public void PayTrip()
+        public DateTime RealizationDate {get; set; }
+        public double SpentMoney {get; set; }
+        public double Rating {get; set; }
+        //public RentCarType RentCarType { get; set; }
+        public IEnumerable<Address> Addresses { get; set; }
+        public void PayRent()
         {
-            
+
         }
     }
 }
