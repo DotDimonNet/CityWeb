@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Entertainment.Events
+namespace CityWeb.RentHouse.Enums
 {
-    class Cinemas : Event
+    public enum ApartamentType
     {
-        EventType CinemaType = EventType.Permanent;
-        
+
     }
 }

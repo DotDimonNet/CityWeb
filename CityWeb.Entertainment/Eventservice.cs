@@ -1,31 +1,34 @@
-﻿using CityWeb.Entities;
-using CityWeb.Infrastructure.Enums;
-using CityWeb.Infrastructure.Interfaces;
-using CityWeb.Transport.Enums;
-using CityWeb.Transport.Interfaces;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Entertainment.Enums;
+using CityWeb.Entertainment.Interfaces;
+using CityWeb.Entities;
+using CityWeb.Infrastructure;
+using CityWeb.Infrastructure.Enums;
+using CityWeb.Infrastructure.Interfaces;
+using CityWeb.Transport.Interfaces;
+using Microsoft.Extensions.Logging;
 
-namespace CityWeb.Transport
+namespace CityWeb.Entertainment
 {
-    public class TransportService : ITransportService
+    public class EventService : IEventService
     {
         private readonly IServiceContext _context;
         private readonly ILogger<ITransportService> _logger;
-        public bool IsActive { get; set; }
-        public string Version { get; set; }
-        public Guid Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public IEnumerable<IPrice> Pricelist { get; set; }
+        public IEnumerable<IPrice> Pricelist {get; set;}
+        public bool IsActive {get; set;}
+        public string Version {get; set;}
+        public Guid Id {get; set;}
+        public DateTime Created {get; set;}
+        public DateTime Modified {get; set;}
+        public string Title {get; set;}
+        public string Description {get; set;}
 
-        public TransportService(IServiceContext context, ILogger<ITransportService> logger)
+
+        public EventService(IServiceContext context, ILogger<ITransportService> logger)
         {
             _context = context;
             _logger = logger;
@@ -35,7 +38,7 @@ namespace CityWeb.Transport
         private static IEnumerable<IPrice> GetInitialPricesForServiceUsage()
         {
             var prices = new List<IPrice>();
-            foreach (var type in Enum.GetValues(typeof(TransportType)).Cast<TransportType>())
+            foreach (var type in Enum.GetValues(typeof(EventType)).Cast<EventType>())
             {
                 prices.Add(new FullPrice()
                 {
@@ -43,19 +46,10 @@ namespace CityWeb.Transport
                     VAT = 0.1,
                     Price = (int)type * 10,
                     Title = $"{type}",
-                    Description = $"Paid for usage transport service with {type} type."
+                    Description = $"Paid for usage event service with {type} type."
                 });
             }
             return prices;
-        }
-
-        public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end)
-        {
-            var usersIds = (_context.GetService("Payment") as IPaymentService)
-                .GetAllPaymentsByDateRange(start, end).Select(x => x.OwnerId);
-
-            return (_context.GetService("UserManagement") as IUserManagementService)
-                .GetUsers(usersIds);
         }
 
         public bool RateService(IUser user, IRating rating)
@@ -65,7 +59,7 @@ namespace CityWeb.Transport
                 var existingRating = user.Ratings.FirstOrDefault(x => x.ServiceId == Id);
                 if (existingRating != null)
                 {
-                    _logger.LogWarning($"User {user.Email} already rated transport service.");
+                    _logger.LogWarning($"User {user.Email} already rated event service.");
                     return false;
                 }
                 else
@@ -82,12 +76,12 @@ namespace CityWeb.Transport
             }
         }
 
-        public ITransportJourney Run(Guid userId, IVehicle vehicle, DateTime time, params IAddress[] addresses)
+        public IEventPayment Run(Guid userId, EventType eventType, DateTime time)
         {
             try
             {
                 var paymentService = _context.GetService("Payment") as IPaymentService;
-                var price = Pricelist.FirstOrDefault(x => x.Title == vehicle.TransportType.ToString());
+                var price = Pricelist.FirstOrDefault(x => x.Title == eventType.ToString());
                 var balance = paymentService.GetAcceptableBalance(userId, price);
                 if (balance != null)
                 {
@@ -95,7 +89,7 @@ namespace CityWeb.Transport
 
                     if (status == PaymentStatus.Created && paymentId != Guid.Empty)
                     {
-                        return new TransportJourney(userId, vehicle, addresses, paymentId);
+                        return new EventPayment(userId, eventType, paymentId);
                     }
                     else
                     {
@@ -105,13 +99,13 @@ namespace CityWeb.Transport
                 }
                 else
                 {
-                    _logger.LogWarning($"User {userId} has not acceptable balance to use {nameof(TransportService)} with {vehicle}.");
+                    _logger.LogWarning($"User {userId} has not acceptable balance to use {nameof(EventService)} with {eventType}.");
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error on TransportService.Run method.");
+                _logger.LogError(ex, "Error on EventService.Run method.");
                 throw;
             }
         }
