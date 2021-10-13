@@ -80,15 +80,14 @@ namespace CityWeb.Transport
                 _logger.LogError(ex, "Error on TransportService.RateService method.");
                 return false;
             }
-            
         }
 
-        public ITransportJourney Run(Guid userId, TransportType transportType, DateTime time, params IAddress[] addresses)
+        public ITransportJourney Run(Guid userId, IVehicle vehicle, DateTime time, params IAddress[] addresses)
         {
             try
             {
                 var paymentService = _context.GetService("Payment") as IPaymentService;
-                var price = Pricelist.FirstOrDefault(x => x.Title == transportType.ToString());
+                var price = Pricelist.FirstOrDefault(x => x.Title == vehicle.TransportType.ToString());
                 var balance = paymentService.GetAcceptableBalance(userId, price);
                 if (balance != null)
                 {
@@ -96,7 +95,7 @@ namespace CityWeb.Transport
 
                     if (status == PaymentStatus.Created && paymentId != Guid.Empty)
                     {
-                        return new TransportJourney(userId, transportType, addresses, paymentId);
+                        return new TransportJourney(userId, vehicle, addresses, paymentId);
                     }
                     else
                     {
@@ -106,7 +105,7 @@ namespace CityWeb.Transport
                 }
                 else
                 {
-                    _logger.LogWarning($"User {userId} has not acceptable balance to use {nameof(TransportService)} with {transportType}.");
+                    _logger.LogWarning($"User {userId} has not acceptable balance to use {nameof(TransportService)} with {vehicle}.");
                     return null;
                 }
             }

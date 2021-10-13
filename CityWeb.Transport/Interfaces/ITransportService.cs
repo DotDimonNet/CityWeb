@@ -13,6 +13,6 @@ namespace CityWeb.Transport.Interfaces
         public IEnumerable<IPrice> Pricelist { get; set; }
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end);
         public bool RateService(IUser user, IRating rating);
-        public ITransportJourney Run(Guid userId, TransportType transportType, DateTime time, params IAddress[] addresses);
+        public ITransportJourney Run(Guid userId, IVehicle vehicle, DateTime time, params IAddress[] addresses);
     }
 }

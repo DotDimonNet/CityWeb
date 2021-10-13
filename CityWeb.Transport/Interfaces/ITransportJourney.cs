@@ -13,7 +13,7 @@ namespace CityWeb.Transport.Interfaces
         public Guid RatingId { get; set; }
         public Guid PaymentId { get; set; }
         public Guid OwnerId { get; set; }
-        public TransportType TransportType { get; set; }
+        public IVehicle Vehicle { get; set; }
         public IEnumerable<IAddress> Visited { get; set; }
     }
 }

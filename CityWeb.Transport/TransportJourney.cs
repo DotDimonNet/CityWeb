@@ -14,16 +14,16 @@ namespace CityWeb.Transport
         public Guid RatingId { get; set; }
         public Guid PaymentId { get; set; }
         public Guid OwnerId { get; set; }
-        public TransportType TransportType { get; set; }
+        public IVehicle Vehicle { get; set; }
         public IEnumerable<IAddress> Visited { get; set; }
         public Guid Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
 
-        public TransportJourney(Guid userId, TransportType type, IEnumerable<IAddress> addresses, Guid paymentId, Guid ratingId = default)
+        public TransportJourney(Guid userId, IVehicle vehicle, IEnumerable<IAddress> addresses, Guid paymentId, Guid ratingId = default)
         {
             OwnerId = userId;
-            TransportType = type;
+            Vehicle = vehicle;
             Visited = addresses;
             PaymentId = paymentId;
             RatingId = ratingId;
