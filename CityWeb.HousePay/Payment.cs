@@ -10,6 +10,7 @@ namespace CityWeb.HousePay
     {
         Gas,
         Water,
-        Electricity,
+        ectricity,
     }
+
 }

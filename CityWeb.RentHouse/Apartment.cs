@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.RentHouse
 {
-    class Apartment : IService
+    class Apartment //: IService
     {
         //interface props
         public Guid ID { get; set; }

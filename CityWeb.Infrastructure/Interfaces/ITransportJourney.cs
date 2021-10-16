@@ -1,0 +1,18 @@
+﻿using CityWeb.Infrastructure.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CityWeb.Infrastructure.Interfaces
+{
+    public interface ITransportJourney : IBaseDBO
+    {
+        public Guid RatingId { get; set; }
+        public Guid PaymentId { get; set; }
+        public Guid OwnerId { get; set; }
+        public IVehicle Vehicle { get; set; }
+        public IEnumerable<IAddress> Visited { get; set; }
+    }
+}

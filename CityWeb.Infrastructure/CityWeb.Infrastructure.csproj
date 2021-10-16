@@ -4,9 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\CityWeb.Common\CityWeb.Common.csproj" />
-    <ProjectReference Include="..\CityWeb.Entities\CityWeb.Entities.csproj" />
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.1" />
   </ItemGroup>
 
 </Project>

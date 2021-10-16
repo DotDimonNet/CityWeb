@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CityWeb.HousePay
-{
-    public enum Counter
+{ 
+
+   public enum Counter
     {
          StartIndicator,
          Endindicator,

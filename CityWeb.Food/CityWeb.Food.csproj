@@ -5,9 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CityWeb.Common\CityWeb.Common.csproj" />
     <ProjectReference Include="..\CityWeb.Entities\CityWeb.Entities.csproj" />
     <ProjectReference Include="..\CityWeb.Infrastructure\CityWeb.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Classes\" />
   </ItemGroup>
 
 </Project>
