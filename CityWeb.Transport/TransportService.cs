@@ -1,7 +1,7 @@
-﻿using CityWeb.Entities;
+﻿using CityWeb.Common.Repository;
+using CityWeb.Entities;
 using CityWeb.Infrastructure.Enums;
 using CityWeb.Infrastructure.Interfaces;
-using CityWeb.Transport.Enums;
 using CityWeb.Transport.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,6 +15,7 @@ namespace CityWeb.Transport
     public class TransportService : ITransportService
     {
         private readonly IServiceContext _context;
+        private readonly IDbContext _dbContext;
         private readonly ILogger<ITransportService> _logger;
         public bool IsActive { get; set; }
         public string Version { get; set; }
@@ -25,9 +26,10 @@ namespace CityWeb.Transport
         public string Description { get; set; }
         public IEnumerable<IPrice> Pricelist { get; set; }
 
-        public TransportService(IServiceContext context, ILogger<ITransportService> logger)
+        public TransportService(IServiceContext context, ILogger<ITransportService> logger, IDbContext dbContext)
         {
             _context = context;
+            _dbContext = dbContext;
             _logger = logger;
             Pricelist = GetInitialPricesForServiceUsage();
         }
@@ -58,7 +60,7 @@ namespace CityWeb.Transport
                 .GetUsers(usersIds);
         }
 
-        public bool RateService(IUser user, IRating rating)
+        public async Task<bool> RateService(IUser user, IRating rating)
         {
             try
             {
@@ -72,8 +74,11 @@ namespace CityWeb.Transport
                 {
                     user.Ratings = user.Ratings.Append(rating);
                     (_context.GetService("UserManagement") as IUserManagementService).UpdateUserData(user);
-                    return true;
                 }
+
+                var query = $"UPDATE ....";
+                var affectedRows = await _dbContext.Journeys.RequestManager.SendRequestAsync(query, null, false);
+                return affectedRows > 0;
             }
             catch (Exception ex)
             {

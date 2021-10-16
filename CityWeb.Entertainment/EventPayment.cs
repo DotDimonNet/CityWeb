@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Entertainment.Enums;
 using CityWeb.Entertainment.Interfaces;
-using CityWeb.Infrastructure.Interfaces;
 
 namespace CityWeb.Entertainment
 {

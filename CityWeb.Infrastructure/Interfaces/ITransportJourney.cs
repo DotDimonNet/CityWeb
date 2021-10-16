@@ -1,12 +1,11 @@
 ﻿using CityWeb.Infrastructure.Interfaces;
-using CityWeb.Transport.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Transport.Interfaces
+namespace CityWeb.Infrastructure.Interfaces
 {
     public interface ITransportJourney : IBaseDBO
     {

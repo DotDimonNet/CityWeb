@@ -6,48 +6,42 @@ using System.Threading.Tasks;
 using CityWeb.Infrastructure;
 using CityWeb.Entities;
 using CityWeb.Infrastructure.Interfaces;
-using CityWeb.RentHouse.Interfaces;
 
 namespace CityWeb.RentHouse
 {
-    public class Hotel : IHotel
+    public class Hotel //: IService
     {
-        public HotelRoomType RoomType { get ; set ; }
-        public IDictionary<HotelRoomType, int> RoomsQuantity { get ; set ; }
-        public IAddress Address { get ; set ; }
-        public IEnumerable<IPrice> Pricelist { get ; set ; }
-        public bool IsActive { get ; set ; }
-        public string Version { get ; set ; }
-        public Guid Id { get ; set ; }
-        public DateTime Created { get ; set ; }
-        public DateTime Modified { get ; set ; }
-        public string Title { get ; set ; }
-        public string Description { get ; set ; }
+        //interface props
+        public Guid ID { get ; set ; }
+        public string Title { get; set; }
+        public double Price { get ; set ; }
+        public double CurrentDiscount { get ; set ; }
+        public double MaxDiscount { get ; set ; }
+        public double DiscountMoneyStep { get ; set ; }
+        public DateTime RealizationDate { get ; set ; }
+        public double SpentMoney { get ; set ; }
+        public Rating Rating { get; set; }
+        //class props
+        public Address Address { get; set; }
+        public int MaxPlacesAmount { get; set; }
+        public int FreePlacelAmount { get; set; }
+        public IEnumerable<IUser> Residents { get; set; }
+        public double PricePerNight { get; set; }
+        public int NightCount { get; set; }
 
-        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage()
+
+        public void GetFreePlaceAmount()
         {
-            var prices = new List<IPrice>();
-            foreach (var type in Enum.GetValues(typeof(HotelRoomType)).Cast<HotelRoomType>())
-            {
-                prices.Add(new FullPrice()
-                {
-                    Tax = 3,
-                    VAT = 0.1,
-                    Price = (int)type * 10,
-                    Title = $"{type}",
-                    Description = $"Paid for usage transport service with {type} type."
-                });
-            }
-            return prices;
+            FreePlacelAmount = MaxPlacesAmount - Residents.Count();
         }
-        public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end)
+        public void Buy()
         {
             throw new NotImplementedException();
         }
 
-        public bool RateService(IUser user, IRating rating)
+        public void GetPrice()
         {
-            throw new NotImplementedException();
+            Price = PricePerNight * NightCount;
         }
     }
 }

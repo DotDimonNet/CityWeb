@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Transport.Enums
+namespace CityWeb.Infrastructure.Enums
 {
     /// <summary>
     /// Enum of municipal transports

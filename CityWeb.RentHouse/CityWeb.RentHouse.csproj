@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CityWeb.Common\CityWeb.Common.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CityWeb.Entities\CityWeb.Entities.csproj" />
     <ProjectReference Include="..\CityWeb.Infrastructure\CityWeb.Infrastructure.csproj" />
-    <ProjectReference Include="..\CityWeb\CityWeb.csproj" />
   </ItemGroup>
 
 </Project>
