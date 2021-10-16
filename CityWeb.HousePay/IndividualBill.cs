@@ -5,15 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Entities;
 using CityWeb.Infrastructure;
-using CityWeb.Entities;
 
 namespace CityWeb.HousePay
 {
-    class IndividualBill
+    class IndividualBill //: IService
 
     {
         public Guid ID { get; set; }
-        public Address HouseAddress { get; set; }
         public string Title { get; set; }
         public double Price { get; set; }
         public double CurrentDiscount { get; set; }
@@ -22,7 +20,6 @@ namespace CityWeb.HousePay
         public DateTime RealizationDate { get; set; }
         public double SpentMoney { get; set; }
         public Rating Rating { get; set; }
-
 
         public void Buy()
         {

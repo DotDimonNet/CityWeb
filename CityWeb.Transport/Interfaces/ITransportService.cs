@@ -1,5 +1,4 @@
 ﻿using CityWeb.Infrastructure.Interfaces;
-using CityWeb.Transport.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace CityWeb.Transport.Interfaces
     {
         public IEnumerable<IPrice> Pricelist { get; set; }
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end);
-        public bool RateService(IUser user, IRating rating);
+        public Task<bool> RateService(IUser user, IRating rating);
         public ITransportJourney Run(Guid userId, IVehicle vehicle, DateTime time, params IAddress[] addresses);
     }
 }
