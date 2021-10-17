@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.RentHouse.Interfaces
 {
-    public interface IHotel : IRentHouseService
+    public interface IHotel //: IRentHouseService
     {
         public HotelRoomType RoomType { get; set; }
         public IDictionary<HotelRoomType,int> RoomsQuantity { get; set; }

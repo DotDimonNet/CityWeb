@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.RentHouse.Interfaces
 {
-    public interface IApartment : IRentHouseService
+    public interface IApartment //: IRentHouseService
     {
         
     }

@@ -1,15 +1,15 @@
-﻿using CityWeb.Infrastructure.Enums;
+﻿using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Infrastructure.Interfaces
+namespace CityWeb.Domain.Entities
 {
-    public interface IVehicle
+    public class VehicleModel : Entity
     {
-        public TransportType TransportType { get; set; }
+        public virtual TransportType TransportType { get; set; }
         public string Mark { get; set; }
         public string Color { get; set; }
         public int Seats { get; set; }

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Infrastructure.Enums;
 
 namespace CityWeb.Infrastructure.Interfaces
 {
-    public interface IUserManagementService : IServiceMetadata
+    /*public interface IUserManagementService : IServiceMetadata
     {
         public IEnumerable<IUser> Users { get; set; }
         public bool UpdateUserData(IUser user);
@@ -19,6 +18,6 @@ namespace CityWeb.Infrastructure.Interfaces
         public IUser GetUserByEmail(string email);
 
         //public bool BlockUser(Guid userId);
-    }
+    }*/
 }
 

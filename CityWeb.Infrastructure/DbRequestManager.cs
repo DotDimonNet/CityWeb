@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Common.Repository
 {
-    public class DbRequestManager<T> : IDbRequestManager<T> where T : IBaseDBO
+    public class DbRequestManager<T> : IDbRequestManager<T> where T : class
     {
         private readonly string _connectionString;
 
