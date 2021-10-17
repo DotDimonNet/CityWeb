@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Infrastructure.Interfaces
+namespace CityWeb.Domain.Entities
 {
-    public interface IAddress : IBaseDBO
+    public class AddressModel : Entity
     {
-        public Guid OwnerId { get; set; }
+        public virtual ApplicationUserModel User { get; set; }
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
         public string ApartmentNumber { get; set; }
