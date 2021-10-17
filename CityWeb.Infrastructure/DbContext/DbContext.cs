@@ -31,6 +31,7 @@ namespace CityWeb.Common.Repository
             }*/
 
             Journeys = new DbCollection<ITransportJourney>(_connectionString);
+            EventPaymentHistory = new DbCollection<IEventPaymentHistory>(_connectionString);
 
             if (_dbSync.IsSynchronized)
             {
@@ -47,8 +48,10 @@ namespace CityWeb.Common.Repository
         private async Task DataLoadAsync()
         {
             await Journeys.Load(nameof(Journeys));
+            await EventPaymentHistory.Load(nameof(EventPaymentHistory));
         }
 
         public IDbCollection<ITransportJourney> Journeys { get; set; }
+        public IDbCollection<IEventPaymentHistory> EventPaymentHistory { get; set ; }
     }
 }

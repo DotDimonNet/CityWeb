@@ -12,6 +12,8 @@ namespace CityWeb.Common.Repository
         public Task InitializeContext();
 
         public IDbCollection<ITransportJourney> Journeys { get; set; }
+        public IDbCollection<IEventPaymentHistory> EventPaymentHistory { get; set; }
+
 
     }
 }

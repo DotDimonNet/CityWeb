@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CityWeb.Infrastructure.Enums;
+using CityWeb.Infrastructure.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Entertainment.Enums;
-using CityWeb.Infrastructure.Interfaces;
 
-namespace CityWeb.Entertainment.Interfaces
+namespace CityWeb.Infrastructure.Interfaces
 {
-    public interface IEventPayment : IBaseDBO
+    public interface IEventPaymentHistory : IBaseDBO
     {
         public Guid RatingId { get; set; }
         public Guid PaymentId { get; set; }
