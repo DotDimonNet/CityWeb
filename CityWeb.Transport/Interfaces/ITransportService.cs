@@ -9,9 +9,9 @@ namespace CityWeb.Transport.Interfaces
 {
     public interface ITransportService : IServiceMetadata
     {
-        public IEnumerable<IPrice> Pricelist { get; set; }
+        /*public IEnumerable<Price> Pricelist { get; set; }
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end);
-        public Task<bool> RateService(IUser user, IRating rating);
-        public ITransportJourney Run(Guid userId, IVehicle vehicle, DateTime time, params IAddress[] addresses);
+        public bool RateService(IUser user, Rating rating);
+        public TransportJourney Run(Guid userId, Vehicle vehicle, DateTime time, params Address[] addresses);*/
     }
 }

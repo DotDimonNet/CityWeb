@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Infrastructure.Interfaces
+namespace CityWeb.Domain.Entities
 {
-    public interface IBalance : IBaseDBO
+    public class BalanceModel : Entity
     {
-        public double Balance { get; set; }
+        public virtual ApplicationUserModel User { get; set; }
+        public double Value { get; set; }
         public string CardNumber { get; set; }
         public string CardCode { get; set; }
         public DateTime ExpirationDate { get; set; }
@@ -16,7 +17,5 @@ namespace CityWeb.Infrastructure.Interfaces
         public bool IsValid => IsExpired 
             && CardCode.Length == 3 
             && CardNumber.Length == 16;
-
-        public string GetInfo();
     }
 }

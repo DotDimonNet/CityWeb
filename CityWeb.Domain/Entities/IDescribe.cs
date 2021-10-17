@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Infrastructure.Interfaces
+namespace CityWeb.Domain.Entities
 {
     public interface IDescribe
     {
