@@ -1,6 +1,4 @@
-﻿using CityWeb.Common.Repository;
-using CityWeb.Entities;
-using CityWeb.Infrastructure.Enums;
+﻿using CityWeb.Entities;
 using CityWeb.Infrastructure.Interfaces;
 using CityWeb.Transport.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -12,10 +10,9 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Transport
 {
-    public class TransportService : ITransportService
+    /*public class TransportService //: ITransportService
     {
         private readonly IServiceContext _context;
-        private readonly IDbContext _dbContext;
         private readonly ILogger<ITransportService> _logger;
         public bool IsActive { get; set; }
         public string Version { get; set; }
@@ -24,19 +21,18 @@ namespace CityWeb.Transport
         public DateTime Modified { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public IEnumerable<IPrice> Pricelist { get; set; }
+        //public IEnumerable<Price> Pricelist { get; set; }
 
-        public TransportService(IServiceContext context, ILogger<ITransportService> logger, IDbContext dbContext)
+        public TransportService(IServiceContext context, ILogger<ITransportService> logger)
         {
             _context = context;
-            _dbContext = dbContext;
             _logger = logger;
             Pricelist = GetInitialPricesForServiceUsage();
         }
 
-        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage()
+        private static IEnumerable<Price> GetInitialPricesForServiceUsage()
         {
-            var prices = new List<IPrice>();
+            var prices = new List<Price>();
             foreach (var type in Enum.GetValues(typeof(TransportType)).Cast<TransportType>())
             {
                 prices.Add(new FullPrice()
@@ -60,7 +56,7 @@ namespace CityWeb.Transport
                 .GetUsers(usersIds);
         }
 
-        public async Task<bool> RateService(IUser user, IRating rating)
+        public bool RateService(IUser user, Infrastructure.Interfaces.Rating rating)
         {
             try
             {
@@ -74,11 +70,8 @@ namespace CityWeb.Transport
                 {
                     user.Ratings = user.Ratings.Append(rating);
                     (_context.GetService("UserManagement") as IUserManagementService).UpdateUserData(user);
+                    return true;
                 }
-
-                var query = $"UPDATE ....";
-                var affectedRows = await _dbContext.Journeys.RequestManager.SendRequestAsync(query, null, false);
-                return affectedRows > 0;
             }
             catch (Exception ex)
             {
@@ -87,7 +80,7 @@ namespace CityWeb.Transport
             }
         }
 
-        public ITransportJourney Run(Guid userId, IVehicle vehicle, DateTime time, params IAddress[] addresses)
+        public Infrastructure.Interfaces.TransportJourney Run(Guid userId, Vehicle vehicle, DateTime time, params Infrastructure.Interfaces.Address[] addresses)
         {
             try
             {
@@ -100,7 +93,7 @@ namespace CityWeb.Transport
 
                     if (status == PaymentStatus.Created && paymentId != Guid.Empty)
                     {
-                        return new TransportJourney(userId, vehicle, addresses, paymentId);
+                        return new Entities.TransportJourney(userId, vehicle, addresses, paymentId);
                     }
                     else
                     {
@@ -120,5 +113,5 @@ namespace CityWeb.Transport
                 throw;
             }
         }
-    }
+    }*/
 }

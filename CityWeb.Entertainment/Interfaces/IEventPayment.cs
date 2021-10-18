@@ -8,7 +8,7 @@ using CityWeb.Infrastructure.Interfaces;
 
 namespace CityWeb.Entertainment.Interfaces
 {
-    public interface IEventPayment : IBaseDBO
+    public interface IEventPayment //: IBaseDBO
     {
         public Guid RatingId { get; set; }
         public Guid PaymentId { get; set; }

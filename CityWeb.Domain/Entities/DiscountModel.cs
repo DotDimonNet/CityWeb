@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Infrastructure.Interfaces
+namespace CityWeb.Domain.Entities
 {
-    public interface IDiscount : IDescribe, IBaseDBO
+    public class DiscountModel : Entity, IDescribe
     {
-        public double Discount { get; set; }
+        public double Value { get; set; }
         public bool IsImmortal { get; set; }
         public DateTime FiredOut { get; set; }
         public string Promocode { get; set; }
         public bool IsReferalBonus { get; set; }
-        public IEnumerable<string> UsedForServices { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }

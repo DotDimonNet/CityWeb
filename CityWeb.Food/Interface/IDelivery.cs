@@ -13,7 +13,7 @@ namespace CityWeb.Food
         public string DeliveryServiceName { get; set; }
         public IEnumerable<IDish> Order { get; set; }
         public double DeliveryPrice { get; set; }
-        public IAddress DeliveryAddress { get; set; }
+        //public Address DeliveryAddress { get; set; }
         public double FreeDeliveryPrice { get; set; }
     }
 }
