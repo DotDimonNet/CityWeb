@@ -1,6 +1,5 @@
 ﻿using CityWeb.Common.Repository;
 using CityWeb.Entities;
-using CityWeb.Infrastructure.Enums;
 using CityWeb.Infrastructure.Interfaces;
 using CityWeb.HousePay.Interfaces;
 using System;
@@ -12,7 +11,7 @@ using CityWeb.HousePay.Enums;
 
 namespace CityWeb.HousePay
 {
-    public class HousePayService :  IHousePayService
+   /* public class HousePayService :  IHousePayService
     {
         public Guid ID { get; set; }
         public Guid Id { get; set; }
@@ -40,4 +39,5 @@ namespace CityWeb.HousePay
             throw new NotImplementedException();
         }
     }
+   */
 }
