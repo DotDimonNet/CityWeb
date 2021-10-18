@@ -15,8 +15,8 @@ namespace CityWeb.HousePay.Interfaces
     {
         /*public IEnumerable<IPrice> Pricelist { get; set; }
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end);
-        public bool RateService(IUser user, IRating rating);*/
+        public bool RateService(IUser user, IRating rating);
     }
-      */
+*/
 
 
