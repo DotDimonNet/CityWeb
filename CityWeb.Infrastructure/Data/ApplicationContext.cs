@@ -33,12 +33,15 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<OrderModel> Orders { get; set; }
 
 
+
         // enums tables
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<TransportType> TransportTypes { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<DeliveryServiceType> DeliveryServiceType { get; set; }
+
+        public DbSet<HousePaymentType> HousePaymentType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,6 +54,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
             builder.Entity<TransportType>().HasKey(x => x.ValueId).HasName("PK_TransportType");
             builder.Entity<EventType>().HasKey(x => x.ValueId).HasName("PK_EventType");
+            builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             builder.Entity<DeliveryServiceType>().HasKey(x => x.ValueId).HasName("PK_DeliveryServiceType");
            
 

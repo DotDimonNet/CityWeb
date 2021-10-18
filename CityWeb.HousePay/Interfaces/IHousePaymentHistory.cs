@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.HousePay
+namespace CityWeb.HousePay.Interfaces
 {
-    public enum Payment
+    interface IHousePaymentHistory
     {
-        Gas,
-        Water,
-        ectricity,
-    }
 
+    }
 }
