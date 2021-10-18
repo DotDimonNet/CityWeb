@@ -33,6 +33,7 @@ namespace CityWeb.Infrastucture.Data
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<TransportType> TransportTypes { get; set; }
+        public DbSet<EventType> EventTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,7 +45,8 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ServiceModel>().HasMany(x => x.Branches).WithOne(x => x.Service).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
             builder.Entity<TransportType>().HasKey(x => x.ValueId).HasName("PK_TransportType");
-            
+            builder.Entity<EventType>().HasKey(x => x.ValueId).HasName("PK_EventType");
+
             base.OnModelCreating(builder);
         }
 

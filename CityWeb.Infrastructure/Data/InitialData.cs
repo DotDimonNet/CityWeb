@@ -39,6 +39,21 @@ namespace CityWeb.Infrastucture.Data
 
                 _context.SaveChanges();
             }
+
+            if (!_context.EventTypes.Any())
+            {
+                _context.AddRange(
+                    EventType.Cinema,
+                    EventType.Circus,
+                    EventType.Club,
+                    EventType.Exhibition,
+                    EventType.Fest,
+                    EventType.Museum,
+                    EventType.Theatre
+                    );
+
+                _context.SaveChanges();
+            }
         }
 
         public static void SetupData(ApplicationContext _context)
