@@ -19,7 +19,7 @@ namespace CityWeb.Domain.Enums
         public static readonly HousePaymentType Trash = new(9, "Trash");
         public static readonly HousePaymentType Rent = new(10, "Rent");
 
-        protected HousePaymentType (int id, string name) : base(id, name) { }
+        protected HousePaymentType(int id, string name) : base(id, name) { }
 
     }
 }
