@@ -10,7 +10,7 @@ namespace CityWeb.Food.Interface
     public interface IRestaurant : IDelivery
     {
         public string RestaurantName { get; set; }
-        public IAddress RestaurantAdress { get; set; }
+        //public Address RestaurantAdress { get; set; }
         public int FreePlaces { get; set; }
         public DateTime OpenTime { get; set; }
         public DateTime CloseTime { get; set; }

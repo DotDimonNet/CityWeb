@@ -1,4 +1,6 @@
 ﻿using CityWeb.Common.Repository;
+using CityWeb.Infrastructure.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,8 +11,9 @@ using System.Threading.Tasks;
 namespace CityWeb.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class TransportController : ControllerBase
+    [Route("api/transport")]
+    [Authorize(Policy = Policies.RequireUserRole)]
+    public class TransportController : Controller
     {
 
         private readonly ILogger<TransportController> _logger;
@@ -23,10 +26,6 @@ namespace CityWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> GetJourneys()
         {
-            var conn = "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=CityWeb;Integrated Security=SSPI;";
-            var syncManager = new DbSyncManager(conn);
-            var context = new DbContext(conn, syncManager);
-            await context.InitializeContext();
             return new JsonResult(1);
         }
     }
