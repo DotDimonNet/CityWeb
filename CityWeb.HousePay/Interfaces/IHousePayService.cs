@@ -15,4 +15,5 @@ namespace CityWeb.HousePay.Interfaces
     public bool RateService(IUser user, IRating rating);*/
 
     }
+    */
 }
