@@ -19,7 +19,8 @@ namespace CityWeb.Infrastucture.Data
                     PaymentStatus.Discarded,
                     PaymentStatus.Executed,
                     PaymentStatus.Refunded,
-                    PaymentStatus.Removed);
+                    PaymentStatus.Removed
+                    );
 
                 _context.SaveChanges();
             }
@@ -79,6 +80,20 @@ namespace CityWeb.Infrastucture.Data
                     HousePaymentType.TV,
                     HousePaymentType.Trash,
                     HousePaymentType.Rent);
+
+                _context.SaveChanges();
+            }
+
+            if (!_context.HotelRoomType.Any())
+            {
+                _context.AddRange(
+                    HotelRoomType.Delux,
+                    HotelRoomType.Econom,
+                    HotelRoomType.Lux,
+                    HotelRoomType.Premium,
+                    HotelRoomType.President,
+                    HotelRoomType.Standart
+                    );
 
                 _context.SaveChanges();
             }
