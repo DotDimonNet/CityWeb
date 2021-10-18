@@ -4,15 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Infrastructure.Interfaces;
-using CityWeb.Infrastructure.Enums;
 
 namespace CityWeb.HousePay.Interfaces
 {
+
+}
+/*
+{
     interface IHousePay : IServiceMetadata
-        {
+      {
         public IEnumerable<IPrice> Pricelist { get; set; }
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end);
         public bool RateService(IUser user, IRating rating);
     }
-}
+      */
+
 
