@@ -12,10 +12,10 @@ namespace CityWeb.HousePay.Interfaces
 /*
 {
     interface IHousePay : IServiceMetadata
-      {
-        public IEnumerable<IPrice> Pricelist { get; set; }
+    {
+        /*public IEnumerable<IPrice> Pricelist { get; set; }
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end);
-        public bool RateService(IUser user, IRating rating);
+        public bool RateService(IUser user, IRating rating);*/
     }
       */
 
