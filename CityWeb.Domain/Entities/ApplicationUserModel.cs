@@ -13,7 +13,8 @@ namespace CityWeb.Domain.Entities
         public virtual ICollection<BalanceModel> Balances { get; set; } = new List<BalanceModel>();
         public virtual ICollection<PaymentModel> Payments { get; set; } = new List<PaymentModel>();
         public virtual ICollection<ServiceModel> Services { get; set; } = new List<ServiceModel>();
-        
+        public virtual ICollection<OrderModel> Orders { get; set; } = new List<OrderModel>();
+
     }
 
     public class ApplicationUserRole : IdentityRole<Guid>

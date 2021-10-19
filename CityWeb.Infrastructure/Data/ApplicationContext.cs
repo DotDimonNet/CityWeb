@@ -51,6 +51,9 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Ratings).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Payments).WithOne(x => x.Owner).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Services).WithMany(x => x.Users);
+            //my test
+            builder.Entity<ApplicationUserModel>().HasMany(x => x.Orders).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
+            //normal code
             builder.Entity<ServiceModel>().HasMany(x => x.Branches).WithOne(x => x.Service).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
             builder.Entity<TransportType>().HasKey(x => x.ValueId).HasName("PK_TransportType");
@@ -58,6 +61,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
             builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             builder.Entity<DeliveryServiceType>().HasKey(x => x.ValueId).HasName("PK_DeliveryServiceType");
+            builder.Entity<OrderModel>().HasMany(x => x.Dish).WithOne(x => x.Order);
            
 
             base.OnModelCreating(builder);
