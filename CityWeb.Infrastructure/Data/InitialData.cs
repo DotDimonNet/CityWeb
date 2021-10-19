@@ -56,12 +56,12 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
             }
 
-            if (!_context.DeliveryServiceType.Any())
+            if (!_context.DeliveryFromType.Any())
             {
                 _context.AddRange(
-                    DeliveryServiceType.Torpedo,
-                    DeliveryServiceType.Rocket,
-                    DeliveryServiceType.FirstDelivery
+                    DeliveryFromType.Restaurant,
+                    DeliveryFromType.FastFood,
+                    DeliveryFromType.FoodMarket
                     );
 
                 _context.SaveChanges();

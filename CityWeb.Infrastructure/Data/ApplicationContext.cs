@@ -28,9 +28,8 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<ServiceBranchModel> ServiceBranches { get; set; }
         public DbSet<TransportJourneyModel> TransportJourneys { get; set; }
         public DbSet<VehicleModel> Vehicles { get; set; }
-        public DbSet<RestaurantModel> Restaurants { get; set; }
-        public DbSet<DishModel> Dishs { get; set; }
-        public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<DeliveryModel> Deliverys { get; set; }
+        public DbSet<ProductModel> Orders { get; set; }
 
 
 
@@ -39,7 +38,7 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<TransportType> TransportTypes { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
-        public DbSet<DeliveryServiceType> DeliveryServiceType { get; set; }
+        public DbSet<DeliveryFromType> DeliveryFromType { get; set; }
 
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
@@ -52,7 +51,11 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Payments).WithOne(x => x.Owner).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Services).WithMany(x => x.Users);
             //my test
-            builder.Entity<ApplicationUserModel>().HasMany(x => x.Orders).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
+           
+            builder.Entity<ApplicationUserModel>().HasMany(x => x.Discounts).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithOne(x => x.Delivery).HasForeignKey(x => x.Id);
+            builder.Entity<ServiceModel>().HasMany(x => x.Discounts).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ServiceModel>().HasMany(x => x.Entertaiments).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
             //normal code
             builder.Entity<ServiceModel>().HasMany(x => x.Branches).WithOne(x => x.Service).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
@@ -60,8 +63,9 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<EventType>().HasKey(x => x.ValueId).HasName("PK_EventType");
             builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
             builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
-            builder.Entity<DeliveryServiceType>().HasKey(x => x.ValueId).HasName("PK_DeliveryServiceType");
-            builder.Entity<OrderModel>().HasMany(x => x.Dish).WithOne(x => x.Order);
+            builder.Entity<DeliveryFromType>().HasKey(x => x.ValueId).HasName("PK_DeliveryFromType");
+            //New
+           
            
 
             base.OnModelCreating(builder);
