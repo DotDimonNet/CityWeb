@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CityWeb.Entities\CityWeb.Entities.csproj" />
     <ProjectReference Include="..\CityWeb.Infrastructure\CityWeb.Infrastructure.csproj" />
   </ItemGroup>
 

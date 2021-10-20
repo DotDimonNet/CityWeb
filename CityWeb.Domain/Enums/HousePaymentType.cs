@@ -15,11 +15,11 @@ namespace CityWeb.Domain.Enums
         public static readonly HousePaymentType GasTransport = new(5, "GasTransport");
         public static readonly HousePaymentType Intercom = new(6, "Intercom");
         public static readonly HousePaymentType Internet = new(7, "Internet");
-        public static readonly HousePaymentType TV = new(8, "Internet");
+        public static readonly HousePaymentType TV = new(8, "TV");
         public static readonly HousePaymentType Trash = new(9, "Trash");
         public static readonly HousePaymentType Rent = new(10, "Rent");
 
-        protected HousePaymentType (int id, string name) : base(id, name) { }
+        protected HousePaymentType(int id, string name) : base(id, name) { }
 
     }
 }

@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class ServiceBranchModel : Entity, IDescribe
+    public class HotelModel : Entity
     {
         public virtual ServiceModel Service { get; set; }
-        public virtual PriceModel Price { get; set; }
-
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public virtual AddressModel RentAddress { get; set; }
+        public virtual ICollection<RoomModel> Rooms { get; set; }
     }
 }

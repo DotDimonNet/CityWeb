@@ -19,7 +19,8 @@ namespace CityWeb.Infrastucture.Data
                     PaymentStatus.Discarded,
                     PaymentStatus.Executed,
                     PaymentStatus.Refunded,
-                    PaymentStatus.Removed);
+                    PaymentStatus.Removed
+                    );
 
                 _context.SaveChanges();
             }
@@ -50,6 +51,48 @@ namespace CityWeb.Infrastucture.Data
                     EventType.Fest,
                     EventType.Museum,
                     EventType.Theatre
+                    );
+
+                _context.SaveChanges();
+            }
+
+            if (!_context.DeliveryFromType.Any())
+            {
+                _context.AddRange(
+                    DeliveryFromType.Restaurant,
+                    DeliveryFromType.FastFood,
+                    DeliveryFromType.FoodMarket
+                    );
+
+                _context.SaveChanges();
+            }
+
+            if (!_context.HousePaymentType.Any())
+            {
+                _context.AddRange(
+                    HousePaymentType.Electricity,
+                    HousePaymentType.WaterGet,
+                    HousePaymentType.WaterOut,
+                    HousePaymentType.Gas,
+                    HousePaymentType.GasTransport,
+                    HousePaymentType.Intercom,
+                    HousePaymentType.Internet,
+                    HousePaymentType.TV,
+                    HousePaymentType.Trash,
+                    HousePaymentType.Rent);
+
+                _context.SaveChanges();
+            }
+
+            if (!_context.HotelRoomType.Any())
+            {
+                _context.AddRange(
+                    HotelRoomType.Delux,
+                    HotelRoomType.Econom,
+                    HotelRoomType.Lux,
+                    HotelRoomType.Premium,
+                    HotelRoomType.President,
+                    HotelRoomType.Standart
                     );
 
                 _context.SaveChanges();

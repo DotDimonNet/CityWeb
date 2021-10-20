@@ -7,7 +7,7 @@ using CityWeb.Infrastructure.Interfaces;
 
 namespace CityWeb.HousePay.Interfaces
 {
-    public interface IHousePayService : IServiceMetadata
+    /*public interface IHousePayService : IServiceMetadata
     
     {
     public IEnumerable<IPrice> Pricelist { get; set; }
@@ -15,4 +15,5 @@ namespace CityWeb.HousePay.Interfaces
     public bool RateService(IUser user, IRating rating);
 
     }
+    */
 }
