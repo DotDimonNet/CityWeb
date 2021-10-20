@@ -37,6 +37,7 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<EntertaimentModel> Entertaiments { get; set; }
         public DbSet<PeriodModel> Periods  { get; set; }
         public DbSet<CarSharingModel> CarSharings { get; set; }
+        public DbSet<TaxiModel> Taxi { get; set; }
 
 
 
