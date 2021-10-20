@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace CityWeb.RentHouse
 {
-    public class RentHouseService : IRentHouseService
+    /*public class RentHouseService : IRentHouseService
     {
         private readonly IServiceContext _context;
         private readonly ILogger<IRentHouseService> _logger;
-        public IEnumerable<IPrice> Pricelist { get ; set ; }
+        public IEnumerable<Price> Pricelist { get ; set ; }
         public bool IsActive { get ; set ; }
         public string Version { get ; set ; }
         public Guid Id { get ; set ; }
@@ -20,7 +20,7 @@ namespace CityWeb.RentHouse
         public DateTime Modified { get ; set ; }
         public string Title { get ; set ; }
         public string Description { get ; set ; }
-        public IAddress Address { get ; set ; }
+        public Address Address { get ; set ; }
 
         public RentHouseService(IServiceContext context, ILogger<IRentHouseService> logger)
         {
@@ -28,7 +28,7 @@ namespace CityWeb.RentHouse
             _logger = logger;
             Pricelist = GetInitialPricesForServiceUsage();
         }
-        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage()
+        private static IEnumerable<Price> GetInitialPricesForServiceUsage()
         {
            
             throw new NotImplementedException();
@@ -44,7 +44,7 @@ namespace CityWeb.RentHouse
                     Description = $"Paid for usage transport service with {type} type."
                 });
             }
-            return prices;*/
+            return prices;
         }
 
         public IEnumerable<IUser> GetUsersActivityForDateRange(DateTime start, DateTime end)
@@ -52,9 +52,9 @@ namespace CityWeb.RentHouse
             throw new NotImplementedException();
         }
 
-        public bool RateService(IUser user, IRating rating)
+        public bool RateService(IUser user, Rating rating)
         {
             throw new NotImplementedException();
         }
-    }
+    }*/
 }

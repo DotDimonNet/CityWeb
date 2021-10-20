@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Interfaces
 {
-    public interface IEventPaymentHistory : IBaseDBO
+    public interface IEventPayment //: IBaseDBO
     {
         public Guid RatingId { get; set; }
         public Guid PaymentId { get; set; }

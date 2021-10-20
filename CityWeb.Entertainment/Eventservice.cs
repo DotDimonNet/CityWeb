@@ -9,15 +9,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Entertainment.Enums;
+using CityWeb.Entertainment.Interfaces;
+using CityWeb.Entities;
+using CityWeb.Infrastructure;
+using CityWeb.Infrastructure.Interfaces;
+using CityWeb.Transport.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace CityWeb.Entertainment
 {
-    public class EventService : IEventService
+    /*public class EventService : IEventService
     {
         private readonly IServiceContext _context;
-        private readonly IDbContext _dbContext;
-        private readonly ILogger<IEventService> _logger;
-        public IEnumerable<IPrice> Pricelist {get; set;}
+        private readonly ILogger<ITransportService> _logger;
+        public IEnumerable<Price> Pricelist {get; set;}
         public bool IsActive {get; set;}
         public string Version {get; set;}
         public Guid Id {get; set;}
@@ -34,9 +40,9 @@ namespace CityWeb.Entertainment
             Pricelist = GetInitialPricesForServiceUsage();
         }
 
-        private static IEnumerable<IPrice> GetInitialPricesForServiceUsage()
+        private static IEnumerable<Price> GetInitialPricesForServiceUsage()
         {
-            var prices = new List<IPrice>();
+            var prices = new List<Price>();
             foreach (var type in Enum.GetValues(typeof(EventType)).Cast<EventType>())
             {
                 prices.Add(new FullPrice()
@@ -51,7 +57,7 @@ namespace CityWeb.Entertainment
             return prices;
         }
 
-        public bool RateService(IUser user, IRating rating)
+        public bool RateService(IUser user, Infrastructure.Interfaces.Rating rating)
         {
             try
             {
@@ -108,6 +114,5 @@ namespace CityWeb.Entertainment
                 throw;
             }
         }
-
-    }
+    }*/
 }

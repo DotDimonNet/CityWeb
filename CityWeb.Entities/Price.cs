@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Entities
 {
-    public class FullPrice : IPrice
+    public class FullPrice //: Price
     {
         public double Tax { get; set; }
         public double VAT { get; set; }
