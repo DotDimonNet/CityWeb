@@ -400,7 +400,7 @@ namespace CityWeb.Infrastucture.Data
 
             };
 
-            var Housepaymodel = new HousePayModel()
+            var Housepay= new HousePayModel()
             {
                 ServiceType = Domain.Enums.HousePaymentType.Internet,
 
@@ -424,6 +424,7 @@ namespace CityWeb.Infrastucture.Data
             _context.Add(deliveryTorpedo);
             _context.Add(hotel);
             _context.Add(carSharing);
+            _context.Add(Housepay);
             _context.SaveChanges();
 
             
