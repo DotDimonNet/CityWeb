@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class VehicleModel : Entity
+    public class TaxiCarModel : Entity
     {
         public virtual TransportType Type { get; set; }
         public string Mark { get; set; }
@@ -15,8 +15,10 @@ namespace CityWeb.Domain.Entities
         public int Seats { get; set; }
         public string Number { get; set; }
         public virtual PriceModel Price { get; set; }
-        public virtual CarSharingModel CarSharing { get; set; }
-        public virtual TaxiModel Taxi { get; set; }//???
-        public bool isFree { get; set; }
+        public virtual TaxiModel Taxi { get; set; }
+        public bool IsFree { get; set; }
+        public virtual AddressModel StartAddress { get; set; }
+        public virtual ICollection<AddressModel> DestinationAddresses { get; set; } = new List<AddressModel>();
+
     }
 }

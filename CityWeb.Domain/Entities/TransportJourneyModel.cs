@@ -9,6 +9,6 @@ namespace CityWeb.Domain.Entities
     public class TransportJourneyModel : Entity
     {
         public virtual PaymentModel Payment { get; set; }
-        public virtual VehicleModel Vehicle { get; set; }
+        public virtual RentCarModel Vehicle { get; set; }
     }
 }

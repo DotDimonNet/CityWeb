@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CityWeb.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace CityWeb.Domain.Entities
 {
     public class ProductModel : Entity
     {
+        
         public string ProductName { get; set; }
         public int ProductCount { get; set; }
         public virtual PriceModel ProductPrice { get; set; }

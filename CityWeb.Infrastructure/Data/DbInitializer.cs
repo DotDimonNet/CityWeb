@@ -94,8 +94,185 @@ namespace CityWeb.Infrastucture.Data
                 result = await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user.UserName), Roles.User);
                 if (!result.Succeeded) throw new DbInitializationException(result.Errors.Select(x => x.Description).Aggregate((x, y) => $"{x} {y}"));
 
+
+
                 _context.SaveChanges();
+
             }
+            var carSharing = new CarSharingModel()
+            {
+                Title = "Zipcar",
+                Description = "Rent Car Company",
+                Id = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Modified = DateTime.Now,               
+                Location = new AddressModel()
+                {
+
+                    StreetName = "Soborna",
+                    HouseNumber = "25A",
+                    Id = Guid.NewGuid()
+                },
+                Vehicle =
+                    {
+                        new RentCarModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Mark = "Zhigalet",
+                            Color = "GnilaVishnya",
+                            IsFree = true,
+                            Price = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 5
+                            },
+                            Type = Domain.Enums.TransportType.RentCar,
+                            Number = "ASS000L",
+                            Seats = 5,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                            RentPeriod = new PeriodModel()
+                            {
+
+                            }
+                        },
+                        new RentCarModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Mark = "Honda",
+                            Color = "Red",
+                            IsFree = false,
+                            Price = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 500
+                            },
+                            Type = Domain.Enums.TransportType.RentCar,
+                            Number = "AB 4532 BX",
+                            Seats = 5,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                            RentPeriod = new PeriodModel()
+                            {
+                                StartTime = new DateTime(2021,10,20),
+                                EndTime = new DateTime(2021,10,24),
+                            },
+                            
+                        }
+                    }
+            };
+
+
+            var hotel = new HotelModel()
+            {
+                Title = "Hillton",
+                Description = "5 stars",
+                RentAddress = new AddressModel()
+                {
+                    StreetName = "Soborna",
+                    HouseNumber = "1",
+                },
+                Rooms =
+                {
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Delux,
+                         Number = 101,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 1500,
+
+                         },
+                         
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                            
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Delux,
+                         Number = 102,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 1500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Delux,
+                         Number = 104,
+                         IsFree = false,
+                         Price = new PriceModel()
+                         {
+                             Value = 1500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                             StartTime = new DateTime(2021,10,20),
+                             EndTime = new DateTime(2021,10,24),
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Lux,
+                         Number = 201,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 1000,
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.President,
+                         Number = 606,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 3500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                             StartTime = new DateTime(2021,10,20),
+                             EndTime = new DateTime(2021,10,27),
+                        }
+                    },
+                    
+                },
+                Created = new DateTime(1847,12,24),
+                Modified = new DateTime(2019,8,13),
+            };
+            
+            _context.Add(hotel);
+            _context.Add(carSharing);
+            _context.SaveChanges();
+
+            
+
         }
     }
 
