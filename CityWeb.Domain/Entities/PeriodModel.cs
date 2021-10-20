@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class TransportJourneyModel : Entity
+    public class PeriodModel : Entity
     {
-        public virtual PaymentModel Payment { get; set; }
-        public virtual RentCarModel Vehicle { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }
