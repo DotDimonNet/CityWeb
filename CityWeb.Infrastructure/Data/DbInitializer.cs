@@ -266,7 +266,142 @@ namespace CityWeb.Infrastucture.Data
                 Created = new DateTime(1847,12,24),
                 Modified = new DateTime(2019,8,13),
             };
-            
+            var deliveryTorpedo = new DeliveryModel()
+            {
+                Title = "Torpedo",
+                Description = "Food Delivery",
+                WorkSchedule = new PeriodModel()
+                {
+                    StartTime =  new DateTime(2015, 7, 20, 09, 00, 00),
+                    EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
+                },
+                Order =
+                {
+                    new ProductModel()
+                    {
+                        ProductName = "Pizza Papperoni",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 149.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Pizza 4Chees",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 119.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "UnagiMaki",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 79.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Burger",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 99.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                },
+                DeliveryPrice = new PriceModel()
+                {
+                    Value = 25,
+                    
+                },
+
+            };
+            var deliveryRocket = new DeliveryModel()
+            {
+                Title = "Rocket",
+                Description = "Get you all",
+                WorkSchedule = new PeriodModel()
+                {
+                    StartTime = new DateTime(2015, 7, 20, 07, 00, 00),
+                    EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
+                },
+                Order =
+                {
+                    new ProductModel()
+                    {
+                        ProductName = "Salat Cesar",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 79.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Steak",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 139.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Udon whis chiken",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 54.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Shaverma",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 64.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                },
+                DeliveryPrice = new PriceModel()
+                {
+                    Value = 30,
+                },
+
+            };
+
+            _context.Add(deliveryRocket);
+            _context.Add(deliveryTorpedo);
             _context.Add(hotel);
             _context.Add(carSharing);
             _context.SaveChanges();

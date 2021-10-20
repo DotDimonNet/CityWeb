@@ -14,5 +14,6 @@ namespace CityWeb.Domain.Entities
         public int ProductCount { get; set; }
         public virtual PriceModel ProductPrice { get; set; }
         public virtual DeliveryModel Delivery { get; set; }
+        public virtual Guid DeliveryId { get; set; } = Guid.NewGuid();
     }
 }
