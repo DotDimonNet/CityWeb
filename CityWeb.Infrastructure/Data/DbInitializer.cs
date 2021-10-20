@@ -99,6 +99,57 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
 
             }
+            var taxi1 = new TaxiModel()
+            {
+                Title = "888",
+                Description = "Common taxi",
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Vehicle = 
+                {
+                    new TaxiCarModel()
+                    {
+                        Mark = "Ford",
+                        IsFree = true,
+                        Color = "brown",
+                        Seats = 4,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                        Type = Domain.Enums.TransportType.TaxiEconom,
+                        StartAddress = new AddressModel()
+                        {
+                            StreetName = "Keletska",
+                            HouseNumber = "55"
+                        },
+                        DestinationAddresses = 
+                        {
+                            new AddressModel()
+                            {
+                                StreetName = "Soborna",
+                                HouseNumber = "24"
+                            },
+                            new AddressModel()
+                            {
+                                StreetName = "Yangelya",
+                                HouseNumber = "15"
+                            }
+                        },
+                        Price = new PriceModel()
+                        {
+                            Value = 20
+                        },
+                        Number = "AB 5162 BS",
+                    },
+                },
+                Payments = new PaymentModel()
+                {
+                    Price = new PriceModel()
+                    {
+                        Value = 25
+                    }                    
+                }
+            };
+
             var carSharing = new CarSharingModel()
             {
                 Title = "Zipcar",
@@ -268,6 +319,7 @@ namespace CityWeb.Infrastucture.Data
             };
             
             _context.Add(hotel);
+            _context.Add(taxi1);
             _context.Add(carSharing);
             _context.SaveChanges();
 
