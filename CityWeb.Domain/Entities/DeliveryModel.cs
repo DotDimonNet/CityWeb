@@ -16,10 +16,8 @@ namespace CityWeb.Domain.Entities
         public virtual PeriodModel WorkSchedule { get; set; }
         public virtual ICollection<ProductModel> Order { get; set; } = new List<ProductModel>();
         public virtual PriceModel DeliveryPrice { get; set; }
-<<<<<<< HEAD
+
         public virtual ApplicationUserModel User { get; set; }
 
-=======
->>>>>>> infrastructure
     }
 }

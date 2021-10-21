@@ -634,20 +634,6 @@ namespace CityWeb.Infrastucture.Data
                 Modified = DateTime.Now,
 
             };
-
-            _context.Add(deliveryRocket);
-            _context.Add(deliveryTorpedo);
-            _context.Add(hotel);
-            _context.Add(taxiUber);
-            _context.Add(taxi888);
-            _context.Add(Zipcar);
-            _context.Add(Rental);
-            _context.Add(Housepay);
-            _context.SaveChanges();
-
-
-
-
             var entertainment = new EntertaimentModel()
             {
                 Title = "SmartCinema",
@@ -695,6 +681,22 @@ namespace CityWeb.Infrastucture.Data
                     }
                 }
             };
+
+            _context.Add(deliveryRocket);
+            _context.Add(deliveryTorpedo);
+            _context.Add(hotel);
+            _context.Add(taxiUber);
+            _context.Add(taxi888);
+            _context.Add(Zipcar);
+            _context.Add(Rental);
+            _context.Add(Housepay);
+            _context.Add(entertainment);
+            _context.SaveChanges();
+
+
+
+
+            
         }
     }
 
