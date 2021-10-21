@@ -265,7 +265,7 @@ namespace CityWeb.Infrastucture.Data
                  }
             };
 
-            var hotel = new HotelModel()
+            var hotelHillton = new HotelModel()
             {
                 Title = "Hillton",
                 Description = "5 stars",
@@ -349,7 +349,7 @@ namespace CityWeb.Infrastucture.Data
                     {
                          Type = Domain.Enums.HotelRoomType.President,
                          Number = 606,
-                         IsFree = true,
+                         IsFree = false,
                          Price = new PriceModel()
                          {
                              Value = 3500,
@@ -368,7 +368,110 @@ namespace CityWeb.Infrastucture.Data
                 Created = new DateTime(1847,12,24),
                 Modified = new DateTime(2019,8,13),
             };
-            var deliveryTorpedo = new DeliveryModel()
+            var hotelCalifornia = new HotelModel()
+            {
+                Title = "California",
+                Description = "4 stars",
+                RentAddress = new AddressModel()
+                {
+                    StreetName = "Vatytina",
+                    HouseNumber = "23",
+                },
+                Rooms =
+                {
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Standart,
+                         Number = 101,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 500,
+
+                         },
+
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Standart,
+                         Number = 102,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Standart,
+                         Number = 103,
+                         IsFree = false,
+                         Price = new PriceModel()
+                         {
+                             Value = 500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                             StartTime = new DateTime(2021,10,21),
+                             EndTime = new DateTime(2021,10,27),
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Econom,
+                         Number = 201,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 400,
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.President,
+                         Number = 202,
+                         IsFree = false,
+                         Price = new PriceModel()
+                         {
+                             Value = 400,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                             StartTime = new DateTime(2021,10,20),
+                             EndTime = new DateTime(2021,10,27),
+                        }
+                    },
+
+                },
+                Created = new DateTime(2015, 12, 24),
+                Modified = new DateTime(2019, 8, 13),
+            };
+                var deliveryTorpedo = new DeliveryModel()
             {
                 Title = "Torpedo",
                 Description = "Food Delivery",
@@ -431,7 +534,6 @@ namespace CityWeb.Infrastucture.Data
                 DeliveryPrice = new PriceModel()
                 {
                     Value = 25,
-                    
                 },
 
             };
@@ -524,13 +626,12 @@ namespace CityWeb.Infrastucture.Data
 
             _context.Add(deliveryRocket);
             _context.Add(deliveryTorpedo);
-            _context.Add(hotel);
+            _context.Add(hotelHillton);
+            _context.Add(hotelCalifornia);
             _context.Add(taxi1);
             _context.Add(carSharing);
             _context.Add(Housepay);
             _context.SaveChanges();
-
-            
 
         }
     }
