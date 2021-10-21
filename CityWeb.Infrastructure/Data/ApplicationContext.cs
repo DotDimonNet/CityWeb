@@ -95,11 +95,6 @@ namespace CityWeb.Infrastucture.Data
 
 
 
-            //builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithMany(x => x.User)
-            //builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithMany(x => x.User)
-            //builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithMany(x => x.User)
-            //builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithMany(x => x.User)
-            //builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithMany(x => x.User)
 
             base.OnModelCreating(builder);
         }
