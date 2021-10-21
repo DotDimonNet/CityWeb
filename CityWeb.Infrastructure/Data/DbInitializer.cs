@@ -726,7 +726,111 @@ namespace CityWeb.Infrastucture.Data
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
+            var cinema = new EntertaimentModel()
+            {
+                Title = "SmartCinema",
+                Description = "Cinema",
+                Id = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Address = new AddressModel()
+                {
 
+                    StreetName = "Soborna",
+                    HouseNumber = "25A",
+                    Id = Guid.NewGuid()
+                },
+                Event =
+                {
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Venom",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+
+                        },
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Duna",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Bad Boys",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Spider-Man",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        }
+
+                }
+            };
+            var circus = new EntertaimentModel()
+            {
+                Title = "Shapito",
+                Description = "Circus",
+                Id = Guid.NewGuid(),
+                EventType = Domain.Enums.EventType.Circus,
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Address = new AddressModel()
+                {
+
+                    StreetName = "ZooStreet",
+                    HouseNumber = "12",
+                    Id = Guid.NewGuid()
+                },
+                Event =
+                {
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Shapito",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = new DateTime(2021,9,1),
+                            Modified = DateTime.Now,
+
+                        },
+                }
+            };
             var service = new ServiceModel()
             {
                 Users =
@@ -756,8 +860,14 @@ namespace CityWeb.Infrastucture.Data
                 {
                     deliveryTorpedo,
                     deliveryRocket
+                },
+                Entertaiments =
+                {
+                    cinema,
+                    circus
                 }
             };
+
 
             _context.Add(service);
             _context.Add(deliveryRocket);
@@ -769,6 +879,8 @@ namespace CityWeb.Infrastucture.Data
             _context.Add(rental);
             _context.Add(zipcar);
             _context.Add(housepay);
+            _context.Add(circus);
+            _context.Add(cinema);
             _context.SaveChanges();
 
         }
