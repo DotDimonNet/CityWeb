@@ -150,7 +150,7 @@ namespace CityWeb.Infrastucture.Data
                         },
                         JourneyPeriod = new PeriodModel()
                         {
-                            StartTime = DateTime.Now, 
+                            StartTime = DateTime.Now,
                             EndTime = DateTime.Now.AddHours(1)
                         }
                     },
@@ -190,7 +190,7 @@ namespace CityWeb.Infrastucture.Data
                         },
                         JourneyPeriod = new PeriodModel()
                         {
-                            
+
                         }
                     },
 
@@ -237,15 +237,15 @@ namespace CityWeb.Infrastucture.Data
                             Value = 20
                         },
                         Number = "AB 5162 BS",
+                        Payment = new PaymentModel()
+                        {
+                            Price = new PriceModel()
+                            {
+                                Value = 25
+                            }
+                        }
                     },
                 },
-                Payments = new PaymentModel()
-                {
-                    Price = new PriceModel()
-                    {
-                        Value = 25
-                    }                    
-                }
             };
 
             var Zipcar = new CarSharingModel()
@@ -582,7 +582,7 @@ namespace CityWeb.Infrastucture.Data
                 Created = new DateTime(2015, 12, 24),
                 Modified = new DateTime(2019, 8, 13),
             };
-                var deliveryTorpedo = new DeliveryModel()
+            var deliveryTorpedo = new DeliveryModel()
             {
                 Title = "Torpedo",
                 Description = "Food Delivery",
@@ -645,7 +645,6 @@ namespace CityWeb.Infrastucture.Data
                 DeliveryPrice = new PriceModel()
                 {
                     Value = 25,
-
                 },
 
             };
@@ -735,73 +734,20 @@ namespace CityWeb.Infrastucture.Data
                 Modified = DateTime.Now,
 
             };
-            var entertainment = new EntertaimentModel()
-            {
-                Title = "SmartCinema",
-                Description = "Cinema",
-                Id = Guid.NewGuid(),
-                Created = DateTime.Now,
-                Modified = DateTime.Now,
-                Address = new AddressModel()
-                {
-
-                    StreetName = "Soborna",
-                    HouseNumber = "25A",
-                    Id = Guid.NewGuid()
-                },
-                Event =
-                    {
-                    new EventModel()
-                    {
-                        Id = Guid.NewGuid(),
-                        Film = "Venom",
-                        EventPrice = new PriceModel()
-                        {
-                            Id = Guid.NewGuid(),
-                            Value = 5
-                        },
-                        Type = Domain.Enums.EventType.Cinema,
-                        Created = DateTime.Now,
-                        Modified = DateTime.Now,
-
-
-                    },
-                    new EventModel()
-                    {
-                        Id = Guid.NewGuid(),
-                        Film = "Duna",
-                        EventPrice = new PriceModel()
-                        {
-                            Id = Guid.NewGuid(),
-                            Value = 6
-                        },
-                        Type = Domain.Enums.EventType.Cinema,
-                        Created = DateTime.Now,
-                        Modified = DateTime.Now,
-
-                    }
-                }
-            };
 
             _context.Add(deliveryRocket);
             _context.Add(deliveryTorpedo);
-            _context.Add(hotel);
-            _context.Add(taxiUber);
+            _context.Add(hotelCalifornia);
+            _context.Add(hotelHillton);
             _context.Add(taxi888);
-            _context.Add(Zipcar);
+            _context.Add(taxiUber);
             _context.Add(Rental);
+            _context.Add(Zipcar);
             _context.Add(Housepay);
-            _context.Add(entertainment);
             _context.SaveChanges();
 
-
-
-
-            
         }
     }
-
-
 
     [Serializable]
     public class DbInitializationException : Exception
