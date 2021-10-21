@@ -734,6 +734,40 @@ namespace CityWeb.Infrastucture.Data
 
             };
 
+            var cinema = new EntertaimentModel()
+            {
+                Title = "SmartCinema",
+                Description = "Cinema",
+                Id = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Address = new AddressModel()
+                {
+
+                    StreetName = "Soborna",
+                    HouseNumber = "25A",
+                    Id = Guid.NewGuid()
+                },
+                Event =
+                {
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Film = "Venom",
+
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 5
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+
+                        },
+                }
+            };
+
             _context.Add(deliveryRocket);
             _context.Add(deliveryTorpedo);
             _context.Add(hotelCalifornia);
@@ -743,6 +777,7 @@ namespace CityWeb.Infrastucture.Data
             _context.Add(Rental);
             _context.Add(Zipcar);
             _context.Add(Housepay);
+            _context.Add(cinema);
             _context.SaveChanges();
 
         }

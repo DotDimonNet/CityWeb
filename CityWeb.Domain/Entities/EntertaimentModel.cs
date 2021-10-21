@@ -9,7 +9,7 @@ namespace CityWeb.Domain.Entities
 {
     public class EntertaimentModel : Entity, IDescribe
     {
-        public virtual ServiceModel Service { get; set; }
+        //public virtual ServiceModel Service { get; set; }
         public virtual EventType EventType { get; set; }
         public int FreePlaceAmount { get; set; }
         public virtual PriceModel Price { get; set; }
