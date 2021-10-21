@@ -64,9 +64,11 @@ namespace CityWeb.Infrastucture.Data
                 if (!result.Succeeded) throw new DbInitializationException(result.Errors.Select(x => x.Description).Aggregate((x, y) => $"{x} {y}"));
             }
 
+            ApplicationUserModel user = null;
+
             if (!_context.Users.Any(r => r.UserName == "admin@admin.admin"))
             {
-                var user = new ApplicationUserModel { 
+                user = new ApplicationUserModel { 
                     UserName = "admin@admin.admin", 
                     Email = "admin@admin.admin", 
                     EmailConfirmed = true, 
@@ -245,7 +247,7 @@ namespace CityWeb.Infrastucture.Data
                     },
                 },
             };
-            var Zipcar = new CarSharingModel()
+            var zipcar = new CarSharingModel()
             {
                 Title = "Zipcar",
                 Description = "Rent Car Company",
@@ -307,7 +309,7 @@ namespace CityWeb.Infrastucture.Data
                         }
                  }
             };
-            var Rental = new CarSharingModel()
+            var rental = new CarSharingModel()
             {
                 Title = "Rental",
                 Description = "Rent Car Company in Vinnytsa",
@@ -706,7 +708,7 @@ namespace CityWeb.Infrastucture.Data
                 },
 
             };
-            var Housepay= new HousePayModel()
+            var housepay= new HousePayModel()
             {
                 ServiceType = Domain.Enums.HousePaymentType.Internet,
 
@@ -725,15 +727,48 @@ namespace CityWeb.Infrastucture.Data
                 Modified = DateTime.Now,
             };
 
+            var service = new ServiceModel()
+            {
+                Users =
+                {
+                    user
+                },
+                HousePayments =
+                {
+                    housepay
+                },
+                Hotels =
+                {
+                    hotelCalifornia,
+                    hotelHillton
+                },
+                CarSharing =
+                {
+                    zipcar,
+                    rental
+                },
+                Taxi =
+                {
+                    taxi888,
+                    taxiUber
+                },
+                Deliverys =
+                {
+                    deliveryTorpedo,
+                    deliveryRocket
+                }
+            };
+
+            _context.Add(service);
             _context.Add(deliveryRocket);
             _context.Add(deliveryTorpedo);
             _context.Add(hotelCalifornia);
             _context.Add(hotelHillton);
             _context.Add(taxi888);
             _context.Add(taxiUber);
-            _context.Add(Rental);
-            _context.Add(Zipcar);
-            _context.Add(Housepay);
+            _context.Add(rental);
+            _context.Add(zipcar);
+            _context.Add(housepay);
             _context.SaveChanges();
 
         }
