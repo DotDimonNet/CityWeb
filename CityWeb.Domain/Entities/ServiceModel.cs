@@ -14,7 +14,7 @@ namespace CityWeb.Domain.Entities
         public virtual ICollection<ApplicationUserModel> Users { get; set; } = new List<ApplicationUserModel>();
         //public virtual ICollection<Guid> UsersId { get; set; }
         //New
-        //public virtual ICollection<EntertaimentModel> Entertaiments { get; set; } = new List<EntertaimentModel>();
+        public virtual ICollection<EntertaimentModel> Entertaiments { get; set; } = new List<EntertaimentModel>();
         //public virtual ICollection<DiscountModel> Discounts { get; set; } = new List<DiscountModel>();
         public virtual ICollection<DeliveryModel> Deliverys { get; set; } = new List<DeliveryModel>();
         public virtual ICollection<HousePayModel> HousePayments { get; set; } = new List<HousePayModel>();
