@@ -99,6 +99,58 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
 
             }
+
+            var taxi2 = new TaxiModel()
+            {
+                Title = "Uber",
+                Description = "Uncommon taxi",
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Vehicle =
+                {
+                    new TaxiCarModel()
+                    {
+                        Mark = "Nissan",
+                        IsFree = true,
+                        Color = "blue",
+                        Seats = 7,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                        Type = Domain.Enums.TransportType.TaxiStandart,
+                        StartAddress = new AddressModel()
+                        {
+                            StreetName = "Porika",
+                            HouseNumber = "31"
+                        },
+                        DestinationAddresses =
+                        {
+                            new AddressModel()
+                            {
+                                StreetName = "Soborna",
+                                HouseNumber = "24"
+                            },
+                            new AddressModel()
+                            {
+                                StreetName = "Kyivska",
+                                HouseNumber = "5"
+                            }
+                        },
+                        Price = new PriceModel()
+                        {
+                            Value = 50
+                        },
+                        Number = "AB 8948 XA",
+                        Payment = new PaymentModel()
+                        {
+                            Price = new PriceModel()
+                            {
+                                Value = 65
+                            }
+                        }
+                    },
+                },
+            };
+
             var taxi1 = new TaxiModel()
             {
                 Title = "888",
@@ -139,15 +191,15 @@ namespace CityWeb.Infrastucture.Data
                             Value = 20
                         },
                         Number = "AB 5162 BS",
+                        Payment = new PaymentModel()
+                        {
+                            Price = new PriceModel()
+                            {
+                                Value = 25
+                            }
+                        }
                     },
                 },
-                Payments = new PaymentModel()
-                {
-                    Price = new PriceModel()
-                    {
-                        Value = 25
-                    }                    
-                }
             };
 
             var carSharing = new CarSharingModel()

@@ -20,6 +20,6 @@ namespace CityWeb.Domain.Entities
         public bool IsFree { get; set; }
         public virtual AddressModel StartAddress { get; set; }
         public virtual ICollection<AddressModel> DestinationAddresses { get; set; } = new List<AddressModel>();
-
+        public virtual PaymentModel Payment { get; set; }
     }
 }
