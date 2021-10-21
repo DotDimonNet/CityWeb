@@ -15,7 +15,6 @@ namespace CityWeb.Controllers
     [Authorize(Policy = Policies.RequireUserRole)]
     public class TransportController : Controller
     {
-
         private readonly ILogger<TransportController> _logger;
 
         public TransportController(ILogger<TransportController> logger)
