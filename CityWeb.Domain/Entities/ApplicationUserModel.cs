@@ -7,16 +7,11 @@ namespace CityWeb.Domain.Entities
     public class ApplicationUserModel : IdentityUser<Guid>
     {
         public virtual UserProfileModel Profile { get; set; }
-
-
         public virtual ICollection<RatingModel> Ratings { get; set; } = new List<RatingModel>();
         public virtual ICollection<BalanceModel> Balances { get; set; } = new List<BalanceModel>();
         public virtual ICollection<PaymentModel> Payments { get; set; } = new List<PaymentModel>();
         public virtual ICollection<ServiceModel> Services { get; set; } = new List<ServiceModel>();
-        //public virtual ServiceModel Service { get; set; }
-        //public virtual Guid ServiceId { get; set; }
         public virtual ICollection<DeliveryModel> Orders { get; set; } = new List<DeliveryModel>();
-        //New 
         public virtual ICollection<DiscountModel> Discounts { get; set; } = new List<DiscountModel>();
 
     }
