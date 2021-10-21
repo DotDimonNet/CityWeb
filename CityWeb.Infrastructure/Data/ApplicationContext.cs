@@ -71,7 +71,7 @@ namespace CityWeb.Infrastucture.Data
             //builder.Entity<ServiceModel>().HasMany(x => x.Hotels).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.HousePayments).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
             //builder.Entity<ServiceModel>().HasMany(x => x.CarSharing).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<ServiceModel>().HasMany(x => x.Taxi).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ServiceModel>().HasMany(x => x.Taxi).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
             //builder.Entity<ServiceModel>().HasMany(x => x.DeliveryModel).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
 
 
