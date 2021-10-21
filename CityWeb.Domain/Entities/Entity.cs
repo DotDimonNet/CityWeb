@@ -4,8 +4,8 @@ namespace CityWeb.Domain.Entities
 {
     public abstract class Entity : IEntity
     {
-        public Guid Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime Modified { get; set; } = DateTime.Now;
     }
 }

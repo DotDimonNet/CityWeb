@@ -9,7 +9,7 @@ namespace CityWeb.Domain.Entities
 {
     public class HousePayModel : Entity
     {
-        public virtual ServiceModel Service { get; set; }
+       // public virtual ServiceModel Service { get; set; }
         public virtual HousePaymentType ServiceType { get; set; }
         public virtual CounterModel Counter { get; set; }
         public virtual AddressModel PayerAddress { get; set; }

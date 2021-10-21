@@ -94,8 +94,444 @@ namespace CityWeb.Infrastucture.Data
                 result = await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user.UserName), Roles.User);
                 if (!result.Succeeded) throw new DbInitializationException(result.Errors.Select(x => x.Description).Aggregate((x, y) => $"{x} {y}"));
 
+
+
                 _context.SaveChanges();
+
             }
+
+            var taxi2 = new TaxiModel()
+            {
+                Title = "Uber",
+                Description = "Uncommon taxi",
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Vehicle =
+                {
+                    new TaxiCarModel()
+                    {
+                        Mark = "Nissan",
+                        IsFree = true,
+                        Color = "blue",
+                        Seats = 7,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                        Type = Domain.Enums.TransportType.TaxiStandart,
+                        StartAddress = new AddressModel()
+                        {
+                            StreetName = "Porika",
+                            HouseNumber = "31"
+                        },
+                        DestinationAddresses =
+                        {
+                            new AddressModel()
+                            {
+                                StreetName = "Soborna",
+                                HouseNumber = "24"
+                            },
+                            new AddressModel()
+                            {
+                                StreetName = "Kyivska",
+                                HouseNumber = "5"
+                            }
+                        },
+                        Price = new PriceModel()
+                        {
+                            Value = 50
+                        },
+                        Number = "AB 8948 XA",
+                        Payment = new PaymentModel()
+                        {
+                            Price = new PriceModel()
+                            {
+                                Value = 65
+                            }
+                        }
+                    },
+                },
+            };
+
+            var taxi1 = new TaxiModel()
+            {
+                Title = "888",
+                Description = "Common taxi",
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Vehicle = 
+                {
+                    new TaxiCarModel()
+                    {
+                        Mark = "Ford",
+                        IsFree = true,
+                        Color = "brown",
+                        Seats = 4,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                        Type = Domain.Enums.TransportType.TaxiEconom,
+                        StartAddress = new AddressModel()
+                        {
+                            StreetName = "Keletska",
+                            HouseNumber = "55"
+                        },
+                        DestinationAddresses = 
+                        {
+                            new AddressModel()
+                            {
+                                StreetName = "Soborna",
+                                HouseNumber = "24"
+                            },
+                            new AddressModel()
+                            {
+                                StreetName = "Yangelya",
+                                HouseNumber = "15"
+                            }
+                        },
+                        Price = new PriceModel()
+                        {
+                            Value = 20
+                        },
+                        Number = "AB 5162 BS",
+                        Payment = new PaymentModel()
+                        {
+                            Price = new PriceModel()
+                            {
+                                Value = 25
+                            }
+                        }
+                    },
+                },
+            };
+
+            var carSharing = new CarSharingModel()
+            {
+                Title = "Zipcar",
+                Description = "Rent Car Company",
+                Id = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Modified = DateTime.Now,               
+                Location = new AddressModel()
+                {
+
+                    StreetName = "Soborna",
+                    HouseNumber = "25A",
+                    Id = Guid.NewGuid()
+                },
+                Vehicle =
+                    {
+                        new RentCarModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Mark = "Zhigalet",
+                            Color = "GnilaVishnya",
+                            IsFree = true,
+                            Price = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 5
+                            },
+                            Type = Domain.Enums.TransportType.RentCar,
+                            Number = "ASS000L",
+                            Seats = 5,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                            RentPeriod = new PeriodModel()
+                            {
+
+                            }
+                        },
+                        new RentCarModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Mark = "Honda",
+                            Color = "Red",
+                            IsFree = false,
+                            Price = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 500
+                            },
+                            Type = Domain.Enums.TransportType.RentCar,
+                            Number = "AB 4532 BX",
+                            Seats = 5,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                            RentPeriod = new PeriodModel()
+                            {
+                                StartTime = new DateTime(2021,10,20),
+                                EndTime = new DateTime(2021,10,24),
+                            },
+                            
+                        }
+                 }
+            };
+
+            var hotel = new HotelModel()
+            {
+                Title = "Hillton",
+                Description = "5 stars",
+                RentAddress = new AddressModel()
+                {
+                    StreetName = "Soborna",
+                    HouseNumber = "1",
+                },
+                Rooms =
+                {
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Delux,
+                         Number = 101,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 1500,
+
+                         },
+                         
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                            
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Delux,
+                         Number = 102,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 1500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Delux,
+                         Number = 104,
+                         IsFree = false,
+                         Price = new PriceModel()
+                         {
+                             Value = 1500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                             StartTime = new DateTime(2021,10,20),
+                             EndTime = new DateTime(2021,10,24),
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.Lux,
+                         Number = 201,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 1000,
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+
+                        }
+                    },
+                    new RoomModel()
+                    {
+                         Type = Domain.Enums.HotelRoomType.President,
+                         Number = 606,
+                         IsFree = true,
+                         Price = new PriceModel()
+                         {
+                             Value = 3500,
+
+                         },
+                         Created = DateTime.Now,
+                         Modified = DateTime.Now,
+                         RentPeriod = new PeriodModel()
+                        {
+                             StartTime = new DateTime(2021,10,20),
+                             EndTime = new DateTime(2021,10,27),
+                        }
+                    },
+                    
+                },
+                Created = new DateTime(1847,12,24),
+                Modified = new DateTime(2019,8,13),
+            };
+            var deliveryTorpedo = new DeliveryModel()
+            {
+                Title = "Torpedo",
+                Description = "Food Delivery",
+                WorkSchedule = new PeriodModel()
+                {
+                    StartTime =  new DateTime(2015, 7, 20, 09, 00, 00),
+                    EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
+                },
+                Order =
+                {
+                    new ProductModel()
+                    {
+                        ProductName = "Pizza Papperoni",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 149.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Pizza 4Chees",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 119.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "UnagiMaki",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 79.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Burger",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 99.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                },
+                DeliveryPrice = new PriceModel()
+                {
+                    Value = 25,
+                    
+                },
+
+            };
+            var deliveryRocket = new DeliveryModel()
+            {
+                Title = "Rocket",
+                Description = "Get you all",
+                WorkSchedule = new PeriodModel()
+                {
+                    StartTime = new DateTime(2015, 7, 20, 07, 00, 00),
+                    EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
+                },
+                Order =
+                {
+                    new ProductModel()
+                    {
+                        ProductName = "Salat Cesar",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 79.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Steak",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 139.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Udon whis chiken",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 54.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                    new ProductModel()
+                    {
+                        ProductName = "Shaverma",
+                        ProductPrice = new PriceModel()
+                        {
+                            Value = 64.99,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                    },
+                },
+                DeliveryPrice = new PriceModel()
+                {
+                    Value = 30,
+                },
+
+            };
+
+            var Housepay= new HousePayModel()
+            {
+                ServiceType = Domain.Enums.HousePaymentType.Internet,
+
+                PayerAddress = new AddressModel()
+                {
+                    Id = Guid.NewGuid(),
+                    StreetName = "Soborna",
+                    HouseNumber = "1",
+                },
+                Price = new PriceModel()
+                {
+                    Value = 120,
+                    Description = "Proplata za veresen",
+                },
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+
+            };
+
+            _context.Add(deliveryRocket);
+            _context.Add(deliveryTorpedo);
+            _context.Add(hotel);
+            _context.Add(taxi1);
+            _context.Add(carSharing);
+            _context.Add(Housepay);
+            _context.SaveChanges();
+
+            
+
         }
     }
 

@@ -10,12 +10,11 @@ namespace CityWeb.Domain.Entities
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public virtual ServiceModel Service { get; set; }
+
+        //public virtual ServiceModel Service { get; set; }
         public virtual AddressModel Location { get; set; }
-        public virtual ICollection<VehicleModel> Vehicle { get; set; } = new List<VehicleModel>();
-        //public virtual VehicleModel Vehicle { get; set; }
-        public virtual PeriodModel RentPeriod { get; set; }
+        public virtual ICollection<RentCarModel> Vehicle { get; set; } = new List<RentCarModel>();
         public virtual PaymentModel Payment { get; set; }
-       
+        
     }
 }
