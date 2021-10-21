@@ -149,7 +149,7 @@ namespace CityWeb.Infrastucture.Data
                         },
                         JourneyPeriod = new PeriodModel()
                         {
-                            StartTime = DateTime.Now, 
+                            StartTime = DateTime.Now,
                             EndTime = DateTime.Now.AddHours(1)
                         }
                     },
@@ -189,7 +189,7 @@ namespace CityWeb.Infrastucture.Data
                         },
                         JourneyPeriod = new PeriodModel()
                         {
-                            
+
                         }
                     },
 
@@ -236,15 +236,15 @@ namespace CityWeb.Infrastucture.Data
                             Value = 20
                         },
                         Number = "AB 5162 BS",
+                        Payment = new PaymentModel()
+                        {
+                            Price = new PriceModel()
+                            {
+                                Value = 25
+                            }
+                        }
                     },
                 },
-                Payments = new PaymentModel()
-                {
-                    Price = new PriceModel()
-                    {
-                        Value = 25
-                    }                    
-                }
             };
 
             var Zipcar = new CarSharingModel()
@@ -581,7 +581,7 @@ namespace CityWeb.Infrastucture.Data
                 Created = new DateTime(2015, 12, 24),
                 Modified = new DateTime(2019, 8, 13),
             };
-                var deliveryTorpedo = new DeliveryModel()
+            var deliveryTorpedo = new DeliveryModel()
             {
                 Title = "Torpedo",
                 Description = "Food Delivery",
@@ -736,9 +736,12 @@ namespace CityWeb.Infrastucture.Data
 
             _context.Add(deliveryRocket);
             _context.Add(deliveryTorpedo);
-            _context.Add(hotel);
-            _context.Add(taxi1);
-            _context.Add(carSharing);
+            _context.Add(hotelCalifornia);
+            _context.Add(hotelHillton);
+            _context.Add(taxi888);
+            _context.Add(taxiUber);
+            _context.Add(Rental);
+            _context.Add(Zipcar);
             _context.Add(Housepay);
             _context.SaveChanges();
 
