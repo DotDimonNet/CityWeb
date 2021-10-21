@@ -100,7 +100,7 @@ namespace CityWeb.Infrastucture.Data
 
             }
 
-            var taxi2 = new TaxiModel()
+            var taxiUber = new TaxiModel()
             {
                 Title = "Uber",
                 Description = "Uncommon taxi",
@@ -111,7 +111,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Nissan",
-                        IsFree = true,
+                        //IsFree = false,
                         Color = "blue",
                         Seats = 7,
                         Created = DateTime.Now,
@@ -146,12 +146,57 @@ namespace CityWeb.Infrastucture.Data
                             {
                                 Value = 65
                             }
+                        },
+                        JourneyPeriod = new PeriodModel()
+                        {
+                            StartTime = DateTime.Now, 
+                            EndTime = DateTime.Now.AddHours(1)
                         }
                     },
+                    new TaxiCarModel()
+                    {
+                        Mark = "Audi",
+                        //IsFree = false,
+                        Color = "red",
+                        Seats = 2,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                        Type = Domain.Enums.TransportType.TaxiStandart,
+                        StartAddress = new AddressModel()
+                        {
+                            StreetName = "Yangelya",
+                            HouseNumber = "15"
+                        },
+                        DestinationAddresses =
+                        {
+                            new AddressModel()
+                            {
+                                StreetName = "Soborna",
+                                HouseNumber = "24"
+                            },
+                        },
+                        Price = new PriceModel()
+                        {
+                            Value = 70
+                        },
+                        Number = "AB 4988 BA",
+                        Payment = new PaymentModel()
+                        {
+                            Price = new PriceModel()
+                            {
+                                Value = 100
+                            }
+                        },
+                        JourneyPeriod = new PeriodModel()
+                        {
+                            
+                        }
+                    },
+
                 },
             };
 
-            var taxi1 = new TaxiModel()
+            var taxi888 = new TaxiModel()
             {
                 Title = "888",
                 Description = "Common taxi",
@@ -162,7 +207,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Ford",
-                        IsFree = true,
+                        //IsFree = true,
                         Color = "brown",
                         Seats = 4,
                         Created = DateTime.Now,
@@ -202,7 +247,7 @@ namespace CityWeb.Infrastucture.Data
                 },
             };
 
-            var carSharing = new CarSharingModel()
+            var Zipcar = new CarSharingModel()
             {
                 Title = "Zipcar",
                 Description = "Rent Car Company",
@@ -223,7 +268,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Zhigalet",
                             Color = "GnilaVishnya",
-                            IsFree = true,
+                            //IsFree = true,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -244,7 +289,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Honda",
                             Color = "Red",
-                            IsFree = false,
+                            //IsFree = false,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -264,6 +309,73 @@ namespace CityWeb.Infrastucture.Data
                         }
                  }
             };
+
+
+            var Rental = new CarSharingModel()
+            {
+                Title = "Rental",
+                Description = "Rent Car Company in Vinnytsa",
+                Id = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Location = new AddressModel()
+                {
+
+                    StreetName = "Kyivska",
+                    HouseNumber = "11",
+                    Id = Guid.NewGuid()
+                },
+                Vehicle =
+                    {
+                        new RentCarModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Mark = "BMW",
+                            Color = "pink",
+                            //IsFree = true,
+                            Price = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 450
+                            },
+                            Type = Domain.Enums.TransportType.RentCar,
+                            Number = "AB 5616 X5",
+                            Seats = 2,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                            RentPeriod = new PeriodModel()
+                            {
+                                StartTime = DateTime.Now,
+                                EndTime = DateTime.Now.AddDays(1)
+                            }
+                        },
+                        new RentCarModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Mark = "Honda",
+                            Color = "White",
+                            //IsFree = false,
+                            Price = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 400
+                            },
+                            Type = Domain.Enums.TransportType.RentCar,
+                            Number = "AB 9845 RT",
+                            Seats = 2,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                            RentPeriod = new PeriodModel()
+                            {
+                                StartTime = new DateTime(2021,10,21),
+                                EndTime = new DateTime(2021,10,25),
+                            },
+
+                        }
+                 }
+            };
+
+
 
             var hotel = new HotelModel()
             {
@@ -525,8 +637,10 @@ namespace CityWeb.Infrastucture.Data
             _context.Add(deliveryRocket);
             _context.Add(deliveryTorpedo);
             _context.Add(hotel);
-            _context.Add(taxi1);
-            _context.Add(carSharing);
+            _context.Add(taxiUber);
+            _context.Add(taxi888);
+            _context.Add(Zipcar);
+            _context.Add(Rental);
             _context.Add(Housepay);
             _context.SaveChanges();
 
