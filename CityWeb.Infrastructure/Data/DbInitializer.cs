@@ -236,15 +236,15 @@ namespace CityWeb.Infrastucture.Data
                             Value = 20
                         },
                         Number = "AB 5162 BS",
-                        Payment = new PaymentModel()
-                        {
-                            Price = new PriceModel()
-                            {
-                                Value = 25
-                            }
-                        }
                     },
                 },
+                Payments = new PaymentModel()
+                {
+                    Price = new PriceModel()
+                    {
+                        Value = 25
+                    }                    
+                }
             };
 
             var Zipcar = new CarSharingModel()
