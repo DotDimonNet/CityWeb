@@ -1,4 +1,7 @@
-﻿using CityWeb.Domain.Entities;
+﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.Entities;
+using CityWeb.Infrastructure.Service;
+using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +17,12 @@ namespace Taste.Web.Controllers
     public class AccountController : Controller
     {
         private readonly SignInManager<ApplicationUserModel> _signInManager;
+        private readonly ApplicationContext _context;
 
-        public AccountController(SignInManager<ApplicationUserModel> signInManager)
+        public AccountController(SignInManager<ApplicationUserModel> signInManager, ApplicationContext context)
         {
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpPost("login")]
@@ -37,11 +42,13 @@ namespace Taste.Web.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] string request)
+        public async Task<IActionResult> Register([FromBody] RegisterModelDTO request)
         {
             try
             {
-                return Ok();
+                var service = new ServiceExample(_context, _signInManager);
+                var user = await service.RegisterUser(request);
+                return Json(user);
             }
             catch (Exception ex)
             {

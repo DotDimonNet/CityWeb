@@ -10,7 +10,7 @@ namespace CityWeb.Domain.Entities
     {
         public virtual ApplicationUserModel User { get; set; }
         public double Value { get; set; }
-        public virtual bool Service { get; set; }
+        //public virtual bool Service { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
     }
