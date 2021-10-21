@@ -97,7 +97,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithOne(x => x.Delivery).HasForeignKey(x => x.DeliveryId);
             builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithOne(x => x.Hotel).HasForeignKey(x => x.HotelId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithOne(x => x.CarSharing).HasForeignKey(x => x.CarSharingId).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);//??
+            builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);
           
 
 >>>>>>> infrastructure
