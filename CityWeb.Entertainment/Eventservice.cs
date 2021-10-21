@@ -1,4 +1,10 @@
-﻿using System;
+﻿using CityWeb.Common.Repository;
+using CityWeb.Entertainment.Interfaces;
+using CityWeb.Entities;
+using CityWeb.Infrastructure.Enums;
+using CityWeb.Infrastructure.Interfaces;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +33,7 @@ namespace CityWeb.Entertainment
         public string Description {get; set;}
 
 
-        public EventService(IServiceContext context, ILogger<ITransportService> logger)
+        public EventService(IServiceContext context, ILogger<IEventService> logger)
         {
             _context = context;
             _logger = logger;
@@ -75,7 +81,7 @@ namespace CityWeb.Entertainment
             }
         }
 
-        public IEventPayment Run(Guid userId, EventType eventType, DateTime time)
+        public IEventPaymentHistory Run(Guid userId, EventType eventType, DateTime time)
         {
             try
             {
@@ -88,7 +94,7 @@ namespace CityWeb.Entertainment
 
                     if (status == PaymentStatus.Created && paymentId != Guid.Empty)
                     {
-                        return new EventPayment(userId, eventType, paymentId);
+                        return new EventPaymentHistory(userId, eventType, paymentId);
                     }
                     else
                     {

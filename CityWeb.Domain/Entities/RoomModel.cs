@@ -13,8 +13,8 @@ namespace CityWeb.Domain.Entities
         public virtual HotelRoomType Type { get; set; }
         public bool IsFree { get; set; }
         public int Number { get; set; }
+        public virtual Guid HotelId { get; set; } = Guid.NewGuid();
         public virtual PriceModel Price { get; set; }
-        public int MaxAmount { get; set; }
         public virtual PeriodModel RentPeriod { get; set; }
     }
 }
