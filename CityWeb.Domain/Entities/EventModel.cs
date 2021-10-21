@@ -10,7 +10,8 @@ namespace CityWeb.Domain.Entities
     public class EventModel : Entity
     {
         public virtual string Film { get; set; }
-        //public virtual ServiceModel Service { get; set; }
+        public virtual ServiceModel Service { get; set; }
+        public virtual Guid ServiceId { get; set; }
         public virtual EventType Type { get; set; }
         public virtual PriceModel EventPrice { get; set; }
         public virtual EntertaimentModel Entertaiment { get; set;}
