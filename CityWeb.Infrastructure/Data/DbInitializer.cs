@@ -66,10 +66,11 @@ namespace CityWeb.Infrastucture.Data
 
             if (!_context.Users.Any(r => r.UserName == "admin@admin.admin"))
             {
-                var user = new ApplicationUserModel { 
-                    UserName = "admin@admin.admin", 
-                    Email = "admin@admin.admin", 
-                    EmailConfirmed = true, 
+                var user = new ApplicationUserModel
+                {
+                    UserName = "admin@admin.admin",
+                    Email = "admin@admin.admin",
+                    EmailConfirmed = true,
                     Profile = new UserProfileModel
                     {
                         Address = new AddressModel()
@@ -157,7 +158,7 @@ namespace CityWeb.Infrastucture.Data
                 Description = "Common taxi",
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
-                Vehicle = 
+                Vehicle =
                 {
                     new TaxiCarModel()
                     {
@@ -173,7 +174,7 @@ namespace CityWeb.Infrastucture.Data
                             StreetName = "Keletska",
                             HouseNumber = "55"
                         },
-                        DestinationAddresses = 
+                        DestinationAddresses =
                         {
                             new AddressModel()
                             {
@@ -208,7 +209,7 @@ namespace CityWeb.Infrastucture.Data
                 Description = "Rent Car Company",
                 Id = Guid.NewGuid(),
                 Created = DateTime.Now,
-                Modified = DateTime.Now,               
+                Modified = DateTime.Now,
                 Location = new AddressModel()
                 {
 
@@ -260,7 +261,7 @@ namespace CityWeb.Infrastucture.Data
                                 StartTime = new DateTime(2021,10,20),
                                 EndTime = new DateTime(2021,10,24),
                             },
-                            
+
                         }
                  }
             };
@@ -286,12 +287,12 @@ namespace CityWeb.Infrastucture.Data
                              Value = 1500,
 
                          },
-                         
+
                          Created = DateTime.Now,
                          Modified = DateTime.Now,
                          RentPeriod = new PeriodModel()
                         {
-                            
+
                         }
                     },
                     new RoomModel()
@@ -363,10 +364,10 @@ namespace CityWeb.Infrastucture.Data
                              EndTime = new DateTime(2021,10,27),
                         }
                     },
-                    
+
                 },
-                Created = new DateTime(1847,12,24),
-                Modified = new DateTime(2019,8,13),
+                Created = new DateTime(1847, 12, 24),
+                Modified = new DateTime(2019, 8, 13),
             };
             var deliveryTorpedo = new DeliveryModel()
             {
@@ -374,7 +375,7 @@ namespace CityWeb.Infrastucture.Data
                 Description = "Food Delivery",
                 WorkSchedule = new PeriodModel()
                 {
-                    StartTime =  new DateTime(2015, 7, 20, 09, 00, 00),
+                    StartTime = new DateTime(2015, 7, 20, 09, 00, 00),
                     EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
                 },
                 Order =
@@ -431,7 +432,7 @@ namespace CityWeb.Infrastucture.Data
                 DeliveryPrice = new PriceModel()
                 {
                     Value = 25,
-                    
+
                 },
 
             };
@@ -502,7 +503,7 @@ namespace CityWeb.Infrastucture.Data
 
             };
 
-            var Housepay= new HousePayModel()
+            var Housepay = new HousePayModel()
             {
                 ServiceType = Domain.Enums.HousePaymentType.Internet,
 
@@ -530,10 +531,60 @@ namespace CityWeb.Infrastucture.Data
             _context.Add(Housepay);
             _context.SaveChanges();
 
-            
 
+
+
+            var entertainment = new EntertaimentModel()
+            {
+                Title = "SmartCinema",
+                Description = "Cinema",
+                Id = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Address = new AddressModel()
+                {
+
+                    StreetName = "Soborna",
+                    HouseNumber = "25A",
+                    Id = Guid.NewGuid()
+                },
+                Event =
+                    {
+                    new EventModel()
+                    {
+                        Id = Guid.NewGuid(),
+                        Film = "Venom",
+                        EventPrice = new PriceModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Value = 5
+                        },
+                        Type = Domain.Enums.EventType.Cinema,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+
+
+                    },
+                    new EventModel()
+                    {
+                        Id = Guid.NewGuid(),
+                        Film = "Duna",
+                        EventPrice = new PriceModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Value = 6
+                        },
+                        Type = Domain.Enums.EventType.Cinema,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+
+                    }
+                }
+            };
         }
     }
+
+
 
     [Serializable]
     public class DbInitializationException : Exception
