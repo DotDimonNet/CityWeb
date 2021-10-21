@@ -213,7 +213,6 @@ namespace CityWeb.Infrastucture.Data
                  }
             };
 
-
             var hotel = new HotelModel()
             {
                 Title = "Hillton",
