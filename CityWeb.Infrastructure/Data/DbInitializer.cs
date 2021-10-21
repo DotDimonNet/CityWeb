@@ -499,7 +499,6 @@ namespace CityWeb.Infrastucture.Data
                              Value = 500,
 
                          },
-
                          Created = DateTime.Now,
                          Modified = DateTime.Now,
                          RentPeriod = new PeriodModel()
@@ -731,7 +730,6 @@ namespace CityWeb.Infrastucture.Data
                 },
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
-
             };
 
             var cinema = new EntertaimentModel()
