@@ -28,12 +28,8 @@ namespace CityWeb.Infrastucture.Data
             if (!_context.TransportTypes.Any())
             {
                 _context.AddRange(
-                    TransportType.CityBus,
-                    TransportType.CityTrolleybus,
-                    TransportType.CityTrum,
-                    TransportType.RentBycicle,
+
                     TransportType.RentCar,
-                    TransportType.RentKickScooter,
                     TransportType.TaxiBusiness,
                     TransportType.TaxiEconom,
                     TransportType.TaxiStandart);

@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CityWeb.Infrastructure.Enums;
+using CityWeb.Infrastructure.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Entertainment.Enums;
-using CityWeb.Entertainment.Interfaces;
 
-namespace CityWeb.Entertainment
+namespace CityWeb.Entities
 {
-    public class EventPayment : IEventPayment
+    public class EventPaymentHistory : IEventPaymentHistory
     {
         public Guid RatingId { get; set; }
         public Guid PaymentId { get; set; }
@@ -18,7 +18,7 @@ namespace CityWeb.Entertainment
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
 
-        public EventPayment(Guid userId, EventType type, Guid paymentId, Guid ratingId = default)
+        public EventPaymentHistory(Guid userId, EventType type, Guid paymentId, Guid ratingId = default)
         {
             OwnerId = userId;
             EventType = type;

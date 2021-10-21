@@ -14,7 +14,7 @@ namespace CityWeb.Infrastucture.Data
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-             Database.SetCommandTimeout(1000);
+            Database.SetCommandTimeout(1000);
         }
 
         public DbSet<UserProfileModel> UserProfiles { get; set; }
@@ -25,9 +25,9 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<PriceModel> Prices { get; set; }
         public DbSet<RatingModel> Ratings { get; set; }
         public DbSet<ServiceModel> Services { get; set; }
-        public DbSet<ServiceBranchModel> ServiceBranches { get; set; }
         public DbSet<TransportJourneyModel> TransportJourneys { get; set; }
-        public DbSet<VehicleModel> Vehicles { get; set; }
+        public DbSet<RentCarModel> RentCars { get; set; }
+        public DbSet<TaxiCarModel> TaxiCar { get; set; }
 
         public DbSet<DeliveryModel> Deliveries { get; set; }
         public DbSet<ProductModel> Orders { get; set; }
@@ -36,7 +36,9 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<HousePayModel> HousePays { get; set; }
         public DbSet<CounterModel> Counters { get; set; }
         public DbSet<EntertaimentModel> Entertaiments { get; set; }
-        public DbSet<PeriodModel> Periods  { get; set; }
+        public DbSet<PeriodModel> Periods { get; set; }
+        public DbSet<CarSharingModel> CarSharings { get; set; }
+        public DbSet<TaxiModel> Taxi { get; set; }
 
 
 
@@ -50,6 +52,7 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<UserProfileModel>().HasOne(x => x.User).WithOne(x => x.Profile).HasForeignKey<UserProfileModel>(x => x.Id).OnDelete(DeleteBehavior.Cascade);
@@ -60,13 +63,18 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Payments).WithOne(x => x.Owner).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Services).WithMany(x => x.Users);
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Discounts).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ApplicationUserModel>().HasMany(x => x.Orders).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
             #endregion
-
             #region ServiceModel
             builder.Entity<ServiceModel>().HasMany(x => x.Discounts).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.Entertaiments).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<ServiceModel>().HasMany(x => x.Hotels).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<ServiceModel>().HasMany(x => x.Branches).WithOne(x => x.Service).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ServiceModel>().HasMany(x => x.Hotels).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ServiceModel>().HasMany(x => x.HousePayments).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ServiceModel>().HasMany(x => x.CarSharing).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ServiceModel>().HasMany(x => x.Taxi).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ServiceModel>().HasMany(x => x.DeliveryModel).WithOne(x => x.Service).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+
+
 
             #endregion
 
@@ -79,10 +87,27 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<DeliveryFromType>().HasKey(x => x.ValueId).HasName("PK_DeliveryFromType");
             #endregion
 
+
             builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithOne(x => x.Delivery).HasForeignKey(x => x.Id);
             builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithOne(x => x.Hotel).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithOne(x => x.CarSharing).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.Id);//??            
+            builder.Entity<EntertaimentModel>().HasMany(x => x.Event).WithOne(x => x.Entertaiment).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithOne(x => x.Delivery).HasForeignKey(x => x.DeliveryId);
+            builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithOne(x => x.Hotel).HasForeignKey(x => x.HotelId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithOne(x => x.CarSharing).HasForeignKey(x => x.CarSharingId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);
 
 
+
+
+
+            //builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithMany(x => x.User)
+            //builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithMany(x => x.User)
+            //builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithMany(x => x.User)
+            //builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithMany(x => x.User)
+            //builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithMany(x => x.User)
 
             base.OnModelCreating(builder);
         }

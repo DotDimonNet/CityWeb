@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Entertainment.Enums
+namespace CityWeb.Infrastructure.Enums
 {
     public enum EventType
     {
