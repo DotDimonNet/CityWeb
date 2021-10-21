@@ -111,7 +111,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Nissan",
-                        //IsFree = false,
+                        IsFree = false,
                         Color = "blue",
                         Seats = 7,
                         Created = DateTime.Now,
@@ -156,7 +156,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Audi",
-                        //IsFree = false,
+                        IsFree = true,
                         Color = "red",
                         Seats = 2,
                         Created = DateTime.Now,
@@ -195,7 +195,6 @@ namespace CityWeb.Infrastucture.Data
 
                 },
             };
-
             var taxi888 = new TaxiModel()
             {
                 Title = "888",
@@ -207,7 +206,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Ford",
-                        //IsFree = true,
+                        IsFree = true,
                         Color = "brown",
                         Seats = 4,
                         Created = DateTime.Now,
@@ -246,7 +245,6 @@ namespace CityWeb.Infrastucture.Data
                     }                    
                 }
             };
-
             var Zipcar = new CarSharingModel()
             {
                 Title = "Zipcar",
@@ -268,7 +266,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Zhigalet",
                             Color = "GnilaVishnya",
-                            //IsFree = true,
+                            IsFree = true,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -289,7 +287,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Honda",
                             Color = "Red",
-                            //IsFree = false,
+                            IsFree = false,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -309,8 +307,6 @@ namespace CityWeb.Infrastucture.Data
                         }
                  }
             };
-
-
             var Rental = new CarSharingModel()
             {
                 Title = "Rental",
@@ -332,7 +328,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "BMW",
                             Color = "pink",
-                            //IsFree = true,
+                            IsFree = true,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -345,8 +341,7 @@ namespace CityWeb.Infrastucture.Data
                             Modified = DateTime.Now,
                             RentPeriod = new PeriodModel()
                             {
-                                StartTime = DateTime.Now,
-                                EndTime = DateTime.Now.AddDays(1)
+                                
                             }
                         },
                         new RentCarModel()
@@ -354,7 +349,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Honda",
                             Color = "White",
-                            //IsFree = false,
+                            IsFree = false,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -374,7 +369,6 @@ namespace CityWeb.Infrastucture.Data
                         }
                  }
             };
-
             var hotelHillton = new HotelModel()
             {
                 Title = "Hillton",
@@ -712,7 +706,6 @@ namespace CityWeb.Infrastucture.Data
                 },
 
             };
-
             var Housepay= new HousePayModel()
             {
                 ServiceType = Domain.Enums.HousePaymentType.Internet,

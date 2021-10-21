@@ -17,7 +17,7 @@ namespace CityWeb.Domain.Entities
         public virtual PriceModel Price { get; set; }
         public virtual TaxiModel Taxi { get; set; }
         public virtual Guid TaxiId { get; set; } = Guid.NewGuid();
-        //public bool IsFree { get; set; }
+        public bool IsFree { get; set; }
         public virtual AddressModel StartAddress { get; set; }
         public virtual ICollection<AddressModel> DestinationAddresses { get; set; } = new List<AddressModel>();
         public virtual PaymentModel Payment { get; set; }
