@@ -10,7 +10,7 @@ namespace CityWeb.Domain.Entities
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public virtual ServiceModel Service { get; set; }
+        //public virtual ServiceModel Service { get; set; }
         public virtual PaymentModel Payments { get; set; }
 
 
