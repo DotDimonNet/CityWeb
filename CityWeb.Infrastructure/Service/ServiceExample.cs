@@ -76,7 +76,7 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<ApplicationUserModel> UpdateUserData(UpdateUserDataDTO updateData)
+        public async Task<UserDTO> UpdateUserData(UpdateUserDataDTO updateData)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.Login);
             if (user != null)
@@ -88,9 +88,10 @@ namespace CityWeb.Infrastructure.Service
                     ApartmentNumber = updateData.ApartmentNumber,
                 };
                 user.Profile.Avatar = updateData.Avatar;
+
                 _context.Update(user);
                 await _context.SaveChangesAsync();
-                return user;
+                return user.ToUserDTO();
             }
             else
             {
