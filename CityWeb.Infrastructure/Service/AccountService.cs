@@ -100,5 +100,21 @@ namespace CityWeb.Infrastructure.Service
             }
 
         }
+
+        public async Task<EmailDTO> ChangeEmail(ChangeEmailDTO changeEmail)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == changeEmail.UserName);
+            if (user != null)
+            {
+                user.Email = changeEmail.Email;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                return user.ToEmailDTO();
+            }
+            else
+            {
+                throw new Exception("User not exist!");
+            }
+        }
     }
 }
