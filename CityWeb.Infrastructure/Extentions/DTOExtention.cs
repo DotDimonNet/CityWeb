@@ -21,5 +21,16 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+        public static UpdatePasswordDTO ToPasswordDTO(this ApplicationUserModel userModel)
+        {
+            return new UpdatePasswordDTO()
+            {
+                UserName = userModel.UserName,
+                OldPassword = userModel.PasswordHash
+            };
+        }
+
+
+
     }
 }
