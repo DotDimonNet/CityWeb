@@ -19,6 +19,16 @@ namespace CityWeb.Domain.DTO
                 Avatar = userModel.Profile.Avatar,
             };
         }
-        
+
+        public static UserPasswordModelDTO ToUpdateUserPasswordDTO(this ApplicationUserModel userModel)
+        {
+            return new UserPasswordModelDTO()
+            {
+                Login = userModel.Profile.Email,
+                Password = userModel.PasswordHash
+            };
+        }
+
+
     }
 }

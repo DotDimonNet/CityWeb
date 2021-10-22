@@ -99,5 +99,23 @@ namespace CityWeb.Infrastructure.Service
             }
 
         }
+
+        public async Task<UserPasswordModelDTO> UpdateUserPassword(UpdateUserPasswordDTO updatePassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.Login);
+            if (user != null)
+            {
+                user.Profile.Password = new UserPasswordModelDTO()
+                {
+                    Password = updatePassword
+                };
+
+
+           }
+            else
+            {
+                throw new Exception("User not exist!");
+            }
+        }
     }
 }
