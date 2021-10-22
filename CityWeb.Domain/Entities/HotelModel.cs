@@ -8,7 +8,8 @@ namespace CityWeb.Domain.Entities
 {
     public class HotelModel : Entity, IDescribe
     {
-        //public virtual ServiceModel Service { get; set; }
+        public virtual ServiceModel Service { get; set; }
+        public virtual Guid ServiceId { get; set; }
         public virtual AddressModel RentAddress { get; set; }
         public virtual ICollection<RoomModel> Rooms { get; set; } = new List<RoomModel>();
         public string Title { get ; set ; }

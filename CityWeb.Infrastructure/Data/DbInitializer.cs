@@ -64,9 +64,11 @@ namespace CityWeb.Infrastucture.Data
                 if (!result.Succeeded) throw new DbInitializationException(result.Errors.Select(x => x.Description).Aggregate((x, y) => $"{x} {y}"));
             }
 
+            ApplicationUserModel user = null;
+
             if (!_context.Users.Any(r => r.UserName == "admin@admin.admin"))
             {
-                var user = new ApplicationUserModel { 
+                user = new ApplicationUserModel { 
                     UserName = "admin@admin.admin", 
                     Email = "admin@admin.admin", 
                     EmailConfirmed = true, 
@@ -111,7 +113,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Nissan",
-                        //IsFree = false,
+                        IsFree = false,
                         Color = "blue",
                         Seats = 7,
                         Created = DateTime.Now,
@@ -156,7 +158,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Audi",
-                        //IsFree = false,
+                        IsFree = true,
                         Color = "red",
                         Seats = 2,
                         Created = DateTime.Now,
@@ -195,7 +197,6 @@ namespace CityWeb.Infrastucture.Data
 
                 },
             };
-
             var taxi888 = new TaxiModel()
             {
                 Title = "888",
@@ -207,7 +208,7 @@ namespace CityWeb.Infrastucture.Data
                     new TaxiCarModel()
                     {
                         Mark = "Ford",
-                        //IsFree = true,
+                        IsFree = true,
                         Color = "brown",
                         Seats = 4,
                         Created = DateTime.Now,
@@ -246,8 +247,7 @@ namespace CityWeb.Infrastucture.Data
                     },
                 },
             };
-
-            var Zipcar = new CarSharingModel()
+            var zipcar = new CarSharingModel()
             {
                 Title = "Zipcar",
                 Description = "Rent Car Company",
@@ -268,7 +268,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Zhigalet",
                             Color = "GnilaVishnya",
-                            //IsFree = true,
+                            IsFree = true,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -289,7 +289,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Honda",
                             Color = "Red",
-                            //IsFree = false,
+                            IsFree = false,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -309,9 +309,7 @@ namespace CityWeb.Infrastucture.Data
                         }
                  }
             };
-
-
-            var Rental = new CarSharingModel()
+            var rental = new CarSharingModel()
             {
                 Title = "Rental",
                 Description = "Rent Car Company in Vinnytsa",
@@ -332,7 +330,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "BMW",
                             Color = "pink",
-                            //IsFree = true,
+                            IsFree = true,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -345,8 +343,7 @@ namespace CityWeb.Infrastucture.Data
                             Modified = DateTime.Now,
                             RentPeriod = new PeriodModel()
                             {
-                                StartTime = DateTime.Now,
-                                EndTime = DateTime.Now.AddDays(1)
+                                
                             }
                         },
                         new RentCarModel()
@@ -354,7 +351,7 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Honda",
                             Color = "White",
-                            //IsFree = false,
+                            IsFree = false,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -374,7 +371,6 @@ namespace CityWeb.Infrastucture.Data
                         }
                  }
             };
-
             var hotelHillton = new HotelModel()
             {
                 Title = "Hillton",
@@ -712,8 +708,7 @@ namespace CityWeb.Infrastucture.Data
                 },
 
             };
-
-            var Housepay= new HousePayModel()
+            var housepay= new HousePayModel()
             {
                 ServiceType = Domain.Enums.HousePaymentType.Internet,
 
@@ -731,16 +726,161 @@ namespace CityWeb.Infrastucture.Data
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
+            var cinema = new EntertaimentModel()
+            {
+                Title = "SmartCinema",
+                Description = "Cinema",
+                Id = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Address = new AddressModel()
+                {
 
+                    StreetName = "Soborna",
+                    HouseNumber = "25A",
+                    Id = Guid.NewGuid()
+                },
+                Event =
+                {
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Venom",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+
+                        },
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Duna",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Bad Boys",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        },
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Spider-Man",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = DateTime.Now,
+                            Modified = DateTime.Now,
+                        }
+
+                }
+            };
+            var circus = new EntertaimentModel()
+            {
+                Title = "Shapito",
+                Description = "Circus",
+                Id = Guid.NewGuid(),
+                EventType = Domain.Enums.EventType.Circus,
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Address = new AddressModel()
+                {
+
+                    StreetName = "ZooStreet",
+                    HouseNumber = "12",
+                    Id = Guid.NewGuid()
+                },
+                Event =
+                {
+                        new EventModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            Title = "Shapito",
+                            EventPrice = new PriceModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                Value = 50
+                            },
+                            Type = Domain.Enums.EventType.Cinema,
+                            Created = new DateTime(2021,9,1),
+                            Modified = DateTime.Now,
+
+                        },
+                }
+            };
+            var service = new ServiceModel()
+            {
+                Users =
+                {
+                    user
+                },
+                HousePayments =
+                {
+                    housepay
+                },
+                Hotels =
+                {
+                    hotelCalifornia,
+                    hotelHillton
+                },
+                CarSharing =
+                {
+                    zipcar,
+                    rental
+                },
+                Taxi =
+                {
+                    taxi888,
+                    taxiUber
+                },
+                Deliverys =
+                {
+                    deliveryTorpedo,
+                    deliveryRocket
+                },
+                Entertaiments =
+                {
+                    cinema,
+                    circus
+                }
+            };
+
+
+            _context.Add(service);
             _context.Add(deliveryRocket);
             _context.Add(deliveryTorpedo);
             _context.Add(hotelCalifornia);
             _context.Add(hotelHillton);
             _context.Add(taxi888);
             _context.Add(taxiUber);
-            _context.Add(Rental);
-            _context.Add(Zipcar);
-            _context.Add(Housepay);
+            _context.Add(rental);
+            _context.Add(zipcar);
+            _context.Add(housepay);
+            _context.Add(circus);
+            _context.Add(cinema);
             _context.SaveChanges();
 
         }

@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class EventModel : Entity
+    public class EventModel : Entity, IDescribe
     {
-        public virtual string Film { get; set; }
-        //public virtual ServiceModel Service { get; set; }
+        public string Title {get; set; }
+        public string Description {get; set; }
         public virtual EventType Type { get; set; }
         public virtual PriceModel EventPrice { get; set; }
         public virtual EntertaimentModel Entertaiment { get; set;}
-
-
+        public virtual Guid EntertaimentId { get; set; }
     }
 }
