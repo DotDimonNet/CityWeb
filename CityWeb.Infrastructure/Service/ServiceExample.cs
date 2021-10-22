@@ -26,22 +26,77 @@ namespace CityWeb.Infrastructure.Service
         {
             var user = new ApplicationUserModel() 
             {
-                UserName = registerModel.UserName,
+                Email = registerModel.Email,
+                UserName = registerModel.Email,
                 Profile = new UserProfileModel() 
                 {
-                    Name = registerModel.Name
+                    FirstName = registerModel.FirstName,
+                    LastName = registerModel.LastName,
+                    Birthday = registerModel.Birthday,
+                    Gender = registerModel.Gender,
                 }
             };
             var result = await _signInManager.UserManager.CreateAsync(user, registerModel.Password);
 
             if (result.Succeeded)
             {
-                return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.UserName);
+                return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.Email);
             }
             else
             {
                 throw new Exception("User was not created!");
             }
+        }
+
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+        public async Task<ApplicationUserModel> LoginUser(LoginModelDTO loginModel)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginModel.Login);
+
+            if (user != null)
+            {
+                var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, loginModel.Attempts > 5);
+                switch (result)
+                {
+                    case var value when result.Succeeded:
+                        return user;
+                    case var value when result.IsLockedOut:
+                        throw new Exception("Locked out");
+                    default:
+                        throw new Exception("Unknown Error");
+                }
+            }
+            else
+            {
+                throw new Exception("User not exist!");
+            }
+        }
+
+        public async Task<ApplicationUserModel> UpdateUserData(UpdateUserDataDTO updateData)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.Login);
+            if (user != null)
+            {
+                user.Profile.Address = new AddressModel()
+                {
+                    StreetName = updateData.StreetName,
+                    HouseNumber = updateData.HouseNumber,
+                    ApartmentNumber = updateData.ApartmentNumber,
+                };
+                user.Profile.Avatar = updateData.Avatar;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                return user;
+            }
+            else
+            {
+                throw new Exception("User not exist!");
+            }
+
         }
     }
 }

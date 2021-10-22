@@ -26,11 +26,11 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] string request)
+        public async Task<IActionResult> Login([FromBody] LoginModelDTO request)
         {
             try
             {
-                var user = await _signInManager.UserManager.FindByEmailAsync(request);
+                var user = await _signInManager.UserManager.FindByEmailAsync(request.Login);
                 await _signInManager.SignInAsync(user, true);
                 return Ok();
             }
