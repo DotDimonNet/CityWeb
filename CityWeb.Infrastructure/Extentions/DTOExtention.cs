@@ -21,14 +21,22 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+        public static LoginModelDTO ToLoginModelDTO(this ApplicationUserModel userModel)
+        {
+            return new LoginModelDTO()
+            {
+                Login = userModel.UserName,
+                Password = userModel.PasswordHash,
+                Attempts = 0
+            };
+        }
+
         public static EmailDTO ToEmailDTO(this ApplicationUserModel userModel)
         {
             return new EmailDTO()
             {
                 Email = userModel.Email,
             };
-        }
-            
-
+        }         
     }
 }
