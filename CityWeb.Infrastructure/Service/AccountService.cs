@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class UserService 
+    public class AccountService 
     {
         private readonly ApplicationContext _context;
         private readonly SignInManager<ApplicationUserModel> _signInManager;
-        public UserService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
+        public AccountService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
         {
             _context = context;
             _signInManager = signInManager;
