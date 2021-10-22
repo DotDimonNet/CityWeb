@@ -56,8 +56,8 @@ namespace CityWeb.Infrastructure.Service
         public async Task<ApplicationUserModel> LoginUser(LoginModelDTO loginModel)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginModel.Login);
-            
-            if(user != null)
+
+            if (user != null)
             {
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, loginModel.Attempts > 5);
                 switch (result)
@@ -74,6 +74,29 @@ namespace CityWeb.Infrastructure.Service
             {
                 throw new Exception("User not exist!");
             }
+        }
+
+        public async Task<ApplicationUserModel> UpdateUserData(UpdateUserDataDTO updateData)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.Login);
+            if (user != null)
+            {
+                user.Profile.Address = new AddressModel()
+                {
+                    StreetName = updateData.StreetName,
+                    HouseNumber = updateData.HouseNumber,
+                    ApartmentNumber = updateData.ApartmentNumber,
+                };
+                user.Profile.Avatar = updateData.Avatar;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                return user;
+            }
+            else
+            {
+                throw new Exception("User not exist!");
+            }
+
         }
     }
 }
