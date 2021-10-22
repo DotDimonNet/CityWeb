@@ -27,8 +27,8 @@ namespace CityWeb.Infrastructure.Service
         {
             var user = new ApplicationUserModel() 
             {
-                Email = registerModel.Email,
-                UserName = registerModel.Email,
+                UserName = registerModel.UserName,
+                Email = registerModel.Email,                
                 Profile = new UserProfileModel() 
                 {
                     FirstName = registerModel.FirstName,
