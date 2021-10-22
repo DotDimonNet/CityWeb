@@ -710,19 +710,26 @@ namespace CityWeb.Infrastucture.Data
             };
             var housepay= new HousePayModel()
             {
-                ServiceType = Domain.Enums.HousePaymentType.Internet,
+                /*HouseHoldIDs =
+                {
+                    new HouseHoldID()
+                    {
+                         PaymentType = Domain.Enums.HousePaymentType.Internet,
 
-                PayerAddress = new AddressModel()
-                {
-                    Id = Guid.NewGuid(),
-                    StreetName = "Soborna",
-                    HouseNumber = "1",
-                },
-                Price = new PriceModel()
-                {
-                    Value = 120,
-                    Description = "Proplata za veresen",
-                },
+                        PayerAddress = new AddressModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            StreetName = "Soborna",
+                            HouseNumber = "1",
+                        },
+                        /*
+                         Price = new PriceModel()
+                        {
+                            Value = 120,
+                            Description = "Proplata za veresen",
+                        },
+                    }
+                },*/
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };

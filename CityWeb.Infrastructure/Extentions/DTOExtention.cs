@@ -37,6 +37,8 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Email = userModel.Email,
             };
-        }         
+        }   
+        
+        //public static HousePayDTO ToHousePayDTO (this ApplicationUserModel userModel)
     }
 }
