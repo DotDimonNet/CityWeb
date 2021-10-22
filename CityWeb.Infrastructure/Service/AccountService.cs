@@ -1,5 +1,6 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Interfaces;
 using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Identity;
@@ -26,8 +27,8 @@ namespace CityWeb.Infrastructure.Service
         {
             var user = new ApplicationUserModel() 
             {
-                Email = registerModel.Email,
-                UserName = registerModel.Email,
+                UserName = registerModel.UserName,
+                Email = registerModel.Email,                
                 Profile = new UserProfileModel() 
                 {
                     FirstName = registerModel.FirstName,
