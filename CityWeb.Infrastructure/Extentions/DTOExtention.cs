@@ -10,10 +10,16 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class DTOExtention
     {
-        public static UserModelDTO ToUserModelDTO(this ApplicationUserModel userModel)
+        public static UserDTO ToUserDTO(this ApplicationUserModel userModel)
         {
-
-            return new UserModelDTO();
+            return new UserDTO()
+            {
+                StreetName = userModel.Profile.Address.StreetName,
+                HouseNumber = userModel.Profile.Address.HouseNumber,
+                ApartmentNumber = userModel.Profile.Address.ApartmentNumber,
+                Avatar = userModel.Profile.Avatar,
+            };
         }
+
     }
 }
