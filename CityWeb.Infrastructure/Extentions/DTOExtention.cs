@@ -21,5 +21,14 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+        public static EmailDTO ToEmailDTO(this ApplicationUserModel userModel)
+        {
+            return new EmailDTO()
+            {
+                Email = userModel.Email,
+            };
+        }
+            
+
     }
 }
