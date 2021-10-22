@@ -46,7 +46,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var service = new ServiceExample(_context, _signInManager);
+                var service = new AccountService(_context, _signInManager);
                 var user = await service.RegisterUser(request);
                 return Json(user);
             }
