@@ -88,10 +88,6 @@ namespace CityWeb.Infrastucture.Data
             #endregion
 
 
-            builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithOne(x => x.Delivery).HasForeignKey(x => x.Id);
-            builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithOne(x => x.Hotel).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithOne(x => x.CarSharing).HasForeignKey(x => x.Id).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.Id);//??     
 
             builder.Entity<DeliveryModel>().HasMany(x => x.Order).WithOne(x => x.Delivery).HasForeignKey(x => x.DeliveryId);
             builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithOne(x => x.Hotel).HasForeignKey(x => x.HotelId).OnDelete(DeleteBehavior.Cascade);
@@ -99,8 +95,8 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);
             builder.Entity<EntertaimentModel>().HasMany(x => x.Event).WithOne(x => x.Entertaiment).HasForeignKey(x => x.EntertainmentId).OnDelete(DeleteBehavior.Cascade);
 
-
-
+            
+            
 
 
 
