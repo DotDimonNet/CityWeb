@@ -82,8 +82,12 @@ namespace CityWeb.Infrastructure.Service
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.Login);
             if (user != null)
             {
+                user.Profile.FirstName = updateData.FirstName;
+                user.Profile.LastName = updateData.LastName;
+                user.Profile.Gender = updateData.Gender;
                 user.Profile.Address = new AddressModel()
                 {
+                    
                     StreetName = updateData.StreetName,
                     HouseNumber = updateData.HouseNumber,
                     ApartmentNumber = updateData.ApartmentNumber,
