@@ -20,6 +20,7 @@ namespace CityWeb.Infrastructure.Extentions
                 Avatar = userModel.Profile.Avatar,
             };
         }
+
         public static LoginModelDTO ToLoginModelDTO(this ApplicationUserModel userModel)
         {
             return new LoginModelDTO()
@@ -29,5 +30,13 @@ namespace CityWeb.Infrastructure.Extentions
                 Attempts = 0
             };
         }
+
+        public static EmailDTO ToEmailDTO(this ApplicationUserModel userModel)
+        {
+            return new EmailDTO()
+            {
+                Email = userModel.Email,
+            };
+        }         
     }
 }
