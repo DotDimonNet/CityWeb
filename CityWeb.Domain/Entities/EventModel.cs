@@ -13,7 +13,7 @@ namespace CityWeb.Domain.Entities
         public string Description {get; set; }
         public virtual EventType Type { get; set; }
         public virtual PriceModel EventPrice { get; set; }
-        public virtual EntertaimentModel Entertaiment { get; set;}
+        public virtual EntertainmentModel Entertaiment { get; set;}
         public virtual Guid EntertaimentId { get; set; }
     }
 }

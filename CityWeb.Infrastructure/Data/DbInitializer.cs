@@ -725,7 +725,7 @@ namespace CityWeb.Infrastucture.Data
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
-            var cinema = new EntertaimentModel()
+            var cinema = new EntertainmentModel()
             {
                 Title = "SmartCinema",
                 Description = "Cinema",
@@ -797,7 +797,7 @@ namespace CityWeb.Infrastucture.Data
 
                 }
             };
-            var circus = new EntertaimentModel()
+            var circus = new EntertainmentModel()
             {
                 Title = "Shapito",
                 Description = "Circus",

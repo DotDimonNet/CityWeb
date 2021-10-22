@@ -37,6 +37,30 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Email = userModel.Email,
             };
-        }         
+        }
+        
+        public static UpdateUserPasswordDTO ToUpdateUserPasswordDTO(this ApplicationUserModel userModel)
+        {
+            return new UpdateUserPasswordDTO()
+            {
+                Login = userModel.Email,
+                Password = userModel.PasswordHash  
+            };
+        }
+
+        public static AddEntertainmentDTO ToAddEntertainment(this EntertainmentModel entertainmentModel)
+        {
+            return new AddEntertainmentDTO()
+            {
+                Title = entertainmentModel.Title,
+                Description = entertainmentModel.Description,
+                Price = entertainmentModel.Price,
+                Type = entertainmentModel.EventType,
+
+            };
+        }
+
+
+        
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class EntertaimentModel : Entity, IDescribe
+    public class EntertainmentModel : Entity, IDescribe
     {
         public virtual ServiceModel Service { get; set; }
         public virtual Guid ServiceId { get; set; }

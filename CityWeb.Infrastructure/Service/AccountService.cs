@@ -121,18 +121,20 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<UserPasswordModelDTO> UpdateUserPassword(UpdateUserPasswordDTO updatePassword)
+        public async Task<UpdateUserPasswordDTO> UpdateUserPassword(UpdateUserPasswordDTO updatePassword)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.Login);
-            if (user != null)
+            if (user != null && updatePassword.Password == user.PasswordHash)
             {
-                user.Profile.Password = new UserPasswordModelDTO()
+                
+                user.PasswordHash = updatePassword.NewPassword/*ToHash*/;
+                if (user.PasswordHash == updatePassword.ConfirmNewPassword/*ToHash*/)
                 {
-                    Password = updatePassword
-                };
-
-
-           }
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                } 
+                return user.ToUpdateUserPasswordDTO();
+            }
             else
             {
                 throw new Exception("User not exist!");
