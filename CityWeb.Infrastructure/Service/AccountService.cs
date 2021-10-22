@@ -54,7 +54,7 @@ namespace CityWeb.Infrastructure.Service
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<ApplicationUserModel> LoginUser(LoginModelDTO loginModel)
+        public async Task<LoginModelDTO> LoginUser(LoginModelDTO loginModel)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginModel.Login);
 
@@ -64,7 +64,7 @@ namespace CityWeb.Infrastructure.Service
                 switch (result)
                 {
                     case var value when result.Succeeded:
-                        return user;
+                        return user.ToLoginModelDTO();
                     case var value when result.IsLockedOut:
                         throw new Exception("Locked out");
                     default:
