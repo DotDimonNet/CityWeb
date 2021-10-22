@@ -20,6 +20,14 @@ namespace CityWeb.Infrastructure.Extentions
                 Avatar = userModel.Profile.Avatar,
             };
         }
-
+        public static LoginModelDTO ToLoginModelDTO(this ApplicationUserModel userModel)
+        {
+            return new LoginModelDTO()
+            {
+                Login = userModel.UserName,
+                Password = userModel.PasswordHash,
+                Attempts = 0
+            };
+        }
     }
 }
