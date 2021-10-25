@@ -12,7 +12,7 @@ namespace CityWeb.Domain.Entities
         public virtual ApplicationUserModel Owner { get; set; }
         public virtual DiscountModel Discount { get; set; }
         public virtual PriceModel Price { get; set; }
-        public virtual RatingModel Rating { get; set; }
+        public virtual RatingModel Rating { get; set; } 
         public virtual PaymentStatus Status { get; set; }
     }   
 }

@@ -16,5 +16,7 @@ namespace CityWeb.Domain.Entities
         public virtual Guid HotelId { get; set; } = Guid.NewGuid();
         public virtual PriceModel Price { get; set; }
         public virtual PeriodModel RentPeriod { get; set; }
+        public string Image { get; set; }
+
     }
 }
