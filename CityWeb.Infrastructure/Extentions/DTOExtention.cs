@@ -104,7 +104,7 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static RentACarDTO ToRentACarDTO(this RentCarModel rentCar)
+        /*public static RentACarDTO ToRentACarDTO(this RentCarModel rentCar)
         {
             return new RentACarDTO()
             {
@@ -112,6 +112,6 @@ namespace CityWeb.Infrastructure.Extentions
                 RentPeriod = rentCar.RentPeriod
                 //Price = rentCar.Price.Total
             };
-        }
+        }*/
     }
 }

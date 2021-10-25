@@ -324,7 +324,7 @@ namespace CityWeb.Infrastucture.Data
                     Id = Guid.NewGuid()
                 },
                 Vehicle =
-                    {
+                {
                         new RentCarModel()
                         {
                             Id = Guid.NewGuid(),
