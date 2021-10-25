@@ -279,10 +279,10 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 5,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
 
-                            }
+                            } }
                         },
                         new RentCarModel()
                         {
@@ -300,11 +300,11 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 5,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
                                 StartTime = new DateTime(2021,10,20),
                                 EndTime = new DateTime(2021,10,24),
-                            },
+                            } },
                             
                         }
                  }
@@ -341,10 +341,10 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 2,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
-                                
-                            }
+
+                            }}
                         },
                         new RentCarModel()
                         {
@@ -362,11 +362,11 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 2,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
                                 StartTime = new DateTime(2021,10,21),
                                 EndTime = new DateTime(2021,10,25),
-                            },
+                            } },
 
                         }
                  }

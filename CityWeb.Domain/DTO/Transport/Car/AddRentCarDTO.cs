@@ -14,6 +14,7 @@ namespace CityWeb.Domain.DTO.Transport.Car
         public string VINCode { get; set; }
 
         public TransportType Type { get; set; }
+        public string Mark { get; set; }
         public string Color { get; set; }
         public int Seats { get; set; }
         public string Number { get; set; }

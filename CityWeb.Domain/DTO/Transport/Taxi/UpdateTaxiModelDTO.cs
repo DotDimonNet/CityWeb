@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Domain.DTO.Taxi
+namespace CityWeb.Domain.DTO.Transport.Taxi
 {
     public class UpdateTaxiModelDTO
     {
