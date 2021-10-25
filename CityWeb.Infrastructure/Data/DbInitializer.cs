@@ -750,7 +750,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
 
@@ -764,7 +764,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
                         },
@@ -777,7 +777,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
                         },
@@ -790,7 +790,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
                         }
@@ -802,7 +802,7 @@ namespace CityWeb.Infrastucture.Data
                 Title = "Shapito",
                 Description = "Circus",
                 Id = Guid.NewGuid(),
-                EventType = Domain.Enums.EventType.Circus,
+                EntertainmentType = Domain.Enums.EntertainmentType.Circus,
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
                 Address = new AddressModel()
@@ -823,7 +823,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = new DateTime(2021,9,1),
                             Modified = DateTime.Now,
 

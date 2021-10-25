@@ -48,17 +48,7 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static AddEntertainmentDTO ToAddEntertainment(this EntertainmentModel entertainmentModel)
-        {
-            return new AddEntertainmentDTO()
-            {
-                Title = entertainmentModel.Title,
-                Description = entertainmentModel.Description,
-                Price = entertainmentModel.Price,
-                Type = entertainmentModel.EventType,
-
-            };
-        }
+        
 
 
         

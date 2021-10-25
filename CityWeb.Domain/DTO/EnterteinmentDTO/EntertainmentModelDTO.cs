@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 
-namespace CityWeb.Domain.DTO
+namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
-    public class AddEntertainmentDTO
+    public class EntertainmentModelDTO
     {
-        public string Title { get; set; }
+        public string EntertainmentTitle { get; set; }
         public string Description { get; set; }
-        public EventType Type { get; set; }
-        public PriceModel Price { get; set; }
+        public EntertainmentType Type { get; set; }
+        public AddressModel Address { get; set; }
+
     }
 }
