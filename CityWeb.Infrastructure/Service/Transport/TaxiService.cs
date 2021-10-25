@@ -108,7 +108,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
                 _context.Update(taxiCar);
                 await _context.SaveChangesAsync();
-                return taxiCar.ToUpdateCarDTO();
+                return taxiCar.ToUpdateTaxiCarDTO();
             }
             else
                 throw new Exception("Car does not exist");

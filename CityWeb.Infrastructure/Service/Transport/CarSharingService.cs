@@ -22,14 +22,14 @@ namespace CityWeb.Infrastructure.Service.Transport
             _context = context;
         }
         
-        public async Task<CarSharingBuilderResult> NextStep(int step = 0)
+        /*public async Task<CarSharingBuilderResult> NextStep(int step = 0)
         {
             var builderResult = await SetupCarSharingBuilderResult();
 
             switch (step)
             {
                 case 1:
-                    return await StepOne(builderResult, "");
+                    return await StepOne(builderResult, "Zipcar");
                 case 2:
                     return await StepThree(builderResult);
                 case 3:
@@ -37,32 +37,48 @@ namespace CityWeb.Infrastructure.Service.Transport
                 default:
                     return builderResult;
             }
+        }*/
+
+        public async Task Steps()
+        {
+            var builder = SetupCarSharingBuilderResult();
+            var stepOne = await StepOne(builder, "Zipcar");
+            var stepTwo = StepTwo(builder, stepOne.VINCode);
+            StepThree(builder, new PeriodModel() { StartTime = DateTime.Now, EndTime = DateTime.Now.AddDays(1) });
         }
 
-        public async Task<CarSharingBuilderResult> SetupCarSharingBuilderResult()
+        public CarSharingBuilderResult SetupCarSharingBuilderResult()
         {
             return new CarSharingBuilderResult()
             {
-
+                //some logic while creating builder
             };
         }
 
-        public async Task<CarSharingBuilderResult> StepOne(CarSharingBuilderResult builderResult, string Title)
+        public async Task<RentCarModel> StepOne(CarSharingBuilderResult builderResult, string title)
         {
-            builderResult.Title = Title;
-            return builderResult;
+            builderResult.CarSharingTitle = title;
+            var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == title);
+            builderResult.Location = carSharing.Location;
+            if (carSharing != null)
+            {
+                return await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharingId == carSharing.Id); //IAsyncEnumerable<RentCarModel>?
+            }
+            else
+                throw new Exception("CarSharing does not exist!");
         }
 
-        public async Task<CarSharingBuilderResult> StepTwo(CarSharingBuilderResult builderResult, TransportType transportType)
+        public async Task<UpdateCarDTO> StepTwo(CarSharingBuilderResult builderResult, string vINCode)
         {
-            builderResult.Car = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == builderResult.Title);
-            return builderResult;
+            builderResult.Car = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == builderResult.CarSharingTitle && x.VINCode == vINCode);
+            return builderResult.Car.ToUpdateRentCarDTO();
         }
 
-        public async Task<CarSharingBuilderResult> StepThree(CarSharingBuilderResult carSharingBuilderResult)
+        public async Task StepThree(CarSharingBuilderResult builderResult, PeriodModel period)
         {
-            carSharingBuilderResult.Payment = await _context.Payments.FirstOrDefaultAsync();
-            return carSharingBuilderResult;
+            builderResult.RentPeriod = period;
+            builderResult.Price = builderResult.Car.Price;//some logic to calculate price
+            //return builderResult;
         }
 
         public async Task<CreateCarSharingModelDTO> CreateCarSharing(CreateCarSharingModelDTO createCarSharingDTO)
@@ -153,7 +169,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
                 _context.Update(rentiCar);
                 await _context.SaveChangesAsync();
-                return rentiCar.ToUpdateCarDTO();
+                return rentiCar.ToUpdateRentCarDTO();
             }
             else
                 throw new Exception("Car does not exist");

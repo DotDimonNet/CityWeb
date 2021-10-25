@@ -79,7 +79,7 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static UpdateCarDTO ToUpdateCarDTO(this TaxiCarModel taxiCar)
+        public static UpdateCarDTO ToUpdateTaxiCarDTO(this TaxiCarModel taxiCar)
         {
             return new UpdateCarDTO()
             {
@@ -91,7 +91,7 @@ namespace CityWeb.Infrastructure.Extentions
                 Seats = taxiCar.Seats
             };
         }
-        public static UpdateCarDTO ToUpdateCarDTO(this RentCarModel rentCar)
+        public static UpdateCarDTO ToUpdateRentCarDTO(this RentCarModel rentCar)
         {
             return new UpdateCarDTO()
             {

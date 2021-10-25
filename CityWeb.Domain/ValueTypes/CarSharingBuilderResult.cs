@@ -10,12 +10,13 @@ namespace CityWeb.Domain.ValueTypes
     public class CarSharingBuilderResult
     {
         //step 1
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string CarSharingTitle { get; set; }
+        public string CarSharingDescription { get; set; }//???
         //step 2
-        public RentCarModel Car { get; set; }//???
+        public RentCarModel Car { get; set; }
         //step 3
-        public PeriodModel Period { get; set; }
-        public PaymentModel Payment { get; set; }//???
+        public PeriodModel RentPeriod { get; set; }
+        public PriceModel Price { get; set; }
+        public AddressModel Location { get; set; }
     }
 }
