@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class ProductModelDTO
+    public class OrderModelDTO
     {
         public string Title { get; set; }
         public string ProductName { get; set; }
-        public string ProductImage { get; set; }
-        public double Value { get; set; }
-        public double Tax { get; set; }
-        public double VAT { get; set; }
+        public int Count { get; set; }
+        public string StreetName { get; set; }
+        public string HouseNumber { get; set; }
+        public string ApartmentNumber { get; set; }
     }
 }

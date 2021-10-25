@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class ProductPriceDTO
+    public class DeleteDTO
     {
-        public double Value { get; set; }
-        public double Tax { get; set; }
-        public double VAT { get; set; }
+        public string Title { get; set; }
+        public string ProductName { get; set; }
     }
 }

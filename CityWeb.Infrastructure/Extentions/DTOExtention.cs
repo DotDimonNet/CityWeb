@@ -1,5 +1,5 @@
 ﻿using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.DeliveryDTO;
+
 using CityWeb.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -39,11 +39,12 @@ namespace CityWeb.Infrastructure.Extentions
                 Email = userModel.Email,
             };
         }   
-        
+        //for delivery
         public static DeliveryDTO ToDeliveryDTO(this DeliveryModel deliveryModel)
         {
             return new DeliveryDTO()
             {
+                DeliveryImage = deliveryModel.DeliveryImage,
                 Description = deliveryModel.Description,
                 StartTime = deliveryModel.WorkSchedule.StartTime,
                 EndTime = deliveryModel.WorkSchedule.EndTime,
@@ -53,10 +54,11 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static ProductPriceDTO ToProductPriceDTO(this ProductModel productModel)
+        public static ProductUpdateDTO ToProductPriceDTO(this ProductModel productModel)
         {
-            return new ProductPriceDTO()
+            return new ProductUpdateDTO()
             {
+                ProductImage = productModel.ProductImage,
                 Value = productModel.ProductPrice.Value,
                 Tax = productModel.ProductPrice.Tax,
                 VAT = productModel.ProductPrice.VAT,
@@ -68,11 +70,14 @@ namespace CityWeb.Infrastructure.Extentions
             return new CreateProductDTO()
             {
                 ProductName = productModel.ProductName,
+                ProductImage = productModel.ProductImage,
                 Value = productModel.ProductPrice.Value,
                 Tax = productModel.ProductPrice.Tax,
                 VAT = productModel.ProductPrice.VAT,
             };
         }
+
+        
 
 
     }
