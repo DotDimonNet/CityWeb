@@ -130,15 +130,5 @@ namespace CityWeb.Infrastructure.Extentions
                 Seats = rentCar.Seats
             };
         }
-
-        /*public static RentACarDTO ToRentACarDTO(this RentCarModel rentCar)
-        {
-            return new RentACarDTO()
-            {
-                VINCode = rentCar.VINCode,
-                RentPeriod = rentCar.RentPeriod
-                //Price = rentCar.Price.Total
-            };
-        }*/
     }
 }
