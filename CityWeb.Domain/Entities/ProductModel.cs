@@ -11,6 +11,7 @@ namespace CityWeb.Domain.Entities
     {
         
         public string ProductName { get; set; }
+        public virtual ProductType ProductType { get; set; }
         public int ProductCount { get; set; }
         public string ProductImage { get; set; }
         public virtual PriceModel ProductPrice { get; set; }

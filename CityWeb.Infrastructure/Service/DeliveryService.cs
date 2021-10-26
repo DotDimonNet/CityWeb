@@ -13,26 +13,32 @@ using CityWeb.Domain.ValueTypes;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class DeliveryServise
+    public class DeliveryService
     {
         private readonly ApplicationContext _context;
         private readonly SignInManager<ApplicationUserModel> _signInManager;
-        public DeliveryServise(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
+        public DeliveryService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
         {
             _context = context;
             _signInManager = signInManager;
         }
 
-        public async Task<DeliveryModel> CreateDeliveryCompany(DeliveryModelDTO deliveryModel)
+        public async Task<DeliveryModelDTO> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel)
         {
             var delivery = new DeliveryModel()
             {
                 Title = deliveryModel.Title,
                 Description = deliveryModel.Description,
             };
-     
-               return await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
-   
+
+            var model = await _context.Deliveries.AddAsync(delivery);
+
+            return model.Entity.ToDeliveryModelDTO();
+        }
+
+        public IEnumerable<DeliveryModelDTO> GetDeliveries() 
+        {
+            return _context.Deliveries.Select(x => x.ToDeliveryModelDTO());
         }
 
         public async Task<DeliveryDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel)
@@ -63,10 +69,11 @@ namespace CityWeb.Infrastructure.Service
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
             if(delivery != null)
             {
-                var product = await _context.Orders.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id) ;
+                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id) ;
                 if (product != null)
                 {
                     product.ProductImage = productModel.ProductImage;
+                    product.ProductType = productModel.ProductType;
                     product.ProductPrice.Value = productModel.Value;
                     product.ProductPrice.VAT = productModel.VAT;
                     product.ProductPrice.Tax = productModel.Tax;
@@ -86,19 +93,20 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<CreateProductDTO> CreateMeny(ProductModelDTO productModel)
+        public async Task<CreateProductDTO> CreateMenu(ProductModelDTO productModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
             if (delivery != null)
             {
-                var product = await _context.Orders.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
+                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
                 if (product == null)
                 {
-                    delivery.Order.Add(
+                    delivery.Products.Add(
                         new ProductModel()
                         {
                             ProductImage = productModel.ProductImage,
                             ProductName = productModel.ProductName,
+                            ProductType = productModel.ProductType,
                             ProductPrice = new PriceModel() 
                             {
                                Value = productModel.Value,
@@ -122,9 +130,9 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task DeleteCompany (DeleteDTO delete)
+        public async Task DeleteDeliveryCompany(DeleteCompanyDTO dtoModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == delete.Title);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == dtoModel.CompanyId);
             if (delivery != null)
             {
                 _context.Remove(delivery);
@@ -132,102 +140,57 @@ namespace CityWeb.Infrastructure.Service
             }
             else
             {
-                throw new Exception("Company was not created!");
+                throw new Exception("Company does not exist!");
             }
         }
 
-        public async Task DeleteProduct(DeleteDTO delete)
+        public async Task DeleteProduct(DeleteProductDTO dtoModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == delete.Title);
-            if (delivery != null)
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == dtoModel.ProductId);
+            if (product != null)
             {
-                var product = await _context.Orders.FirstOrDefaultAsync(x => x.ProductName == delete.ProductName);
-                if (product != null)
-                {
-                    _context.Orders.Remove(product);
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Product was not created!");
-                }
+                _context.Products.Remove(product);
+                _context.SaveChanges();
             }
             else
             {
-                throw new Exception("Company was not created!");
+                throw new Exception("Product does not exist!");
             }
-        }
-
-        public async Task<PaymentModel> GetOrder(OrderModelDTO ordermodel)
-        {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == ordermodel.Title);
-            if (delivery != null)
-            {
-                if(delivery.WorkSchedule.StartTime < DateTime.Now && delivery.WorkSchedule.EndTime > DateTime.Now)
-                {
-                    var product = await _context.Orders.FirstOrDefaultAsync(x => x.ProductName == ordermodel.ProductName);
-                    var orderPrice = product.ProductPrice.Total * ordermodel.Count;
-                    return new PaymentModel()
-                    {
-                        Title = ordermodel.ProductName,
-                        Price = orderPrice,
-                    };
-                }
-                else
-                {
-                    throw new Exception("Delivery is not available in this time!");
-                }
-            }
-            else
-            {
-                throw new Exception("Delivery company is not found");
-            }
-
-        }
-
-        //Builder
-
-        public async Task<DeliveryBuilderResult> StepZero()
-        {
-            var builderResult = new DeliveryBuilderResult();
-            //Front-end simulation
-            foreach (var item in _context.Deliveries)
-            {
-                Console.WriteLine(item.DeliveryImage);
-                Console.WriteLine(item.Title);
-            }
-            
-            return builderResult;
-        }
-
-        public async Task<DeliveryBuilderResult> StepOne(DeliveryBuilderResult builderResult, string deliveryServiceTitle)
-        {
-            builderResult.DeliveryTitle = deliveryServiceTitle;
-
-            var deliveryService = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryServiceTitle);
-            
-            //Front-end simulation
-            foreach (var item in deliveryService.Order)
-            {
-                Console.WriteLine(item.ProductPrice);
-                Console.WriteLine(item.ProductName);
-                Console.WriteLine(item.ProductPrice.Total);
-                Console.WriteLine(item.ProductCount);
-            }
-            return builderResult;
-        }
-
-        public async Task<DeliveryBuilderResult> StepTwo(DeliveryBuilderResult builderResult, string productImage, string productName, double productPrice, int productCount)
-        {
-            builderResult.ProductImage = productImage;
-            builderResult.ProductName = productName;
-            builderResult.ProductCount = productCount;
-            builderResult.Price = productPrice;
-
-            return builderResult;
         }
 
         
+        public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companyShedule)
+        {
+            var delivery = _context.Deliveries.Where(x => x.WorkSchedule.StartTime.TimeOfDay < companyShedule.WorkTime.TimeOfDay && x.WorkSchedule.EndTime.TimeOfDay > companyShedule.WorkTime.TimeOfDay);
+            return delivery.Select(x => x.ToSelectDeliveryModelDTO());
+        }
+        
+        public async Task<IEnumerable<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel)
+        {
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => dtoModel.DeliveryId == x.Id );
+
+            return delivery.Products.Select(x => x.ProductType.Name);
+        }
+
+        public IEnumerable<ProductModelDTO> GetProductsByType(ProductByTypeDTO dtoModel)
+        {
+            var products = _context.Products.Where(x => dtoModel.DeliveryId == x.DeliveryId && x.ProductType.Name == dtoModel.TypeName).Distinct();
+
+            return products.Select(x => x.ToProductDTO());
+        }
+
+        public async Task<PaymentModelDTO> CheckoutBusket(BusketModelDTO busketModelDTO)
+        {
+            var productIds = busketModelDTO.Busket.Select(x => x.ProductId);
+            var products = _context.Products.Where(x => productIds.Contains(x.Id));
+            
+            var price = await products.SumAsync(x => x.ProductPrice.Total * busketModelDTO.Busket.FirstOrDefault(z => z.ProductId == x.Id).Quantity);
+
+            return new PaymentModelDTO()
+            {
+                TotalPrice = price
+            };
+        }
     }
 
 }

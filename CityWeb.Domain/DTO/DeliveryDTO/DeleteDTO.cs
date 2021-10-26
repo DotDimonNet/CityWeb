@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class DeleteDTO
+    public class DeleteProductDTO
     {
-        public string Title { get; set; }
-        public string ProductName { get; set; }
+        public Guid ProductId { get; set; }
+    }
+
+    public class DeleteCompanyDTO
+    {
+        public Guid CompanyId { get; set; }
     }
 }

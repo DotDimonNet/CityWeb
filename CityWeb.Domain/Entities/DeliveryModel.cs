@@ -16,10 +16,8 @@ namespace CityWeb.Domain.Entities
         public virtual Guid ServiceId { get; set; }
         public virtual AddressModel DeliveryAdress { get; set; }
         public virtual PeriodModel WorkSchedule { get; set; }
-        public virtual ICollection<ProductModel> Order { get; set; } = new List<ProductModel>();
+        public virtual ICollection<ProductModel> Products { get; set; } = new List<ProductModel>();
         public virtual PriceModel DeliveryPrice { get; set; }
-
-        public virtual ApplicationUserModel User { get; set; }
-
+        public virtual RatingModel Rating { get; set; }
     }
 }

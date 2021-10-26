@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CityWeb.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace CityWeb.Domain.DTO
     {
         public string Title { get; set; }
         public string ProductName { get; set; }
+        public ProductType ProductType { get; set; }
         public string ProductImage { get; set; }
         public double Value { get; set; }
         public double Tax { get; set; }

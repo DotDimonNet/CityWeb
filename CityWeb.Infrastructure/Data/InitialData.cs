@@ -52,12 +52,16 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
             }
 
-            if (!_context.DeliveryFromType.Any())
+            if (!_context.ProductTypes.Any())
             {
                 _context.AddRange(
-                    DeliveryFromType.Restaurant,
-                    DeliveryFromType.FastFood,
-                    DeliveryFromType.FoodMarket
+                    ProductType.AlcoholicDrinks,
+                    ProductType.FastFood,
+                    ProductType.Burgers,
+                    ProductType.Pizza,
+                    ProductType.Salads,
+                    ProductType.Sushi,
+                    ProductType.Sweets
                     );
 
                 _context.SaveChanges();

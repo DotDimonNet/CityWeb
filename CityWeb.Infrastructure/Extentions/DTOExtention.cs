@@ -1,5 +1,4 @@
 ﻿using CityWeb.Domain.DTO;
-
 using CityWeb.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -77,8 +76,48 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        
+        public static ProductModelDTO ToProductDTO(this ProductModel productModel)
+        {
+            return new ProductModelDTO()
+            {
+                ProductName = productModel.ProductName,
+                ProductImage = productModel.ProductImage,
+                Value = productModel.ProductPrice.Value,
+                Tax = productModel.ProductPrice.Tax,
+                VAT = productModel.ProductPrice.VAT,
+            };
+        }
 
+        public static DeliveryModelDTO ToDeliveryModelDTO(this DeliveryModel model)
+        {
+            return new DeliveryModelDTO()
+            {
+                Title = model.Title,
+                DeliveryId = model.Id,
+                Description = model.Description
+            };
+        }
 
+        public static SelectDeliveryModelDTO ToSelectDeliveryModelDTO(this DeliveryModel model)
+        {
+            return new SelectDeliveryModelDTO()
+            {
+                DeliveryId = model.Id
+            };
+        }
+
+        //public static ProductByTypeDTO ToProductByTypeDTO(this ProductModel model)
+        //{
+        //    return new ProductByTypeDTO
+        //    {
+        //        DeliveryId = model.Id,
+        //        TypeName = model.ProductType.Name,
+        //    };
+        //}
+
+        //public static bool IsWork(this PeriodModel periodModel, DateTime dateTime = default)
+        //{
+        //    return periodModel.StartTime.TimeOfDay < dateTime.TimeOfDay && periodModel.EndTime.TimeOfDay > dateTime.TimeOfDay;
+        //}
     }
 }
