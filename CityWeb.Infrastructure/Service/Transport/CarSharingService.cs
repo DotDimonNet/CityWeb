@@ -127,7 +127,7 @@ namespace CityWeb.Infrastructure.Service.Transport
                 throw new Exception("CarSharing does not exist");
         }
 
-        public async Task<AddRentCarDTO> CreateRentCar(AddRentCarDTO addRentCarDTO)
+        public async Task<AddRentCarDTO> AddRentCar(AddRentCarDTO addRentCarDTO)
         {
             //var result = _context.Taxi.FirstOrDefaultAsync(x => x.Title == taxiModelDTO.Title);
             if (_context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == addRentCarDTO.CarSharingTitle && x.VINCode == addRentCarDTO.VINCode) == null)
