@@ -22,6 +22,15 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+        public static UpdatePasswordDTO ToPasswordDTO(this ApplicationUserModel userModel)
+        {
+            return new UpdatePasswordDTO()
+            {
+                UserName = userModel.UserName,
+                OldPassword = userModel.PasswordHash
+            };
+        }
+      
         public static LoginModelDTO ToLoginModelDTO(this ApplicationUserModel userModel)
         {
             return new LoginModelDTO()
@@ -76,9 +85,6 @@ namespace CityWeb.Infrastructure.Extentions
                 VAT = productModel.ProductPrice.VAT,
             };
         }
-
-        
-
 
     }
 }

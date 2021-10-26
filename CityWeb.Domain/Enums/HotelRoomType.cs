@@ -16,5 +16,6 @@ namespace CityWeb.Domain.Enums
         public static readonly HotelRoomType Econom = new(6, "Econom");
 
         protected HotelRoomType(int id, string name) : base(id, name) { }
+
     }
 }
