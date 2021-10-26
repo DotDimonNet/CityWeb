@@ -49,6 +49,7 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Email = userModel.Email,
             };
+        }
         public static CreateTaxiModelDTO ToCreateTaxiModelDTO(this TaxiModel taxiModel)
         {
             return new CreateTaxiModelDTO()
