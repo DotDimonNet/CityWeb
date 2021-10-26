@@ -16,6 +16,7 @@ namespace CityWeb.Infrastructure.Service
     public class EntertainmentService
     {
         private readonly ApplicationContext _context;
+        private readonly EntertainmentBuilderResult _builder;
         public EntertainmentService(ApplicationContext context)
         {
             _context = context;
@@ -27,15 +28,10 @@ namespace CityWeb.Infrastructure.Service
             var result = new EntertainmentBuilderResult();
             result.EntertainmentTitle = entModel.EntertainmentTitle;
             var entertainment = _context.Entertaiments.FirstOrDefault(x => x.Title == entModel.EntertainmentTitle);
-            if (entertainment != null)
-            {
-                foreach (var events in EventModel)
-                {
-
-                }
+           
             }
           
-        }*/
+        }
 
 
 
