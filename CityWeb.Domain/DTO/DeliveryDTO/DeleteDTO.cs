@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class UserModelDTO
+    public class DeleteDTO
     {
-
+        public string Title { get; set; }
+        public string ProductName { get; set; }
     }
 }
