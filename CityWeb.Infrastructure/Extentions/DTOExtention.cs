@@ -44,7 +44,7 @@ namespace CityWeb.Infrastructure.Extentions
 
         public static CreateTaxiModelDTO ToCreateTaxiModelDTO(this TaxiModel taxiModel)
         {
-            return new CreateTaxiModelDTO ()
+            return new CreateTaxiModelDTO()
             {
                 Title = taxiModel.Title,
                 Description = taxiModel.Description
@@ -79,9 +79,9 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static UpdateCarDTO ToUpdateTaxiCarDTO(this TaxiCarModel taxiCar)
+        public static UpdateTaxiCarDTO ToUpdateTaxiCarDTO(this TaxiCarModel taxiCar)
         {
-            return new UpdateCarDTO()
+            return new UpdateTaxiCarDTO()
             {
                 VINCode = taxiCar.VINCode,
                 Type = taxiCar.Type,
@@ -91,9 +91,36 @@ namespace CityWeb.Infrastructure.Extentions
                 Seats = taxiCar.Seats
             };
         }
-        public static UpdateCarDTO ToUpdateRentCarDTO(this RentCarModel rentCar)
+
+        public static AddRentCarDTO ToAddRentCarDTO(this RentCarModel rentCar)
         {
-            return new UpdateCarDTO()
+            return new AddRentCarDTO()
+            {
+                VINCode = rentCar.VINCode,
+                Type = rentCar.Type,
+                Mark = rentCar.Mark,
+                Color = rentCar.Color,
+                Number = rentCar.Number,
+                Seats = rentCar.Seats
+            };
+        }
+
+        public static UpdateRentCarDTO ToUpdateRentCarDTO(this RentCarModel rentCar)
+        {
+            return new UpdateRentCarDTO()
+            {
+                VINCode = rentCar.VINCode,
+                Type = rentCar.Type,
+                Mark = rentCar.Mark,
+                Color = rentCar.Color,
+                Number = rentCar.Number,
+                Seats = rentCar.Seats
+            };
+        }
+
+        public static RentCarsModelDTO ToRentCarsModelDTO(this RentCarModel rentCar)
+        {
+            return new RentCarsModelDTO()
             {
                 VINCode = rentCar.VINCode,
                 Type = rentCar.Type,

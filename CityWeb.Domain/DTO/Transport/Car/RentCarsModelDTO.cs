@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.Transport.Car
 {
-    public class UpdateCarDTO
+    public class RentCarsModelDTO
     {
-        //public string TaxiTitle { get; set }
         public string VINCode { get; set; }
 
         public TransportType Type { get; set; }

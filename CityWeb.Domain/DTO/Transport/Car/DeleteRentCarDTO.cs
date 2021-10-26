@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.Transport.Car
 {
-    public class DeleteCarDTO
+    public class DeleteRentCarDTO
     {
-        //public string TaxiTitle { get; set; }
         public string VINCode { get; set; }
     }
 }
