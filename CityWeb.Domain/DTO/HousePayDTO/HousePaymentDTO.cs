@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class UpdateHouseHoldDTO
+    public class HousePaymentDTO
     {
+    public string AccountID {get; set; }
+    public double Price { get; set; }
+
+    public string 
 
 
     }
