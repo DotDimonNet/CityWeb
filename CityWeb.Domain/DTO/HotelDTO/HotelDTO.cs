@@ -13,5 +13,6 @@ namespace CityWeb.Domain.DTO.HotelDTO
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
         public string ApartmentNumber { get; set; }
+        public string Image { get; set; }
     }
 }
