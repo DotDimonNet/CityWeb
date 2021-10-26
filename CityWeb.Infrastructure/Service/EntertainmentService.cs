@@ -21,9 +21,11 @@ namespace CityWeb.Infrastructure.Service
             _context = context;
         }
 
-        /*
+        
         public async Task<EventModel> StepOne(EntertainmentModelDTO entModel)
         {
+            var result = new EntertainmentBuilderResult();
+            result.EntertainmentTitle = entModel.EntertainmentTitle;
             var entertainment = _context.Entertaiments.FirstOrDefault(x => x.Title == entModel.EntertainmentTitle);
             if (entertainment != null)
             {
@@ -32,7 +34,7 @@ namespace CityWeb.Infrastructure.Service
 
                 }
             }
-            
+          
         }*/
 
 
