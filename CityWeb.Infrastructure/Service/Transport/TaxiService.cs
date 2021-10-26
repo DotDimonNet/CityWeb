@@ -167,6 +167,5 @@ namespace CityWeb.Infrastructure.Service.Transport
             else
                 throw new Exception("Car does not exist");
         }
-
     }
 }
