@@ -44,6 +44,9 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Error");
             }
         }
+          
+
+
 
         public async void Delete(DeleteEntertainmentDTO deleteData)
         {
@@ -64,20 +67,20 @@ namespace CityWeb.Infrastructure.Service
 
 
 
-        /*
+        
         public async Task<EntertainmentModelDTO> AddEntertainmentModel(AddEntertainmentModelDTO addData)
         {
-            var entertainment = new EntertainmentModelDTO()
+            var entertainment = new EntertainmentModel()
             {
-                EntertainmentTitle = addData.EntertainmentTitle,
+                Title = addData.EntertainmentTitle,
                 Description = addData.Description
             };
-            var newEnt = await _context.AddAsync(entertainment);
-            return newToAddEntertainmentModel();
+            var entModel = await _context.Entertaiments.AddAsync(entertainment);
+            return entModel.Entity.ToEntertainmentModelDTO();
 
 
 
-        }*/
+        }
 
         public async Task<IEnumerable<string>> StepOne(ServiceModelDTO dtoService)
         {
