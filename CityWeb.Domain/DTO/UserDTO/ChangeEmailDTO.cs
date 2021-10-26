@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class UserModelDTO
+    public class ChangeEmailDTO
     {
+        public string UserName { get; set; }
+        public string Email { get; set; }
 
     }
 }

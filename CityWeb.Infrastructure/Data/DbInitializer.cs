@@ -142,13 +142,13 @@ namespace CityWeb.Infrastucture.Data
                             Value = 50
                         },
                         Number = "AB 8948 XA",
-                        Payment = new PaymentModel()
-                        {
-                            Price = new PriceModel()
-                            {
-                                Value = 65
-                            }
-                        },
+                        //Payment = new PaymentModel()
+                        //{
+                        //    Price = new PriceModel()
+                        //    {
+                        //        Value = 65
+                        //    }
+                        //},
                         JourneyPeriod = new PeriodModel()
                         {
                             StartTime = DateTime.Now,
@@ -184,10 +184,10 @@ namespace CityWeb.Infrastucture.Data
                         Number = "AB 4988 BA",
                         Payment = new PaymentModel()
                         {
-                            Price = new PriceModel()
-                            {
-                                Value = 100
-                            }
+                            //Price = new PriceModel()
+                            //{
+                            //    Value = 100
+                            //}
                         },
                         JourneyPeriod = new PeriodModel()
                         {
@@ -237,15 +237,15 @@ namespace CityWeb.Infrastucture.Data
                             Value = 20
                         },
                         Number = "AB 5162 BS",
-                        Payment = new PaymentModel()
-                        {
-                            Price = new PriceModel()
-                            {
-                                Value = 25
-                            }
-                        }
                     },
                 },
+                Payments = new PaymentModel()
+                {
+                    //Price = new PriceModel()
+                    //{
+                    //    Value = 25
+                    //}                    
+                }
             };
             var zipcar = new CarSharingModel()
             {
@@ -721,7 +721,7 @@ namespace CityWeb.Infrastucture.Data
                 Price = new PriceModel()
                 {
                     Value = 120,
-                    Description = "Proplata za veresen",
+                    //Description = "Proplata za veresen",
                 },
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
