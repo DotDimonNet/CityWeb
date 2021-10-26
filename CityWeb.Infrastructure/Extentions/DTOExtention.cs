@@ -1,5 +1,7 @@
-﻿using CityWeb.Domain.DTO;
-
+using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO.Transport.Car;
+using CityWeb.Domain.DTO.Transport.CarSharing;
+using CityWeb.Domain.DTO.Transport.Taxi;
 using CityWeb.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -47,9 +49,95 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Email = userModel.Email,
             };
-
+        public static CreateTaxiModelDTO ToCreateTaxiModelDTO(this TaxiModel taxiModel)
+        {
+            return new CreateTaxiModelDTO()
+            {
+                Title = taxiModel.Title,
+                Description = taxiModel.Description
+            };
         }
-        
+
+        public static UpdateTaxiModelDTO ToUpdateTaxiModelDTO(this TaxiModel taxiModel)
+        {
+            return new UpdateTaxiModelDTO()
+            {
+                Title = taxiModel.Title,
+                Description = taxiModel.Description
+            };
+        }
+
+        public static CreateCarSharingModelDTO ToCreateCarSharingModelDTO(this CarSharingModel carSharingModel)
+        {
+            return new CreateCarSharingModelDTO()
+            {
+                Title = carSharingModel.Title,
+                Description = carSharingModel.Description
+            };
+        }
+
+        public static UpdateCarSharingModelDTO ToUpdateCarSharingModelDTO(this CarSharingModel carSharingModel)
+        {
+            return new UpdateCarSharingModelDTO()
+            {
+                Title = carSharingModel.Title,
+                Description = carSharingModel.Description,
+                Location = carSharingModel.Location
+            };
+        }
+
+        public static UpdateTaxiCarDTO ToUpdateTaxiCarDTO(this TaxiCarModel taxiCar)
+        {
+            return new UpdateTaxiCarDTO()
+            {
+                VINCode = taxiCar.VINCode,
+                Type = taxiCar.Type,
+                Mark = taxiCar.Mark,
+                Color = taxiCar.Color,
+                Number = taxiCar.Number,
+                Seats = taxiCar.Seats
+            };
+        }
+
+        public static AddRentCarDTO ToAddRentCarDTO(this RentCarModel rentCar)
+        {
+            return new AddRentCarDTO()
+            {
+                VINCode = rentCar.VINCode,
+                Type = rentCar.Type,
+                Mark = rentCar.Mark,
+                Color = rentCar.Color,
+                Number = rentCar.Number,
+                Seats = rentCar.Seats
+            };
+        }
+
+        public static UpdateRentCarDTO ToUpdateRentCarDTO(this RentCarModel rentCar)
+        {
+            return new UpdateRentCarDTO()
+            {
+                VINCode = rentCar.VINCode,
+                Type = rentCar.Type,
+                Mark = rentCar.Mark,
+                Color = rentCar.Color,
+                Number = rentCar.Number,
+                Seats = rentCar.Seats
+            };
+        }
+
+        public static RentCarsModelDTO ToRentCarsModelDTO(this RentCarModel rentCar)
+        {
+            return new RentCarsModelDTO()
+            {
+                VINCode = rentCar.VINCode,
+                Type = rentCar.Type,
+                Mark = rentCar.Mark,
+                Color = rentCar.Color,
+                Number = rentCar.Number,
+                Seats = rentCar.Seats
+            };
+        }
+
         public static UpdateUserPasswordDTO ToUpdateUserPasswordDTO(this ApplicationUserModel userModel)
         {
             return new UpdateUserPasswordDTO()
