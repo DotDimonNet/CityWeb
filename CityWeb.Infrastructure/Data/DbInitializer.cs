@@ -710,7 +710,7 @@ namespace CityWeb.Infrastucture.Data
             };
             var housepay= new HousePayModel()
             {
-                /*HouseHoldIDs =
+                HouseHoldIDs =
                 {
                     new HouseHoldID()
                     {
@@ -722,14 +722,14 @@ namespace CityWeb.Infrastucture.Data
                             StreetName = "Soborna",
                             HouseNumber = "1",
                         },
-                        /*
+                        
                          Price = new PriceModel()
                         {
                             Value = 120,
                             Description = "Proplata za veresen",
                         },
                     }
-                },*/
+                },
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
