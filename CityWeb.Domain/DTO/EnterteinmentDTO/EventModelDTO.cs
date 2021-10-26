@@ -9,6 +9,7 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
     public class EventModelDTO
     {
+        public Guid EventId { get; set; }
         public string EventTitle { get; set; }
         public string Description { get; set; }
         public PriceModel Price { get; set; }

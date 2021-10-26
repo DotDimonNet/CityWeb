@@ -15,6 +15,7 @@ namespace CityWeb.Infrastructure.Extentions
         {
             return new EntertainmentModelDTO()
             {
+                EntertainmentId = entModel.ServiceId,
                 EntertainmentTitle = entModel.Title,
                 Description = entModel.Description,
                 Type = entModel.EntertainmentType,

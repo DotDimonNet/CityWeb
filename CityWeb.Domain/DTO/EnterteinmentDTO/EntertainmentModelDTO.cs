@@ -10,6 +10,7 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
     public class EntertainmentModelDTO
     {
+        public Guid EntertainmentId { get; set; }
         public string EntertainmentTitle { get; set; }
         public string Description { get; set; }
         public EntertainmentType Type { get; set; }

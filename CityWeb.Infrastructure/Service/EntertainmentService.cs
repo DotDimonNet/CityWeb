@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
@@ -16,11 +17,10 @@ namespace CityWeb.Infrastructure.Service
     public class EntertainmentService
     {
         private readonly ApplicationContext _context;
-        private readonly EntertainmentBuilderResult _builder;
+
         public EntertainmentService(ApplicationContext context, EntertainmentBuilderResult builder)
         {
             _context = context;
-            _builder = builder;
         }
 
         public EntertainmentModelDTO UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
@@ -81,21 +81,19 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("You cannot delete this Entertainment");
             }
         }*/
+
+        public async Task<IEnumerable<string>> StepOne(ServiceModelDTO dtoService)
+        {
+            var service = await _context.Services.FirstOrDefaultAsync(x => dtoService.Entertaiments == x.Entertaiments);
+            return service.Entertaiments.Select(x => x.Title);
+        }
+        public async Task<IEnumerable<string>> StepTwo(EntertainmentModelDTO entModel)
+        {
+            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentId == x.Id && x.WorkSchedule.EndTime != (DateTime.Now));
+            return entertainment.Event.Select(x => x.Title);
+        }
+
         
-
-        public async Task<EntertainmentBuilderResult> StepOne(EntertainmentModelDTO entModel)
-        {
-            var result = new EntertainmentBuilderResult();
-
-            result.EntertainmentTitle = entModel.EntertainmentTitle;
-            return result;
-        }
-        public async Task<EntertainmentBuilderResult> StepTwo(EntertainmentBuilderResult result, EventModelDTO eventModel)
-        {
-            result.EventTitle = eventModel.EventTitle;
-            
-            return result;
-        }
         
 
 
