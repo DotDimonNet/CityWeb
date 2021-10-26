@@ -34,31 +34,10 @@ namespace CityWeb.Infrastructure.Extentions
         }
 
 
-        public static EventDataPaymentDTO ToEventDataPaymentDTO(this ApplicationUserModel userModel)
-        {
-            return new EventDataPaymentDTO()
-            {
-                Name = userModel.UserName,
-                Email = userModel.Email,
-                Balance = (BalanceModel)userModel.Balances
-
-            };
-        }
+        
 
 
-        public static EventBillDTO ToEventBillDTO( EventDataPaymentDTO userModel, EntertainmentModelDTO entModel, EventModelDTO eventModel)
-        {
-            return new EventBillDTO()
-            {
-                EntertainmentTitle = entModel.EntertainmentTitle,
-                EntertainmentType = entModel.Type,
-                EventTitle = eventModel.EventTitle,
-                Price = eventModel.Price,
-                Name = userModel.Name,
-                Email = userModel.Email,
-                Balance = userModel.Balance
-            };
-        }
+        
 
 
         public static EntertainmentModelDTO ToAddEntertainmentModel(this AddEntertainmentModelDTO entModel)

@@ -17,26 +17,11 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
         private readonly EntertainmentBuilderResult _builder;
-        public EntertainmentService(ApplicationContext context)
+        public EntertainmentService(ApplicationContext context, EntertainmentBuilderResult builder)
         {
             _context = context;
+            _builder = builder;
         }
-
-        
-        public async Task<EventModel> StepOne(EntertainmentModelDTO entModel)
-        {
-            var result = new EntertainmentBuilderResult();
-            result.EntertainmentTitle = entModel.EntertainmentTitle;
-            var entertainment = _context.Entertaiments.FirstOrDefault(x => x.Title == entModel.EntertainmentTitle);
-           
-            }
-          
-        }
-
-
-
-
-
 
         public EntertainmentModelDTO UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
         {
@@ -96,8 +81,22 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("You cannot delete this Entertainment");
             }
         }*/
+        
 
+        public async Task<EntertainmentBuilderResult> StepOne(EntertainmentModelDTO entModel)
+        {
+            var result = new EntertainmentBuilderResult();
 
+            result.EntertainmentTitle = entModel.EntertainmentTitle;
+            return result;
+        }
+        public async Task<EntertainmentBuilderResult> StepTwo(EntertainmentBuilderResult result, EventModelDTO eventModel)
+        {
+            result.EventTitle = eventModel.EventTitle;
+            
+            return result;
+        }
+        
 
 
 
