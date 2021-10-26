@@ -155,7 +155,6 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Wrong old password!");
             }
         }
-
         public async Task<EmailDTO> ChangeEmail(ChangeEmailDTO changeEmail)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == changeEmail.UserName);
