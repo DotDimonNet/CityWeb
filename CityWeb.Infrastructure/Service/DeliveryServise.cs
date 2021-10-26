@@ -16,11 +16,9 @@ namespace CityWeb.Infrastructure.Service
     public class DeliveryServise
     {
         private readonly ApplicationContext _context;
-        private readonly SignInManager<ApplicationUserModel> _signInManager;
-        public DeliveryServise(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
+        public DeliveryServise(ApplicationContext context)
         {
             _context = context;
-            _signInManager = signInManager;
         }
 
         public async Task<DeliveryModel> CreateDeliveryCompany(DeliveryModelDTO deliveryModel)
@@ -30,14 +28,17 @@ namespace CityWeb.Infrastructure.Service
                 Title = deliveryModel.Title,
                 Description = deliveryModel.Description,
             };
-     
-               return await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
-   
+
+            var deliveryEntity = _context.Deliveries.Add(delivery);
+            await _context.SaveChangesAsync();
+
+            return deliveryEntity.Entity;
         }
 
         public async Task<DeliveryDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
+            
             if (delivery != null)
             {
                 delivery.Description = deliveryModel.Description;
@@ -61,9 +62,11 @@ namespace CityWeb.Infrastructure.Service
         public async Task<ProductUpdateDTO> UpdateProduct(ProductModelDTO productModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
-            if(delivery != null)
+            
+            if (delivery != null)
             {
-                var product = await _context.Orders.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id) ;
+                var product = await _context.Orders.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
+                
                 if (product != null)
                 {
                     product.ProductImage = productModel.ProductImage;
@@ -86,7 +89,7 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<CreateProductDTO> CreateMeny(ProductModelDTO productModel)
+        public async Task<CreateProductDTO> CreateMenu(ProductModelDTO productModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
             if (delivery != null)
@@ -122,7 +125,7 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task DeleteCompany (DeleteDTO delete)
+        public async Task DeleteCompany(DeleteDTO delete)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == delete.Title);
             if (delivery != null)
