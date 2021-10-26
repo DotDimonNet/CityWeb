@@ -105,6 +105,56 @@ namespace CityWeb.Infrastructure.Service
 
         }
 
+        /*        public async Task<UpdatePasswordDTO> UpdatePasswordData(UpdatePasswordDTO updatePassword)
+                {
+                    var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.UserName);
+                    if (user != null)
+                    {
+                       if(updatePassword.OldPassword == user.PasswordHash )
+                        {
+                            if(updatePassword.NewPassword == updatePassword.ConfirmPassword)
+                            {
+                                user.PasswordHash = updatePassword.NewPassword;
+                                _context.Update(user);
+                                await _context.SaveChangesAsync();
+                                return user.ToPasswordDTO();
+                            }
+                            else
+                            {
+                                throw new Exception("Passwords do not match");
+                            }
+                        }
+                       else
+                        {
+                            throw new Exception("Wrong old password!");
+                        }               
+                    }
+                    else
+                    {
+                        throw new Exception("User not exist!");
+                    }
+                }*/
+        public async Task<UpdatePasswordDTO> UpdatePasswordData(UpdatePasswordDTO updatePassword, ApplicationUserModel user)
+        {
+                if (updatePassword.OldPassword == user.PasswordHash)
+                {
+                    if (updatePassword.NewPassword == updatePassword.ConfirmPassword)
+                    {
+                        user.PasswordHash = updatePassword.NewPassword;
+                        _context.Update(user);
+                        await _context.SaveChangesAsync();
+                        return user.ToPasswordDTO();
+                    }
+                    else
+                    {
+                        throw new Exception("Passwords do not match");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Wrong old password!");
+                }
+  
         public async Task<EmailDTO> ChangeEmail(ChangeEmailDTO changeEmail)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == changeEmail.UserName);
