@@ -1,4 +1,4 @@
-﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.DTO.Transport.Taxi;
@@ -24,6 +24,15 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+        public static UpdatePasswordDTO ToPasswordDTO(this ApplicationUserModel userModel)
+        {
+            return new UpdatePasswordDTO()
+            {
+                UserName = userModel.UserName,
+                OldPassword = userModel.PasswordHash
+            };
+        }
+      
         public static LoginModelDTO ToLoginModelDTO(this ApplicationUserModel userModel)
         {
             return new LoginModelDTO()
@@ -40,8 +49,6 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Email = userModel.Email,
             };
-        }
-
         public static CreateTaxiModelDTO ToCreateTaxiModelDTO(this TaxiModel taxiModel)
         {
             return new CreateTaxiModelDTO()
@@ -128,6 +135,52 @@ namespace CityWeb.Infrastructure.Extentions
                 Color = rentCar.Color,
                 Number = rentCar.Number,
                 Seats = rentCar.Seats
+            };
+        }
+
+        public static UpdateUserPasswordDTO ToUpdateUserPasswordDTO(this ApplicationUserModel userModel)
+        {
+            return new UpdateUserPasswordDTO()
+            {
+                Login = userModel.Email,
+                Password = userModel.PasswordHash  
+            };
+        }  
+        //for delivery
+        public static DeliveryDTO ToDeliveryDTO(this DeliveryModel deliveryModel)
+        {
+            return new DeliveryDTO()
+            {
+                DeliveryImage = deliveryModel.DeliveryImage,
+                Description = deliveryModel.Description,
+                StartTime = deliveryModel.WorkSchedule.StartTime,
+                EndTime = deliveryModel.WorkSchedule.EndTime,
+                Value = deliveryModel.DeliveryPrice.Value,
+                Tax = deliveryModel.DeliveryPrice.Tax,
+                VAT = deliveryModel.DeliveryPrice.VAT,
+            };
+        }
+
+        public static ProductUpdateDTO ToProductPriceDTO(this ProductModel productModel)
+        {
+            return new ProductUpdateDTO()
+            {
+                ProductImage = productModel.ProductImage,
+                Value = productModel.ProductPrice.Value,
+                Tax = productModel.ProductPrice.Tax,
+                VAT = productModel.ProductPrice.VAT,
+            };
+        }
+
+        public static CreateProductDTO ToCreateProductDTO(this ProductModel productModel)
+        {
+            return new CreateProductDTO()
+            {
+                ProductName = productModel.ProductName,
+                ProductImage = productModel.ProductImage,
+                Value = productModel.ProductPrice.Value,
+                Tax = productModel.ProductPrice.Tax,
+                VAT = productModel.ProductPrice.VAT,
             };
         }
     }
