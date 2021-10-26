@@ -12,8 +12,6 @@ namespace CityWeb.Domain.Entities
         public virtual ApplicationUserModel Owner { get; set; }
         public virtual DiscountModel Discount { get; set; }
         public double Price { get; set; }
-        // public virtual RatingModel Rating { get; set; }
-        //public double TotalPrice => Price * Discount;
         public virtual PaymentStatus Status { get; set; }
         public string Title { get; set ; }
         public string Description { get ; set ; }

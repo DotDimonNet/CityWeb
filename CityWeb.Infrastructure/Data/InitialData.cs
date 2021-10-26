@@ -40,13 +40,13 @@ namespace CityWeb.Infrastucture.Data
             if (!_context.EventTypes.Any())
             {
                 _context.AddRange(
-                    EventType.Cinema,
-                    EventType.Circus,
-                    EventType.Club,
-                    EventType.Exhibition,
-                    EventType.Fest,
-                    EventType.Museum,
-                    EventType.Theatre
+                    EntertainmentType.Cinema,
+                    EntertainmentType.Circus,
+                    EntertainmentType.Club,
+                    EntertainmentType.Exhibition,
+                    EntertainmentType.Fest,
+                    EntertainmentType.Museum,
+                    EntertainmentType.Theatre
                     );
 
                 _context.SaveChanges();

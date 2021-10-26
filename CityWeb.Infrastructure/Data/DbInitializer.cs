@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using CityWeb.Infrastructure.Authorization;
 using CityWeb.Domain.Entities;
+using CityWeb.Infrastructure.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CityWeb.Infrastucture.Data
 {
@@ -203,7 +202,7 @@ namespace CityWeb.Infrastucture.Data
                 Description = "Common taxi",
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
-                Vehicle = 
+                Vehicle =
                 {
                     new TaxiCarModel()
                     {
@@ -219,7 +218,7 @@ namespace CityWeb.Infrastucture.Data
                             StreetName = "Keletska",
                             HouseNumber = "55"
                         },
-                        DestinationAddresses = 
+                        DestinationAddresses =
                         {
                             new AddressModel()
                             {
@@ -253,7 +252,7 @@ namespace CityWeb.Infrastucture.Data
                 Description = "Rent Car Company",
                 Id = Guid.NewGuid(),
                 Created = DateTime.Now,
-                Modified = DateTime.Now,               
+                Modified = DateTime.Now,
                 Location = new AddressModel()
                 {
 
@@ -261,8 +260,8 @@ namespace CityWeb.Infrastucture.Data
                     HouseNumber = "25A",
                     Id = Guid.NewGuid()
                 },
-                Vehicle =
-                    {
+                Vehicle = {
+                    
                         new RentCarModel()
                         {
                             Id = Guid.NewGuid(),
@@ -279,10 +278,10 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 5,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
 
-                            }
+                            } }
                         },
                         new RentCarModel()
                         {
@@ -300,14 +299,16 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 5,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod =
                             {
-                                StartTime = new DateTime(2021,10,20),
-                                EndTime = new DateTime(2021,10,24),
-                            },
-                            
+                                new PeriodModel()
+                                {
+                                    StartTime = new DateTime(2021,10,20),
+                                    EndTime = new DateTime(2021,10,24),
+                                }
+                            }
                         }
-                 }
+                }
             };
             var rental = new CarSharingModel()
             {
@@ -324,7 +325,7 @@ namespace CityWeb.Infrastucture.Data
                     Id = Guid.NewGuid()
                 },
                 Vehicle =
-                    {
+                {
                         new RentCarModel()
                         {
                             Id = Guid.NewGuid(),
@@ -341,10 +342,10 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 2,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
-                                
-                            }
+
+                            }}
                         },
                         new RentCarModel()
                         {
@@ -362,11 +363,11 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 2,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
                                 StartTime = new DateTime(2021,10,21),
                                 EndTime = new DateTime(2021,10,25),
-                            },
+                            } },
 
                         }
                  }
@@ -392,12 +393,12 @@ namespace CityWeb.Infrastucture.Data
                              Value = 1500,
 
                          },
-                         
+
                          Created = DateTime.Now,
                          Modified = DateTime.Now,
                          RentPeriod = new PeriodModel()
                         {
-                            
+
                         }
                     },
                     new RoomModel()
@@ -469,10 +470,10 @@ namespace CityWeb.Infrastucture.Data
                              EndTime = new DateTime(2021,10,27),
                         }
                     },
-                    
+
                 },
-                Created = new DateTime(1847,12,24),
-                Modified = new DateTime(2019,8,13),
+                Created = new DateTime(1847, 12, 24),
+                Modified = new DateTime(2019, 8, 13),
             };
             var hotelCalifornia = new HotelModel()
             {
@@ -582,7 +583,7 @@ namespace CityWeb.Infrastucture.Data
                 Description = "Food Delivery",
                 WorkSchedule = new PeriodModel()
                 {
-                    StartTime =  new DateTime(2015, 7, 20, 09, 00, 00),
+                    StartTime = new DateTime(2015, 7, 20, 09, 00, 00),
                     EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
                 },
                 Products =
@@ -726,7 +727,7 @@ namespace CityWeb.Infrastucture.Data
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
-            var cinema = new EntertaimentModel()
+            var cinema = new EntertainmentModel()
             {
                 Title = "SmartCinema",
                 Description = "Cinema",
@@ -740,7 +741,7 @@ namespace CityWeb.Infrastucture.Data
                     HouseNumber = "25A",
                     Id = Guid.NewGuid()
                 },
-                Event =
+                Event = 
                 {
                         new EventModel()
                         {
@@ -751,7 +752,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
 
@@ -765,7 +766,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
                         },
@@ -778,7 +779,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
                         },
@@ -791,19 +792,19 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
                         }
 
                 }
             };
-            var circus = new EntertaimentModel()
+            var circus = new EntertainmentModel()
             {
                 Title = "Shapito",
                 Description = "Circus",
                 Id = Guid.NewGuid(),
-                EventType = Domain.Enums.EventType.Circus,
+                EntertainmentType = Domain.Enums.EntertainmentType.Circus,
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
                 Address = new AddressModel()
@@ -824,7 +825,7 @@ namespace CityWeb.Infrastucture.Data
                                 Id = Guid.NewGuid(),
                                 Value = 50
                             },
-                            Type = Domain.Enums.EventType.Cinema,
+                            Type = Domain.Enums.EntertainmentType.Cinema,
                             Created = new DateTime(2021,9,1),
                             Modified = DateTime.Now,
 
@@ -881,6 +882,7 @@ namespace CityWeb.Infrastucture.Data
             _context.Add(housepay);
             _context.Add(circus);
             _context.Add(cinema);
+            _context.Add(circus);
             _context.SaveChanges();
 
         }
