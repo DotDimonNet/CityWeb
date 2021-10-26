@@ -170,5 +170,25 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("User not exist!");
             }
         }
+
+        public async Task<UpdateUserPasswordDTO> UpdateUserPassword(UpdateUserPasswordDTO updatePassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.Login);
+            if (user != null && updatePassword.Password == user.PasswordHash)
+            {
+                
+                user.PasswordHash = updatePassword.NewPassword/*ToHash*/;
+                if (user.PasswordHash == updatePassword.ConfirmNewPassword/*ToHash*/)
+                {
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                } 
+                return user.ToUpdateUserPasswordDTO();
+            }
+            else
+            {
+                throw new Exception("User not exist!");
+            }
+        }
     }
 }
