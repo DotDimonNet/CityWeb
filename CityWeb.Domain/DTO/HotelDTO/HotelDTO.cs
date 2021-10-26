@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Domain.Entities
+namespace CityWeb.Domain.DTO.HotelDTO
 {
-    public class AddressModel : Entity
+    public class HotelDTO
     {
-        public virtual ApplicationUserModel User { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
         public string ApartmentNumber { get; set; }
-        public override string ToString()
-        {
-            return $"Street {StreetName} {HouseNumber}";
-        }
+        public string Image { get; set; }
     }
 }
