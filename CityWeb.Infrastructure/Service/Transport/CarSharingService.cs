@@ -22,23 +22,6 @@ namespace CityWeb.Infrastructure.Service.Transport
             _context = context;
         }
         
-        /*public async Task<CarSharingBuilderResult> NextStep(int step = 0)
-        {
-            var builderResult = await SetupCarSharingBuilderResult();
-
-            switch (step)
-            {
-                case 1:
-                    return await StepOne(builderResult, "Zipcar");
-                case 2:
-                    return await StepThree(builderResult);
-                case 3:
-                    return await StepThree(builderResult);
-                default:
-                    return builderResult;
-            }
-        }*/
-
         public async Task Steps()
         {
             var builder = SetupCarSharingBuilderResult();
