@@ -54,7 +54,7 @@ namespace CityWeb.Infrastructure.Service
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<ApplicationUserModel> LoginUser(LoginModelDTO loginModel)
+        public async Task<LoginModelDTO> LoginUser(LoginModelDTO loginModel)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginModel.Login);
 
@@ -64,7 +64,7 @@ namespace CityWeb.Infrastructure.Service
                 switch (result)
                 {
                     case var value when result.Succeeded:
-                        return user;
+                        return user.ToLoginModelDTO();
                     case var value when result.IsLockedOut:
                         throw new Exception("Locked out");
                     default:
@@ -82,8 +82,12 @@ namespace CityWeb.Infrastructure.Service
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.Login);
             if (user != null)
             {
+                user.Profile.FirstName = updateData.FirstName;
+                user.Profile.LastName = updateData.LastName;
+                user.Profile.Gender = updateData.Gender;
                 user.Profile.Address = new AddressModel()
                 {
+                    
                     StreetName = updateData.StreetName,
                     HouseNumber = updateData.HouseNumber,
                     ApartmentNumber = updateData.ApartmentNumber,
@@ -150,6 +154,21 @@ namespace CityWeb.Infrastructure.Service
                 {
                     throw new Exception("Wrong old password!");
                 }
+  
+        public async Task<EmailDTO> ChangeEmail(ChangeEmailDTO changeEmail)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == changeEmail.UserName);
+            if (user != null)
+            {
+                user.Email = changeEmail.Email;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                return user.ToEmailDTO();
+            }
+            else
+            {
+                throw new Exception("User not exist!");
+            }
         }
     }
 }
