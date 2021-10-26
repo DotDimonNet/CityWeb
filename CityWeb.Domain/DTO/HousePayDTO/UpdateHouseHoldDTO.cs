@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class UpdateHousePayAdressDTO
+    public class UpdateHouseHoldDTO
     {
 
 
