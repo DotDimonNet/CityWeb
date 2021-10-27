@@ -12,7 +12,6 @@ namespace CityWeb.Domain.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public virtual UserProfileModel Owner { get; set; }
-        public virtual Accountmodel Provider { get; set; }
         public virtual ServiceModel Service { get; set; }
         public virtual HousePaymentType PaymentType { get; set; }
         public double CurrentValue  { get; set; }
