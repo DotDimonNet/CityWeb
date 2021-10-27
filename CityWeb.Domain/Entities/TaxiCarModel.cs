@@ -14,6 +14,7 @@ namespace CityWeb.Domain.Entities
         public string Color { get; set; }
         public int Seats { get; set; }
         public string Number { get; set; }
+        public string VINCode { get; set; }
         public virtual PriceModel Price { get; set; }
         public virtual TaxiModel Taxi { get; set; }
         public virtual Guid TaxiId { get; set; } = Guid.NewGuid();

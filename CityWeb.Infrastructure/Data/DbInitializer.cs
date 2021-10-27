@@ -260,8 +260,8 @@ namespace CityWeb.Infrastucture.Data
                     HouseNumber = "25A",
                     Id = Guid.NewGuid()
                 },
-                Vehicle =
-                    {
+                Vehicle = {
+                    
                         new RentCarModel()
                         {
                             Id = Guid.NewGuid(),
@@ -278,10 +278,10 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 5,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
 
-                            }
+                            } }
                         },
                         new RentCarModel()
                         {
@@ -299,14 +299,16 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 5,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod =
                             {
-                                StartTime = new DateTime(2021,10,20),
-                                EndTime = new DateTime(2021,10,24),
-                            },
-
+                                new PeriodModel()
+                                {
+                                    StartTime = new DateTime(2021,10,20),
+                                    EndTime = new DateTime(2021,10,24),
+                                }
+                            }
                         }
-                 }
+                }
             };
             var rental = new CarSharingModel()
             {
@@ -323,7 +325,7 @@ namespace CityWeb.Infrastucture.Data
                     Id = Guid.NewGuid()
                 },
                 Vehicle =
-                    {
+                {
                         new RentCarModel()
                         {
                             Id = Guid.NewGuid(),
@@ -340,10 +342,10 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 2,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
-                                
-                            }
+
+                            }}
                         },
                         new RentCarModel()
                         {
@@ -361,11 +363,11 @@ namespace CityWeb.Infrastucture.Data
                             Seats = 2,
                             Created = DateTime.Now,
                             Modified = DateTime.Now,
-                            RentPeriod = new PeriodModel()
+                            RentPeriod = {new PeriodModel()
                             {
                                 StartTime = new DateTime(2021,10,21),
                                 EndTime = new DateTime(2021,10,25),
-                            },
+                            } },
 
                         }
                  }
