@@ -14,6 +14,6 @@ namespace CityWeb.Domain.Entities
         public virtual EntertainmentType Type { get; set; }
         public virtual PriceModel EventPrice { get; set; }
         public virtual EntertainmentModel Entertaiment { get; set;}
-        public virtual Guid EntertaimentId { get; set; }
+        public virtual Guid EntertaimentId { get; set; } = new Guid();
     }
 }
