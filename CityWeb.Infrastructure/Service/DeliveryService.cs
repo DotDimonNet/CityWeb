@@ -16,7 +16,7 @@ namespace CityWeb.Infrastructure.Service
     public class DeliveryService
     {
         private readonly ApplicationContext _context;
-        public DeliveryServise(ApplicationContext context)
+        public DeliveryService(ApplicationContext context)
         {
             _context = context;
         }

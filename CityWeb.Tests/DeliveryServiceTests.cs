@@ -17,15 +17,15 @@ namespace CityWeb.Tests
         [Test]
         public async Task CreateDeliveryCompanyTest()
         {
-            var deliveryService = new DeliveryServise(TestHelper.ApplicationContext);
-            var dto = new DeliveryModelDTO()
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext);
+            var dto = new CreateDeliveryModelDTO()
             {
                 Title = "Delivery Company",
                 Description = "Default description"
             };
 
             var delivery = await deliveryService.CreateDeliveryCompany(dto);
-            var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Id == delivery.Id);
+            var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == delivery.Title);
 
             Assert.IsNotNull(delivery);
             Assert.AreEqual(delivery.Description, deliveryFromContext.Description);
