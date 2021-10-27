@@ -77,10 +77,31 @@ namespace CityWeb.Tests
             {
                 var carSharing = new CarSharingModel()
                 {
-                    Title = $"CarSharing{i+1}",
-                    Description = $"Default descriotion {i}",
+                    Title = $"CarSharing{i + 1}",
+                    Description = $"Default description {i}",
                     Payment = new PaymentModel(),
-                    
+                    Service = service,
+                    ServiceId = service.Id,
+                    Vehicle = 
+                    { 
+                        new RentCarModel()
+                        {                         
+                            Type = Domain.Enums.TransportType.RentCar,
+                            VINCode = $"VAG489645{i+1}",
+                            RentPeriod = 
+                            {
+                                new PeriodModel(){ },
+                            },
+                            Color = "red",
+                            Mark = "Honda",
+                            Number = $"AB 55{i} CC",
+                            Seats = 2,
+                            Price = new PriceModel()
+                            {
+                                Value = i*100
+                            }
+                        }
+                    }
                 };
 
                 carSharings.Add(carSharing);
