@@ -30,7 +30,7 @@ namespace CityWeb.Infrastructure.Service
             };
 
             var model = await _context.Deliveries.AddAsync(delivery);
-
+            _context.SaveChanges();
             return model.Entity.ToDeliveryModelDTO();
         }
 
