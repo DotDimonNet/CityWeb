@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Domain.DTO
+namespace CityWeb.Domain.DTO.Transport.Car
 {
-    public class UserModelDTO
+    public class DeleteRentCarDTO
     {
-
+        public string VINCode { get; set; }
     }
 }
