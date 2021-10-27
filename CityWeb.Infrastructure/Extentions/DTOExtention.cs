@@ -179,6 +179,7 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 ProductName = productModel.ProductName,
                 ProductImage = productModel.ProductImage,
+                ProductType = productModel.ProductType,
                 Value = productModel.ProductPrice.Value,
                 Tax = productModel.ProductPrice.Tax,
                 VAT = productModel.ProductPrice.VAT,

@@ -98,12 +98,9 @@ namespace CityWeb.Infrastructure.Service
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
             if (delivery != null)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
-                if (product == null)
-                {
-                    delivery.Products.Add(
-                        new ProductModel()
+                var product = new ProductModel()
                         {
+                            DeliveryId = delivery.Id,
                             ProductImage = productModel.ProductImage,
                             ProductName = productModel.ProductName,
                             ProductType = productModel.ProductType,
@@ -112,17 +109,13 @@ namespace CityWeb.Infrastructure.Service
                                Value = productModel.Value,
                                 VAT = productModel.VAT,
                                 Tax = productModel.Tax,
-                             } 
-                        });
+                            } 
+                        };
 
-                    _context.Update(delivery);
+                    var model = await _context.Products.AddAsync(product);
                     await _context.SaveChangesAsync();
-                    return product.ToCreateProductDTO();
-                }
-                else
-                {
-                    throw new Exception("Product was already created!");
-                }
+                    return model.Entity.ToCreateProductDTO();
+               
             }
             else
             {
