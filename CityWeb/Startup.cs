@@ -67,7 +67,7 @@ namespace CityWeb
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = options.User.AllowedUserNameCharacters + "åæøÅÆØ";
+                options.User.AllowedUserNameCharacters = options.User.AllowedUserNameCharacters;
                 options.Tokens.PasswordResetTokenProvider = nameof(PasswordResetTokenProvider);
             });
 

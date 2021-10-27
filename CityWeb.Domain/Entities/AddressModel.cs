@@ -12,5 +12,9 @@ namespace CityWeb.Domain.Entities
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
         public string ApartmentNumber { get; set; }
+        public override string ToString()
+        {
+            return $"Street {StreetName} {HouseNumber}";
+        }
     }
 }
