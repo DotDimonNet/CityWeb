@@ -16,11 +16,9 @@ namespace CityWeb.Infrastructure.Service
     public class DeliveryService
     {
         private readonly ApplicationContext _context;
-        private readonly SignInManager<ApplicationUserModel> _signInManager;
-        public DeliveryService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
+        public DeliveryServise(ApplicationContext context)
         {
             _context = context;
-            _signInManager = signInManager;
         }
 
         public async Task<DeliveryModelDTO> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel)
@@ -44,6 +42,7 @@ namespace CityWeb.Infrastructure.Service
         public async Task<DeliveryDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
+            
             if (delivery != null)
             {
                 delivery.Description = deliveryModel.Description;
@@ -67,7 +66,8 @@ namespace CityWeb.Infrastructure.Service
         public async Task<ProductUpdateDTO> UpdateProduct(ProductModelDTO productModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
-            if(delivery != null)
+            
+            if (delivery != null)
             {
                 var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id) ;
                 if (product != null)
