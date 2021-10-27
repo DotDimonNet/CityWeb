@@ -80,7 +80,7 @@ namespace CityWeb.Infrastructure.Service
 
                     _context.Update(product);
                     await _context.SaveChangesAsync();
-                    return product.ToProductPriceDTO();
+                    return product.ToProductUpdateDTO();
                 }
                 else
                 {
@@ -98,24 +98,30 @@ namespace CityWeb.Infrastructure.Service
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
             if (delivery != null)
             {
-                var product = new ProductModel()
+                var checkProductName = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
+                if (checkProductName == null)
+                {
+                    var product = new ProductModel()
+                    {
+                        DeliveryId = delivery.Id,
+                        ProductImage = productModel.ProductImage,
+                        ProductName = productModel.ProductName,
+                        ProductType = productModel.ProductType,
+                        ProductPrice = new PriceModel()
                         {
-                            DeliveryId = delivery.Id,
-                            ProductImage = productModel.ProductImage,
-                            ProductName = productModel.ProductName,
-                            ProductType = productModel.ProductType,
-                            ProductPrice = new PriceModel() 
-                            {
-                               Value = productModel.Value,
-                                VAT = productModel.VAT,
-                                Tax = productModel.Tax,
-                            } 
-                        };
-
+                            Value = productModel.Value,
+                            VAT = productModel.VAT,
+                            Tax = productModel.Tax,
+                        }
+                    };
                     var model = await _context.Products.AddAsync(product);
                     await _context.SaveChangesAsync();
                     return model.Entity.ToCreateProductDTO();
-               
+                }
+                else
+                {
+                    throw new Exception("Product was already created!");
+                }
             }
             else
             {
@@ -125,7 +131,7 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task DeleteDeliveryCompany(DeleteCompanyDTO dtoModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == dtoModel.CompanyId);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
             if (delivery != null)
             {
                 _context.Remove(delivery);
@@ -139,16 +145,25 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task DeleteProduct(DeleteProductDTO dtoModel)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == dtoModel.ProductId);
-            if (product != null)
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
+            if(delivery != null)
             {
-                _context.Products.Remove(product);
-                _context.SaveChanges();
+                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == dtoModel.ProductName && x.DeliveryId == delivery.Id);
+                if (product != null)
+                {
+                    _context.Products.Remove(product);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Product does not exist!");
+                }
             }
             else
             {
-                throw new Exception("Product does not exist!");
+                throw new Exception("Company does not exist!");
             }
+            
         }
 
         

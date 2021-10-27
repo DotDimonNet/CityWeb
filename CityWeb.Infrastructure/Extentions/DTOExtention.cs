@@ -152,6 +152,7 @@ namespace CityWeb.Infrastructure.Extentions
         {
             return new DeliveryDTO()
             {
+                Title = deliveryModel.Title,
                 DeliveryImage = deliveryModel.DeliveryImage,
                 Description = deliveryModel.Description,
                 StartTime = deliveryModel.WorkSchedule.StartTime,
@@ -162,10 +163,11 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static ProductUpdateDTO ToProductPriceDTO(this ProductModel productModel)
+        public static ProductUpdateDTO ToProductUpdateDTO(this ProductModel productModel)
         {
             return new ProductUpdateDTO()
             {
+                ProductName = productModel.ProductName,
                 ProductImage = productModel.ProductImage,
                 Value = productModel.ProductPrice.Value,
                 Tax = productModel.ProductPrice.Tax,

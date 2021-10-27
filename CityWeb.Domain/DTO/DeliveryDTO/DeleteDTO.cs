@@ -8,11 +8,12 @@ namespace CityWeb.Domain.DTO
 {
     public class DeleteProductDTO
     {
-        public Guid ProductId { get; set; }
+        public string Title { get; set; }
+        public string ProductName { get; set; }
     }
 
     public class DeleteCompanyDTO
     {
-        public Guid CompanyId { get; set; }
+        public string Title { get; set; }
     }
 }
