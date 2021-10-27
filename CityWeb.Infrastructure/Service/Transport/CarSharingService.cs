@@ -112,7 +112,9 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<AddRentCarDTO> AddRentCar(AddRentCarDTO addRentCarDTO)
         {
-            if (_context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == addRentCarDTO.CarSharingTitle && x.VINCode == addRentCarDTO.VINCode) == null)
+            var isNullCar = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == addRentCarDTO.CarSharingTitle && x.VINCode == addRentCarDTO.VINCode);
+            var isExistCar = isNullCar == null;
+            if (isExistCar)
             {
                 var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == addRentCarDTO.CarSharingTitle);
                 if (carSharing != null)
@@ -128,8 +130,9 @@ namespace CityWeb.Infrastructure.Service.Transport
                         Number = addRentCarDTO.Number,
                         Color = addRentCarDTO.Color
                     };
-                    _context.RentCars.Add(rentCarModel);
-                    _context.SaveChanges();
+
+                    await _context.RentCars.AddAsync(rentCarModel);
+                    await _context.SaveChangesAsync();
                     return rentCarModel.ToAddRentCarDTO();
                 }
                 else

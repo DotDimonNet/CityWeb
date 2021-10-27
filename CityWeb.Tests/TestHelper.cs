@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CityWeb.Tests
@@ -29,6 +30,7 @@ namespace CityWeb.Tests
 
             var dbInitializer = new DbInitializer(ApplicationContext, UserManagerMock.Object, RoleManagerMock.Object);
             await dbInitializer.Initialize();
+            await GenerateData();
         }
 
         private static async Task SetupManagementMocks()
@@ -43,6 +45,7 @@ namespace CityWeb.Tests
                     Gender = "male"
                 }
             };
+
             var store = new Mock<IUserStore<ApplicationUserModel>>();
             UserManagerMock = new Mock<UserManager<ApplicationUserModel>>(store.Object, null, null, null, null, null, null, null, null);
             
@@ -63,7 +66,27 @@ namespace CityWeb.Tests
             RoleManagerMock = new Mock<RoleManager<ApplicationUserRole>>(storeRoles.Object, null, null, null, null);
             
             RoleManagerMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationUserRole>()))
-                .ReturnsAsync(IdentityResult.Success).Verifiable();
+                .ReturnsAsync(IdentityResult.Success).Verifiable();    
+        }
+
+        private static async Task GenerateData()
+        {
+            var service = new ServiceModel();
+            var carSharings = new List<CarSharingModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var carSharing = new CarSharingModel()
+                {
+                    Title = $"CarSharing{i+1}",
+                    Description = $"Default descriotion {i}",
+                    Payment = new PaymentModel(),
+                    
+                };
+
+                carSharings.Add(carSharing);
+            }
+            await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
+            await ApplicationContext.SaveChangesAsync();
         }
     }
 }
