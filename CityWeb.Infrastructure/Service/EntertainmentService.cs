@@ -18,7 +18,7 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
 
-        public EntertainmentService(ApplicationContext context, EntertainmentBuilderResult builder)
+        public EntertainmentService(ApplicationContext context)
         {
             _context = context;
         }
