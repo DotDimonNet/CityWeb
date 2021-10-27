@@ -11,7 +11,9 @@ namespace CityWeb.Domain.DTO
     public string AccountID {get; set; }
     public double Price { get; set; }
 
-    public string 
+    public double CurrentValue { get; set; }
+
+    public double PaidValue { get; set; }
 
 
     }
