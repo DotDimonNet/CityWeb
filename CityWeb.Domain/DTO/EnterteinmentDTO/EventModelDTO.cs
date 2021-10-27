@@ -11,7 +11,6 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
     {
         public Guid EventId { get; set; }
         public string EventTitle { get; set; }
-        public string Description { get; set; }
         public double Value { get; set; }
         public double Tax { get; set; }
         public double VAT { get; set; }

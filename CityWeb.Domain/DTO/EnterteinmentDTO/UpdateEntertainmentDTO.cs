@@ -11,8 +11,6 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
     public class UpdateEntertainmentDTO
     {
         public string EntertainmentTitle { get; set; }
-        public string Description { get; set; }
-        public EntertainmentType Type { get; set; }
-        public AddressModel Address { get; set; }
+        
     }
 }

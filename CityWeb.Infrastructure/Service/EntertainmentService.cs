@@ -22,20 +22,13 @@ namespace CityWeb.Infrastructure.Service
         {
             _context = context;
         }
-        public async Task<EntertainmentModel> GetEntertainmentById(Guid id)
-        {
-            return await _context.Entertaiments
-                .FirstOrDefaultAsync(x => x.Id == id);
-        }
         public async Task<EntertainmentModelDTO> UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
             if(entertainment != null)
             {
-                entertainment.Title = updateData.EntertainmentTitle;
-                entertainment.Description = updateData.Description;
-                entertainment.EntertainmentType = updateData.Type;
-                entertainment.Address = updateData.Address;
+                entertainment.Title = updateData.EntertainmentTitle;       
+                
 
                 _context.Update(entertainment);
                 await _context.SaveChangesAsync();
@@ -57,7 +50,6 @@ namespace CityWeb.Infrastructure.Service
                 if (events != null)
                 {
                     events.Title = updateEvent.EventTitle;
-                    events.Description = updateEvent.Description;
                     events.EventPrice.Tax = updateEvent.Price.Tax;
                     events.EventPrice.Value = updateEvent.Price.Value;
                     events.EventPrice.VAT = updateEvent.Price.VAT;
@@ -71,26 +63,28 @@ namespace CityWeb.Infrastructure.Service
                 {
                     throw new Exception("Event was not created!");
                 }
+                
             }
             else
             {
                 throw new Exception("Entertainment was not created!");
             }
 
+
         }
-        public async void Delete(DeleteEntertainmentDTO deleteData)
+        public async Task<bool> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
             if(entertainment != null)
             {
                 _context.Remove(entertainment);
                 await _context.SaveChangesAsync();
+                return true;
                 
-                Console.WriteLine($"You deleted {entertainment.Title}");
             }
             else
             {
-                throw new Exception("You cannot delete this Entertainment");
+                return false;
             }
 
         }
@@ -102,6 +96,7 @@ namespace CityWeb.Infrastructure.Service
                 Description = addData.Description
             };
             var entModel = await _context.Entertaiments.AddAsync(entertainment);
+            await _context.SaveChangesAsync();
             return entModel.Entity.ToEntertainmentModelDTO();
 
 

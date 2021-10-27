@@ -36,41 +36,87 @@ namespace CityWeb.Tests
             Assert.AreEqual(entertainment.Description, entertainmentFromContext.Description);
             Assert.AreEqual(entertainment.EntertainmentTitle, entertainmentFromContext.Title);
         }
-
+        [Test]
         public async Task UpdadeEntertainmentModelTest()
         {
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
 
             var dto = new UpdateEntertainmentDTO()
             {
-                EntertainmentTitle = "Lounge bar",
-                Description = "Default description",
-                Type = EntertainmentType.Cinema,
-                Address = new AddressModel()
-                {
-                    StreetName = "Soborna",
-                    HouseNumber = "25A",
-                    Id = Guid.NewGuid()
-                }
+                EntertainmentTitle = $"Entertainment1",        
             };
-
-            var entertainment = await TestHelper.ApplicationContext.Entertaiments.FirstOrDefaultAsync(x => x.Title == dto.EntertainmentTitle);
-            if (entertainment != null)
-            {
-                entertainment.Title = dto.EntertainmentTitle;
-                entertainment.Description = dto.Description;
-                entertainment.EntertainmentType = dto.Type;
-                entertainment.Address = dto.Address;
+            
+            var entertainment = await entertainmentService.UpdadeEntertainmentModel(dto);
+            var entertainmentFromContext = TestHelper.ApplicationContext.Entertaiments.FirstOrDefault(x => x.Title == entertainment.EntertainmentTitle);
 
 
-            }
-            var updateEntertainment = await entertainmentService.UpdadeEntertainmentModel(dto);
-            var updateEntertainmentFromContext = TestHelper.ApplicationContext.Entertaiments.FirstOrDefault(x => x.Id == updateEntertainment.EntertainmentId);
+            Assert.IsNotNull(entertainment); 
+            Assert.AreEqual(entertainment.EntertainmentTitle, entertainmentFromContext.Title);
 
-
-            Assert.IsNotNull(updateEntertainment);
-            Assert.AreEqual(updateEntertainment.Description, updateEntertainmentFromContext.Description);
-            Assert.AreEqual(updateEntertainment.EntertainmentTitle, updateEntertainmentFromContext.Title);
         }
+        [Test]
+        public async Task DeleteEntertainmentModelTest()
+        {
+            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+            var dto = new DeleteEntertainmentDTO()
+            {
+                Title = "Entertainment1",
+            };    
+            var entertainment = await entertainmentService.DeleteEntertainmentModel(dto);
+            var entertainmentFromContext =  TestHelper.ApplicationContext.Entertaiments.FirstOrDefaultAsync(x => x.Title == dto.Title);
+
+            Assert.IsTrue(entertainment);
+        }
+
+
+        //[Test]
+        //public async Task UpdateEventModelTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+
+        //    var dto = new EntertainmentModel()
+        //    {
+        //        Title = $"Entertainment1",
+        //        Event =
+        //        {
+        //            new EventModel()
+        //            {
+        //                Title = "Event1 in Entertainment1"
+        //            },
+        //        },
+        //    };
+                
+
+        //    var events = await entertainmentService.UpdateEventModel(dto);
+        //    var eventsFromContext = TestHelper.ApplicationContext.Events.FirstOrDefault(x => x.Title == events.EventTitle);
+
+
+        //    Assert.IsNotNull(events);
+        //    Assert.AreEqual(events.EventTitle, eventsFromContext.Title);
+        //}
+
+
+        //[Test]
+        //public async Task StepOneTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //    var dto = new EntertainmentModel()
+        //    {
+        //        Title = $"Entertainment1",
+        //        Description = $"Default description 1",
+        //        Address = new AddressModel()
+        //        {
+        //            StreetName = "Soborna",
+        //            HouseNumber = "25A"
+
+        //        }
+        //    };
+
+        //    var entertainment = await entertainmentService.StepOne();
+        //    var entertainmentFromContext = TestHelper.ApplicationContext.Services.FirstOrDefault(x => x.Entertaiments == entertainment);
+        //}
+
     }
+
+
 }

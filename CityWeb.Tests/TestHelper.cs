@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CityWeb.Tests
@@ -29,6 +30,7 @@ namespace CityWeb.Tests
 
             var dbInitializer = new DbInitializer(ApplicationContext, UserManagerMock.Object, RoleManagerMock.Object);
             await dbInitializer.Initialize();
+            await GenerateData();
         }
 
         private static async Task SetupManagementMocks()
@@ -64,6 +66,63 @@ namespace CityWeb.Tests
             
             RoleManagerMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationUserRole>()))
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
+
+        }
+        private static async Task GenerateData()
+        {
+            var service = new ServiceModel();
+            var entertainments = new List<EntertainmentModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var entertainment = new EntertainmentModel()
+                {
+                    Title = $"Entertainment{i + 1}",
+                    Description = $"Default description {i}",
+                    Address = new AddressModel()
+                    {
+                        StreetName = "Soborna",
+                        HouseNumber = "25A"
+
+                    },
+                    Event = 
+                    {
+
+                        new EventModel()
+                        {
+                            Title = $"Event1 in Entertainment{i + 1}",
+                            EventPrice = new PriceModel()
+                            {
+                                Value = 300+i,
+                                VAT = 10+i,
+                                Tax = 10+i,
+                            }
+                        },
+                        new EventModel()
+                        {
+                            Title = $"Event2 in Entertainment{i + 1}",
+                            EventPrice = new PriceModel()
+                            {
+                                Value = 300+i,
+                                VAT = 10+i,
+                                Tax = 10+i,
+                            }
+                        }
+                    }
+                    
+                    
+
+
+                };
+
+                entertainments.Add(entertainment);
+            }
+            await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
+            await ApplicationContext.SaveChangesAsync();
+
+            
         }
     }
 }
+
+
+    
