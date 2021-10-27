@@ -711,19 +711,19 @@ namespace CityWeb.Infrastucture.Data
             };
             var housepay= new HousePayModel()
             {
-                ServiceType = Domain.Enums.HousePaymentType.Internet,
+                //ServiceType = Domain.Enums.HousePaymentType.Internet,
 
-                PayerAddress = new AddressModel()
+                /*yerAddress = new AddressModel()
                 {
                     Id = Guid.NewGuid(),
                     StreetName = "Soborna",
                     HouseNumber = "1",
-                },
-                Price = new PriceModel()
+                },*/
+                /*ice = new PriceModel()
                 {
                     Value = 120,
                     //Description = "Proplata za veresen",
-                },
+                },*/
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
