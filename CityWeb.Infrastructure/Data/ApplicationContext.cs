@@ -47,10 +47,10 @@ namespace CityWeb.Infrastucture.Data
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<TransportType> TransportTypes { get; set; }
-        public DbSet<EventType> EventTypes { get; set; }
+        //public DbSet<EventType> EventTypes { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<EntertainmentType> EventTypes { get; set; }
-        public DbSet<DeliveryFromType> DeliveryFromType { get; set; }
+        
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
 
