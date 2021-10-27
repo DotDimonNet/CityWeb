@@ -18,6 +18,7 @@ namespace CityWeb.Domain.Entities
         public virtual ICollection<EventModel> Event { get; set; } = new List<EventModel>();
         public string Title { get ; set ; }
         public string Description { get ; set ; }
-        
+        public virtual ApplicationUserModel User { get; set; }
+
     }
 }

@@ -22,7 +22,11 @@ namespace CityWeb.Infrastructure.Service
         {
             _context = context;
         }
-
+        public async Task<EntertainmentModel> GetEntertainmentById(Guid id)
+        {
+            return await _context.Entertaiments
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
         public async Task<EntertainmentModelDTO> UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
@@ -44,10 +48,36 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Error");
             }
         }
-          
+        public async Task<EventModelDTO> UpdateEventModel(UpdateEventDTO updateEvent)
+        {
+            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle);
+            if (entertainment != null)
+            {
+                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle && x.EntertaimentId== entertainment.Id);
+                if (events != null)
+                {
+                    events.Title = updateEvent.EventTitle;
+                    events.Description = updateEvent.Description;
+                    events.EventPrice.Tax = updateEvent.Price.Tax;
+                    events.EventPrice.Value = updateEvent.Price.Value;
+                    events.EventPrice.VAT = updateEvent.Price.VAT;
 
 
+                    _context.Update(events);
+                    await _context.SaveChangesAsync();
+                    return events.ToEventModelDTO();
+                }
+                else
+                {
+                    throw new Exception("Event was not created!");
+                }
+            }
+            else
+            {
+                throw new Exception("Entertainment was not created!");
+            }
 
+        }
         public async void Delete(DeleteEntertainmentDTO deleteData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
@@ -64,10 +94,6 @@ namespace CityWeb.Infrastructure.Service
             }
 
         }
-
-
-
-        
         public async Task<EntertainmentModelDTO> AddEntertainmentModel(AddEntertainmentModelDTO addData)
         {
             var entertainment = new EntertainmentModel()
@@ -81,7 +107,6 @@ namespace CityWeb.Infrastructure.Service
 
 
         }
-
         public async Task<IEnumerable<string>> StepOne(ServiceModelDTO dtoService)
         {
             var service = await _context.Services.FirstOrDefaultAsync(x => dtoService.Entertaiments == x.Entertaiments);

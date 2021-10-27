@@ -39,6 +39,7 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<HousePayModel> HousePays { get; set; }
         public DbSet<CounterModel> Counters { get; set; }
         public DbSet<EntertainmentModel> Entertaiments { get; set; }
+        public DbSet<EventModel> Events { get; set; }
         public DbSet<PeriodModel> Periods { get; set; }
         public DbSet<CarSharingModel> CarSharings { get; set; }
         public DbSet<TaxiModel> Taxi { get; set; }
@@ -67,6 +68,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Services).WithMany(x => x.Users);
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Discounts).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationUserModel>().HasMany(x => x.Orders).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ApplicationUserModel>().HasMany(x => x.Events).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region ServiceModel

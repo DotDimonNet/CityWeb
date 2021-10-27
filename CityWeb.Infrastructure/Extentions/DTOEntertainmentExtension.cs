@@ -29,17 +29,11 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 EventTitle = eventModel.Title,
                 Description = eventModel.Description,
-                Price = eventModel.EventPrice,
-                
+                Value = eventModel.EventPrice.Value,
+                Tax = eventModel.EventPrice.Tax,
+                VAT = eventModel.EventPrice.VAT,
             };
         }
-
-
-        
-
-
-        
-
 
         public static EntertainmentModelDTO ToAddEntertainmentModel(this AddEntertainmentModelDTO entModel)
         {
