@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Service.Transport
 {
-    class CarSharingService
+    public class CarSharingService
     {
         private readonly ApplicationContext _context;
         public CarSharingService(ApplicationContext context)
