@@ -23,9 +23,9 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static EventModelDTO ToEventModelDTO(this EventModel eventModel)
+        public static UpdateEventDTO ToUpdateEventModelDTO(this EventModel eventModel)
         {
-            return new EventModelDTO()
+            return new UpdateEventDTO()
             {
                 EventTitle = eventModel.Title,
                 Value = eventModel.EventPrice.Value,

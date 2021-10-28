@@ -41,23 +41,23 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Error");
             }
         }
-        public async Task<EventModelDTO> UpdateEventModel(UpdateEventDTO updateEvent)
+        public async Task<UpdateEventDTO> UpdateEventModel(EventModelDTO updateEvent)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle);
+            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.Title);
             if (entertainment != null)
             {
                 var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle && x.EntertaimentId== entertainment.Id);
                 if (events != null)
                 {
                     events.Title = updateEvent.EventTitle;
-                    events.EventPrice.Tax = updateEvent.Price.Tax;
-                    events.EventPrice.Value = updateEvent.Price.Value;
-                    events.EventPrice.VAT = updateEvent.Price.VAT;
+                    events.EventPrice.Tax = updateEvent.Tax;
+                    events.EventPrice.Value = updateEvent.Value;
+                    events.EventPrice.VAT = updateEvent.VAT;
 
 
                     _context.Update(events);
                     await _context.SaveChangesAsync();
-                    return events.ToEventModelDTO();
+                    return events.ToUpdateEventModelDTO();
                 }
                 else
                 {
