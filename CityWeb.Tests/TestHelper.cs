@@ -91,22 +91,22 @@ namespace CityWeb.Tests
 
                         new EventModel()
                         {
-                            Title = $"Event1 in Entertainment{i + 1}",
+                            Title = $"Event1",
                             EventPrice = new PriceModel()
                             {
-                                Value = 300+i,
-                                VAT = 10+i,
-                                Tax = 10+i,
+                                Value = 300,
+                                VAT = 10,
+                                Tax = 10,
                             }
                         },
                         new EventModel()
                         {
-                            Title = $"Event2 in Entertainment{i + 1}",
+                            Title = $"Event2",
                             EventPrice = new PriceModel()
                             {
-                                Value = 300+i,
-                                VAT = 10+i,
-                                Tax = 10+i,
+                                Value = 300,
+                                VAT = 10,
+                                Tax = 10,
                             }
                         }
                     }

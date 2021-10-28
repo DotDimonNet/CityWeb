@@ -69,10 +69,10 @@ namespace CityWeb.Tests
         }
 
 
-        //[Test]
-        //public async Task UpdateEventModelTest()
-        //{
-        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        [Test]
+        public async Task UpdateEventModelTest()
+        {
+            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
 
             var dto = new EventModelDTO()
             {
