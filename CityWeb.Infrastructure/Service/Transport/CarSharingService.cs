@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Service.Transport
 {
-    class CarSharingService
+    public class CarSharingService
     {
         private readonly ApplicationContext _context;
         public CarSharingService(ApplicationContext context)
@@ -34,7 +34,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         {
             return new CarSharingBuilderResult()
             {
-                //some logic while creating builder
+
             };
         }
 
@@ -60,7 +60,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         public async Task<CarSharingBuilderResult> StepThree(CarSharingBuilderResult builderResult, PeriodModel period)
         {
             builderResult.RentPeriod = period;
-            builderResult.Price = builderResult.Car.Price;//some logic to calculate price
+            builderResult.Price = builderResult.Car.Price;
             return builderResult;
         }
 
@@ -112,7 +112,6 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<AddRentCarDTO> AddRentCar(AddRentCarDTO addRentCarDTO)
         {
-            //var result = _context.Taxi.FirstOrDefaultAsync(x => x.Title == taxiModelDTO.Title);
             if (_context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == addRentCarDTO.CarSharingTitle && x.VINCode == addRentCarDTO.VINCode) == null)
             {
                 var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == addRentCarDTO.CarSharingTitle);
@@ -171,15 +170,6 @@ namespace CityWeb.Infrastructure.Service.Transport
             }            
             else
                 throw new Exception("Car does not exist");
-        }
-
-        public async Task RentACar(RentACarDTO rentCar)
-        {
-            var car = await _context.RentCars.FirstOrDefaultAsync(x => x.VINCode == rentCar.VINCode);
-            /*if (car.RentPeriod.Where(x => x.StartTime >= rentCar.DateStart && x.StartTime <= rentCar.DateEnd 
-                                        || x.EndTime >= rentCar.DateStart && x.EndTime <= rentCar.DateEnd ))
-                                        != null)*/
-            //return car.ToRentACarDTO();
         }
     }
 }

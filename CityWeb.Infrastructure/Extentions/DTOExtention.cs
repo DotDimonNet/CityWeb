@@ -152,6 +152,7 @@ namespace CityWeb.Infrastructure.Extentions
         {
             return new DeliveryDTO()
             {
+                Title = deliveryModel.Title,
                 DeliveryImage = deliveryModel.DeliveryImage,
                 Description = deliveryModel.Description,
                 StartTime = deliveryModel.WorkSchedule.StartTime,
@@ -162,10 +163,11 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static ProductUpdateDTO ToProductPriceDTO(this ProductModel productModel)
+        public static ProductUpdateDTO ToProductUpdateDTO(this ProductModel productModel)
         {
             return new ProductUpdateDTO()
             {
+                ProductName = productModel.ProductName,
                 ProductImage = productModel.ProductImage,
                 Value = productModel.ProductPrice.Value,
                 Tax = productModel.ProductPrice.Tax,
@@ -179,10 +181,55 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 ProductName = productModel.ProductName,
                 ProductImage = productModel.ProductImage,
+                ProductType = productModel.ProductType,
                 Value = productModel.ProductPrice.Value,
                 Tax = productModel.ProductPrice.Tax,
                 VAT = productModel.ProductPrice.VAT,
             };
         }
+
+        public static ProductModelDTO ToProductDTO(this ProductModel productModel)
+        {
+            return new ProductModelDTO()
+            {
+                ProductName = productModel.ProductName,
+                ProductImage = productModel.ProductImage,
+                Value = productModel.ProductPrice.Value,
+                Tax = productModel.ProductPrice.Tax,
+                VAT = productModel.ProductPrice.VAT,
+            };
+        }
+
+        public static DeliveryModelDTO ToDeliveryModelDTO(this DeliveryModel model)
+        {
+            return new DeliveryModelDTO()
+            {
+                Title = model.Title,
+                DeliveryId = model.Id,
+                Description = model.Description
+            };
+        }
+
+        public static SelectDeliveryModelDTO ToSelectDeliveryModelDTO(this DeliveryModel model)
+        {
+            return new SelectDeliveryModelDTO()
+            {
+                DeliveryId = model.Id
+            };
+        }
+
+        //public static ProductByTypeDTO ToProductByTypeDTO(this ProductModel model)
+        //{
+        //    return new ProductByTypeDTO
+        //    {
+        //        DeliveryId = model.Id,
+        //        TypeName = model.ProductType.Name,
+        //    };
+        //}
+
+        //public static bool IsWork(this PeriodModel periodModel, DateTime dateTime = default)
+        //{
+        //    return periodModel.StartTime.TimeOfDay < dateTime.TimeOfDay && periodModel.EndTime.TimeOfDay > dateTime.TimeOfDay;
+        //}
     }
 }

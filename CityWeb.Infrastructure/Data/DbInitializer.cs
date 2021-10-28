@@ -586,7 +586,7 @@ namespace CityWeb.Infrastucture.Data
                     StartTime = new DateTime(2015, 7, 20, 09, 00, 00),
                     EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
                 },
-                Order =
+                Products =
                 {
                     new ProductModel()
                     {
@@ -652,7 +652,7 @@ namespace CityWeb.Infrastucture.Data
                     StartTime = new DateTime(2015, 7, 20, 07, 00, 00),
                     EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
                 },
-                Order =
+                Products =
                 {
                     new ProductModel()
                     {
