@@ -119,7 +119,6 @@ namespace CityWeb.Tests
                 entertainments.Add(entertainment);
             }
             await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
-            await ApplicationContext.SaveChangesAsync();
 
 
             #region Transport
@@ -240,8 +239,6 @@ namespace CityWeb.Tests
             await ApplicationContext.Taxi.AddRangeAsync(taxi);
             await ApplicationContext.TaxiCar.AddRangeAsync(taxiCars);
             #endregion
-
-            await ApplicationContext.SaveChangesAsync();
 
 
             //Create Deliverys company
