@@ -69,6 +69,7 @@ namespace CityWeb.Tests
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
 
         }
+
         private static async Task GenerateData()
         {
             var service = new ServiceModel();
@@ -85,7 +86,7 @@ namespace CityWeb.Tests
                         HouseNumber = "25A"
 
                     },
-                    Event = 
+                    Event =
                     {
 
                         new EventModel()
@@ -109,8 +110,8 @@ namespace CityWeb.Tests
                             }
                         }
                     }
-                    
-                    
+
+
 
 
                 };
@@ -130,13 +131,13 @@ namespace CityWeb.Tests
                     Payment = new PaymentModel(),
                     Service = service,
                     ServiceId = service.Id,
-                    Vehicle = 
-                    { 
+                    Vehicle =
+                    {
                         new RentCarModel()
-                        {                         
+                        {
                             Type = Domain.Enums.TransportType.RentCar,
                             VINCode = $"VAG489645{i+1}",
-                            RentPeriod = 
+                            RentPeriod =
                             {
                                 new PeriodModel(){ },
                             },
@@ -156,26 +157,7 @@ namespace CityWeb.Tests
             }
             await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
             await ApplicationContext.SaveChangesAsync();
-        }
 
-        private static async Task GenerateData()
-        {
-            var service = new ServiceModel();
-            var carSharings = new List<CarSharingModel>();
-            for (int i = 0; i < 10; i++)
-            {
-                var carSharing = new CarSharingModel()
-                {
-                    Title = $"CarSharing{i + 1}",
-                    Description = $"Default descriotion {i}",
-                    Payment = new PaymentModel(),
-
-                };
-
-                carSharings.Add(carSharing);
-            }
-            await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
-        
 
             //Create Deliverys company
 
