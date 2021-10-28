@@ -69,7 +69,7 @@ namespace CityWeb.Tests
         }
 
 
-        [Test]
+        //[Test]
         //public async Task UpdateEventModelTest()
         //{
         //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
