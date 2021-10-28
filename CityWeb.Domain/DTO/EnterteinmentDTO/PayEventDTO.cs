@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CityWeb.Domain.Entities;
 
 namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
-    public class UpdateEventDTO
+    public class PayEventDTO
     {
-        public string EventTitle { get; set; }
-        public PriceModel Price { get; set; }
+        public double TotalPrice { get; set; }
     }
 }

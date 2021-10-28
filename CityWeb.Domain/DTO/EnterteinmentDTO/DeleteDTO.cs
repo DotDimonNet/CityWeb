@@ -8,9 +8,16 @@ using CityWeb.Domain.Enums;
 
 namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
-    public class UpdateEntertainmentDTO
+    public class DeleteEntertainmentDTO
     {
-        public string EntertainmentTitle { get; set; }
         
+        public string Title { get; set; }
+        
+    }
+
+    public class DeleteEventDTO
+    {
+        public string Title { get; set; }
+        public string EventTitle { get; set; }
     }
 }
