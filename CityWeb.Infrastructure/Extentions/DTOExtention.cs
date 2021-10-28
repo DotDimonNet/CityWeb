@@ -217,6 +217,16 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+        public static bool IsFree(this RentCarModel rentCar, PeriodModel period)
+        {
+            foreach (var item in rentCar.RentPeriod)
+            {
+                if(item.StartTime >= period.StartTime && item.StartTime <= period.EndTime
+                || item.EndTime >= period.StartTime && item.EndTime <= period.EndTime)
+                    return false;
+            }
+            return true;
+        }
         //public static ProductByTypeDTO ToProductByTypeDTO(this ProductModel model)
         //{
         //    return new ProductByTypeDTO

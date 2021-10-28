@@ -18,7 +18,6 @@ namespace CityWeb.Domain.Entities
         public virtual PriceModel Price { get; set; }
         public virtual CarSharingModel CarSharing { get; set; }
         public virtual Guid CarSharingId { get; set; }
-        public bool IsFree { get; set; }
         public virtual ICollection<PeriodModel> RentPeriod { get; set; } = new List<PeriodModel>();
     }
 }

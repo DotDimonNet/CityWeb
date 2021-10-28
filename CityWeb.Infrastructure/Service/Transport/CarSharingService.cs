@@ -42,9 +42,9 @@ namespace CityWeb.Infrastructure.Service.Transport
         {
             builderResult.CarSharingTitle = title;
             var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == title);
-            builderResult.Location = carSharing.Location;
             if (carSharing != null)
             {
+                builderResult.Location = carSharing.Location;
                 return _context.RentCars.Where(x => x.CarSharingId == carSharing.Id).Select(y => y.ToRentCarsModelDTO());
             }
             else
@@ -53,15 +53,27 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<RentCarsModelDTO> StepTwo(CarSharingBuilderResult builderResult, string vINCode)
         {
-            builderResult.Car = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == builderResult.CarSharingTitle && x.VINCode == vINCode);
-            return builderResult.Car.ToRentCarsModelDTO();
+            var car = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == builderResult.CarSharingTitle && x.VINCode == vINCode);
+            if (car != null)
+            {
+                builderResult.Car = car;
+                return builderResult.Car.ToRentCarsModelDTO();
+            }
+            else
+                throw new Exception("Car does not exist!");
+            
         }
 
-        public async Task<CarSharingBuilderResult> StepThree(CarSharingBuilderResult builderResult, PeriodModel period)
+        public async Task<bool> StepThree(CarSharingBuilderResult builderResult, PeriodModel period)
         {
-            builderResult.RentPeriod = period;
-            builderResult.Price = builderResult.Car.Price;//some logic to calculate price
-            return builderResult;
+            if (builderResult.Car.IsFree(period))
+            {
+                builderResult.RentPeriod = period;
+                builderResult.Price = (period.EndTime.Day - period.StartTime.Day) * builderResult.Car.Price.Total;
+                return true;
+            }
+            else
+                throw new Exception("Car is not free in this period");
         }
 
         public async Task<CreateCarSharingModelDTO> CreateCarSharing(CreateCarSharingModelDTO createCarSharingDTO)
@@ -74,12 +86,12 @@ namespace CityWeb.Infrastructure.Service.Transport
                     Description = createCarSharingDTO.Description
                 };
                 _context.CarSharings.Add(carSharingModel);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return carSharingModel.ToCreateCarSharingModelDTO();
             }
             else
             {
-                throw new Exception("CarSharing was not created!");
+                throw new Exception("CarSharing already exist, cant create one more with same title!");
             }
         }
 
@@ -89,7 +101,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             if (carSharing != null)
             { 
                 _context.CarSharings.Remove(carSharing);
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return true;
             }
             else
@@ -114,7 +126,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         public async Task<AddRentCarDTO> AddRentCar(AddRentCarDTO addRentCarDTO)
         {
             //var result = _context.Taxi.FirstOrDefaultAsync(x => x.Title == taxiModelDTO.Title);
-            if (await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == addRentCarDTO.CarSharingTitle && x.VINCode == addRentCarDTO.VINCode) == null)
+            if (await _context.RentCars.FirstOrDefaultAsync(x => x.VINCode == addRentCarDTO.VINCode) == null)
             {
                 var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == addRentCarDTO.CarSharingTitle);
                 if (carSharing != null)
@@ -131,7 +143,7 @@ namespace CityWeb.Infrastructure.Service.Transport
                         Color = addRentCarDTO.Color
                     };
                     _context.RentCars.Add(rentCarModel);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return rentCarModel.ToAddRentCarDTO();
                 }
                 else
@@ -139,7 +151,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             }
             else
             {
-                throw new Exception("Car was not created!");
+                throw new Exception("Car already exist, cant create one more with same VIN code!");
             }
         }
 

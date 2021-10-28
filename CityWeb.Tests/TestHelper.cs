@@ -132,6 +132,11 @@ namespace CityWeb.Tests
                     Payment = new PaymentModel(),
                     Service = service,
                     ServiceId = service.Id,
+                    Location = new AddressModel()
+                    {
+                        StreetName = "Porika",
+                        HouseNumber = $"{i+1}"
+                    },
                     Vehicle =
                     {
                         new RentCarModel()
