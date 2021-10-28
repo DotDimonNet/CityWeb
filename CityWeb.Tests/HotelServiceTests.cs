@@ -14,23 +14,5 @@ namespace CityWeb.Tests
         {
             await TestHelper.SetupDbContext();
         }
-
-        [Test]
-        public async Task CreateHotelTest()
-        {
-            var hotelService = new HotelService(TestHelper.ApplicationContext);
-            var dto = new HotelDTO()
-            {
-                Title = "Hotel Paradise",
-                Description = "Default description"
-            };
-
-            var hotel = await hotelService.AddHotel(dto);
-            var hotelFromContext = TestHelper.ApplicationContext.Hotels.FirstOrDefault(x => x.Id == hotel.Id);
-
-            Assert.IsNotNull(hotel);
-            Assert.AreEqual(hotel.Description, hotelFromContext.Description);
-            Assert.AreEqual(hotel.Title, hotelFromContext.Title);
-        }
     }
 }
