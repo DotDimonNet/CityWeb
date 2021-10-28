@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class RatingModel : Entity, IDescribe
+    public class RatingModel : Entity
     {
         public virtual ApplicationUserModel User { get; set; }
         public double Value { get; set; }
-        //public virtual bool Service { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public virtual ServiceModel Service{ get; set; }
     }
 }

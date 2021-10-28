@@ -15,7 +15,7 @@ namespace CityWeb.Infrastructure.Extentions
         {
             return new EntertainmentModelDTO()
             {
-                EntertainmentId = entModel.ServiceId,
+                EntertainmentId = entModel.Id,
                 EntertainmentTitle = entModel.Title,
                 Description = entModel.Description,
                 Type = entModel.EntertainmentType,
@@ -28,17 +28,12 @@ namespace CityWeb.Infrastructure.Extentions
             return new EventModelDTO()
             {
                 EventTitle = eventModel.Title,
-                Description = eventModel.Description,
-                Price = eventModel.EventPrice,
-                
+                Value = eventModel.EventPrice.Value,
+                Tax = eventModel.EventPrice.Tax,
+                VAT = eventModel.EventPrice.VAT,
             };
         }
 
-
-        
-
-
-        
 
 
         public static EntertainmentModelDTO ToAddEntertainmentModel(this AddEntertainmentModelDTO entModel)
