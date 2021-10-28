@@ -32,7 +32,7 @@ namespace CityWeb.Infrastructure.Extentions
                 OldPassword = userModel.PasswordHash
             };
         }
-      
+
         public static LoginModelDTO ToLoginModelDTO(this ApplicationUserModel userModel)
         {
             return new LoginModelDTO()
@@ -143,9 +143,9 @@ namespace CityWeb.Infrastructure.Extentions
             return new UpdateUserPasswordDTO()
             {
                 Login = userModel.Email,
-                Password = userModel.PasswordHash  
+                Password = userModel.PasswordHash
             };
-        }  
+        }
         //for delivery
         public static DeliveryDTO ToDeliveryDTO(this DeliveryModel deliveryModel)
         {
