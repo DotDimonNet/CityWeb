@@ -66,7 +66,48 @@ namespace CityWeb.Tests
             RoleManagerMock = new Mock<RoleManager<ApplicationUserRole>>(storeRoles.Object, null, null, null, null);
 
             RoleManagerMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationUserRole>()))
-                .ReturnsAsync(IdentityResult.Success).Verifiable();
+                .ReturnsAsync(IdentityResult.Success).Verifiable();    
+        }
+
+        private static async Task GenerateData()
+        {
+            var service = new ServiceModel();
+            var carSharings = new List<CarSharingModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var carSharing = new CarSharingModel()
+                {
+                    Title = $"CarSharing{i + 1}",
+                    Description = $"Default description {i}",
+                    Payment = new PaymentModel(),
+                    Service = service,
+                    ServiceId = service.Id,
+                    Vehicle = 
+                    { 
+                        new RentCarModel()
+                        {                         
+                            Type = Domain.Enums.TransportType.RentCar,
+                            VINCode = $"VAG489645{i+1}",
+                            RentPeriod = 
+                            {
+                                new PeriodModel(){ },
+                            },
+                            Color = "red",
+                            Mark = "Honda",
+                            Number = $"AB 55{i} CC",
+                            Seats = 2,
+                            Price = new PriceModel()
+                            {
+                                Value = i*100
+                            }
+                        }
+                    }
+                };
+
+                carSharings.Add(carSharing);
+            }
+            await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
+            await ApplicationContext.SaveChangesAsync();
         }
 
         private static async Task GenerateData()

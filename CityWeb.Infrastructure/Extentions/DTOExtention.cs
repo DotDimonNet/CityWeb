@@ -83,7 +83,6 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Title = carSharingModel.Title,
                 Description = carSharingModel.Description,
-                Location = carSharingModel.Location
             };
         }
 
