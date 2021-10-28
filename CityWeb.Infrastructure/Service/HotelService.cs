@@ -23,18 +23,22 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task<RoomModel> AddRoom(RoomDTO room)
         {
-            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Id == room.HotelId);
+            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == room.HotelTitle);
             if(hotel != null)
             {
                 var newRoom = new RoomModel()
                 {
-                    HotelId = room.HotelId,
                     Number = room.Number,
                     Price = room.Price,
                     Type = room.Type,
+                    HotelId = hotel.Id,
+                    RentPeriod = new PeriodModel
+                    {
+
+                    },                    
+                    Image = room.Image,
                 };
-                hotel.Rooms.Add(newRoom);
-                _context.Update(hotel);
+                await _context.Rooms.AddAsync(newRoom);
                 await _context.SaveChangesAsync();
                 return newRoom;
             }
@@ -69,15 +73,13 @@ namespace CityWeb.Infrastructure.Service
                     Image = hotelDTO.Image,
                     Description = hotelDTO.Description,
                     Title = hotelDTO.Title,  
-                    Rooms = null,
                     RentAddress = new AddressModel
                     {
                         StreetName = hotelDTO.StreetName,
                         HouseNumber = hotelDTO.HouseNumber,
                     },     
                 };
-                _context.Hotels.Add(newHotel);
-                _context.Update(_context.Hotels);
+                await _context.Hotels.AddAsync(newHotel);                
                 await _context.SaveChangesAsync();
                 return newHotel;
             }

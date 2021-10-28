@@ -1,4 +1,5 @@
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +70,59 @@ namespace CityWeb.Tests
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
 
         }
+        #region GenarateHotel
+        private static async Task<ICollection<RoomModel>> GenerateRooms(int amount)
+        {
+            var rooms = new List<RoomModel>();
+            for(int i = 1; i <= amount; i++)
+            {
+                var room = new RoomModel()
+                {
+                    Type = HotelRoomType.GetRandomRoomType(),
+                    Image = $"Room_img{i}.png",
+                    Number = i + 100,
+                    IsFree = GetRandomBool(),
+                    Price = new PriceModel
+                    {
+                        Value = (i * 100) + 300,
+                    },
+                };
+                rooms.Add(room);
+            }
+            await ApplicationContext.Rooms.AddRangeAsync(rooms);
+            return rooms;
+        }
+        private static async Task<ICollection<HotelModel>> GenerateHotels(int amount)
+        {
+            var hotels = new List<HotelModel>();
+            for (int i = 1; i < 11; i++)
+            {
+                var hotel = new HotelModel()
+                {
+                    Title = $"Hotel {i}",
+                    Description = $"Default descriotion {i}",
+                    Image = $"Hotel_img{i}.png",
+                    RentAddress = new AddressModel
+                    {
+                        StreetName = $"Street {i}",
+                        HouseNumber = $"i",
+                    },
+                    Rooms = await GenerateRooms(15),
+
+                };
+                hotels.Add(hotel);
+            }
+            return hotels;
+        }
+        #endregion
+
+        private static bool GetRandomBool()
+        {
+            var rnd = new Random();
+            if (rnd.Next(2) == 0)
+                return false;
+            return true;
+        }
 
         private static async Task GenerateData()
         {
@@ -84,11 +138,9 @@ namespace CityWeb.Tests
                     {
                         StreetName = "Soborna",
                         HouseNumber = "25A"
-
                     },
                     Event =
                     {
-
                         new EventModel()
                         {
                             Title = $"Event1 in Entertainment{i + 1}",
@@ -110,12 +162,7 @@ namespace CityWeb.Tests
                             }
                         }
                     }
-
-
-
-
                 };
-
                 entertainments.Add(entertainment);
             }
             await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
@@ -152,7 +199,6 @@ namespace CityWeb.Tests
                         }
                     }
                 };
-
                 carSharings.Add(carSharing);
             }
             await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
@@ -175,7 +221,6 @@ namespace CityWeb.Tests
                             ProductName = $"Product{i + 1}",
                             ProductPrice = new PriceModel()
                         }
-
                     },
                     DeliveryPrice = new PriceModel(),
                     WorkSchedule = new PeriodModel()
@@ -184,10 +229,13 @@ namespace CityWeb.Tests
                         EndTime = DateTime.Now.AddHours(+2),
                     },    
                 };
-
                 deliverys.Add(delivery);
             }
             await ApplicationContext.Deliveries.AddRangeAsync(deliverys);
+            await ApplicationContext.SaveChangesAsync();
+
+            //Create Hotels
+            await ApplicationContext.Hotels.AddRangeAsync(await GenerateHotels(10));
             await ApplicationContext.SaveChangesAsync();
         }
     }

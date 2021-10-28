@@ -13,7 +13,7 @@ namespace CityWeb.Domain.DTO.HotelDTO
         public HotelRoomType Type { get; set; }
         public int Number { get; set; }
         public PriceModel Price { get; set; }
-        public Guid HotelId { get; set; }
+        public string HotelTitle { get; set; }
         public string Image { get; set; }
     } 
 }
