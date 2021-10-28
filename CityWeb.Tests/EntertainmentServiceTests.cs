@@ -70,23 +70,23 @@ namespace CityWeb.Tests
 
 
         [Test]
-        public async Task UpdateEventModelTest()
-        {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //public async Task UpdateEventModelTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
 
-            var dto = new EventModelDTO()
-            {
+        //    var dto = new EventModelDTO()
+        //    {
                 
-            };
+        //    };
 
 
-            var events = await entertainmentService.UpdateEventModel(dto);
-            var eventsFromContext = TestHelper.ApplicationContext.Events.FirstOrDefault(x => x.Title == events.EventTitle);
+        //    var events = await entertainmentService.UpdateEventModel(dto);
+        //    var eventsFromContext = TestHelper.ApplicationContext.Events.FirstOrDefault(x => x.Title == events.EventTitle);
 
 
-            Assert.IsNotNull(events);
-            Assert.AreEqual(events.EventTitle, eventsFromContext.Title);
-        }
+        //    Assert.IsNotNull(events);
+        //    Assert.AreEqual(events.EventTitle, eventsFromContext.Title);
+        //}
 
 
         //[Test]
