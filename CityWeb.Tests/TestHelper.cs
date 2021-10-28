@@ -66,12 +66,60 @@ namespace CityWeb.Tests
             RoleManagerMock = new Mock<RoleManager<ApplicationUserRole>>(storeRoles.Object, null, null, null, null);
 
             RoleManagerMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationUserRole>()))
-                .ReturnsAsync(IdentityResult.Success).Verifiable();    
-        }
+                .ReturnsAsync(IdentityResult.Success).Verifiable();
 
+        }
         private static async Task GenerateData()
         {
             var service = new ServiceModel();
+            var entertainments = new List<EntertainmentModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var entertainment = new EntertainmentModel()
+                {
+                    Title = $"Entertainment{i + 1}",
+                    Description = $"Default description {i}",
+                    Address = new AddressModel()
+                    {
+                        StreetName = "Soborna",
+                        HouseNumber = "25A"
+
+                    },
+                    Event = 
+                    {
+
+                        new EventModel()
+                        {
+                            Title = $"Event1 in Entertainment{i + 1}",
+                            EventPrice = new PriceModel()
+                            {
+                                Value = 300+i,
+                                VAT = 10+i,
+                                Tax = 10+i,
+                            }
+                        },
+                        new EventModel()
+                        {
+                            Title = $"Event2 in Entertainment{i + 1}",
+                            EventPrice = new PriceModel()
+                            {
+                                Value = 300+i,
+                                VAT = 10+i,
+                                Tax = 10+i,
+                            }
+                        }
+                    }
+                    
+                    
+
+
+                };
+
+                entertainments.Add(entertainment);
+            }
+            await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
+            await ApplicationContext.SaveChangesAsync();
+
             var carSharings = new List<CarSharingModel>();
             for (int i = 0; i < 10; i++)
             {
@@ -159,8 +207,9 @@ namespace CityWeb.Tests
             }
             await ApplicationContext.Deliveries.AddRangeAsync(deliverys);
             await ApplicationContext.SaveChangesAsync();
-
-
         }
     }
 }
+
+
+    
