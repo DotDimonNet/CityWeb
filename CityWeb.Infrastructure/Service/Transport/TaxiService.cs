@@ -22,14 +22,14 @@ namespace CityWeb.Infrastructure.Service.Transport
             _context = context;
         }
 
-        public async Task Steps()
+        /*public async Task Steps()
         {
             var builder = SetupTaxiBuilderResult();
             var stepOne = await StepOne(builder, "Uber");
             ICollection<AddressModel> addresses = new List<AddressModel>() { new AddressModel() { }, new AddressModel() { } };
             var stepTwo = StepTwo(builder, addresses);
             StepThree(builder, TransportType.TaxiBusiness);
-        }
+        }*/
 
         public TaxiBuilderResult SetupTaxiBuilderResult()
         {
@@ -39,24 +39,23 @@ namespace CityWeb.Infrastructure.Service.Transport
             };
         }
 
-        public async Task<TaxiCarModel> StepOne(TaxiBuilderResult builderResult, string title)
+        public async Task<IEnumerable<TaxiModelDTO>> StepOne(TaxiBuilderResult builderResult, ICollection<AddressModel> addresses)
+        {
+            builderResult.VisitedAddresses = addresses;
+            return await _context.Taxi.Select(x => x.ToTaxiModelDTO()).ToListAsync();
+        }
+
+        public async Task<IEnumerable<TransportType>> StepTwo(TaxiBuilderResult builderResult, string title)
         {
             builderResult.TaxiTitle = title;
             var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == title);
             if (taxi != null)
             {
-                return await _context.TaxiCar.FirstOrDefaultAsync(x => x.TaxiId == taxi.Id); 
+                return await _context.TaxiCar.Where(x => x.TaxiId == taxi.Id).Select(x => x.Type).Distinct().ToListAsync();
             }
             else
                 throw new Exception("CarSharing does not exist!");
-        }
-
-        public IQueryable<TransportType> StepTwo(TaxiBuilderResult builderResult, ICollection<AddressModel> addresses)
-        {
-            builderResult.VisitedAddresses = addresses;
-            var taxiTypes = _context.TaxiCar.Where(x => x.Taxi.Title == builderResult.TaxiTitle).Distinct().Select(x => x.Type);
-            return taxiTypes;
-        }
+        }        
 
         public async Task StepThree(TaxiBuilderResult builderResult, TransportType taxiType)
         {

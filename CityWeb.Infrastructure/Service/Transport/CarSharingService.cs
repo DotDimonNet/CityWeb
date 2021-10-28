@@ -34,7 +34,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         {
             return new CarSharingBuilderResult()
             {
-                //some logic while creating builder
+
             };
         }
 
@@ -114,7 +114,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             if (carSharing != null)
             {
                 carSharing.Description = updateCarSharingDTO.Description;
-                //carSharing.Location = updateCarSharingDTO.Location;
+                carSharing.Location = updateCarSharingDTO.Location;
                 _context.Update(carSharing);
                 await _context.SaveChangesAsync();
                 return carSharing.ToUpdateCarSharingModelDTO();
@@ -125,7 +125,6 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<AddRentCarDTO> AddRentCar(AddRentCarDTO addRentCarDTO)
         {
-            //var result = _context.Taxi.FirstOrDefaultAsync(x => x.Title == taxiModelDTO.Title);
             if (await _context.RentCars.FirstOrDefaultAsync(x => x.VINCode == addRentCarDTO.VINCode) == null)
             {
                 var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == addRentCarDTO.CarSharingTitle);

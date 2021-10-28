@@ -34,12 +34,9 @@ namespace CityWeb.Tests
             var carSharing = await carSharingService.CreateCarSharing(dto);
             var carSharingFromContext = TestHelper.ApplicationContext.CarSharings.FirstOrDefault(x => x.Title == carSharing.Title);
 
-            
             Assert.IsNotNull(carSharing);
             Assert.AreEqual(carSharing.Description, carSharingFromContext.Description);
             Assert.AreEqual(carSharing.Title, carSharingFromContext.Title);
-
-            
         }
 
         [Test]
