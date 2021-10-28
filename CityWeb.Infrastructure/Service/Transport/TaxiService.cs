@@ -35,7 +35,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         {
             return new TaxiBuilderResult()
             {
-                //some logic while creating builder
+
             };
         }
 
@@ -45,7 +45,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == title);
             if (taxi != null)
             {
-                return await _context.TaxiCar.FirstOrDefaultAsync(x => x.TaxiId == taxi.Id); //IAsyncEnumerable<TaxiCarModel>?
+                return await _context.TaxiCar.FirstOrDefaultAsync(x => x.TaxiId == taxi.Id); 
             }
             else
                 throw new Exception("CarSharing does not exist!");
@@ -63,13 +63,12 @@ namespace CityWeb.Infrastructure.Service.Transport
             builderResult.TaxiType = taxiType;
             builderResult.Price = new PriceModel()
             {
-                //some logic
+
             };
         }
 
         public async Task<CreateTaxiModelDTO> CreateTaxi(CreateTaxiModelDTO createTaxiDTO)
         { 
-            //var result = _context.Taxi.FirstOrDefaultAsync(x => x.Title == taxiModelDTO.Title);
             if (await _context.Taxi.FirstOrDefaultAsync(x => x.Title == createTaxiDTO.Title) == null)
             {
                 var taxiModel = new TaxiModel()
@@ -112,7 +111,6 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<TaxiCarModel> CreateTaxiCar(AddTaxiCarDTO addTaxiCarDTO)
         {
-            //var result = _context.Taxi.FirstOrDefaultAsync(x => x.Title == taxiModelDTO.Title);
             if (_context.TaxiCar.FirstOrDefaultAsync(x => x.Taxi.Title == addTaxiCarDTO.TaxiTitle && x.VINCode == addTaxiCarDTO.VINCode) == null)
             {
                 var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == addTaxiCarDTO.TaxiTitle);
@@ -169,6 +167,5 @@ namespace CityWeb.Infrastructure.Service.Transport
             else
                 throw new Exception("Car does not exist");
         }
-
     }
 }
