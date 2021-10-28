@@ -102,7 +102,7 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
             var carDTO = new DeleteRentCarDTO()
             {
-                VINCode = "VAG4896451",
+                VINCode = "BAG48964501",
             };
 
             var rentCar = await rentCarService.DeleteRentCar(carDTO);
@@ -118,10 +118,10 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
             var carDTO = new UpdateRentCarDTO()
             {
-                VINCode = "VAG4896451",
+                VINCode = "BAG48964500",
                 Color = "white",
                 Mark = "Honda",
-                Number = "AB 5555 CC",
+                Number = "AB 5855 CC",
                 Seats = 1,
                 Type = Domain.Enums.TransportType.RentCar
             };
@@ -184,8 +184,8 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
             await rentCarService.StepOne(builder, "CarSharing1");
-            var stepTwoResult = await rentCarService.StepTwo(builder, "VAG4896451");
-            var stepTwoResultFromComtext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.VINCode == "VAG4896451");
+            var stepTwoResult = await rentCarService.StepTwo(builder, "BAG48964500");
+            var stepTwoResultFromComtext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.VINCode == "BAG48964500");
 
             Assert.AreEqual(stepTwoResult.VINCode, stepTwoResultFromComtext.VINCode);
         }
@@ -196,7 +196,7 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
             await rentCarService.StepOne(builder, "CarSharing1");
-            await rentCarService.StepTwo(builder, "VAG4896451");
+            await rentCarService.StepTwo(builder, "BAG48964500");
          
             var period = new PeriodModel()
             {
