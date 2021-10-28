@@ -586,7 +586,7 @@ namespace CityWeb.Infrastucture.Data
                     StartTime = new DateTime(2015, 7, 20, 09, 00, 00),
                     EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
                 },
-                Order =
+                Products =
                 {
                     new ProductModel()
                     {
@@ -652,7 +652,7 @@ namespace CityWeb.Infrastucture.Data
                     StartTime = new DateTime(2015, 7, 20, 07, 00, 00),
                     EndTime = new DateTime(2015, 7, 20, 23, 30, 00),
                 },
-                Order =
+                Products =
                 {
                     new ProductModel()
                     {
@@ -709,21 +709,27 @@ namespace CityWeb.Infrastucture.Data
                 },
 
             };
-            var housepay= new HousePayModel()
+            var housepay = new HousePayModel()
             {
-                ServiceType = Domain.Enums.HousePaymentType.Internet,
+                Title = "Platizh",
+                Description = "oplata za internet",
+                Owner = new UserProfileModel()
+                {
+                    Address = new AddressModel
+                    {
+                        StreetName = "Pravdy",
+                        HouseNumber = "123",
+                    },
+                },
+                CounterModels = {
+                    new CounterModel
+                        {
 
-                PayerAddress = new AddressModel()
-                {
-                    Id = Guid.NewGuid(),
-                    StreetName = "Soborna",
-                    HouseNumber = "1",
+                         Type = Domain.Enums.HousePaymentType.Gas,
+
+                        },
                 },
-                Price = new PriceModel()
-                {
-                    Value = 120,
-                    //Description = "Proplata za veresen",
-                },
+
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
