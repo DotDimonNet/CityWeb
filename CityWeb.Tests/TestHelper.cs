@@ -103,6 +103,13 @@ namespace CityWeb.Tests
                         {
                             ProductName = $"Product{i + 1}",
                             ProductPrice = new PriceModel()
+                            {
+                                Value = i *10,
+                                Tax = i*2,
+                                VAT = i +1,
+                            },
+                            ProductType = Domain.Enums.ProductType.AlcoholicDrinks,
+                            ProductImage = $"img{i+1}"
                         }
 
                     },

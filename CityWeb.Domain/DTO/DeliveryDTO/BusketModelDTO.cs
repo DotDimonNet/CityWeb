@@ -9,7 +9,7 @@ namespace CityWeb.Domain.DTO
 {
     public class BusketModelDTO
     {
-        public IEnumerable<BusketItemModelDTO> Busket { get; set; }
+        public ICollection<BusketItemModelDTO> Busket { get; set; } = new List<BusketItemModelDTO>();
         public string UserName { get; set; }
         public AddressModel Address { get; set; }
     }
