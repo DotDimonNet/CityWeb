@@ -205,6 +205,7 @@ namespace CityWeb.Tests
             {
                 var rating = new RatingModel()
                 {
+                    ServiceId = Guid.NewGuid(),
                     Value = i
                 };
                 ratings.Add(rating);

@@ -43,5 +43,10 @@ namespace CityWeb.Infrastructure.Service
             var service = _context.Ratings.Where(x => x.ServiceId == serviceRate.ServiceId);
             return service.Max();
         }
+        public async Task<RatingModel> FindMinRating(MinServiceRateDTO serviceRate)
+        {
+            var service = _context.Ratings.Where(x => x.ServiceId == serviceRate.ServiceId);
+            return service.Min();
+        }
     }
 }
