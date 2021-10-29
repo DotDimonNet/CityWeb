@@ -11,5 +11,7 @@ namespace CityWeb.Domain.Entities
         public virtual ApplicationUserModel User { get; set; }
         public double Value { get; set; }
         public virtual ServiceModel Service{ get; set; }
+        public virtual Guid ServiceId { get; set; }
+        public virtual Guid UserId { get; set; }
     }
 }

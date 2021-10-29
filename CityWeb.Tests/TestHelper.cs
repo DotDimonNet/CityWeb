@@ -126,7 +126,19 @@ namespace CityWeb.Tests
             await ApplicationContext.Deliveries.AddRangeAsync(deliverys);
             await ApplicationContext.SaveChangesAsync();
 
+            //Create Ratings
 
+            var ratings = new List<RatingModel>();
+            for (int i = 1; i < 5; i++)
+            {
+                var rating = new RatingModel()
+                {
+                    Value = i
+                };
+                ratings.Add(rating);
+            }
+            await ApplicationContext.Ratings.AddRangeAsync(ratings);
+            await ApplicationContext.SaveChangesAsync();
         }
     }
 }
