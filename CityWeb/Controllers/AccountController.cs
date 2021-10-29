@@ -1,12 +1,9 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
-using CityWeb.Infrastructure.Service;
-using CityWeb.Infrastucture.Data;
+using CityWeb.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Threading.Tasks;
 
@@ -17,12 +14,12 @@ namespace Taste.Web.Controllers
     public class AccountController : Controller
     {
         private readonly SignInManager<ApplicationUserModel> _signInManager;
-        private readonly ApplicationContext _context;
+        private readonly IAccountService _accountService;
 
-        public AccountController(SignInManager<ApplicationUserModel> signInManager, ApplicationContext context)
+        public AccountController(SignInManager<ApplicationUserModel> signInManager, IAccountService accountService)
         {
             _signInManager = signInManager;
-            _context = context;
+            _accountService = accountService;
         }
 
         [HttpPost("login")]
@@ -30,9 +27,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var user = await _signInManager.UserManager.FindByEmailAsync(request.Login);
-                await _signInManager.SignInAsync(user, true);
-                return Ok();
+                var user = await _accountService.LoginUser(request);
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -46,8 +42,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var service = new AccountService(_context, _signInManager);
-                var user = await service.RegisterUser(request);
+                var user = await _accountService.RegisterUser(request);
                 return Json(user);
             }
             catch (Exception ex)

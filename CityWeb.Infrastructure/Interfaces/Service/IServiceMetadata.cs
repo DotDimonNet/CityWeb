@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Interfaces
 {
-    public interface IServiceMetadata //: IBaseDBO, IDescribe
+    public interface IServiceMetadata
     {
         public bool IsActive { get; set; }
         public string Version { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }   
 }
 

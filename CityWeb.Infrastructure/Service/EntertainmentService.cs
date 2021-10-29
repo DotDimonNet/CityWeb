@@ -22,28 +22,26 @@ namespace CityWeb.Infrastructure.Service
         {
             _context = context;
         }
+
         public async Task<UpdateEntertainmentDTO> UpdadeEntertainmentModel(EntertainmentModelDTO updateData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
+
             if(entertainment != null)
             {
                 entertainment.Title = updateData.EntertainmentTitle;       
                 
-
                 _context.Update(entertainment);
                 await _context.SaveChangesAsync();
                 return entertainment.ToUpdateEntertainmentModelDTO();
 
             }
-            
             else
             {
                 throw new Exception("Entertainment doesnt exists");
             }
-            _context.Update(entertainment);
-            await _context.SaveChangesAsync();
-            return entertainment.ToUpdateEntertainmentModelDTO();
         }
+
         public async Task<UpdateEventDTO> UpdateEventModel(EventModelDTO updateEvent)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.Title);
@@ -86,7 +84,7 @@ namespace CityWeb.Infrastructure.Service
             }
             else
             {
-                throw new Exception("Enterainment doesnt exists");
+                throw new Exception("Enterainment doesn't exists");
             }
 
         }
@@ -104,12 +102,12 @@ namespace CityWeb.Infrastructure.Service
                 }
                 else
                 {
-                    throw new Exception("Event doesnt exist");
+                    throw new Exception("Event doesn't exist");
                 }
             }
             else
             {
-                throw new Exception("Entertainment doesnt exist");
+                throw new Exception("Entertainment doesn't exist");
             }
         }
         public async Task<AddEntertainmentModelDTO> AddEntertainmentModel(EntertainmentModelDTO addData)
@@ -158,12 +156,12 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Entertainment doesnt exist");
             }
         }
-        public async Task<IEnumerable<string>> StepOne(ServiceModelDTO dtoService)
+        public async Task<IEnumerable<string>> GetEntertainmentTitlesFromService(ServiceModelDTO dtoService)
         {
             var service = await _context.Services.FirstOrDefaultAsync(x => dtoService.Entertaiments == x.Entertaiments);
             return service.Entertaiments.Select(x => x.Title);
         }
-        public async Task<IEnumerable<string>> StepTwo(EntertainmentModelDTO entModel)
+        public async Task<IEnumerable<string>> GetEventTitlesFromEntertainment(EntertainmentModelDTO entModel)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentId == x.Id && x.WorkSchedule.EndTime != (DateTime.Now));
             return entertainment.Event.Select(x => x.Title);
