@@ -50,6 +50,16 @@ namespace CityWeb.Infrastructure.Extentions
                 Email = userModel.Email,
             };
         }
+
+        public static TaxiModelDTO ToTaxiModelDTO(this TaxiModel taxiModel)
+        {
+            return new TaxiModelDTO()
+            {
+                Title = taxiModel.Title,
+                Description = taxiModel.Description
+            };
+        }
+
         public static CreateTaxiModelDTO ToCreateTaxiModelDTO(this TaxiModel taxiModel)
         {
             return new CreateTaxiModelDTO()
@@ -83,6 +93,7 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Title = carSharingModel.Title,
                 Description = carSharingModel.Description,
+                Location = carSharingModel.Location
             };
         }
 
