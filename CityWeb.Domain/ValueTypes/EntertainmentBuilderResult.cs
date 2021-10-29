@@ -9,8 +9,11 @@ namespace CityWeb.Domain.ValueTypes
 {
     public class EntertainmentBuilderResult
     {
+        //Step1
         public string EntertainmentTitle { get; set; }
+        //Step2
         public string EventTitle { get; set; }
+        //Step3
         public BalanceModel Balance { get; set; }
     }
 }

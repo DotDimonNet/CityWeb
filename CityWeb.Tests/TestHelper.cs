@@ -67,26 +67,97 @@ namespace CityWeb.Tests
 
             RoleManagerMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationUserRole>()))
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
+
         }
 
         private static async Task GenerateData()
         {
             var service = new ServiceModel();
+            var entertainments = new List<EntertainmentModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var entertainment = new EntertainmentModel()
+                {
+                    Title = $"Entertainment{i + 1}",
+                    Description = $"Default description {i}",
+                    Address = new AddressModel()
+                    {
+                        StreetName = "Soborna",
+                        HouseNumber = "25A"
+
+                    },
+                    Event =
+                    {
+
+                        new EventModel()
+                        {
+                            Title = $"Event1",
+                            EventPrice = new PriceModel()
+                            {
+                                Value = 300,
+                                VAT = 10,
+                                Tax = 10,
+                            }
+                        },
+                        new EventModel()
+                        {
+                            Title = $"Event2",
+                            EventPrice = new PriceModel()
+                            {
+                                Value = 300,
+                                VAT = 10,
+                                Tax = 10,
+                            }
+                        }
+                    }
+
+
+
+
+                };
+
+                entertainments.Add(entertainment);
+            }
+            await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
+            await ApplicationContext.SaveChangesAsync();
+
             var carSharings = new List<CarSharingModel>();
             for (int i = 0; i < 10; i++)
             {
                 var carSharing = new CarSharingModel()
                 {
                     Title = $"CarSharing{i + 1}",
-                    Description = $"Default descriotion {i}",
+                    Description = $"Default description {i}",
                     Payment = new PaymentModel(),
-
+                    Service = service,
+                    ServiceId = service.Id,
+                    Vehicle =
+                    {
+                        new RentCarModel()
+                        {
+                            Type = Domain.Enums.TransportType.RentCar,
+                            VINCode = $"VAG489645{i+1}",
+                            RentPeriod =
+                            {
+                                new PeriodModel(){ },
+                            },
+                            Color = "red",
+                            Mark = "Honda",
+                            Number = $"AB 55{i} CC",
+                            Seats = 2,
+                            Price = new PriceModel()
+                            {
+                                Value = i*100
+                            }
+                        }
+                    }
                 };
 
                 carSharings.Add(carSharing);
             }
             await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
-        
+            await ApplicationContext.SaveChangesAsync();
+
 
             //Create Deliverys company
 
@@ -126,6 +197,7 @@ namespace CityWeb.Tests
             await ApplicationContext.Deliveries.AddRangeAsync(deliverys);
             await ApplicationContext.SaveChangesAsync();
 
+
             //Create Ratings
 
             var ratings = new List<RatingModel>();
@@ -139,6 +211,10 @@ namespace CityWeb.Tests
             }
             await ApplicationContext.Ratings.AddRangeAsync(ratings);
             await ApplicationContext.SaveChangesAsync();
+
         }
     }
 }
+
+
+    
