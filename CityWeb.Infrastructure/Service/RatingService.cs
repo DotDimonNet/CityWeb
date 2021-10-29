@@ -14,19 +14,34 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
         private readonly SignInManager<ApplicationUserModel> _signInManager;
-        public RatingService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
+        public RatingService(ApplicationContext context)
         {
             _context = context;
-            _signInManager = signInManager;
+            
         }
 
-        //public async Task<RatingModel> RateService(RateServiceDTO rateService)
-        //{
-        //    var delivery = await _context.Services.FirstOrDefault 
-        //    return new RatingModel()
-        //    {
-        //        Value =
-        //    };
-        //}
+        public async Task<RatingModel> RateService(RateServiceDTO rateService)
+        {
+            var rating =  _context.Services.FirstOrDefault(x => x.Id == rateService.ServiceId);
+            var newRating = new RatingModel()
+            {
+                Value = rateService.Rating
+            };
+
+            var model = await _context.Ratings.AddAsync(newRating);
+            _context.SaveChanges();
+            return model.Entity;
+        }
+
+        public async IEnumerable<RatingModel> FindRateByUserId(UserRateDTO userRate)
+        {
+            return _context.Ratings.All(x => x.UserId == userRate.UserId);
+        }
+
+        public async Task <RatingModel> FindMaxRating(MaxServiceRateDTO serviceRate)
+        {
+            var service = _context.Ratings.Where(x => x.ServiceId == serviceRate.ServiceId);
+            return service.Max();
+        }
     }
 }

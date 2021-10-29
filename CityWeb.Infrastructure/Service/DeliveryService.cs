@@ -166,7 +166,7 @@ namespace CityWeb.Infrastructure.Service
             
         }
 
-        
+        // Methods for steps
         public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companyShedule)
         {
             var delivery = _context.Deliveries.Where(x => x.WorkSchedule.StartTime.TimeOfDay < companyShedule.WorkTime.TimeOfDay && x.WorkSchedule.EndTime.TimeOfDay > companyShedule.WorkTime.TimeOfDay);
@@ -175,14 +175,14 @@ namespace CityWeb.Infrastructure.Service
         
         public async Task<IEnumerable<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => dtoModel.DeliveryId == x.Id );
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => dtoModel.Title == x.Title );
 
             return delivery.Products.Select(x => x.ProductType.Name);
         }
 
         public IEnumerable<ProductModelDTO> GetProductsByType(ProductByTypeDTO dtoModel)
         {
-            var products = _context.Products.Where(x => dtoModel.DeliveryId == x.DeliveryId && x.ProductType.Name == dtoModel.TypeName).Distinct();
+            var products = _context.Products.Where(x => dtoModel.ProductName == x.ProductName && x.ProductType.Name == dtoModel.TypeName).Distinct();
 
             return products.Select(x => x.ToProductDTO());
         }

@@ -174,6 +174,13 @@ namespace CityWeb.Tests
                         {
                             ProductName = $"Product{i + 1}",
                             ProductPrice = new PriceModel()
+                            {
+                                Value = i *10,
+                                Tax = i*2,
+                                VAT = i +1,
+                            },
+                            ProductType = Domain.Enums.ProductType.AlcoholicDrinks,
+                            ProductImage = $"img{i+1}"
                         }
 
                     },
@@ -189,6 +196,22 @@ namespace CityWeb.Tests
             }
             await ApplicationContext.Deliveries.AddRangeAsync(deliverys);
             await ApplicationContext.SaveChangesAsync();
+
+
+            //Create Ratings
+
+            var ratings = new List<RatingModel>();
+            for (int i = 1; i < 5; i++)
+            {
+                var rating = new RatingModel()
+                {
+                    Value = i
+                };
+                ratings.Add(rating);
+            }
+            await ApplicationContext.Ratings.AddRangeAsync(ratings);
+            await ApplicationContext.SaveChangesAsync();
+
         }
     }
 }

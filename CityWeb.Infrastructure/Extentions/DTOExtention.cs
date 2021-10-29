@@ -213,7 +213,7 @@ namespace CityWeb.Infrastructure.Extentions
         {
             return new SelectDeliveryModelDTO()
             {
-                DeliveryId = model.Id
+                Title = model.Title
             };
         }
 
