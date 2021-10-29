@@ -11,6 +11,7 @@ namespace CityWeb.Domain.DTO.Transport.CarSharing
     {
         public string Title { get; set; }
         public string Description { get; set; }
+        public AddressModel Location { get; set; }
         //public virtual ServiceModel Service { get; set; }
     }
 }

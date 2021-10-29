@@ -16,7 +16,7 @@ namespace CityWeb.Domain.ValueTypes
         public RentCarModel Car { get; set; }
         //step 3
         public PeriodModel RentPeriod { get; set; }
-        public PriceModel Price { get; set; }
+        public double Price { get; set; }
         public AddressModel Location { get; set; }
     }
 }

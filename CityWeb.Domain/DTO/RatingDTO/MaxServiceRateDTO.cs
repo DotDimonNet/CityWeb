@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.RatingDTO
 {
-    public class RateServiceDTO
+    public class MaxServiceRateDTO
     {
         public Guid ServiceId { get; set; }
-        public int Rating { get; set; }
     }
 }

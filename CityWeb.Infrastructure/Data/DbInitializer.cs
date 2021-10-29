@@ -267,7 +267,6 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Zhigalet",
                             Color = "GnilaVishnya",
-                            IsFree = true,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -288,7 +287,6 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Honda",
                             Color = "Red",
-                            IsFree = false,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -331,7 +329,6 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "BMW",
                             Color = "pink",
-                            IsFree = true,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
@@ -352,7 +349,6 @@ namespace CityWeb.Infrastucture.Data
                             Id = Guid.NewGuid(),
                             Mark = "Honda",
                             Color = "White",
-                            IsFree = false,
                             Price = new PriceModel()
                             {
                                 Id = Guid.NewGuid(),
