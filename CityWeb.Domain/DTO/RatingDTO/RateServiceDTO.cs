@@ -8,6 +8,7 @@ namespace CityWeb.Domain.DTO.RatingDTO
 {
     public class RateServiceDTO
     {
+        public Guid UserId { get; set; }
         public Guid ServiceId { get; set; }
         public double Rating { get; set; }
     }

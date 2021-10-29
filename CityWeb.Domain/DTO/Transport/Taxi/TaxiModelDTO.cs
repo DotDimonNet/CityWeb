@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Infrastructure.Interfaces
+namespace CityWeb.Domain.DTO.Transport.Taxi
 {
-    public interface IServiceMetadata
+    public class TaxiModelDTO
     {
-        public bool IsActive { get; set; }
-        public string Version { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-    }   
+    }
 }
-
