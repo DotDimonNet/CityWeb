@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
-    public class SelectEntertainmentDTO
+    public class GetEventsFromEntertainmentsDTO
     {
         public Guid EntertainmentId { get; set; }
     }
 
-    public class SelectEventDTO
+    public class GetEventFromEventsDTO
     {
         public Guid EventId { get; set; }
         

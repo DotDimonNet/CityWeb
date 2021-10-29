@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Infrastructure.Authorization;
+using CityWeb.Infrastructure.Interfaces.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,18 +14,43 @@ namespace CityWeb.Controllers
     [ApiController]
     [Route("api/Entertainment")]
     [Authorize(Policy = Policies.RequireUserRole)]
+
+    
     public class EntertainmentController : Controller
     {
-        private readonly ILogger<EntertainmentController> _logger;
-        public EntertainmentController(ILogger<EntertainmentController> logger)
+        private readonly IEntertainmentService _entertainmentService;
+        public EntertainmentController(IEntertainmentService entertainmentService)
         {
-            _logger = logger;
+            _entertainmentService = entertainmentService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetEvents()
+        [HttpGet("events")]
+        public async Task<IEntertainmentService> GetEventsFromEntertainment([FromBody] GetEventsFromEntertainmentsDTO request)
         {
-            return new JsonResult(1);
+            try
+            {
+                var user = await _entertainmentService.GetEventTitlesFromEntertainment(request);
+                return (IEntertainmentService)Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
         }
+        [HttpGet("event")]
+        public async Task<IEntertainmentService> GetEventFromEvents([FromBody] GetEventFromEventsDTO request)
+        {
+            try
+            {
+                var user = await _entertainmentService.GetEventFromEventTitles(request);
+                return (IEntertainmentService)Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }

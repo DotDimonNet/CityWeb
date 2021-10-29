@@ -86,8 +86,8 @@ namespace CityWeb.Infrastructure.Service
             {
                 throw new Exception("Enterainment doesn't exists");
             }
-
         }
+
         public async Task<bool> DeleteEventModel(DeleteEventDTO deleteData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
@@ -110,6 +110,7 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Entertainment doesn't exist");
             }
         }
+
         public async Task<AddEntertainmentModelDTO> AddEntertainmentModel(EntertainmentModelDTO addData)
         {
             var entertainment = new EntertainmentModel()
@@ -120,10 +121,8 @@ namespace CityWeb.Infrastructure.Service
             var entModel = await _context.Entertaiments.AddAsync(entertainment);
             await _context.SaveChangesAsync();
             return entModel.Entity.ToAddEntertainmentModelDTO();
-
-
-
         }
+
         public async Task<AddEventModelDTO> AddEventtModel(EventModelDTO addData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.Title);
@@ -156,16 +155,19 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Entertainment doesnt exist");
             }
         }
-        public async Task<IEnumerable<string>> SelectEntertainment(SelectEntertainmentDTO entModel)
+
+        public async Task<IEnumerable<string>> GetEventTitlesFromEntertainment(GetEventsFromEntertainmentsDTO entModel)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentId == x.Id);
             return entertainment.Event.Select(x => x.Title);
         }
-        public async Task<EventModelDTO> SelectEvent(SelectEventDTO eventModel)
+
+        public async Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO eventModel)
         {
             var events = await _context.Events.FirstOrDefaultAsync(x => eventModel.EventId == x.Id && x.isAvailable == true);
             return events.ToEventModelDTO();
         }
+
         //public async Task<PayEventDTO> PaymentOfEvent(EventModelDTO eventModel)
         //{
         //    var pay = _context.Payments.Where(x => eventModel.EventId == x.ProductId);
