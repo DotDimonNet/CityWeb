@@ -17,7 +17,7 @@ namespace CityWeb.Tests
             await TestHelper.SetupDbContext();
         }
 
-        [Test]
+        //[Test]
     //    public async Task RegisterUserTest()
     //    {
     //        var accountService = new AccountService(TestHelper.ApplicationContext, SignInManagerMock);//what second argument must be
@@ -39,5 +39,5 @@ namespace CityWeb.Tests
     //        Assert.AreEqual(user.Email, userFromContext.Email);
     //        Assert.AreEqual(user.UserName, userFromContext.UserName);
     //    }
-    //}
+    }
 }
