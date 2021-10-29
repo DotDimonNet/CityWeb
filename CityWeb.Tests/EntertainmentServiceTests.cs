@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
@@ -246,24 +247,10 @@ namespace CityWeb.Tests
             Assert.AreEqual(exept.Message, "Event doesnt exist");
         }
 
-
-        //public async Task StepOneTest()
+        //[Test]
+        //public async Task SelectEntertainmentTest()
         //{
-        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-        //    var dto = new EntertainmentModel()
-        //    {
-        //        Title = $"Entertainment1",
-        //        Description = $"Default description 1",
-        //        Address = new AddressModel()
-        //        {
-        //            StreetName = "Soborna",
-        //            HouseNumber = "25A"
 
-        //        }
-        //    };
-
-        //    var entertainment = await entertainmentService.StepOne();
-        //    var entertainmentFromContext = TestHelper.ApplicationContext.Services.FirstOrDefault(x => x.Entertaiments == entertainment);
         //}
 
     }

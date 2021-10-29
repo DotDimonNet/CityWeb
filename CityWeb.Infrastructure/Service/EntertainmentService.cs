@@ -56,7 +56,7 @@ namespace CityWeb.Infrastructure.Service
                     events.EventPrice.Tax = updateEvent.Tax;
                     events.EventPrice.Value = updateEvent.Value;
                     events.EventPrice.VAT = updateEvent.VAT;
-
+                    
 
                     _context.Update(events);
                     await _context.SaveChangesAsync();
@@ -158,17 +158,22 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Entertainment doesnt exist");
             }
         }
-        public async Task<IEnumerable<string>> StepOne(ServiceModelDTO dtoService)
+        public async Task<IEnumerable<string>> SelectEntertainment(SelectEntertainmentDTO entModel)
         {
-            var service = await _context.Services.FirstOrDefaultAsync(x => dtoService.Entertaiments == x.Entertaiments);
-            return service.Entertaiments.Select(x => x.Title);
-        }
-        public async Task<IEnumerable<string>> StepTwo(EntertainmentModelDTO entModel)
-        {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentId == x.Id && x.WorkSchedule.EndTime != (DateTime.Now));
+            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentId == x.Id);
             return entertainment.Event.Select(x => x.Title);
         }
-        
+        public async Task<EventModelDTO> SelectEvent(SelectEventDTO eventModel)
+        {
+            var events = await _context.Events.FirstOrDefaultAsync(x => eventModel.EventId == x.Id && x.isAvailable == true);
+            return events.ToEventModelDTO();
+        }
+        //public async Task<PayEventDTO> PaymentOfEvent(EventModelDTO eventModel)
+        //{
+        //    var pay = _context.Payments.Where(x => eventModel.EventId == x.ProductId);
+        //    return pay.Where(x => x.Id == )
+        //}
+
 
 
 

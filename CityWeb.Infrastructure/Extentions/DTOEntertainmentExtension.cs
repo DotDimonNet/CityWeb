@@ -49,5 +49,15 @@ namespace CityWeb.Infrastructure.Extentions
                 VAT = eventModel.EventPrice.VAT,
             };
         }
+       
+        public static EventModelDTO ToEventModelDTO (this EventModel eventModel)
+        {
+            return new EventModelDTO()
+            {
+                EventTitle = eventModel.Title,
+                Total = eventModel.EventPrice.Total,
+                isAvailable = eventModel.isAvailable
+            };
+        }
     }
 }

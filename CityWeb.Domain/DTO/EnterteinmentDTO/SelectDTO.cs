@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
-    public class PayEventDTO
+    public class SelectEntertainmentDTO
+    {
+        public Guid EntertainmentId { get; set; }
+    }
+
+    public class SelectEventDTO
     {
         public Guid EventId { get; set; }
-        public Guid PaymentId { get; set; }
+        
     }
 }
