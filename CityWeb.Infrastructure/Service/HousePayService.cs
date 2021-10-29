@@ -30,6 +30,7 @@ namespace CityWeb.Infrastructure.Service
 
             return counterEntity.Entity;
         }
+
         public async Task<bool> DeleteCounterModel(DeleteCounterModelDTO deleteCounterModel)
         {
             var counter = _context.Counters.FirstOrDefault(x => x.Number == deleteCounterModel.Number);

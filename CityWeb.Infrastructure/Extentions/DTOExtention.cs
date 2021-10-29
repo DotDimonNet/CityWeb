@@ -153,7 +153,7 @@ namespace CityWeb.Infrastructure.Extentions
         {
             return new UpdateUserPasswordDTO()
             {
-                Login = userModel.Email,
+                UserName = userModel.UserName,
                 Password = userModel.PasswordHash
             };
         }

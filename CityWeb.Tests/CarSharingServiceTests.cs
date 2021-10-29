@@ -2,7 +2,6 @@
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
-using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Service.Transport;
 using NUnit.Framework;
 using System;

@@ -11,5 +11,9 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
 
+        public DiscountService(ApplicationContext context)
+        {
+            _context = context;
+        }
     }
 }
