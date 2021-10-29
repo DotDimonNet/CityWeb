@@ -709,21 +709,27 @@ namespace CityWeb.Infrastucture.Data
                 },
 
             };
-            var housepay= new HousePayModel()
+            var housepay = new HousePayModel()
             {
-                ServiceType = Domain.Enums.HousePaymentType.Internet,
+                Title = "Platizh",
+                Description = "oplata za internet",
+                Owner = new UserProfileModel()
+                {
+                    Address = new AddressModel
+                    {
+                        StreetName = "Pravdy",
+                        HouseNumber = "123",
+                    },
+                },
+                CounterModels = {
+                    new CounterModel
+                        {
 
-                PayerAddress = new AddressModel()
-                {
-                    Id = Guid.NewGuid(),
-                    StreetName = "Soborna",
-                    HouseNumber = "1",
+                         Type = Domain.Enums.HousePaymentType.Gas,
+
+                        },
                 },
-                Price = new PriceModel()
-                {
-                    Value = 120,
-                    //Description = "Proplata za veresen",
-                },
+
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };

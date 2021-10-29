@@ -11,41 +11,43 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class DTOEntertainmentExtension
     {
-        public static EntertainmentModelDTO ToEntertainmentModelDTO(this EntertainmentModel entModel)
+        public static AddEntertainmentModelDTO ToAddEntertainmentModelDTO(this EntertainmentModel entModel)
         {
-            return new EntertainmentModelDTO()
+            return new AddEntertainmentModelDTO()
             {
-                EntertainmentId = entModel.ServiceId,
+                
                 EntertainmentTitle = entModel.Title,
                 Description = entModel.Description,
                 Type = entModel.EntertainmentType,
                 Address = entModel.Address
             };
         }
-
-        public static EventModelDTO ToEventModelDTO(this EventModel eventModel)
+        public static AddEventModelDTO ToAddEventModelDTO(this EventModel eventModel)
         {
-            return new EventModelDTO()
+            return new AddEventModelDTO()
             {
                 EventTitle = eventModel.Title,
-                Description = eventModel.Description,
+                Value = eventModel.EventPrice.Value,
+                VAT = eventModel.EventPrice.VAT,
+                Tax = eventModel.EventPrice.Tax
+            };
+        }
+        public static UpdateEntertainmentDTO ToUpdateEntertainmentModelDTO(this EntertainmentModel entModel)
+        {
+            return new UpdateEntertainmentDTO()
+            {
+                EntertainmentTitle = entModel.Title
+            };
+        }
+        public static UpdateEventDTO ToUpdateEventModelDTO(this EventModel eventModel)
+        {
+            return new UpdateEventDTO()
+            {
+                EventTitle = eventModel.Title,
                 Value = eventModel.EventPrice.Value,
                 Tax = eventModel.EventPrice.Tax,
                 VAT = eventModel.EventPrice.VAT,
             };
         }
-
-        public static EntertainmentModelDTO ToAddEntertainmentModel(this AddEntertainmentModelDTO entModel)
-        {
-            return new EntertainmentModelDTO()
-            {
-                EntertainmentTitle = entModel.EntertainmentTitle,
-                Type = entModel.Type,
-                Description = entModel.Description,
-                Address = entModel.Address
-
-            };
-        }
-
     }
 }
