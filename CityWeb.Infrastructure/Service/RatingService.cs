@@ -33,10 +33,10 @@ namespace CityWeb.Infrastructure.Service
             return model.Entity;
         }
 
-        public async IEnumerable<RatingModel> FindRateByUserId(UserRateDTO userRate)
-        {
-            return _context.Ratings.All(x => x.UserId == userRate.UserId);
-        }
+        //public IEnumerable<RatingModel> FindRateByUserId(UserRateDTO userRate)
+        //{
+        //    return _context.Ratings.All(x => x.UserId == userRate.UserId);
+        //}
 
         public async Task <RatingModel> FindMaxRating(MaxServiceRateDTO serviceRate)
         {
