@@ -3,6 +3,7 @@ using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Extentions;
+using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastucture.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Service.Transport
 {
-    public class CarSharingService
+    public class CarSharingService: ICarSharingService
     {
         private readonly ApplicationContext _context;
         public CarSharingService(ApplicationContext context)
@@ -22,12 +23,14 @@ namespace CityWeb.Infrastructure.Service.Transport
             _context = context;
         }
         
-        public async Task Steps()
+        public IEnumerable<CarSharingModel> GetAllCarSharings()
         {
-            var builder = SetupCarSharingBuilderResult();
-            var stepOne = await StepOne(builder, "Zipcar");
-            var stepTwo = StepTwo(builder, " ");
-            var result = StepThree(builder, new PeriodModel() { StartTime = DateTime.Now, EndTime = DateTime.Now.AddDays(1) });
+            return _context.CarSharings;
+        }
+
+        public IEnumerable<RentCarModel> GetAllRentCars()
+        {
+            return _context.RentCars;
         }
 
         public CarSharingBuilderResult SetupCarSharingBuilderResult()
