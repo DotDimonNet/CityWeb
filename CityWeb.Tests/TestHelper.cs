@@ -1,5 +1,6 @@
 using CityWeb.Domain.Entities;
 using CityWeb.Infrastucture.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -62,6 +63,11 @@ namespace CityWeb.Tests
             UserManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
 
+            var _contextAccessor = new Mock<IHttpContextAccessor>();
+            var _userPrincipalFactory = new Mock<IUserClaimsPrincipalFactory<ApplicationUserModel>>();
+            SignInManagerMock = new Mock<SignInManager<ApplicationUserModel>>(UserManagerMock.Object,
+                           _contextAccessor.Object, _userPrincipalFactory.Object, null, null, null);
+
             var storeRoles = new Mock<IRoleStore<ApplicationUserRole>>();
             RoleManagerMock = new Mock<RoleManager<ApplicationUserRole>>(storeRoles.Object, null, null, null, null);
 
@@ -110,10 +116,6 @@ namespace CityWeb.Tests
                             }
                         }
                     }
-
-
-
-
                 };
 
                 entertainments.Add(entertainment);
@@ -269,7 +271,7 @@ namespace CityWeb.Tests
                             ProductType = Domain.Enums.ProductType.AlcoholicDrinks,
                             ProductImage = $"img{i+1}"
                         }
-
+                    
                     },
                     DeliveryPrice = new PriceModel(),
                     WorkSchedule = new PeriodModel()

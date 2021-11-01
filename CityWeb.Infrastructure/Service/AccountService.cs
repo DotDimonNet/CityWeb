@@ -41,7 +41,8 @@ namespace CityWeb.Infrastructure.Service
 
             if (result.Succeeded)
             {
-                return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.Email);
+                 await _context.Users.AddAsync(user);
+                return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.UserName);
             }
             else
             {
