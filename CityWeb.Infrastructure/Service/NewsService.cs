@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Infrastructure.Extentions;
 
 namespace CityWeb.Infrastructure.Service
 {
@@ -108,20 +109,46 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public IEnumerable<string> GetNewsOfService(IEnumerable<string> getNews)
+        public async Task<IEnumerable<string>> GetNewsOfService(GetServiceDTO getNews)
         {
-            throw new NotImplementedException();
+            var newsService = await _context.News.FirstOrDefaultAsync(x => getNews.ServiceTitle == x.Title && getNews.ServiceType == x.Type);
+            return newsService.NewsItems.Select(x => x.Title);
         }
 
-        public Task<IEnumerable<string>> GetService(GetServiceDTO getService)
+        public async Task<NewsItemModel> GetItem(GetNewsItemDTO getItem)
         {
-            throw new NotImplementedException();
+            var newsItem = await _context.NewsItems.FirstOrDefaultAsync(x => getItem.Title == x.Title);
+            return newsItem;
         }
 
-        public IEnumerable<string> UpdateNews(IEnumerable<string> updateNews)
+        public async Task<NewsItemModel> UpdateNewsItem(UpdateNewsItemDTO updateNews, UpdateNewsServiceDTO updateService)
         {
-            throw new NotImplementedException();
+            var service = await _context.News.FirstOrDefaultAsync(x => x.Title == updateService.ServiceTitle);
+            if (service != null)
+            {
+                var newsItem = await _context.NewsItems.FirstOrDefaultAsync(x => x.Title == updateNews.NewsItemTitle);
+                if (newsItem != null)
+                {
+                    var updateNewsItem = new NewsItemModel()
+                    {
+                        Title = updateNews.NewsItemTitle,
+                        Description = updateNews.Description
+                    };
+                    _context.Update(service);
+                    await _context.SaveChangesAsync();
+                    return updateNewsItem;
+                }
+                else
+                {
+                    throw new Exception("News Item is not exists");
+                }
+            }
+            else
+            {
+                throw new Exception("News Service is not exists");
+            }
         }
+           
 
         public async Task<NewsModel> UpdateNewsService(UpdateNewsServiceDTO updateService)
         {

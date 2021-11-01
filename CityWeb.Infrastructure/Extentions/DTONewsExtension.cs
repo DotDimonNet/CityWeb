@@ -10,14 +10,13 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class DTONewsExtension
     {
-        //public static NewsModel ToNewsModel(this NewsServiceModelDTO newsModel)
+        //public static NewsItemModel ToNewsItemModelDTO(this GetNewsItemDTO newsModel)
         //{
-        //    return new NewsModel()
+        //    return new NewsItemModel()
         //    {
-        //        Title = newsModel.ServiceTitle,
-        //        Description = newsModel.Description,
-        //        Address = newsModel.Address
+        //        Title = newsModel.Title
         //    };
         //}
+
     }
 }

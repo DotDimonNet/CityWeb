@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CityWeb.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace CityWeb.Domain.DTO.NewsDTO
 {
     public class GetServiceDTO
     {
-        public Guid ServiceId { get; set; }
+        public string ServiceTitle { get; set; }
+        public NewsType ServiceType { get; set; }
     }
 }

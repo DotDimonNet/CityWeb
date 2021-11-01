@@ -11,7 +11,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     public interface IEntertainmentService
     {
         public Task<IEnumerable<string>> GetEventTitlesFromEntertainment(GetEventsFromEntertainmentsDTO entModel);
-        public Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO eventModel);  
+        public Task<EventModel> GetEventFromEventTitles(GetEventFromEventsDTO eventModel);  
         public Task<EntertainmentModel> AddEntertainmentModel(AddEntertainmentModelDTO addData);//Dont touch
         public Task<EventModel> AddEventModel(AddEventModelDTO addData);//Dont touch
         public Task<bool> DeleteEventModel(DeleteEventDTO deleteData);

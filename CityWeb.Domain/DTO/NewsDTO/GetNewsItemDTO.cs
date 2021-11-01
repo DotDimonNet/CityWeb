@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.NewsDTO
 {
-    class GetNewsItemDTO
+    public class GetNewsItemDTO
     {
+        public string Title { get; set; } 
     }
 }

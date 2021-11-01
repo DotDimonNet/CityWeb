@@ -181,10 +181,10 @@ namespace CityWeb.Infrastructure.Service
             return entertainment.Event.Select(x => x.Title);
         }//Dont Touch
 
-        public async Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO eventModel)
+        public async Task<EventModel> GetEventFromEventTitles(GetEventFromEventsDTO eventModel)
         {
             var events = await _context.Events.FirstOrDefaultAsync(x => eventModel.EventId == x.Id && x.isAvailable == true);
-            return events.ToEventModelDTO();
+            return events;
         }//Dont Touch
 
         //public async Task<PayEventDTO> PaymentOfEvent(EventModelDTO eventModel)
