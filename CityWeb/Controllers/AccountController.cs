@@ -1,5 +1,6 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Infrastructure.Authorization;
 using CityWeb.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,12 +14,10 @@ namespace Taste.Web.Controllers
     [Route("api/account")]
     public class AccountController : Controller
     {
-        private readonly SignInManager<ApplicationUserModel> _signInManager;
         private readonly IAccountService _accountService;
 
-        public AccountController(SignInManager<ApplicationUserModel> signInManager, IAccountService accountService)
+        public AccountController(IAccountService accountService)
         {
-            _signInManager = signInManager;
             _accountService = accountService;
         }
 
@@ -53,10 +52,9 @@ namespace Taste.Web.Controllers
 
 
         [HttpGet("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _accountService.SignOut();
             return NoContent();
         }
     }
