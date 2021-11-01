@@ -1,4 +1,5 @@
 using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO.DeliveryDTO;
 using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.DTO.Transport.Taxi;
@@ -158,9 +159,9 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
         //for delivery
-        public static DeliveryDTO ToDeliveryDTO(this DeliveryModel deliveryModel)
+        public static UpdatedDeliveryDTO ToUpdatedDeliveryDTO(this DeliveryModel deliveryModel)
         {
-            return new DeliveryDTO()
+            return new UpdatedDeliveryDTO()
             {
                 Title = deliveryModel.Title,
                 DeliveryImage = deliveryModel.DeliveryImage,
@@ -216,7 +217,13 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Title = model.Title,
                 DeliveryId = model.Id,
-                Description = model.Description
+                Description = model.Description,
+                DeliveryImage = model.DeliveryImage,
+                StartTime = model.WorkSchedule.StartTime,
+                EndTime = model.WorkSchedule.EndTime,
+                Value = model.DeliveryPrice.Value,
+                Tax = model.DeliveryPrice.Tax,
+                VAT = model.DeliveryPrice.VAT,
             };
         }
 
@@ -228,18 +235,60 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        //public static ProductByTypeDTO ToProductByTypeDTO(this ProductModel model)
-        //{
-        //    return new ProductByTypeDTO
-        //    {
-        //        DeliveryId = model.Id,
-        //        TypeName = model.ProductType.Name,
-        //    };
-        //}
+        public static DeliveryModel CreateFromDTO(this CreateDeliveryModelDTO deliveryModel)
+        {
+            return new DeliveryModel()
+            {
+                Title = deliveryModel.Title,
+                Description = deliveryModel.Description,
+                Service = new ServiceModel(),
+                DeliveryAdress = new AddressModel(),
+                WorkSchedule = new PeriodModel(),
+                DeliveryPrice = new PriceModel()
+            };
+        }
+        public static CreatedDeliveryModelDTO ToCreatedDeliveryModelDTO(this DeliveryModel deliveryModel)
+        {
+            return new CreatedDeliveryModelDTO()
+            {
+                Title = deliveryModel.Title,
+                Description = deliveryModel.Description,
+            };
+        }
+        public static void UpdateFromDTO(this DeliveryModel delivery, UpdateDeliveryModelDTO deliveryModel)
+        {
+            delivery.Description = deliveryModel.Description;
+            delivery.WorkSchedule.StartTime = deliveryModel.StartTime;
+            delivery.WorkSchedule.EndTime = deliveryModel.EndTime;
+            delivery.DeliveryPrice.Value = deliveryModel.Value;
+            delivery.DeliveryPrice.Tax = deliveryModel.Tax;
+            delivery.DeliveryPrice.VAT = deliveryModel.VAT;
+        }
 
-        //public static bool IsWork(this PeriodModel periodModel, DateTime dateTime = default)
-        //{
-        //    return periodModel.StartTime.TimeOfDay < dateTime.TimeOfDay && periodModel.EndTime.TimeOfDay > dateTime.TimeOfDay;
-        //}
+        public static ProductModel CreateProductFromDTO(this DeliveryModel deliveryModel, ProductModelDTO productModelDTO)
+        {
+            return new ProductModel()
+            {
+                DeliveryId = deliveryModel.Id,
+                ProductImage = productModelDTO.ProductImage,
+                ProductName = productModelDTO.ProductName,
+                ProductType = productModelDTO.ProductType,
+                ProductPrice = new PriceModel()
+                {
+                    Value = productModelDTO.Value,
+                    VAT = productModelDTO.VAT,
+                    Tax = productModelDTO.Tax,
+                },
+            };
+        }
+
+        public static void UpdateProductFromDTO(this ProductModel productModel, ProductModelDTO productModelDTO)
+        {
+            productModel.ProductImage = productModelDTO.ProductImage;
+            productModel.ProductType = productModelDTO.ProductType;
+            productModel.ProductPrice.Value = productModelDTO.Value;
+            productModel.ProductPrice.VAT = productModelDTO.VAT;
+            productModel.ProductPrice.Tax = productModelDTO.Tax;
+        }
     }
 }

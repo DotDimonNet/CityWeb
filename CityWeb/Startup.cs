@@ -1,6 +1,7 @@
 ﻿using CityWeb.Domain.Entities;
 using CityWeb.Infrastructure.Authorization;
 using CityWeb.Infrastructure.Interfaces;
+using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastructure.Service;
 using CityWeb.Infrastructure.Settings;
 using CityWeb.Infrastucture.Data;
@@ -105,6 +106,7 @@ namespace CityWeb
             services.AddOptions();
             services.AddScoped<DbInitializer>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IDeliveryService, DeliveryService>();
             services.Configure<AuthSettings>(Configuration.GetSection("Auth"));
             services.AddMvc();
             services.AddControllers(options =>
