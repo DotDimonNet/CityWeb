@@ -227,19 +227,23 @@ namespace CityWeb.Infrastructure.Extentions
                 Title = model.Title
             };
         }
-
-        //public static ProductByTypeDTO ToProductByTypeDTO(this ProductModel model)
-        //{
-        //    return new ProductByTypeDTO
-        //    {
-        //        DeliveryId = model.Id,
-        //        TypeName = model.ProductType.Name,
-        //    };
-        //}
-
-        //public static bool IsWork(this PeriodModel periodModel, DateTime dateTime = default)
-        //{
-        //    return periodModel.StartTime.TimeOfDay < dateTime.TimeOfDay && periodModel.EndTime.TimeOfDay > dateTime.TimeOfDay;
-        //}
+        public static CounterModel FromCreateCounterModelDTO(this CreateCounterModelDTO counterModelDTO)
+        {
+            return new CounterModel()
+            {
+                Number = counterModelDTO.Number,
+                StartCount = counterModelDTO.StartCount,
+                Type = counterModelDTO.Type
+            };
+        }
+        public static UpdateCounterModelDTO ToUpdateCounterModelDTO(this CounterModel counterModel)
+        {
+            return new UpdateCounterModelDTO()
+            {
+                StartCount = counterModel.StartCount,
+                EndCount = counterModel.EndCount,
+                PriceByItem = counterModel.PriceByItem
+            };
+        }
     }
 }

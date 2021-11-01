@@ -9,12 +9,13 @@ namespace CityWeb.Domain.Entities
 {
     public class CounterModel : Entity
     {
-        public int Number { get; set; }
-        public virtual HousePayModel HouseHold { get; set; }
+        public string Number { get; set; }
         public virtual HousePaymentType Type { get; set; }
-        public virtual Guid HouseId { get; set;}
-        public double Price { get; set; }
+        public virtual Guid HousePaymentId { get; set;}
+        public virtual HousePayModel HouseHold { get; set; }
+        public double PriceByItem { get; set; }
         public double StartCount { get; set; }
         public double EndCount { get; set; }
+       
     }
 }
