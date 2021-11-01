@@ -109,6 +109,7 @@ namespace CityWeb
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ICarSharingService, CarSharingService>();
             services.AddTransient<ITaxiService, TaxiService>();
+            services.AddTransient<IEntertainmentService, EntertainmentService>();
             services.Configure<AuthSettings>(Configuration.GetSection("Auth"));
             services.AddMvc();
             services.AddControllers(options =>

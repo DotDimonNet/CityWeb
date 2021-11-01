@@ -10,7 +10,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
 {
     public interface IEntertainmentService
     {
-        public Task<IEnumerable<string>> GetEventTitlesFromEntertainment(GetEventsFromEntertainmentsDTO entModel);
+        public Task<IEnumerable<EventModelDTO>> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO entModel);
         public Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO eventModel);  
         public Task<EntertainmentModelDTO> AddEntertainmentModel(AddEntertainmentModelDTO addData);//Dont touch
         public Task<EventModelDTO> AddEventModel(AddEventModelDTO addData);//Dont touch

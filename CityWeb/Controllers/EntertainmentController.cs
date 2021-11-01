@@ -13,8 +13,6 @@ namespace CityWeb.Controllers
 {
     [ApiController]
     [Route("api/entertainment")]
-    [Authorize(Policy = Policies.RequireUserRole)]
-
 
     public class EntertainmentController : Controller
     {
@@ -29,7 +27,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var entertainment = await _entertainmentService.GetEventTitlesFromEntertainment(request);
+                var entertainment = await _entertainmentService.GetEventsFromEntertainment(request);
                 return (IEntertainmentService)Ok(entertainment);
             }
             catch (Exception ex)
