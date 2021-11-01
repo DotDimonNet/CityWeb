@@ -14,6 +14,7 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
     public class GetEventFromEventsDTO
     {
         public string EventTitle { get; set; }
-
+        public double Total { get; set; }
+        public bool isAvailable { get; set; }
     }
 }
