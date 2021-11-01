@@ -323,6 +323,8 @@ namespace CityWeb.Infrastructure.Extentions
                 StartCount = counterModel.StartCount,
                 EndCount = counterModel.EndCount,
                 PriceByItem = counterModel.PriceByItem
+            };
+        }
 
         public static DeliveryModel CreateFromDTO(this CreateDeliveryModelDTO deliveryModel)
         {
