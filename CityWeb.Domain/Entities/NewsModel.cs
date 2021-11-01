@@ -11,7 +11,7 @@ namespace CityWeb.Domain.Entities
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public NewsType Type { get; set; }
+        public virtual NewsType Type { get; set; }
         public virtual ICollection<NewsItemModel> NewsItems { get; set; } = new List<NewsItemModel>();
         public virtual ICollection<EntertainmentModel> EntertainmentNews {get;set;} = new List<EntertainmentModel>();
         public virtual ICollection<DeliveryModel> DeliveryNews {get;set;} = new List<DeliveryModel>();

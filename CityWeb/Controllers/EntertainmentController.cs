@@ -25,7 +25,7 @@ namespace CityWeb.Controllers
         }
 
         [HttpGet("events")]
-        public async Task<IEntertainmentService> GetEventsFromEntertainment([FromBody] GetEventsFromEntertainmentsDTO request)
+        public async Task<IEntertainmentService> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO request)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace CityWeb.Controllers
         }
 
         [HttpGet("events/event")]
-        public async Task<IEntertainmentService> GetEventFromEvents([FromBody] GetEventFromEventsDTO request)
+        public async Task<IEntertainmentService> GetEventFromEvents(GetEventFromEventsDTO request)
         {
             try
             {

@@ -8,12 +8,12 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
     public class GetEventsFromEntertainmentsDTO
     {
-        public Guid EntertainmentId { get; set; }
+        public string EntertainmentTitle { get; set; }
     }
 
     public class GetEventFromEventsDTO
     {
-        public Guid EventId { get; set; }
-        
+        public string EventTitle { get; set; }
+
     }
 }

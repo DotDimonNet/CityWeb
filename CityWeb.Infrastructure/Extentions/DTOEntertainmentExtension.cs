@@ -15,11 +15,11 @@ namespace CityWeb.Infrastructure.Extentions
         //{
         //    return new EntertainmentModel()
         //    {
-                
+
         //        Title = entModel.EntertainmentTitle,
         //        Description = entModel.Description,
         //        EntertainmentType = entModel.Type,
-                
+
         //    };
         //}
         //public static AddEventModelDTO ToAddEventModelDTO(this EventModel eventModel)
@@ -49,15 +49,25 @@ namespace CityWeb.Infrastructure.Extentions
         //        VAT = eventModel.EventPrice.VAT,
         //    };
         //}
-       
-        //public static EventModelDTO ToEventModelDTO (this EventModel eventModel)
-        //{
-        //    return new EventModelDTO()
-        //    {
-        //        EventTitle = eventModel.Title,
-        //        Total = eventModel.EventPrice.Total,
-        //        isAvailable = eventModel.isAvailable
-        //    };
-        //}
+
+        public static EventModelDTO ToEventModelDTO(this EventModel eventModel)
+        {
+            return new EventModelDTO()
+            {
+                EventTitle = eventModel.Title,
+                Total = eventModel.EventPrice.Total,
+                isAvailable = eventModel.isAvailable
+            };
+        }
+
+        public static EntertainmentModelDTO ToEntertainmentModelDTO(this UpdateEntertainmentDTO updateData)
+        {
+            return  new EntertainmentModelDTO()
+            {
+                EntertainmentTitle = updateData.EntertainmentTitle,
+                Description = updateData.Description,
+
+            };
+        }
     }
 }
