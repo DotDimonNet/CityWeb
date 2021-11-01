@@ -1,12 +1,9 @@
-﻿using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.Transport.Car;
+﻿using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.Taxi;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Domain.ValueTypes;
-using CityWeb.Infrastructure.Interfaces;
 using CityWeb.Infrastructure.Interfaces.Service;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,7 +22,7 @@ namespace Taste.Web.Controllers
             _taxiService = taxiService;
         }
 
-        [HttpPost("createTaxi")]
+        [HttpPut("taxi")]
         public async Task<IActionResult> CreateTaxi([FromBody] CreateTaxiModelDTO request)
         {
             try
@@ -39,7 +36,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("updateTaxi")]
+        [HttpPost("taxi")]
         public async Task<IActionResult> UpdateTaxi([FromBody] UpdateTaxiModelDTO request)
         {
             try
@@ -53,7 +50,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("deleteTaxi")]
+        [HttpDelete("taxi")]
         public async Task<IActionResult> DeleteTaxi([FromBody] DeleteTaxiModelDTO request)
         {
             try
@@ -67,7 +64,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("addTaxiCar")]
+        [HttpPut("taxi-car")]
         public async Task<IActionResult> AddTaxiCar([FromBody] AddTaxiCarDTO request)
         {
             try
@@ -81,7 +78,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("updateTaxiCar")]
+        [HttpPost("taxi-car")]
         public async Task<IActionResult> UpdateTaxiCar([FromBody] UpdateTaxiCarDTO request)
         {
             try
@@ -95,7 +92,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("deleteTaxiCar")]
+        [HttpDelete("taxi-car")]
         public async Task<IActionResult> DeleteTaxiCar([FromBody] DeleteTaxiCarDTO request)
         {
             try
@@ -109,7 +106,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("setupTaxiBuilderResult")]
+        [HttpPut("setup-taxi-builder-result")]
         public IActionResult SetupTaxiBuilderResult()
         {
             try
@@ -123,8 +120,8 @@ namespace Taste.Web.Controllers
             }
         }
 
-        /*[HttpPost("stepOne")]
-        public async Task<IActionResult> StepOne([FromBody] TaxiBuilderResult builder, ICollection<AddressModel> addresses)
+        [HttpPost("stepOne")]
+        public async Task<IActionResult> StepOne([FromBody] TaxiBuilderResult builder, [FromQuery] ICollection<AddressModel> addresses)
         {
             try
             {
@@ -135,10 +132,10 @@ namespace Taste.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
 
-        /*[HttpPost("stepTwo")]
-        public async Task<IActionResult> StepTwo([FromBody] TaxiBuilderResult builder, string title)
+        [HttpPost("stepTwo")]
+        public async Task<IActionResult> StepTwo([FromBody] TaxiBuilderResult builder, [FromQuery] string title)
         {
             try
             {
@@ -149,10 +146,10 @@ namespace Taste.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
 
-        /*[HttpPost("stepThree")]
-        public async Task<IActionResult> StepThree([FromBody] TaxiBuilderResult builder, TransportType taxiType)
+        [HttpPost("stepThree")]
+        public async Task<IActionResult> StepThree([FromBody] TaxiBuilderResult builder, [FromQuery] TransportType taxiType)
         {
             try
             {
@@ -163,9 +160,9 @@ namespace Taste.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
 
-        [HttpPost("getAllTaxis")]
+        [HttpGet("get-all-taxis")]
         public IActionResult GetAllTaxis()
         {
             try
@@ -179,7 +176,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("getAllTaxiCars")]
+        [HttpGet("get-all-taxi-cars")]
         public IActionResult GetAllTaxiCars()
         {
             try

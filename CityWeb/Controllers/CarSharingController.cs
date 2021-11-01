@@ -1,11 +1,8 @@
-﻿using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.Transport.Car;
+﻿using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
-using CityWeb.Infrastructure.Interfaces;
 using CityWeb.Infrastructure.Interfaces.Service;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -13,7 +10,7 @@ using System.Threading.Tasks;
 namespace Taste.Web.Controllers
 {
     [ApiController]
-    [Route("api/carSharing")]
+    [Route("api/car-sharing")]
     public class CarSharingController : Controller
     {
         private readonly ICarSharingService _carSharingService;
@@ -23,7 +20,7 @@ namespace Taste.Web.Controllers
             _carSharingService = carSharingService;
         }
 
-        [HttpPost("createCarSharing")]
+        [HttpPut("car-sharing")]
         public async Task<IActionResult> CreateCarSharing([FromBody] CreateCarSharingModelDTO request)
         {
             try
@@ -37,7 +34,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("updateCarSharing")]
+        [HttpPost("car-sharing")]
         public async Task<IActionResult> UpdateCarSharing([FromBody] UpdateCarSharingModelDTO request)
         {
             try
@@ -51,7 +48,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("deleteCarSharing")]
+        [HttpDelete("car-sharing")]
         public async Task<IActionResult> DeleteCarSharing([FromBody] DeleteCarSharingModelDTO request)
         {
             try
@@ -65,7 +62,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("addRentCar")]
+        [HttpPut("rent-car")]
         public async Task<IActionResult> AddRentCar([FromBody] AddRentCarDTO request)
         {
             try
@@ -79,7 +76,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("updateRentCar")]
+        [HttpPost("rent-car")]
         public async Task<IActionResult> UpdateRentCar([FromBody] UpdateRentCarDTO request)
         {
             try
@@ -93,7 +90,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("deleteRentCar")]
+        [HttpDelete("rent-car")]
         public async Task<IActionResult> DeleteRentCar([FromBody] DeleteRentCarDTO request)
         {
             try
@@ -107,7 +104,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("setupCarSharingBuilderResult")]
+        [HttpPut("setup-car-sharing-builder-result")]
         public IActionResult SetupCarSharingBuilderResult()
         {
             try
@@ -121,8 +118,8 @@ namespace Taste.Web.Controllers
             }
         }
 
-        /*[HttpPost("stepOne")]
-        public async Task<IActionResult> StepOne([FromBody] CarSharingBuilderResult builder, string title)
+        [HttpPost("step-one")]
+        public async Task<IActionResult> StepOne([FromBody] CarSharingBuilderResult builder, [FromQuery] string title)
         {
             try
             {
@@ -133,10 +130,10 @@ namespace Taste.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
 
-        /*[HttpPost("stepTwo")]
-        public async Task<IActionResult> StepTwo([FromBody] CarSharingBuilderResult builder, string vinCode)
+        [HttpPost("step-two")]
+        public async Task<IActionResult> StepTwo([FromBody] CarSharingBuilderResult builder, [FromQuery] string vinCode)
         {
             try
             {
@@ -147,10 +144,10 @@ namespace Taste.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
 
-        /*[HttpPost("stepThree")]
-        public async Task<IActionResult> StepThree([FromBody] CarSharingBuilderResult builder, PeriodModel period)
+        [HttpPost("step-three")]
+        public async Task<IActionResult> StepThree([FromBody] CarSharingBuilderResult builder, [FromQuery] PeriodModel period)
         {
             try
             {
@@ -161,9 +158,9 @@ namespace Taste.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
 
-        [HttpPost("getAllCarSharings")]
+        [HttpGet("get-all-car-sharings")]
         public IActionResult GetAllCarSharings()
         {
             try
@@ -177,7 +174,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("getAllRentCars")]
+        [HttpGet("get-all-rent-cars")]
         public IActionResult GetAllRentCars()
         {
             try
