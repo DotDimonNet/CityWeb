@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Domain.DTO.EnterteinmentDTO;
+using CityWeb.Domain.Entities;
 
 namespace CityWeb.Infrastructure.Interfaces.Service
 {
@@ -11,11 +12,11 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     {
         public Task<IEnumerable<string>> GetEventTitlesFromEntertainment(GetEventsFromEntertainmentsDTO entModel);
         public Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO eventModel);  
-        public Task<AddEntertainmentModelDTO> AddEntertainmentModel(EntertainmentModelDTO addData);
-        public Task<AddEventModelDTO> AddEventtModel(EventModelDTO addData);
+        public Task<EntertainmentModel> AddEntertainmentModel(AddEntertainmentModelDTO addData);//Dont touch
+        public Task<EventModel> AddEventModel(AddEventModelDTO addData);//Dont touch
         public Task<bool> DeleteEventModel(DeleteEventDTO deleteData);
-        public Task<string> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData);
-        public Task<UpdateEventDTO> UpdateEventModel(EventModelDTO updateEvent);
-        public Task<UpdateEntertainmentDTO> UpdadeEntertainmentModel(EntertainmentModelDTO updateData);
+        public Task<bool> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData);
+        public Task<EventModel> UpdateEventModel(UpdateEventDTO updateEvent);
+        public Task<EntertainmentModel> UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData);//Dont touch
     }
 }

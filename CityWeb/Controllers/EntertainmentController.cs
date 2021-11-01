@@ -12,10 +12,10 @@ using Microsoft.Extensions.Logging;
 namespace CityWeb.Controllers
 {
     [ApiController]
-    [Route("api/Entertainment")]
+    [Route("api/entertainment")]
     [Authorize(Policy = Policies.RequireUserRole)]
 
-    
+
     public class EntertainmentController : Controller
     {
         private readonly IEntertainmentService _entertainmentService;
@@ -29,21 +29,8 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var user = await _entertainmentService.GetEventTitlesFromEntertainment(request);
-                return (IEntertainmentService)Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return (IEntertainmentService)BadRequest(ex.Message);
-            }
-        }
-        [HttpGet("event")]
-        public async Task<IEntertainmentService> GetEventFromEvents([FromBody] GetEventFromEventsDTO request)
-        {
-            try
-            {
-                var user = await _entertainmentService.GetEventFromEventTitles(request);
-                return (IEntertainmentService)Ok(user);
+                var entertainment = await _entertainmentService.GetEventTitlesFromEntertainment(request);
+                return (IEntertainmentService)Ok(entertainment);
             }
             catch (Exception ex)
             {
@@ -51,6 +38,103 @@ namespace CityWeb.Controllers
             }
         }
 
+        [HttpPost("add")]
+        public async Task<IEntertainmentService> AddEntertainment([FromBody] AddEntertainmentModelDTO request)
+        {
+            try
+            {
+                var entertainment = await _entertainmentService.AddEntertainmentModel(request);
+                return (IEntertainmentService)Ok(entertainment);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("update")]
+        public async Task<IEntertainmentService> UpdadeEntertainment([FromBody] UpdateEntertainmentDTO request)
+        {
+            try
+            {
+                var entertainment = await _entertainmentService.UpdadeEntertainmentModel(request);
+                return (IEntertainmentService)Ok(entertainment);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("delete")]
+        public async Task<IEntertainmentService> DeleteEntertainment([FromBody] DeleteEntertainmentDTO request)
+        {
+            try
+            {
+                var entertainment = await _entertainmentService.DeleteEntertainmentModel(request);
+                return (IEntertainmentService)Ok(entertainment);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("events/event")]
+        public async Task<IEntertainmentService> GetEventFromEvents([FromBody] GetEventFromEventsDTO request)
+        {
+            try
+            {
+                var eventModel = await _entertainmentService.GetEventFromEventTitles(request);
+                return (IEntertainmentService)Ok(eventModel);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("events/add")]
+        public async Task<IEntertainmentService> AddEvent([FromBody] AddEventModelDTO request)
+        {
+            try
+            {
+                var eventModel = await _entertainmentService.AddEventModel(request);
+                return (IEntertainmentService)Ok(eventModel);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("events/update")]
+        public async Task<IEntertainmentService> UpdateEvent([FromBody] UpdateEventDTO request)
+        {
+            try
+            {
+                var eventModel = await _entertainmentService.UpdateEventModel(request);
+                return (IEntertainmentService)Ok(eventModel);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("events/delete")]
+        public async Task<IEntertainmentService> DeleteEvent([FromBody] DeleteEventDTO request)
+        {
+            try
+            {
+                var eventModel = await _entertainmentService.DeleteEventModel(request);
+                return (IEntertainmentService)Ok(eventModel);
+            }
+            catch (Exception ex)
+            {
+                return (IEntertainmentService)BadRequest(ex.Message);
+            }
+        }
 
     }
 }

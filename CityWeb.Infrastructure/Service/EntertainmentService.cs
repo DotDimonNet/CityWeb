@@ -8,13 +8,14 @@ using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Extentions;
+using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class EntertainmentService
+    public class EntertainmentService : IEntertainmentService
     {
         private readonly ApplicationContext _context;
 
@@ -23,42 +24,49 @@ namespace CityWeb.Infrastructure.Service
             _context = context;
         }
 
-        public async Task<UpdateEntertainmentDTO> UpdadeEntertainmentModel(EntertainmentModelDTO updateData)
+        public async Task<EntertainmentModel> UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
-
-            if(entertainment != null)
+            var entertainments = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
+            if (entertainments != null)
             {
-                entertainment.Title = updateData.EntertainmentTitle;       
-                
-                _context.Update(entertainment);
-                await _context.SaveChangesAsync();
-                return entertainment.ToUpdateEntertainmentModelDTO();
+                var updateEntertainmentModel = new EntertainmentModel()
+                {
+                    Title = updateData.EntertainmentTitle
 
+                };
+                _context.Update(entertainments);
+                await _context.SaveChangesAsync();
+                return updateEntertainmentModel;
             }
             else
             {
-                throw new Exception("Entertainment doesnt exists");
+                throw new Exception("Entertainment Service is not exists");
             }
-        }
+        }//Dont Touch
 
-        public async Task<UpdateEventDTO> UpdateEventModel(EventModelDTO updateEvent)
+        public async Task<EventModel> UpdateEventModel(UpdateEventDTO updateEvent)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.Title);
+            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.EntertainmentTitle);
             if (entertainment != null)
             {
-                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle && x.EntertaimentId== entertainment.Id);
+                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle);
                 if (events != null)
                 {
-                    events.Title = updateEvent.EventTitle;
-                    events.EventPrice.Tax = updateEvent.Tax;
-                    events.EventPrice.Value = updateEvent.Value;
-                    events.EventPrice.VAT = updateEvent.VAT;
-                    
+                    var updateEventModel = new EventModel()
+                    {
+                        Title = updateEvent.EventTitle,
+                        EventPrice = new PriceModel()
+                        {
+                            Value = updateEvent.Value,
+                            Tax = updateEvent.Tax,
+                            VAT = updateEvent.VAT
+                        }
+                    };
+
 
                     _context.Update(events);
                     await _context.SaveChangesAsync();
-                    return events.ToUpdateEventModelDTO();
+                    return updateEventModel;
                 }
                 else
                 {
@@ -72,21 +80,22 @@ namespace CityWeb.Infrastructure.Service
             }
 
 
-        }
-        public async Task<string> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData)
+        }//Dont touch
+
+        public async Task<bool> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
             if(entertainment != null)
             {
                 _context.Remove(entertainment);
                 await _context.SaveChangesAsync();
-                return "Entertainment was deleted";
+                return true;
             }
             else
             {
                 throw new Exception("Enterainment doesn't exists");
             }
-        }
+        }//Dont Touch
 
         public async Task<bool> DeleteEventModel(DeleteEventDTO deleteData)
         {
@@ -109,29 +118,39 @@ namespace CityWeb.Infrastructure.Service
             {
                 throw new Exception("Entertainment doesn't exist");
             }
-        }
+        }// Dont Touch
 
-        public async Task<AddEntertainmentModelDTO> AddEntertainmentModel(EntertainmentModelDTO addData)
+        public async Task<EntertainmentModel> AddEntertainmentModel(AddEntertainmentModelDTO addData)
         {
-            var entertainment = new EntertainmentModel()
+            var entertainments = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.EntertainmentTitle);
+            if(entertainments == null)
             {
-                Title = addData.EntertainmentTitle,
-                Description = addData.Description
-            };
-            var entModel = await _context.Entertaiments.AddAsync(entertainment);
-            await _context.SaveChangesAsync();
-            return entModel.Entity.ToAddEntertainmentModelDTO();
-        }
+                var addEntertainmentModel = new EntertainmentModel()
+                {
+                    Title = addData.EntertainmentTitle,
+                    Description = addData.Description,
+                    EntertainmentType = addData.Type
+                };
+                await _context.Entertaiments.AddAsync(addEntertainmentModel);
+                await _context.SaveChangesAsync();
+                return addEntertainmentModel;
+            }
+            else
+            {
+                throw new Exception("Entertainment Service was already created");
+            }
+            
+        } //Dont touch
 
-        public async Task<AddEventModelDTO> AddEventtModel(EventModelDTO addData)
+        public async Task<EventModel> AddEventModel(AddEventModelDTO addData)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.Title);
-            if (entertainment != null)
+            var entertainments = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.Title);
+            if (entertainments != null)
             {
                 var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
                 if(events == null)
                 {
-                    var dto = new EventModel()
+                    var addEventModel = new EventModel()
                     {
                         Title = addData.EventTitle,
                         EventPrice = new PriceModel()
@@ -141,9 +160,9 @@ namespace CityWeb.Infrastructure.Service
                             VAT = addData.VAT
                         }
                     };
-                    var eventModel = await _context.AddAsync(dto);
+                    var eventModel = await _context.AddAsync(addEventModel);
                     await _context.SaveChangesAsync();
-                    return eventModel.Entity.ToAddEventModelDTO();
+                    return addEventModel;
                 }
                 else
                 {
@@ -154,19 +173,19 @@ namespace CityWeb.Infrastructure.Service
             {
                 throw new Exception("Entertainment doesnt exist");
             }
-        }
+        }//Dont Touch
 
         public async Task<IEnumerable<string>> GetEventTitlesFromEntertainment(GetEventsFromEntertainmentsDTO entModel)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentId == x.Id);
             return entertainment.Event.Select(x => x.Title);
-        }
+        }//Dont Touch
 
         public async Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO eventModel)
         {
             var events = await _context.Events.FirstOrDefaultAsync(x => eventModel.EventId == x.Id && x.isAvailable == true);
             return events.ToEventModelDTO();
-        }
+        }//Dont Touch
 
         //public async Task<PayEventDTO> PaymentOfEvent(EventModelDTO eventModel)
         //{

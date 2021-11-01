@@ -11,15 +11,15 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class DTOEntertainmentExtension
     {
-        public static AddEntertainmentModelDTO ToAddEntertainmentModelDTO(this EntertainmentModel entModel)
+        public static EntertainmentModel ToAddEntertainmentModelDTO(this AddEntertainmentModelDTO entModel)
         {
-            return new AddEntertainmentModelDTO()
+            return new EntertainmentModel()
             {
                 
-                EntertainmentTitle = entModel.Title,
+                Title = entModel.EntertainmentTitle,
                 Description = entModel.Description,
-                Type = entModel.EntertainmentType,
-                Address = entModel.Address
+                EntertainmentType = entModel.Type,
+                
             };
         }
         public static AddEventModelDTO ToAddEventModelDTO(this EventModel eventModel)

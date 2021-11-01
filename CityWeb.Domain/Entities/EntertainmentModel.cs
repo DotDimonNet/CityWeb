@@ -19,6 +19,7 @@ namespace CityWeb.Domain.Entities
         public string Title { get ; set ; }
         public string Description { get ; set ; }
         public virtual ApplicationUserModel User { get; set; }
+        public virtual NewsType EntertainmentNews { get; set; } 
 
     }
 }
