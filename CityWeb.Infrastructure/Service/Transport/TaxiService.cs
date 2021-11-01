@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Domain.Enums;
+using CityWeb.Infrastructure.Interfaces.Service;
 
 namespace CityWeb.Infrastructure.Service.Transport
 {
-    class TaxiService
+    class TaxiService : ITaxiService
     {
         private readonly ApplicationContext _context;
         public TaxiService(ApplicationContext context)
@@ -22,21 +23,22 @@ namespace CityWeb.Infrastructure.Service.Transport
             _context = context;
         }
 
-        /*public async Task Steps()
-        {
-            var builder = SetupTaxiBuilderResult();
-            var stepOne = await StepOne(builder, "Uber");
-            ICollection<AddressModel> addresses = new List<AddressModel>() { new AddressModel() { }, new AddressModel() { } };
-            var stepTwo = StepTwo(builder, addresses);
-            StepThree(builder, TransportType.TaxiBusiness);
-        }*/
-
         public TaxiBuilderResult SetupTaxiBuilderResult()
         {
             return new TaxiBuilderResult()
             {
 
             };
+        }
+
+        public IEnumerable<TaxiModel> GetAllTaxis()
+        {
+            return _context.Taxi;
+        }
+
+        public IEnumerable<TaxiCarModel> GetAllTaxiCars()
+        {
+            return _context.TaxiCar;
         }
 
         public async Task<IEnumerable<TaxiModelDTO>> StepOne(TaxiBuilderResult builderResult, ICollection<AddressModel> addresses)
@@ -57,13 +59,14 @@ namespace CityWeb.Infrastructure.Service.Transport
                 throw new Exception("CarSharing does not exist!");
         }        
 
-        public async Task StepThree(TaxiBuilderResult builderResult, TransportType taxiType)
+        public async Task<bool> StepThree(TaxiBuilderResult builderResult, TransportType taxiType)
         {
             builderResult.TaxiType = taxiType;
             builderResult.Price = new PriceModel()
             {
 
             };
+            return true;
         }
 
         public async Task<CreateTaxiModelDTO> CreateTaxi(CreateTaxiModelDTO createTaxiDTO)
@@ -85,11 +88,14 @@ namespace CityWeb.Infrastructure.Service.Transport
             }
         }
 
-        public async Task DeleteTaxi(DeleteTaxiModelDTO deleteTaxiDTO)
+        public async Task<bool> DeleteTaxi(DeleteTaxiModelDTO deleteTaxiDTO)
         {
             var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == deleteTaxiDTO.Title);
             if (taxi != null)
+            {
                 _context.Taxi.Remove(taxi);
+                return true;
+            }
             else
                 throw new Exception("Taxi does not exist");
         }
@@ -158,11 +164,14 @@ namespace CityWeb.Infrastructure.Service.Transport
                 throw new Exception("Car does not exist");
         }
 
-        public async Task DeleteTaxiCar(DeleteTaxiCarDTO deleteCarDTO)
+        public async Task<bool> DeleteTaxiCar(DeleteTaxiCarDTO deleteCarDTO)
         {
             var taxiCar = await _context.TaxiCar.FirstOrDefaultAsync(x => x.VINCode == deleteCarDTO.VINCode);
             if (taxiCar != null)
+            {
                 _context.TaxiCar.Remove(taxiCar);
+                return true;
+            }
             else
                 throw new Exception("Car does not exist");
         }
