@@ -20,7 +20,6 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
     }
     public class UpdateEventDTO
     {
-        public string EntertainmentTitle { get; set; }
         public string EventTitle { get; set; }
         public double VAT { get; set; }
         public double Value { get; set; }

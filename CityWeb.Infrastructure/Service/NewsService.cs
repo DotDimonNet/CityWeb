@@ -21,48 +21,31 @@ namespace CityWeb.Infrastructure.Service
             _context = context;
         }
 
-        public async Task<NewsItemModel> AddNews(AddNewsItemDTO addNewsItem, AddNewsServiceDTO addNewsService)
-        {
-            var service = await _context.News.FirstOrDefaultAsync(x => x.Title == addNewsService.ServiceTitle && x.Type == addNewsService.ServiceType);
-            if (service != null)
+        public async Task<NewsItemModelDTO> AddNews(AddNewsItemDTO addData)
+        { 
+            var newsItem = await _context.NewsItems.FirstOrDefaultAsync(x => x.Title == addData.Title);
+            if (newsItem == null)
             {
-                var newsItem = await _context.NewsItems.FirstOrDefaultAsync(x => x.Title == addNewsItem.Title);
-                if (newsItem == null)
-                {
-                    var addItem = new NewsItemModel()
-                    {
-                        Title = addNewsItem.Title,
-                        Description = addNewsItem.Description
-                    };
-                    await _context.NewsItems.AddAsync(addItem);
-                    await _context.SaveChangesAsync();
-                    return addItem;
-                }
-                else
-                {
-                    throw new Exception("News Item was already created");
-                }
+                var addNewsItem = addData.ToNewsItemModel();
+                var model = await _context.NewsItems.AddAsync(addNewsItem);
+                await _context.SaveChangesAsync();
+                return model.Entity.ToNewsItemModelDTO();
             }
             else
             {
-                throw new Exception("News Service is not created");
-            }
+                throw new Exception("News Item was already created");
+            }  
         }
 
-        public async Task<NewsModel> AddNewsService(AddNewsServiceDTO addService)
+        public async Task<NewsModelDTO> AddNewsService(AddNewsModelDTO addService)
         {
             var service = await _context.News.FirstOrDefaultAsync(x => x.Title == addService.ServiceTitle);
             if(service == null)
             {
-                var addNewsService = new NewsModel()
-                {
-                    Title = addService.ServiceTitle,
-                    Description = addService.Description,
-                    Type = addService.ServiceType
-                };
-                await _context.News.AddAsync(addNewsService);
+                var addNews = addService.ToNewsModelDTO();
+                var model = await _context.News.AddAsync(addNews);
                 await _context.SaveChangesAsync();
-                return addNewsService;
+                return model.Entity.ToNewsModelDTO();
             }
             else
             {
@@ -70,37 +53,29 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<bool> DeleteNews(DeleteNewsItemDTO deleteNews, DeleteNewsServiceDTO deleteNewsService )
+        public async Task<bool> DeleteNews(DeleteNewsItemDTO deleteNews )
         {
-            var service = await _context.News.FirstOrDefaultAsync(x => x.Title == deleteNewsService.ServiceTitle && x.Type == deleteNewsService.Type);
-            if (service != null)
+            var deleteNewsItem = await _context.NewsItems.FirstOrDefaultAsync(x => x.Title == deleteNews.NewsItemTitle);
+            if (deleteNewsItem != null)
             {
-                var deleteNewsItem = await _context.NewsItems.FirstOrDefaultAsync(x => x.Title == deleteNews.NewsItemTitle);
-                if (deleteNewsItem != null)
-                {
-                    _context.Remove(service);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                else
-                {
-                    throw new Exception("News Item is not exists");
-                }
+                _context.Remove(deleteNews);
+                await _context.SaveChangesAsync();
+                return true;
             }
             else
             {
-                throw new Exception("News Service is not exists");
+                throw new Exception("News Item is not exists");
             }
+           
         }
 
-        public async Task<bool> DeleteNewsService(DeleteNewsServiceDTO deleteService)
+        public async Task<bool> DeleteNewsService(DeleteNewsModelDTO deleteService)
         {
             var service =  await _context.News.FirstOrDefaultAsync(x => x.Title == deleteService.ServiceTitle);
             if (service != null)
             {
                 _context.Remove(service);
                 await _context.SaveChangesAsync();
-                _context.Update(service);
                 return true;
             }
             else
@@ -109,61 +84,39 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<IEnumerable<string>> GetNewsOfService(GetServiceDTO getNews)
-        {
-            var newsService = await _context.News.FirstOrDefaultAsync(x => getNews.ServiceTitle == x.Title && getNews.ServiceType == x.Type);
-            return newsService.NewsItems.Select(x => x.Title);
-        }
+        //public async Task<IEnumerable<string>> GetNewsOfService(GetServiceDTO getNews)
+        //{
+            
+        //}
 
-        public async Task<NewsItemModel> GetItem(GetNewsItemDTO getItem)
-        {
-            var newsItem = await _context.NewsItems.FirstOrDefaultAsync(x => getItem.Title == x.Title);
-            return newsItem;
-        }
+        //public async Task<NewsItemModelDTO> GetItem(GetNewsItemDTO getItem)
+        //{
+            
+        //}
 
-        public async Task<NewsItemModel> UpdateNewsItem(UpdateNewsItemDTO updateNews, UpdateNewsServiceDTO updateService)
+        public async Task<NewsItemModelDTO> UpdateNewsItem(UpdateNewsItemDTO updateNews)
         {
-            var service = await _context.News.FirstOrDefaultAsync(x => x.Title == updateService.ServiceTitle);
-            if (service != null)
+            var newsItem = await _context.NewsItems.FirstOrDefaultAsync(x => x.Title == updateNews.NewsItemTitle);
+            if (newsItem != null)
             {
-                var newsItem = await _context.NewsItems.FirstOrDefaultAsync(x => x.Title == updateNews.NewsItemTitle);
-                if (newsItem != null)
-                {
-                    var updateNewsItem = new NewsItemModel()
-                    {
-                        Title = updateNews.NewsItemTitle,
-                        Description = updateNews.Description
-                    };
-                    _context.Update(service);
-                    await _context.SaveChangesAsync();
-                    return updateNewsItem;
-                }
-                else
-                {
-                    throw new Exception("News Item is not exists");
-                }
+                var model = _context.NewsItems.Update(newsItem.UpdateFromDTO(updateNews));
+                await _context.SaveChangesAsync();
+                return model.Entity.ToNewsItemModelDTO();
             }
             else
             {
-                throw new Exception("News Service is not exists");
+                throw new Exception("News Item is not exists");
             }
         }
            
-
-        public async Task<NewsModel> UpdateNewsService(UpdateNewsServiceDTO updateService)
+        public async Task<NewsModelDTO> UpdateNewsService(UpdateNewsModelDTO updateService)
         {
-            var service = await _context.News.FirstOrDefaultAsync(x => x.Title == updateService.ServiceTitle);
-            if (service != null)
+            var newsService = await _context.News.FirstOrDefaultAsync(x => x.Title == updateService.ServiceTitle);
+            if (newsService != null)
             {
-                var updateNewsService = new NewsModel()
-                {
-                    Title = updateService.ServiceTitle,
-                    Description = updateService.Description
-                    
-                };
-                _context.Update(service);
+                var model = _context.News.Update(newsService.UpdateFromDTO(updateService));
                 await _context.SaveChangesAsync();
-                return updateNewsService;
+                return model.Entity.ToNewsModelDTO();
             }
             else
             {

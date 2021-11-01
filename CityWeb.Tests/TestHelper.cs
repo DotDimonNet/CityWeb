@@ -132,8 +132,8 @@ namespace CityWeb.Tests
                     Title = $"CarSharing{i + 1}",
                     Description = $"Default description {i}",
                     Payment = new PaymentModel(),
-                    Service = service,
-                    ServiceId = service.Id,
+                    //Service = service,
+                    //ServiceId = service.Id,
                     Location = new AddressModel()
                     {
                         StreetName = "Porika",
@@ -200,11 +200,12 @@ namespace CityWeb.Tests
             {
                 var oneTaxi = new TaxiModel()
                 {
-                    Title = $"CarSharing{i + 1}",
+                    Title = $"Taxi{i + 1}",
                     Description = $"Default description {i}",
                     Service = service,
                     ServiceId = service.Id
                 };
+                taxi.Add(oneTaxi);
             };
 
             var taxiCars = new List<TaxiCarModel>();

@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.Transport.CarSharing
 {
-    public class UpdateCarSharingModelDTO
+    public class CarSharingModelDTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
         public AddressModelDTO Location { get; set; }
-        //public virtual ServiceModel Service { get; set; }
     }
 }

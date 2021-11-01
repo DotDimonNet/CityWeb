@@ -1,4 +1,5 @@
-﻿using CityWeb.Domain.DTO.Transport.Car;
+﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
@@ -20,7 +21,7 @@ namespace Taste.Web.Controllers
             _carSharingService = carSharingService;
         }
 
-        [HttpPut("car-sharing")]
+        [HttpPost("manage-car-sharing")]
         public async Task<IActionResult> CreateCarSharing([FromBody] CreateCarSharingModelDTO request)
         {
             try
@@ -34,7 +35,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("car-sharing")]
+        [HttpPut("manage-car-sharing")]
         public async Task<IActionResult> UpdateCarSharing([FromBody] UpdateCarSharingModelDTO request)
         {
             try
@@ -48,7 +49,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("car-sharing")]
+        [HttpDelete("manage-car-sharing")]
         public async Task<IActionResult> DeleteCarSharing([FromBody] DeleteCarSharingModelDTO request)
         {
             try
@@ -62,7 +63,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("rent-car")]
+        [HttpPost("rent-car")]
         public async Task<IActionResult> AddRentCar([FromBody] AddRentCarDTO request)
         {
             try
@@ -76,7 +77,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("rent-car")]
+        [HttpPut("rent-car")]
         public async Task<IActionResult> UpdateRentCar([FromBody] UpdateRentCarDTO request)
         {
             try
@@ -123,7 +124,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var stepOneResult = await _carSharingService.StepOne(builder, title);
+                var stepOneResult = await _carSharingService.GetAllCarsOfCarSharing(builder, title);
                 return Json(stepOneResult);
             }
             catch (Exception ex)
@@ -137,7 +138,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var stepTwoResult = await _carSharingService.StepTwo(builder, vinCode);
+                var stepTwoResult = await _carSharingService.ChooseCar(builder, vinCode);
                 return Json(stepTwoResult);
             }
             catch (Exception ex)
@@ -147,11 +148,11 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("step-three")]
-        public async Task<IActionResult> StepThree([FromBody] CarSharingBuilderResult builder, [FromQuery] PeriodModel period)
+        public async Task<IActionResult> StepThree([FromBody] CarSharingBuilderResult builder, [FromQuery] PeriodModelDTO period)
         {
             try
             {
-                var stepThreeResult = await _carSharingService.StepThree(builder, period);
+                var stepThreeResult = await _carSharingService.CheckRent(builder, period);
                 return Ok(stepThreeResult);
             }
             catch (Exception ex)

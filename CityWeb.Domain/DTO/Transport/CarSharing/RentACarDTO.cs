@@ -11,8 +11,6 @@ namespace CityWeb.Domain.DTO.Transport.CarSharing
     {
         public string VINCode { get; set; }
 
-        public DateTime DateStart { get; set; }
-        public DateTime DateEnd { get; set; }
-        //public ICollection<PeriodModel> RentPeriod { get; set; } = new List<PeriodModel>();
+        public PeriodModelDTO RentPeriod { get; set; }
     }
 }
