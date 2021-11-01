@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CityWeb.Domain.DTO.RatingDTO;
 using Microsoft.EntityFrameworkCore;
+using CityWeb.Domain.DTO;
 
 namespace CityWeb.Infrastructure.Service
 {
@@ -41,5 +42,19 @@ namespace CityWeb.Infrastructure.Service
             return await _context.Ratings
                 .Where(x => x.ServiceId == serviceRate.ServiceId).MaxAsync(x => x.Value);
         }
+        public async Task<double> FindMinRating(MinServiceRateDTO serviceRate)
+        {
+            return await _context.Ratings.Where(x => x.ServiceId == serviceRate.ServiceId).MinAsync(x => x.Value);
+        }
+
+        public int ShowQuantityOfUsersThatRateService(ServiceRateDTO serviceRate)
+        {
+            return _context.Services.Where(x => x.Id == serviceRate.ServiceId).Select(x => x.Users).Count();
+        }
+
+        //public Task<double> CalculateAverageRating(AvarageRatingDTO avarageRating)
+        //{
+        //    var result = _context.
+        //}
     }
 }
