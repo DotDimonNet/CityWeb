@@ -18,6 +18,6 @@ namespace CityWeb.Domain.Entities
         public virtual PeriodModel WorkSchedule { get; set; }
         public virtual ICollection<ProductModel> Products { get; set; } = new List<ProductModel>();
         public virtual PriceModel DeliveryPrice { get; set; }
-        public virtual RatingModel Rating { get; set; }
+        
     }
 }

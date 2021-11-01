@@ -107,6 +107,7 @@ namespace CityWeb
             services.AddOptions();
             services.AddScoped<DbInitializer>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IDeliveryService, DeliveryService>();
             services.AddTransient<ICarSharingService, CarSharingService>();
             services.AddTransient<ITaxiService, TaxiService>();
             services.AddTransient<IEntertainmentService, EntertainmentService>();
