@@ -1,5 +1,6 @@
 using CityWeb.Domain.Entities;
 using CityWeb.Infrastucture.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -62,6 +63,11 @@ namespace CityWeb.Tests
             UserManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
 
+            var _contextAccessor = new Mock<IHttpContextAccessor>();
+            var _userPrincipalFactory = new Mock<IUserClaimsPrincipalFactory<ApplicationUserModel>>();
+            SignInManagerMock = new Mock<SignInManager<ApplicationUserModel>>(UserManagerMock.Object,
+                           _contextAccessor.Object, _userPrincipalFactory.Object, null, null, null);
+
             var storeRoles = new Mock<IRoleStore<ApplicationUserRole>>();
             RoleManagerMock = new Mock<RoleManager<ApplicationUserRole>>(storeRoles.Object, null, null, null, null);
 
@@ -110,10 +116,6 @@ namespace CityWeb.Tests
                             }
                         }
                     }
-
-
-
-
                 };
 
                 entertainments.Add(entertainment);
@@ -130,8 +132,8 @@ namespace CityWeb.Tests
                     Title = $"CarSharing{i + 1}",
                     Description = $"Default description {i}",
                     Payment = new PaymentModel(),
-                    Service = service,
-                    ServiceId = service.Id,
+                    //Service = service,
+                    //ServiceId = service.Id,
                     Location = new AddressModel()
                     {
                         StreetName = "Porika",
@@ -198,11 +200,12 @@ namespace CityWeb.Tests
             {
                 var oneTaxi = new TaxiModel()
                 {
-                    Title = $"CarSharing{i + 1}",
+                    Title = $"Taxi{i + 1}",
                     Description = $"Default description {i}",
                     Service = service,
                     ServiceId = service.Id
                 };
+                taxi.Add(oneTaxi);
             };
 
             var taxiCars = new List<TaxiCarModel>();
@@ -269,7 +272,7 @@ namespace CityWeb.Tests
                             ProductType = Domain.Enums.ProductType.AlcoholicDrinks,
                             ProductImage = $"img{i+1}"
                         }
-
+                    
                     },
                     DeliveryPrice = new PriceModel(),
                     WorkSchedule = new PeriodModel()
@@ -292,6 +295,7 @@ namespace CityWeb.Tests
             {
                 var rating = new RatingModel()
                 {
+                    ServiceId = Guid.NewGuid(),
                     Value = i
                 };
                 ratings.Add(rating);

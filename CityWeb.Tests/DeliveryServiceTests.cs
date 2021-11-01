@@ -72,11 +72,11 @@ namespace CityWeb.Tests
             };
 
             var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.UpdateDeliveryCompany(dto));
-            Assert.AreEqual(exeption.Message, "Company was not created!");
+            Assert.AreEqual(exeption.Message, "Company does not exist!");
         }
 
             [Test]
-        public async Task CreateMenuTest()
+        public async Task CreateProductTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext);
             var dto = new ProductModelDTO()
@@ -90,7 +90,7 @@ namespace CityWeb.Tests
                 VAT = 10.00,
             };
 
-            var product = await deliveryService.CreateMenu(dto);
+            var product = await deliveryService.CreateProduct(dto);
             var productFromContext = TestHelper.ApplicationContext.Products.FirstOrDefault(x => x.ProductName == product.ProductName);
 
             Assert.IsNotNull(product);
@@ -117,7 +117,7 @@ namespace CityWeb.Tests
                 VAT = 10.00,
             };
 
-            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.CreateMenu(dto));
+            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.CreateProduct(dto));
             Assert.AreEqual(exeption.Message, "Company was not created!");
         }
 
@@ -136,7 +136,7 @@ namespace CityWeb.Tests
                 VAT = 10.00,
             };
 
-            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.CreateMenu(dto));
+            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.CreateProduct(dto));
             Assert.AreEqual(exeption.Message, "Product was already created!");
         }
 
@@ -238,6 +238,7 @@ namespace CityWeb.Tests
                 Title = "DeliveryCompany66",
                 ProductName = "Product6",
             };
+
             var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.DeleteProduct(dto));
             Assert.AreEqual(exeption.Message, "Company does not exist!");
         }
@@ -270,7 +271,6 @@ namespace CityWeb.Tests
         }
 
         [Test]
-
         public async Task SelectDeliveryCompanyTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext);
@@ -308,34 +308,30 @@ namespace CityWeb.Tests
             }
         }
 
-        //[Test]
-        //public async Task CheckoutBusketTest()
-        //{
-        //    var deliveryService = new DeliveryService(TestHelper.ApplicationContext);
-        //    var dto = new BusketModelDTO()
-        //    {
-        //        Busket =
-        //        {
-        //            new BusketItemModelDTO()
-        //            {
-        //                ProductId = Guid.NewGuid(),
-        //                Quantity = 5,
-        //            }
-        //        },
-        //        Address = new AddressModel()
-        //        {
-        //            StreetName = "Vatytina",
-        //            HouseNumber = "58",
-        //            ApartmentNumber = "101",
-        //        },
-        //       UserName = "Volodya"
-        //    };
+        [Test]
+        public async Task CheckoutBusketTest()
+        {
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext);
+            var dto = new BusketModelDTO()
+            {
+                Busket =
+                {
+                    new BusketItemModelDTO()
+                    {
+                        ProductId = Guid.NewGuid(),
+                        Quantity = 5,
+                    }
+                },
+                Address = new AddressModel()
+                {
+                    StreetName = "Vatytina",
+                    HouseNumber = "58",
+                    ApartmentNumber = "101",
+                },
+                UserName = "Volodya"
+            };
 
-        //    var delivery = deliveryService.CheckoutBusket(dto);
-            
-        //}
-
-
-
+            var delivery = deliveryService.CheckoutBusket(dto);
+        }
     }
 }

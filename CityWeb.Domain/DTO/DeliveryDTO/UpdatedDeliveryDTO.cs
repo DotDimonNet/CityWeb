@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class DeliveryDTO
+    public class UpdatedDeliveryDTO
     {
         public string Title { get; set; }
         public string Description { get; set; }

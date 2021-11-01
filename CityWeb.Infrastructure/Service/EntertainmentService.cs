@@ -8,13 +8,14 @@ using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Extentions;
+using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class EntertainmentService
+    public class EntertainmentService : IEntertainmentService
     {
         private readonly ApplicationContext _context;
 
@@ -23,159 +24,128 @@ namespace CityWeb.Infrastructure.Service
             _context = context;
         }
 
-        public async Task<UpdateEntertainmentDTO> UpdadeEntertainmentModel(EntertainmentModelDTO updateData)
+        public async Task<EntertainmentModelDTO> UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
-
-            if(entertainment != null)
-            {
-                entertainment.Title = updateData.EntertainmentTitle;       
-                
-                _context.Update(entertainment);
-                await _context.SaveChangesAsync();
-                return entertainment.ToUpdateEntertainmentModelDTO();
-
-            }
-            else
-            {
-                throw new Exception("Entertainment doesnt exists");
-            }
-        }
-
-        public async Task<UpdateEventDTO> UpdateEventModel(EventModelDTO updateEvent)
-        {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.Title);
             if (entertainment != null)
             {
-                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle && x.EntertaimentId== entertainment.Id);
-                if (events != null)
-                {
-                    events.Title = updateEvent.EventTitle;
-                    events.EventPrice.Tax = updateEvent.Tax;
-                    events.EventPrice.Value = updateEvent.Value;
-                    events.EventPrice.VAT = updateEvent.VAT;
-
-
-                    _context.Update(events);
-                    await _context.SaveChangesAsync();
-                    return events.ToUpdateEventModelDTO();
-                }
-                else
-                {
-                    throw new Exception("Event was not created!");
-                }
-                
+                var model = _context.Entertaiments.Update(entertainment.UpdateFromDTO(updateData));
+                await _context.SaveChangesAsync();
+                return model.Entity.ToEntertainmentModelDTO();
             }
             else
             {
-                throw new Exception("Entertainment was not created!");
+                throw new Exception("Entertainment Service is not exists");
             }
-
-
         }
-        public async Task<string> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData)
+
+        public async Task<EventModelDTO> UpdateEventModel(UpdateEventDTO updateEvent)
+        {
+            var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle);
+            if (eventModel != null)
+            {
+                var model = _context.Events.Update(eventModel.UpdateFromDTO(updateEvent));
+                await _context.SaveChangesAsync();
+                return model.Entity.ToEventModelDTO();
+            }
+            else
+            {
+                throw new Exception("Event was not created!");
+            }
+        }
+
+        public async Task<bool> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData)
         {
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
-            if(entertainment != null)
+            if (entertainment != null)
             {
                 _context.Remove(entertainment);
                 await _context.SaveChangesAsync();
-                return "Entertainment was deleted";
+                return true;
             }
             else
             {
                 throw new Exception("Enterainment doesn't exists");
             }
-
         }
+
         public async Task<bool> DeleteEventModel(DeleteEventDTO deleteData)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
-            if (entertainment != null)
+            
+            var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == deleteData.EventTitle);
+            if(events != null)
             {
-                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == deleteData.EventTitle);
-                if(events != null)
-                {
-                    _context.Remove(events);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                else
-                {
-                    throw new Exception("Event doesn't exist");
-                }
+                _context.Remove(events);
+                await _context.SaveChangesAsync();
+                return true;
             }
             else
             {
-                throw new Exception("Entertainment doesn't exist");
+                throw new Exception("Event doesn't exist");
             }
+           
         }
-        public async Task<AddEntertainmentModelDTO> AddEntertainmentModel(EntertainmentModelDTO addData)
+
+        public async Task<EntertainmentModelDTO> AddEntertainmentModel(AddEntertainmentModelDTO addData)
         {
-            var entertainment = new EntertainmentModel()
+            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.EntertainmentTitle);
+            if (entertainment == null)
             {
-                Title = addData.EntertainmentTitle,
-                Description = addData.Description
-            };
-            var entModel = await _context.Entertaiments.AddAsync(entertainment);
-            await _context.SaveChangesAsync();
-            return entModel.Entity.ToAddEntertainmentModelDTO();
-
-
-
-        }
-        public async Task<AddEventModelDTO> AddEventtModel(EventModelDTO addData)
-        {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.Title);
-            if (entertainment != null)
-            {
-                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
-                if(events == null)
-                {
-                    var dto = new EventModel()
-                    {
-                        Title = addData.EventTitle,
-                        EventPrice = new PriceModel()
-                        {
-                            Value = addData.Value,
-                            Tax = addData.Tax,
-                            VAT = addData.VAT
-                        }
-                    };
-                    var eventModel = await _context.AddAsync(dto);
-                    await _context.SaveChangesAsync();
-                    return eventModel.Entity.ToAddEventModelDTO();
-                }
-                else
-                {
-                    throw new Exception("Event already exists");
-                }
+                var addEntModel = addData.ToEntertainmentModel();
+                var model = await _context.Entertaiments.AddAsync(addEntModel);
+                await _context.SaveChangesAsync();
+                return model.Entity.ToEntertainmentModelDTO();
             }
             else
             {
-                throw new Exception("Entertainment doesnt exist");
+                throw new Exception("Entertainment Service was already created");
+            }
+            
+        }
+
+        public async Task<EventModelDTO> AddEventModel(AddEventModelDTO addData)
+        {    
+            var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
+            if (events == null)
+            {
+                var addEventModel = addData.ToEventModel();
+                var model = await _context.Events.AddAsync(addEventModel);
+                await _context.SaveChangesAsync();
+                return model.Entity.ToEventModelDTO();
+            }
+            else
+            {
+                throw new Exception("Event already exists");
             }
         }
-        public async Task<IEnumerable<string>> GetEntertainmentTitlesFromService(ServiceModelDTO dtoService)
+
+        public async Task<IEnumerable<EventModelDTO>> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO entModel)
         {
-            var service = await _context.Services.FirstOrDefaultAsync(x => dtoService.Entertaiments == x.Entertaiments);
-            return service.Entertaiments.Select(x => x.Title);
+            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentTitle == x.Title);
+            if(entertainment != null)
+            {
+                return entertainment.Event.Select(x => x.ToEventModelDTO());
+            }
+            else
+            {
+                throw new Exception("Entertainment doesn't exists");
+            }
+            
         }
-        public async Task<IEnumerable<string>> GetEventTitlesFromEntertainment(EntertainmentModelDTO entModel)
+
+        public async Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO getEventModel)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentId == x.Id && x.WorkSchedule.EndTime != (DateTime.Now));
-            return entertainment.Event.Select(x => x.Title);
+            var eventModel = await _context.Events.FirstOrDefaultAsync(x => getEventModel.EventTitle == x.Title && x.isAvailable);
+            if(eventModel != null)
+            {
+                return getEventModel.ToEventModelDTO();
+            }
+            else
+            {
+                throw new Exception("Event doesn't exists");
+            }
+           
         }
-        
-
-
-
-
-
-
-
-
-
 
     }   
 }

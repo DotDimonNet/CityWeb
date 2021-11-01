@@ -1,7 +1,9 @@
 ﻿using CityWeb.Domain.Entities;
 using CityWeb.Infrastructure.Authorization;
 using CityWeb.Infrastructure.Interfaces;
+using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastructure.Service;
+using CityWeb.Infrastructure.Service.Transport;
 using CityWeb.Infrastructure.Settings;
 using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -105,6 +107,10 @@ namespace CityWeb
             services.AddOptions();
             services.AddScoped<DbInitializer>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IDeliveryService, DeliveryService>();
+            services.AddTransient<ICarSharingService, CarSharingService>();
+            services.AddTransient<ITaxiService, TaxiService>();
+            services.AddTransient<IEntertainmentService, EntertainmentService>();
             services.Configure<AuthSettings>(Configuration.GetSection("Auth"));
             services.AddMvc();
             services.AddControllers(options =>

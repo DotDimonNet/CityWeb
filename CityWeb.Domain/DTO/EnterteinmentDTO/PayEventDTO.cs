@@ -8,6 +8,7 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
     public class PayEventDTO
     {
-        public double TotalPrice { get; set; }
+        public Guid EventId { get; set; }
+        public Guid PaymentId { get; set; }
     }
 }
