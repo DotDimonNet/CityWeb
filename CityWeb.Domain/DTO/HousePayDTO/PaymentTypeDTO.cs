@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Domain.Enums;
+
 
 namespace CityWeb.Domain.DTO.HousePayDTO
 {
-    public class DeleteCounterModelDTO
+    class PaymentTypeDTO
     {
-        public int Number { get; set; }
+        public string NameValue { get; set; }
+        public HousePaymentType Paymenttype { get; set; }
     }
 }

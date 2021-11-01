@@ -307,6 +307,22 @@ namespace CityWeb.Infrastructure.Extentions
                 Title = model.Title
             };
         }
+        public static CounterModel FromCreateCounterModelDTO(this CreateCounterModelDTO counterModelDTO)
+        {
+            return new CounterModel()
+            {
+                Number = counterModelDTO.Number,
+                StartCount = counterModelDTO.StartCount,
+                Type = counterModelDTO.Type
+            };
+        }
+        public static UpdateCounterModelDTO ToUpdateCounterModelDTO(this CounterModel counterModel)
+        {
+            return new UpdateCounterModelDTO()
+            {
+                StartCount = counterModel.StartCount,
+                EndCount = counterModel.EndCount,
+                PriceByItem = counterModel.PriceByItem
 
         public static DeliveryModel CreateFromDTO(this CreateDeliveryModelDTO deliveryModel)
         {
