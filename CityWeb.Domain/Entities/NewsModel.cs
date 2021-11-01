@@ -1,4 +1,5 @@
-﻿using CityWeb.Domain.Enums;
+﻿using CityWeb.Domain.DTO.NewsDTO;
+using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,14 @@ namespace CityWeb.Domain.Entities
         public virtual ICollection<HotelModel> HotelNews {get;set;} = new List<HotelModel>();
         public virtual ICollection<CarSharingModel> CarSharingNews {get;set;} = new List<CarSharingModel>();
         public virtual ICollection<TaxiModel> TaxiNews {get;set;} = new List<TaxiModel>();
-        
+
+        public NewsModel UpdateFromDTO(UpdateNewsModelDTO updateService)
+        {
+            return new NewsModel()
+            {
+                Title = updateService.ServiceTitle,
+                Description = updateService.Description
+            };
+        }
     }
 }

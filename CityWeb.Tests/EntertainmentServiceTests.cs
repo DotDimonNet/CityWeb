@@ -26,7 +26,7 @@ namespace CityWeb.Tests
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
             var dto = new AddEntertainmentModelDTO()
             {
-                EntertainmentTitle = "sdfgdgf",
+                EntertainmentTitle = "asdasd",
                 Description = "Default description",
                 Type = EntertainmentType.Club
             };
@@ -46,7 +46,7 @@ namespace CityWeb.Tests
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
             var dto = new AddEventModelDTO()
             {
-                Title = "Entertainment1",
+                
                 EventTitle = "asdvfdas",
                 Value = 100.00,
                 Tax = 10.00,
@@ -83,7 +83,6 @@ namespace CityWeb.Tests
 
             var dto = new UpdateEventDTO()
             {
-                EntertainmentTitle = "Entertainment1",
                 EventTitle = "Event1",
                 Value = 300,
                 Tax = 10,
@@ -130,28 +129,12 @@ namespace CityWeb.Tests
         }
 
         [Test]
-        public void AddEventtModelEntertainmentNotExistTest()
-        {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-            var dto = new AddEventModelDTO()
-            {
-                Title = " ",
-                EventTitle = "asdvfdas",
-                Value = 100.00,
-                Tax = 10.00,
-                VAT = 10.00
-            };
-
-            var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.AddEventModel(dto));
-            Assert.AreEqual(exept.Message, "Entertainment doesnt exist");
-        }
-        [Test]
         public void AddEventtModelEventExistsTest()
         {
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
             var dto = new AddEventModelDTO()
             {
-                Title = "Entertainment1",
+                
                 EventTitle = "Event1",
                 Value = 100.00,
                 Tax = 10.00,
@@ -176,30 +159,12 @@ namespace CityWeb.Tests
             Assert.AreEqual(exept.Message, "Entertainment Service is not exists");
         }
         [Test]
-        public void UpdateEventModelEntertainmentNotExistsTest()
-        {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-
-            var dto = new UpdateEventDTO()
-            {
-                EntertainmentTitle = " ",
-                EventTitle = "Event1",
-                Value = 300,
-                Tax = 10,
-                VAT = 10,
-            };
-
-            var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.UpdateEventModel(dto));
-            Assert.AreEqual(exept.Message, "Entertainment was not created!");
-        }
-        [Test]
         public void UpdateEventModelEventNotExistsTest()
         {
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
 
             var dto = new UpdateEventDTO()
             {
-                EntertainmentTitle = "Entertainment1",
                 EventTitle = " ",
                 Value = 300,
                 Tax = 10,
@@ -221,20 +186,7 @@ namespace CityWeb.Tests
             var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.DeleteEntertainmentModel(dto));
             Assert.AreEqual(exept.Message, "Enterainment doesn't exists");
         }
-        [Test]
-        public void DeleteEventModelEntertainmentNotExistTest()
-        {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-
-            var dto = new DeleteEventDTO()
-            {
-                Title = "",
-                EventTitle = "Event1"
-            };
-
-            var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.DeleteEventModel(dto));
-            Assert.AreEqual(exept.Message, "Entertainment doesn't exist");
-        }
+       
         [Test]
         public void DeleteEventModelEventNotExistTest()
         {

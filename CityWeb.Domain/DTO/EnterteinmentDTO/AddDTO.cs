@@ -18,11 +18,11 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
 
     public class AddEventModelDTO
     {
-        public string Title { get; set; }
         public string EventTitle { get; set; }
         public double Value { get; set; }
         public double VAT { get; set; }
         public double Tax { get; set; }
+        
 
     }
 }
