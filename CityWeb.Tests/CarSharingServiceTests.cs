@@ -1,13 +1,13 @@
-﻿using CityWeb.Domain.DTO.Transport.Car;
+﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Service.Transport;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CityWeb.Tests
@@ -27,7 +27,13 @@ namespace CityWeb.Tests
             var dto = new CreateCarSharingModelDTO()
             {
                 Title = "CarSharing Company",
-                Description = "Default description of CarSharing company"
+                Description = "Default description of CarSharing company",
+                Location = new AddressModelDTO()
+                {
+                    StreetName = "Yangelya",
+                    HouseNumber = "25",
+                    ApartmentNubmer = "1"
+                }
             };
 
             var carSharing = await carSharingService.CreateCarSharing(dto);
@@ -89,6 +95,12 @@ namespace CityWeb.Tests
             {
                 Title = "CarSharing1",
                 Description = "new car sharing description",
+                Location = new AddressModelDTO()
+                {
+                    StreetName = "Yangelya",
+                    HouseNumber = "25",
+                    ApartmentNubmer = "1"
+                }
             };
 
             var carSharing = await carSharingService.UpdateCarSharing(dto);
@@ -259,11 +271,11 @@ namespace CityWeb.Tests
         }
 
         [Test]
-        public async Task StepOneTest()
+        public async Task GetAllCarsOfCarSharingTest()
         {
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
-            var stepOneResult = await rentCarService.StepOne(builder, "CarSharing1");
+            var stepOneResult = await rentCarService.GetAllCarsOfCarSharing(builder, "CarSharing1");
             var stepOneResultFromContext = TestHelper.ApplicationContext.RentCars.Where(x => x.CarSharing.Title == builder.CarSharingTitle);
 
             foreach (var item in stepOneResult.ToList())
@@ -278,75 +290,106 @@ namespace CityWeb.Tests
         }
 
         [Test]
-        public void StepOneCarSaringNotExistTest()
+        public void GetAllCarsOfCarSharingNotExistTest()
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
-            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.StepOne(builder, " "));
+            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.GetAllCarsOfCarSharing(builder, " "));
             Assert.AreEqual(exept.Message, "CarSharing does not exist!");
         }
 
         [Test]
-        public async Task StepTwoTest()
+        public async Task ChooseCarTest()
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.StepOne(builder, "CarSharing1");
-            var stepTwoResult = await carSharingService.StepTwo(builder, "BAG48964500");
+            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
+            var stepTwoResult = await carSharingService.ChooseCar(builder, "BAG48964500");
             var stepTwoResultFromComtext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.VINCode == "BAG48964500");
 
             Assert.AreEqual(stepTwoResult.VINCode, stepTwoResultFromComtext.VINCode);
         }
 
         [Test]
-        public async Task StepTwoCarDoesNotExistTest()
+        public async Task ChooseCarDoesNotExistTest()
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.StepOne(builder, "CarSharing1");
-            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.StepTwo(builder, " "));
+            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
+            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.ChooseCar(builder, " "));
             Assert.AreEqual(exept.Message, "Car does not exist!");
         }
 
         [Test]
-        public async Task StepThreeTest()
+        public async Task CheckRentTest()
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.StepOne(builder, "CarSharing1");
-            await carSharingService.StepTwo(builder, "BAG48964500");
+            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
+            await carSharingService.ChooseCar(builder, "BAG48964500");
          
-            var period = new PeriodModel()
+            var period = new PeriodModelDTO()
             {
                 StartTime = DateTime.Now.AddDays(5),
                 EndTime = DateTime.Now.AddDays(7)
             };
             var builder2 = builder;
-            builder2.RentPeriod = period;
-            builder2.Price = (period.EndTime.Day - period.StartTime.Day) * builder2.Car.Price.Total;
+            builder2.RentPeriod = new PeriodModelDTO()
+            {
+                StartTime = period.StartTime,
+                EndTime = period.EndTime
+            };
+            builder2.RentPeriod.EndTime = period.EndTime;
+            var car = await TestHelper.ApplicationContext.RentCars.FirstOrDefaultAsync(x => x.VINCode == "BAG48964500");
+            builder2.Price = (period.EndTime.Day - period.StartTime.Day) * car.Price.Total;
 
-            var result = await carSharingService.StepThree(builder, period);
+            var result = await carSharingService.CheckRent(builder, period);
 
             Assert.IsTrue(result);
             Assert.AreEqual(builder, builder2);
         }
 
         [Test]
-        public async Task StepThreeIsCarFreeTest()
+        public async Task CheckRentIsCarFreeTest()
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.StepOne(builder, "CarSharing1");
-            await carSharingService.StepTwo(builder, "BAG48964500");
-
-            var period = new PeriodModel()
+            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
+            await carSharingService.ChooseCar(builder, "BAG48964500");
+            var period = new PeriodModelDTO()
             {
                 StartTime = DateTime.Now,
                 EndTime = DateTime.Now.AddDays(2)
             };
 
-            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.StepThree(builder, period));
+            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.CheckRent(builder, period));
             Assert.AreEqual(exept.Message, "Car is not free in this period");
+        }
+
+        [Test]
+        public async Task GetAllCarSharingsTest()
+        {
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharings = await carSharingService.GetAllCarSharings();
+            var carSharingsFromContext = TestHelper.ApplicationContext.CarSharings.ToList();
+
+            foreach (var item in carSharings)
+            {
+                Assert.Contains(item.Title, carSharingsFromContext.Select(x => x.Title).ToList());
+            }
+        }
+
+        [Test]
+        public async Task GetAllRentCarsTest()
+        {
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCars = await carSharingService.GetAllRentCars();
+            var rentCarsFromContext = TestHelper.ApplicationContext.RentCars;
+
+            foreach (var item in rentCars)
+            {
+                Assert.Contains(item.VINCode, rentCarsFromContext.Select(x => x.VINCode).ToList());
+            }
         }
     }
 }

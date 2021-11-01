@@ -22,7 +22,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<CreateTaxiModelDTO> CreateTaxi(CreateTaxiModelDTO createTaxiDTO);
         public Task<bool> DeleteTaxi(DeleteTaxiModelDTO deleteTaxiDTO);
         public Task<UpdateTaxiModelDTO> UpdateTaxi(UpdateTaxiModelDTO updateTaxiDTO);
-        public Task<TaxiCarModel> CreateTaxiCar(AddTaxiCarDTO addTaxiCarDTO);
+        public Task<TaxiCarModel> AddTaxiCar(AddTaxiCarDTO addTaxiCarDTO);
         public Task<UpdateTaxiCarDTO> UpdateTaxiCar(UpdateTaxiCarDTO updateCarDTO);
         public Task<bool> DeleteTaxiCar(DeleteTaxiCarDTO deleteCarDTO);
     }
