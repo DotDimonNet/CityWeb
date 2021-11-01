@@ -15,7 +15,7 @@ using CityWeb.Infrastructure.Interfaces.Service;
 
 namespace CityWeb.Infrastructure.Service.Transport
 {
-    class TaxiService : ITaxiService
+    public class TaxiService : ITaxiService
     {
         private readonly ApplicationContext _context;
         public TaxiService(ApplicationContext context)
@@ -84,7 +84,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             }
             else
             {
-                throw new Exception("Taxi was not created!");
+                throw new Exception("Taxi already exist, cant create one more with same title!");
             }
         }
 
@@ -94,6 +94,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             if (taxi != null)
             {
                 _context.Taxi.Remove(taxi);
+                await _context.SaveChangesAsync();
                 return true;
             }
             else
@@ -114,9 +115,10 @@ namespace CityWeb.Infrastructure.Service.Transport
                 throw new Exception("Taxi does not exist");
         }
 
-        public async Task<TaxiCarModel> CreateTaxiCar(AddTaxiCarDTO addTaxiCarDTO)
+        public async Task<TaxiCarModel> AddTaxiCar(AddTaxiCarDTO addTaxiCarDTO)
         {
-            if (_context.TaxiCar.FirstOrDefaultAsync(x => x.Taxi.Title == addTaxiCarDTO.TaxiTitle && x.VINCode == addTaxiCarDTO.VINCode) == null)
+            var car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.VINCode == addTaxiCarDTO.VINCode);
+            if (car == null)
             {
                 var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == addTaxiCarDTO.TaxiTitle);
                 if (taxi != null)
@@ -132,8 +134,8 @@ namespace CityWeb.Infrastructure.Service.Transport
                         Number = addTaxiCarDTO.Number,
                         Color = addTaxiCarDTO.Color
                     };
-                    _context.TaxiCar.Add(taxiCarModel);
-                    _context.SaveChanges();
+                    await _context.TaxiCar.AddAsync(taxiCarModel);
+                    await _context.SaveChangesAsync();
                     return await _context.TaxiCar.FirstOrDefaultAsync(x => x.VINCode == addTaxiCarDTO.VINCode);
                 }
                 else
@@ -141,7 +143,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             }
             else
             {
-                throw new Exception("Car was not created!");
+                throw new Exception("Car already exist, cant create with same VINCode!");
             }
         }
 
@@ -170,6 +172,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             if (taxiCar != null)
             {
                 _context.TaxiCar.Remove(taxiCar);
+                await _context.SaveChangesAsync();
                 return true;
             }
             else

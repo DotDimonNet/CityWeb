@@ -22,7 +22,7 @@ namespace Taste.Web.Controllers
             _taxiService = taxiService;
         }
 
-        [HttpPut("taxi")]
+        [HttpPost("taxi")]
         public async Task<IActionResult> CreateTaxi([FromBody] CreateTaxiModelDTO request)
         {
             try
@@ -36,7 +36,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("taxi")]
+        [HttpPut("taxi")]
         public async Task<IActionResult> UpdateTaxi([FromBody] UpdateTaxiModelDTO request)
         {
             try
@@ -64,12 +64,12 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("taxi-car")]
+        [HttpPost("taxi-car")]
         public async Task<IActionResult> AddTaxiCar([FromBody] AddTaxiCarDTO request)
         {
             try
             {
-                var taxiCar = await _taxiService.CreateTaxiCar(request);
+                var taxiCar = await _taxiService.AddTaxiCar(request);
                 return Json(taxiCar);
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("taxi-car")]
+        [HttpPut("taxi-car")]
         public async Task<IActionResult> UpdateTaxiCar([FromBody] UpdateTaxiCarDTO request)
         {
             try
@@ -120,7 +120,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("stepOne")]
+        [HttpPost("step-one")]
         public async Task<IActionResult> StepOne([FromBody] TaxiBuilderResult builder, [FromQuery] ICollection<AddressModel> addresses)
         {
             try
@@ -134,7 +134,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("stepTwo")]
+        [HttpPost("step-two")]
         public async Task<IActionResult> StepTwo([FromBody] TaxiBuilderResult builder, [FromQuery] string title)
         {
             try
@@ -148,7 +148,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("stepThree")]
+        [HttpPost("step-three")]
         public async Task<IActionResult> StepThree([FromBody] TaxiBuilderResult builder, [FromQuery] TransportType taxiType)
         {
             try
