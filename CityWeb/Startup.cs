@@ -2,6 +2,7 @@
 using CityWeb.Infrastructure.Authorization;
 using CityWeb.Infrastructure.Settings;
 using CityWeb.Infrastucture.Data;
+using CityWeb.Mapping;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -99,6 +100,11 @@ namespace CityWeb
                 options.AddPolicy(Policies.RequireAdminRole, policy => policy.RequireClaim(ClaimTypes.Role, Roles.Admin));
                 options.AddPolicy(Policies.RequireContentManagerRole, policy => policy.RequireClaim(ClaimTypes.Role, Roles.ContentManager));
                 options.AddPolicy(Policies.RequireUserRole, policy => policy.RequireClaim(ClaimTypes.Role, Roles.User));
+            });
+
+            services.AddAutoMapper(x =>
+            {
+                x.AddProfile<MappingProfile>();
             });
             services.AddOptions();
             services.AddScoped<DbInitializer>();
