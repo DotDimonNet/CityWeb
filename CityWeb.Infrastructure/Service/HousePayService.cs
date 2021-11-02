@@ -41,6 +41,29 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<bool> DeleteHousePay(HousePayModelDTO dtoModel)
+        {
+            var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
+            if (housePay != null)
+            {
+                _context.Remove(housePay);
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                throw new Exception("Company does not exist!");
+            }
+        }
+        public async Task<ICollection<HousePayModelDTO>> GetAllHousePay()
+        {
+            return await _context.HousePays.Select(x => x.ToHousePayModelDTO()).ToListAsync();
+        }
+        public IEnumerable<HousePayModelDTO> GetHousePays(int skip = 0, int take = 20)
+        {
+            return _context.HousePays.Skip(skip).Take(take).Select(x => x.ToHousePayModelDTO());
+        }
         public async Task<CounterModel> CreateCounterModel(CreateCounterModelDTO counterModel)
         {
             var counter = counterModel.CreateCounterFromlDTO();
@@ -78,8 +101,14 @@ namespace CityWeb.Infrastructure.Service
             else
                 throw new Exception("Counter does not exist");
         }
-
-   
+        public async Task<ICollection<CounterModelDTO>> GetAllCounters()
+        {
+            return await _context.Counters.Select(x => x.ToCounterModelDTO()).ToListAsync();
+        }
+        public IEnumerable<CounterModelDTO> GetCounters(int skip = 0, int take = 20)
+        {
+            return _context.Counters.Skip(skip).Take(take).Select(x => x.ToCounterModelDTO());
+        }
     }
 }
 

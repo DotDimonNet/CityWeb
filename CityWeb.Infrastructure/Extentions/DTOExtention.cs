@@ -438,6 +438,15 @@ namespace CityWeb.Infrastructure.Extentions
                 Type = counterModel.Type
             };
         }
+        public static CounterModelDTO ToCounterModelDTO(this CounterModel counterModel)
+        {
+            return new CounterModelDTO()
+            {
+                Number = counterModel.Number,
+                StartCount = counterModel.StartCount,
+                EndCount = counterModel.EndCount,
+            };
+        }
         public static AddressModelDTO ToAddressModelDTO(this AddressModel model)
         {
             return new AddressModelDTO()
