@@ -50,6 +50,33 @@ namespace Taste.Web.Controllers
             }
         }
 
+        [HttpPut("update-account")]
+        public async Task<IActionResult> UpdateData([FromBody] UpdateUserDataDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserData(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> UpdateUserPassword([FromBody] UpdateUserPasswordDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserPassword(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()
@@ -57,5 +84,7 @@ namespace Taste.Web.Controllers
             await _accountService.SignOut();
             return NoContent();
         }
+
+        
     }
 }
