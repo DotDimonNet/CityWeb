@@ -37,6 +37,19 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut("hotel")]
+        public async Task<IActionResult> UpdateHotel([FromBody] HotelDTO request)
+        {
+            try
+            {
+                var hotel = await _hotelService.UpdateHotel(request);
+                return Json(hotel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpDelete("hotel")]
         public async Task<IActionResult> RemoveHotel([FromBody] DeleteHotelDTO request)
         {
@@ -57,6 +70,19 @@ namespace CityWeb.Controllers
             {
                 var hotel = await _hotelService.AddRoom(request);
                 return Json(hotel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("room")]
+        public async Task<IActionResult> UpdateRoom([FromBody] UpdateRoomDTO request)
+        {
+            try
+            {
+                var room = await _hotelService.UpdateRoom(request);
+                return Json(room);
             }
             catch (Exception ex)
             {

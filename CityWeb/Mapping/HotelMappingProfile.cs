@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.HotelDTO;
 using CityWeb.Domain.Entities;
 using System;
@@ -13,7 +14,17 @@ namespace CityWeb.Mapping
         public HotelMappingProfile()
         {
             CreateMap<HotelModel, HotelDTO>();
-            CreateMap<HotelModel, DeleteHotelDTO>();
+            CreateMap<RoomModel, RoomDTO>();
+                //.ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
+            CreateMap<RoomModel, UpdateRoomDTO>()
+                .ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
+            CreateMap<RoomModel, PeriodModel>();
+            CreateMap<RoomModel, PriceModel>();
+            CreateMap<RoomDTO, PriceDTO>();
+            CreateMap<RoomModel, PriceDTO>();
+            CreateMap<AddressModel, HotelAddressDTO>();
+
+
         }
     }
 }

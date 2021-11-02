@@ -12,6 +12,8 @@ namespace CityWeb.Infrastructure.Interfaces.Service
 {
     public interface IHotelService
     {
+        public Task<RoomModel> UpdateRoom(UpdateRoomDTO DTO);
+        public Task<HotelModel> UpdateHotel(HotelDTO DTO);
         public Task<bool> RemoveHotel(DeleteHotelDTO hotelDTO);
         public Task<HotelModel> AddHotel(HotelDTO hotelDTO);
         public Task<bool> RemoveRoom(DeleteRoomDTO room);
