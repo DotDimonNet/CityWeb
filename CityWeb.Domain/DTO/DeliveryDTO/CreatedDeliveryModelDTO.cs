@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Domain.DTO.DeliveryDTO
+namespace CityWeb.Domain.DTO
 {
-    public class CreatedDeliveryModelDTO
+    public class CreateDeliveryModelDTO
     {
-        public string Title { get; set;}
-        public string Description { get; set;}
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public AddressModelDTO DeliveryAdress { get; set; }
+        public PeriodModelDTO WorkSchedule { get; set; }
+        public PriceModelDTO DeliveryPrice { get; set; }
     }
 }

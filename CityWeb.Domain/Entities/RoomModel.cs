@@ -17,6 +17,6 @@ namespace CityWeb.Domain.Entities
         public virtual PriceModel Price { get; set; }
         public virtual PeriodModel RentPeriod { get; set; }
         public string Image { get; set; }
-
+        //public ApplicationUserModel User { get; set; }
     }
 }

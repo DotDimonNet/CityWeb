@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO.HotelDTO
 {
-    public class HotelDTO
+    public class HotelTitleDTO
     {
         public string Title { get; set; }
-        public string Description { get; set; }
-        public string Image { get; set; }
-        public HotelAddressDTO Address { get; set; }
     }
 }
