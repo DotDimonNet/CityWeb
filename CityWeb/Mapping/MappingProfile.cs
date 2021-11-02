@@ -12,9 +12,13 @@ namespace CityWeb.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<DeliveryModel, DeliveryModelDTO>()
-                .ForMember(x => x.Description, o => o.MapFrom(z => z.Description))
-                .ForMember(x => x.Title, o => o.MapFrom(z => z.Title));
+            //Address
+            CreateMap<AddressModel, AddressModelDTO>();
+            CreateMap<AddressModelDTO, AddressModel>();
+
+            //Period
+            CreateMap<PeriodModel, PeriodModelDTO>();
+            CreateMap<PeriodModelDTO, PeriodModel>();
         }
     }
 }
