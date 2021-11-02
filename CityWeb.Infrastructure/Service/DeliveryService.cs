@@ -9,14 +9,17 @@ using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Domain.DTO.DeliveryDTO;
 using CityWeb.Domain.Entities;
+using AutoMapper;
 
 namespace CityWeb.Infrastructure.Service
 {
     public class DeliveryService : IDeliveryService
     {
         private readonly ApplicationContext _context;
-        public DeliveryService(ApplicationContext context)
+        private readonly IMapper _mapper;
+        public DeliveryService(ApplicationContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
@@ -43,7 +46,7 @@ namespace CityWeb.Infrastructure.Service
                 delivery.UpdateFromDTO(deliveryModel);
                 _context.Deliveries.Update(delivery);
                 await _context.SaveChangesAsync();
-                return delivery.ToDeliveryModelDTO();
+                return _mapper.Map<DeliveryModel, DeliveryModelDTO>(delivery);
             }
             else
             {
