@@ -1,6 +1,5 @@
 ﻿using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.Transport.Car;
-using CityWeb.Domain.DTO.Transport.CarSharing;
+using CityWeb.Domain.DTO.HousePayDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Interfaces.Service;
@@ -14,20 +13,20 @@ namespace Taste.Web.Controllers
     [Route("api/house-pay")]
     public class HousePayController : Controller
     {
-        private readonly IHousePayService _HousePayService;
+        private readonly IHousePayService _housePayService;
 
-        public HousePayController(IHousePayService HousePayService)
+        public HousePayController(IHousePayService housePayService)
         {
-            _HousePayService = HousePayService;
+            _housePayService = housePayService;
         }
 
-        [HttpPost("manage-car-sharing")]
-        public async Task<IActionResult> CreateCarSharing([FromBody] CreateCarSharingModelDTO request)
+        [HttpPost("manage-house-pay")]
+        public async Task<IActionResult> CreateHousePayModel([FromBody] CreateHousePayModelDTO request)
         {
             try
             {
-                var carSharing = await _carSharingService.CreateCarSharing(request);
-                return Json(carSharing);
+                var housePay = await _housePayService.CreateHousePayModel(request);
+                return Json(housePay);
             }
             catch (Exception ex)
             {
