@@ -119,8 +119,8 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("step-one")]
-        public async Task<IActionResult> StepOne([FromBody] CarSharingBuilderResult builder, [FromQuery] string title)
+        [HttpPost("get-all-cars-of-car-sharing")]
+        public async Task<IActionResult> GetAllCarsOfCarSharing([FromBody] CarSharingBuilderResult builder, [FromQuery] string title)
         {
             try
             {
@@ -133,12 +133,12 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("step-two")]
-        public async Task<IActionResult> StepTwo([FromBody] CarSharingBuilderResult builder, [FromQuery] string vinCode)
+        [HttpPost("get-car-rent-periods")]
+        public async Task<IActionResult> GetCarRentPeriods([FromBody] CarSharingBuilderResult builder, [FromQuery] string vinCode)
         {
             try
             {
-                var stepTwoResult = await _carSharingService.ChooseCar(builder, vinCode);
+                var stepTwoResult = await _carSharingService.GetCarResersedPeriods(builder, vinCode);
                 return Json(stepTwoResult);
             }
             catch (Exception ex)
@@ -147,8 +147,8 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("step-three")]
-        public async Task<IActionResult> StepThree([FromBody] CarSharingBuilderResult builder, [FromQuery] PeriodModelDTO period)
+        [HttpPost("check-rent")]
+        public async Task<IActionResult> CheckRent([FromBody] CarSharingBuilderResult builder, [FromQuery] PeriodModelDTO period)
         {
             try
             {

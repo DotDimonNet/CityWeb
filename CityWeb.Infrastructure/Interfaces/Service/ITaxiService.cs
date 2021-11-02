@@ -15,15 +15,11 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     {
         public IEnumerable<TaxiModel> GetAllTaxis();
         public IEnumerable<TaxiCarModel> GetAllTaxiCars();
-        public TaxiBuilderResult SetupTaxiBuilderResult();
-        public Task<IEnumerable<TaxiModelDTO>> StepOne(TaxiBuilderResult builderResult, ICollection<AddressModel> addresses);
-        public Task<IEnumerable<TransportType>> StepTwo(TaxiBuilderResult builderResult, string title);
-        public Task<bool> StepThree(TaxiBuilderResult builderResult, TransportType taxiType);
-        public Task<CreateTaxiModelDTO> CreateTaxi(CreateTaxiModelDTO createTaxiDTO);
+        public Task<TaxiModelDTO> CreateTaxi(CreateTaxiModelDTO createTaxiDTO);
         public Task<bool> DeleteTaxi(DeleteTaxiModelDTO deleteTaxiDTO);
-        public Task<UpdateTaxiModelDTO> UpdateTaxi(UpdateTaxiModelDTO updateTaxiDTO);
-        public Task<TaxiCarModel> AddTaxiCar(AddTaxiCarDTO addTaxiCarDTO);
-        public Task<UpdateTaxiCarDTO> UpdateTaxiCar(UpdateTaxiCarDTO updateCarDTO);
+        public Task<TaxiModelDTO> UpdateTaxi(UpdateTaxiModelDTO updateTaxiDTO);
+        public Task<TaxiCarModelDTO> AddTaxiCar(AddTaxiCarDTO addTaxiCarDTO);
+        public Task<TaxiCarModelDTO> UpdateTaxiCar(UpdateTaxiCarDTO updateCarDTO);
         public Task<bool> DeleteTaxiCar(DeleteTaxiCarDTO deleteCarDTO);
     }
 }

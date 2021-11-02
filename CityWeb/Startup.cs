@@ -109,6 +109,8 @@ namespace CityWeb
             services.AddAutoMapper(x =>
             {
                 x.AddProfile<MappingProfile>();
+                x.AddProfile<CarSharingMappingProfile>();
+                x.AddProfile<TaxiMappingProfile>();
             });
             services.AddOptions();
             services.AddScoped<DbInitializer>();

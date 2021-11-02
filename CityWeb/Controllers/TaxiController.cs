@@ -106,62 +106,6 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("setup-taxi-builder-result")]
-        public IActionResult SetupTaxiBuilderResult()
-        {
-            try
-            {
-                var builderResult = _taxiService.SetupTaxiBuilderResult();
-                return Json(builderResult);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("step-one")]
-        public async Task<IActionResult> StepOne([FromBody] TaxiBuilderResult builder, [FromQuery] ICollection<AddressModel> addresses)
-        {
-            try
-            {
-                var stepOneResult = await _taxiService.StepOne(builder, addresses);
-                return Json(stepOneResult);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("step-two")]
-        public async Task<IActionResult> StepTwo([FromBody] TaxiBuilderResult builder, [FromQuery] string title)
-        {
-            try
-            {
-                var stepTwoResult = await _taxiService.StepTwo(builder, title);
-                return Json(stepTwoResult);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("step-three")]
-        public async Task<IActionResult> StepThree([FromBody] TaxiBuilderResult builder, [FromQuery] TransportType taxiType)
-        {
-            try
-            {
-                var stepThreeResult = await _taxiService.StepThree(builder, taxiType);
-                return Ok(stepThreeResult);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpGet("get-all-taxis")]
         public IActionResult GetAllTaxis()
         {
