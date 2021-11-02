@@ -35,6 +35,8 @@ namespace CityWeb.Infrastructure.Service
             {
                 entertainment = _mapper.Map<UpdateEntertainmentDTO, EntertainmentModel>(updateData);
                 entertainment.Address = _mapper.Map<AddressModelDTO, AddressModel>(updateData.Location);
+                entertainment.EntertainmentType = await _context.EventTypes.FirstOrDefaultAsync(x => x.Name == updateData.Type);
+                entertainment.Service = new ServiceModel();
                 _context.Entertaiments.Update(entertainment);
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
@@ -54,6 +56,7 @@ namespace CityWeb.Infrastructure.Service
             {
                 eventModel = _mapper.Map<UpdateEventDTO, EventModel>(updateEvent);
                 eventModel.EventPrice = _mapper.Map<PriceModelDTO, PriceModel>(updateEvent.EventPrice);
+
                 _context.Events.Update(eventModel);
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<EventModel, EventModelDTO>(eventModel);
@@ -125,23 +128,33 @@ namespace CityWeb.Infrastructure.Service
         }
 
         public async Task<EventModelDTO> AddEventModel(AddEventModelDTO addData)
-        {    
-            var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
-            if (eventModel == null)
+        {
+            try
             {
-                eventModel = _mapper.Map<AddEventModelDTO, EventModel>(addData);
-                eventModel.EventPrice = _mapper.Map<PriceModelDTO, PriceModel>(addData.EventPrice);
-                
-                await _context.Events.AddAsync(eventModel);
-                await _context.SaveChangesAsync();
-                var result =  _mapper.Map<EventModel, EventModelDTO>(eventModel);
-                result.EventPrice = _mapper.Map<PriceModel, PriceModelDTO>(eventModel.EventPrice);
-                return result;
+                var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
+                if (eventModel == null)
+                {
+                    eventModel = _mapper.Map<AddEventModelDTO, EventModel>(addData);
+                    eventModel.EventPrice = _mapper.Map<PriceModelDTO, PriceModel>(addData.EventPrice);
+                    eventModel.Entertaiment = new EntertainmentModel();
+                    eventModel.Entertaiment.Service = new ServiceModel();
+                    await _context.Events.AddAsync(eventModel);
+                    await _context.SaveChangesAsync();
+                    var result = _mapper.Map<EventModel, EventModelDTO>(eventModel);
+                    result.EventPrice = _mapper.Map<PriceModel, PriceModelDTO>(eventModel.EventPrice);
+                    return result;
+                }
+                else
+                {
+                    throw new Exception("Event already exists");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Event already exists");
+
+                throw new Exception(ex.Message);
             }
+            
         }
 
         public async Task<IEnumerable<EventModelDTO>> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO entModel)
