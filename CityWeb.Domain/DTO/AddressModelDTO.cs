@@ -10,6 +10,6 @@ namespace CityWeb.Domain.DTO
     {
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
-        public string ApartmentNubmer { get; set; }
+        public string ApartmentNumber { get; set; }
     }
 }
