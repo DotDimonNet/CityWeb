@@ -1,5 +1,4 @@
 ﻿using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.DeliveryDTO;
 using CityWeb.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,9 +10,8 @@ namespace CityWeb.Infrastructure.Interfaces.Service
 {
     public interface IDeliveryService
     {
-        public Task<DeliveryModel> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel);
-        public Task<ICollection<DeliveryModelDTO>> GetAllDelivery();
-        public IEnumerable<DeliveryModelDTO> GetDeliveries(int skip = 0, int take = 10);
+        public Task<DeliveryModelDTO> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel);
+        public Task<ICollection<DeliveryModelDTO>> GetAllDelivery(int skip = 0, int take = 10);
         public Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel);
         public Task<ProductUpdateDTO> UpdateProduct(ProductModelDTO productModel);
         public Task<CreateProductDTO> CreateProduct(ProductModelDTO productModel);
