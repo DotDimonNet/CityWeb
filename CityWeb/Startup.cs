@@ -109,11 +109,14 @@ namespace CityWeb
             services.AddAutoMapper(x =>
             {
                 x.AddProfile<MappingProfile>();
+
+                x.AddProfile<HotelMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
             });
             services.AddOptions();
             services.AddScoped<DbInitializer>();
+            services.AddTransient<IHotelService, HotelService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IDeliveryService, DeliveryService>();
             services.AddTransient<ICarSharingService, CarSharingService>();
