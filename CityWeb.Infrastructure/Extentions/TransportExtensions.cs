@@ -11,7 +11,7 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class TransportExtensions
     {
-        public static bool IsFree(this RentCarModel rentCar, PeriodModel period)
+       public static bool IsFree(this RentCarModel rentCar, PeriodModel period)
         {
             foreach (var item in rentCar.RentPeriod)
             {
@@ -31,9 +31,5 @@ namespace CityWeb.Infrastructure.Extentions
             }
             return true;
         }
-        /*public static TransportType GetByName()
-        {
-
-        }*/
     }
 }
