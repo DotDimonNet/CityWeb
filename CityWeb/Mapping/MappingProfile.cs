@@ -20,6 +20,7 @@ namespace CityWeb.Mapping
             CreateMap<PeriodModel, PeriodModelDTO>();
             CreateMap<PeriodModelDTO, PeriodModel>();
 
+
             //Price
             CreateMap<PriceModel, PriceModelDTO>();
             CreateMap<PriceModelDTO, PriceModel>();
@@ -27,6 +28,7 @@ namespace CityWeb.Mapping
             //Profile
             CreateMap<UserProfileModel, UserProfileModelDTO>();
             CreateMap<UserProfileModelDTO, UserProfileModel>();
+
         }
     }
 }
