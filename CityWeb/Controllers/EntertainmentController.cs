@@ -23,114 +23,114 @@ namespace CityWeb.Controllers
         }
 
         [HttpGet("events")]
-        public async Task<IEntertainmentService> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO request)
+        public async Task<IActionResult> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO request)
         {
             try
             {
                 var entertainment = await _entertainmentService.GetEventsFromEntertainment(request);
-                return (IEntertainmentService)Ok(entertainment);
+                return Ok(entertainment);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("add")]
-        public async Task<IEntertainmentService> AddEntertainment([FromBody] AddEntertainmentModelDTO request)
+        [HttpPut("add")]
+        public async Task<IActionResult> AddEntertainment([FromBody] AddEntertainmentModelDTO request)
         {
             try
             {
                 var entertainment = await _entertainmentService.AddEntertainmentModel(request);
-                return (IEntertainmentService)Ok(entertainment);
+                return Json(entertainment);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPost("update")]
-        public async Task<IEntertainmentService> UpdadeEntertainment([FromBody] UpdateEntertainmentDTO request)
+        public async Task<IActionResult> UpdadeEntertainment([FromBody] UpdateEntertainmentDTO request)
         {
             try
             {
                 var entertainment = await _entertainmentService.UpdadeEntertainmentModel(request);
-                return (IEntertainmentService)Ok(entertainment);
+                return Json(entertainment);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("delete")]
-        public async Task<IEntertainmentService> DeleteEntertainment([FromBody] DeleteEntertainmentDTO request)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteEntertainment([FromBody] DeleteEntertainmentDTO request)
         {
             try
             {
                 var entertainment = await _entertainmentService.DeleteEntertainmentModel(request);
-                return (IEntertainmentService)Ok(entertainment);
+                return Ok(entertainment);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("events/event")]
-        public async Task<IEntertainmentService> GetEventFromEvents(GetEventFromEventsDTO request)
+        public async Task<IActionResult> GetEventFromEvents(GetEventFromEventsDTO request)
         {
             try
             {
                 var eventModel = await _entertainmentService.GetEventFromEventTitles(request);
-                return (IEntertainmentService)Ok(eventModel);
+                return Ok(eventModel);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("events/add")]
-        public async Task<IEntertainmentService> AddEvent([FromBody] AddEventModelDTO request)
+        [HttpPut("events/add")]
+        public async Task<IActionResult> AddEvent([FromBody] AddEventModelDTO request)
         {
             try
             {
                 var eventModel = await _entertainmentService.AddEventModel(request);
-                return (IEntertainmentService)Ok(eventModel);
+                return Json(eventModel);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPost("events/update")]
-        public async Task<IEntertainmentService> UpdateEvent([FromBody] UpdateEventDTO request)
+        public async Task<IActionResult> UpdateEvent([FromBody] UpdateEventDTO request)
         {
             try
             {
                 var eventModel = await _entertainmentService.UpdateEventModel(request);
-                return (IEntertainmentService)Ok(eventModel);
+                return Json(eventModel);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost("events/delete")]
-        public async Task<IEntertainmentService> DeleteEvent([FromBody] DeleteEventDTO request)
+        [HttpDelete("events/delete")]
+        public async Task<IActionResult> DeleteEvent([FromBody] DeleteEventDTO request)
         {
             try
             {
                 var eventModel = await _entertainmentService.DeleteEventModel(request);
-                return (IEntertainmentService)Ok(eventModel);
+                return Ok(eventModel);
             }
             catch (Exception ex)
             {
-                return (IEntertainmentService)BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
