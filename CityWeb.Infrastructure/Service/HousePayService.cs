@@ -53,7 +53,7 @@ namespace CityWeb.Infrastructure.Service
             }
             else
             {
-                throw new Exception("Company does not exist!");
+                throw new Exception("HousePay does not exist!");
             }
         }
         public async Task<ICollection<HousePayModelDTO>> GetAllHousePay()
