@@ -13,6 +13,7 @@ namespace CityWeb.Domain.Entities
         public virtual ICollection<ServiceModel> Services { get; set; } = new List<ServiceModel>();
         public virtual ICollection<DeliveryModel> Orders { get; set; } = new List<DeliveryModel>();
         public virtual ICollection<DiscountModel> Discounts { get; set; } = new List<DiscountModel>();
+        public virtual ICollection<EntertainmentModel> Events { get; set; } = new List<EntertainmentModel>();
 
     }
 

@@ -1,0 +1,192 @@
+﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO.Transport.Car;
+using CityWeb.Domain.DTO.Transport.CarSharing;
+using CityWeb.Domain.Entities;
+using CityWeb.Domain.ValueTypes;
+using CityWeb.Infrastructure.Interfaces.Service;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
+
+namespace Taste.Web.Controllers
+{
+    [ApiController]
+    [Route("api/car-sharing")]
+    public class CarSharingController : Controller
+    {
+        private readonly ICarSharingService _carSharingService;
+
+        public CarSharingController(ICarSharingService carSharingService)
+        {
+            _carSharingService = carSharingService;
+        }
+
+        [HttpPost("manage-car-sharing")]
+        public async Task<IActionResult> CreateCarSharing([FromBody] CreateCarSharingModelDTO request)
+        {
+            try
+            {
+                var carSharing = await _carSharingService.CreateCarSharing(request);
+                return Json(carSharing);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("manage-car-sharing")]
+        public async Task<IActionResult> UpdateCarSharing([FromBody] UpdateCarSharingModelDTO request)
+        {
+            try
+            {
+                var carSharing = await _carSharingService.UpdateCarSharing(request);
+                return Json(carSharing);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("manage-car-sharing")]
+        public async Task<IActionResult> DeleteCarSharing([FromBody] DeleteCarSharingModelDTO request)
+        {
+            try
+            {
+                var isDeleted = await _carSharingService.DeleteCarSharing(request);
+                return Ok(isDeleted);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("rent-car")]
+        public async Task<IActionResult> AddRentCar([FromBody] AddRentCarDTO request)
+        {
+            try
+            {
+                var rentCar = await _carSharingService.AddRentCar(request);
+                return Json(rentCar);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("rent-car")]
+        public async Task<IActionResult> UpdateRentCar([FromBody] UpdateRentCarDTO request)
+        {
+            try
+            {
+                var rentCar = await _carSharingService.UpdateRentCar(request);
+                return Json(rentCar);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("rent-car")]
+        public async Task<IActionResult> DeleteRentCar([FromBody] DeleteRentCarDTO request)
+        {
+            try
+            {
+                var isDeleted = await _carSharingService.DeleteRentCar(request);
+                return Ok(isDeleted);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("setup-car-sharing-builder-result")]
+        public IActionResult SetupCarSharingBuilderResult()
+        {
+            try
+            {
+                var builderResult = _carSharingService.SetupCarSharingBuilderResult();
+                return Json(builderResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("step-one")]
+        public async Task<IActionResult> StepOne([FromBody] CarSharingBuilderResult builder, [FromQuery] string title)
+        {
+            try
+            {
+                var stepOneResult = await _carSharingService.GetAllCarsOfCarSharing(builder, title);
+                return Json(stepOneResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("step-two")]
+        public async Task<IActionResult> StepTwo([FromBody] CarSharingBuilderResult builder, [FromQuery] string vinCode)
+        {
+            try
+            {
+                var stepTwoResult = await _carSharingService.ChooseCar(builder, vinCode);
+                return Json(stepTwoResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("step-three")]
+        public async Task<IActionResult> StepThree([FromBody] CarSharingBuilderResult builder, [FromQuery] PeriodModelDTO period)
+        {
+            try
+            {
+                var stepThreeResult = await _carSharingService.CheckRent(builder, period);
+                return Ok(stepThreeResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-all-car-sharings")]
+        public IActionResult GetAllCarSharings()
+        {
+            try
+            {
+                var carSharings = _carSharingService.GetAllCarSharings();
+                return Json(carSharings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-all-rent-cars")]
+        public IActionResult GetAllRentCars()
+        {
+            try
+            {
+                var rentCars = _carSharingService.GetAllRentCars();
+                return Json(rentCars);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+    }
+}

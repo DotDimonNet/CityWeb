@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class HousePayModel : Entity
+    public class HousePayModel : Entity, IDescribe
     {
+        public string Title { get; set; }
+        public string Description { get; set; }
         public virtual ServiceModel Service { get; set; }
         public virtual Guid ServiceId { get; set; }
-        public virtual HousePaymentType ServiceType { get; set; }
-        public virtual CounterModel Counter { get; set; }
-        public virtual AddressModel PayerAddress { get; set; }
-        public virtual PriceModel Price { get; set; }
+        public virtual AddressModel HouseHoldAdress { get; set; }
+        public virtual ICollection<CounterModel> CounterModels { get; set; } = new List<CounterModel>();
+        public virtual HousePaymentType HousePaymentType { get; set; }
     }
 }

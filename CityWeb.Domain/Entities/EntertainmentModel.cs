@@ -1,4 +1,5 @@
-﻿using CityWeb.Domain.Enums;
+﻿using CityWeb.Domain.DTO.EnterteinmentDTO;
+using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,21 @@ namespace CityWeb.Domain.Entities
         public virtual ICollection<EventModel> Event { get; set; } = new List<EventModel>();
         public string Title { get ; set ; }
         public string Description { get ; set ; }
-        
+        public virtual ApplicationUserModel User { get; set; }
+        public virtual NewsType EntertainmentNews { get; set; }
+        public EntertainmentModel UpdateFromDTO(UpdateEntertainmentDTO updateData)
+        {
+            return new EntertainmentModel()
+            {
+                Title = updateData.EntertainmentTitle,
+                Description = updateData.Description,
+                EntertainmentType = updateData.Type,
+                Address = new AddressModel()
+                {
+                    StreetName = updateData.StreetName,
+                    HouseNumber = updateData.HouseNumber
+                }
+            };
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace CityWeb.Infrastructure.Service
 {
     public class HotelService
     {
-        private HotelBuilderResult _builderResult;
+        private readonly HotelBuilderResult _builderResult;
         private readonly ApplicationContext _context;
         public HotelService(ApplicationContext context)
         {
@@ -24,7 +24,8 @@ namespace CityWeb.Infrastructure.Service
         public async Task<RoomModel> AddRoom(RoomDTO room)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Id == room.HotelId);
-            if(hotel != null)
+
+            if (hotel != null)
             {
                 var newRoom = new RoomModel()
                 {
@@ -33,9 +34,11 @@ namespace CityWeb.Infrastructure.Service
                     Price = room.Price,
                     Type = room.Type,
                 };
+
                 hotel.Rooms.Add(newRoom);
                 _context.Update(hotel);
                 await _context.SaveChangesAsync();
+
                 return newRoom;
             }
             else
@@ -45,7 +48,11 @@ namespace CityWeb.Infrastructure.Service
         }
         public async Task RemoveRoom(DeleteRoomDTO room)
         {
-            var removeRoom = await _context.Rooms.FirstOrDefaultAsync(x => x.Hotel.Id == room.HotelId && x.Hotel.Title == room.HotelTitle && x.Number == room.RoomNumber);
+            var removeRoom = await _context.Rooms.FirstOrDefaultAsync(
+                x => x.Hotel.Id == room.HotelId 
+                    && x.Hotel.Title == room.HotelTitle 
+                    && x.Number == room.RoomNumber);
+
             if (room != null)
             {             
                 _context.Rooms.Remove(removeRoom);
@@ -62,6 +69,7 @@ namespace CityWeb.Infrastructure.Service
         public async Task<HotelModel> AddHotel(HotelDTO hotelDTO)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.Title);
+
             if (hotel == null)
             {
                 var newHotel = new HotelModel
@@ -79,6 +87,7 @@ namespace CityWeb.Infrastructure.Service
                 _context.Hotels.Add(newHotel);
                 _context.Update(_context.Hotels);
                 await _context.SaveChangesAsync();
+
                 return newHotel;
             }
             else
@@ -101,19 +110,6 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Hotel with this title already exist!");
             }
         }
-
-        /* public async Task<HotelBuilderResult> GoNext(HotelBuilderResult builderResultModel, int step = 1)
-         {
-             switch (step)
-             {
-                 case 1:
-                     return await StepOne(builderResultModel);
-                 case 2:
-                     return await StepTwo(builderResultModel);
-                 default:
-                     return new HotelBuilderResult();
-             }
-         }*/
 
         //Step 1
         public async Task<ICollection<RoomModel>> GetAllFreeRooms(string hotelTitle)
@@ -155,7 +151,7 @@ namespace CityWeb.Infrastructure.Service
             }
             return result;
         }
-        public async Task<HotelBuilderResult> StepTwo(HotelBuilderResult result, HotelRoomType type )
+        public async Task<HotelBuilderResult> StepTwo(HotelBuilderResult result, HotelRoomType type)
         {
             result.RoomType = type;
             var rooms = _context.Rooms.Where(x => x.Hotel.Title == result.HotelTitle && x.IsFree && x.Type == result.RoomType);    

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class AccountService 
+    public class AccountService : IAccountService
     {
         private readonly ApplicationContext _context;
         private readonly SignInManager<ApplicationUserModel> _signInManager;
@@ -41,7 +41,8 @@ namespace CityWeb.Infrastructure.Service
 
             if (result.Succeeded)
             {
-                return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.Email);
+                await _context.Users.AddAsync(user);
+                return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.UserName);
             }
             else
             {
@@ -54,22 +55,19 @@ namespace CityWeb.Infrastructure.Service
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<LoginModelDTO> LoginUser(LoginModelDTO loginModel)
+        public async Task<UserDTO> LoginUser(LoginModelDTO loginModel)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginModel.Login);
 
             if (user != null)
             {
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, loginModel.Attempts > 5);
-                switch (result)
+                return result switch
                 {
-                    case var value when result.Succeeded:
-                        return user.ToLoginModelDTO();
-                    case var value when result.IsLockedOut:
-                        throw new Exception("Locked out");
-                    default:
-                        throw new Exception("Unknown Error");
-                }
+                    var value when result.Succeeded => user.ToUserDTO(),
+                    var value when result.IsLockedOut => throw new Exception("Locked out"),
+                    _ => throw new Exception("Unknown Error")
+                };
             }
             else
             {
@@ -105,57 +103,7 @@ namespace CityWeb.Infrastructure.Service
 
         }
 
-        /*        public async Task<UpdatePasswordDTO> UpdatePasswordData(UpdatePasswordDTO updatePassword)
-                {
-                    var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.UserName);
-                    if (user != null)
-                    {
-                       if(updatePassword.OldPassword == user.PasswordHash )
-                        {
-                            if(updatePassword.NewPassword == updatePassword.ConfirmPassword)
-                            {
-                                user.PasswordHash = updatePassword.NewPassword;
-                                _context.Update(user);
-                                await _context.SaveChangesAsync();
-                                return user.ToPasswordDTO();
-                            }
-                            else
-                            {
-                                throw new Exception("Passwords do not match");
-                            }
-                        }
-                       else
-                        {
-                            throw new Exception("Wrong old password!");
-                        }               
-                    }
-                    else
-                    {
-                        throw new Exception("User not exist!");
-                    }
-                }*/
-        public async Task<UpdatePasswordDTO> UpdatePasswordData(UpdatePasswordDTO updatePassword, ApplicationUserModel user)
-        {
-            if (updatePassword.OldPassword == user.PasswordHash)
-            {
-                if (updatePassword.NewPassword == updatePassword.ConfirmPassword)
-                {
-                    user.PasswordHash = updatePassword.NewPassword;
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                    return user.ToPasswordDTO();
-                }
-                else
-                {
-                    throw new Exception("Passwords do not match");
-                }
-            }
-            else
-            {
-                throw new Exception("Wrong old password!");
-            }
-        }
-        public async Task<EmailDTO> ChangeEmail(ChangeEmailDTO changeEmail)
+        public async Task<UserDTO> ChangeEmail(ChangeEmailDTO changeEmail)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == changeEmail.UserName);
             if (user != null)
@@ -163,7 +111,7 @@ namespace CityWeb.Infrastructure.Service
                 user.Email = changeEmail.Email;
                 _context.Update(user);
                 await _context.SaveChangesAsync();
-                return user.ToEmailDTO();
+                return user.ToUserDTO();
             }
             else
             {
@@ -171,23 +119,19 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<UpdateUserPasswordDTO> UpdateUserPassword(UpdateUserPasswordDTO updatePassword)
+        public async Task<bool> UpdateUserPassword(UpdateUserPasswordDTO updatePassword)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.Login);
-            if (user != null && updatePassword.Password == user.PasswordHash)
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.UserName);
+            if (user != null)
             {
-                
-                user.PasswordHash = updatePassword.NewPassword/*ToHash*/;
-                if (user.PasswordHash == updatePassword.ConfirmNewPassword/*ToHash*/)
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                } 
-                return user.ToUpdateUserPasswordDTO();
+
+                var result = await _signInManager.UserManager.ChangePasswordAsync(user, updatePassword.Password, updatePassword.NewPassword);
+
+                return result.Succeeded;
             }
             else
             {
-                throw new Exception("User not exist!");
+                throw new Exception("User not exists!");
             }
         }
     }
