@@ -1,4 +1,6 @@
-﻿using CityWeb.Domain.Entities;
+﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO.Transport.Car;
+using CityWeb.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +13,12 @@ namespace CityWeb.Domain.ValueTypes
     {
         //step 1
         public string CarSharingTitle { get; set; }
-        public string CarSharingDescription { get; set; }//???
+        public string CarSharingDescription { get; set; }
         //step 2
-        public RentCarModel Car { get; set; }
+        public RentCarsModelDTO Car { get; set; }
         //step 3
-        public PeriodModel RentPeriod { get; set; }
-        public PriceModel Price { get; set; }
-        public AddressModel Location { get; set; }
+        public PeriodModelDTO RentPeriod { get; set; }
+        public double Price { get; set; }
+        public AddressModelDTO Location { get; set; }
     }
 }

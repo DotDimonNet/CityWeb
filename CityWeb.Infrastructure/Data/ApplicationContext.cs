@@ -32,6 +32,7 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<RentCarModel> RentCars { get; set; }
         public DbSet<TaxiCarModel> TaxiCar { get; set; }
         public DbSet<HousePayModel> HouseHolDs { get; set; }
+        public DbSet<NewsModel> News { get; set; }
 
         public DbSet<DeliveryModel> Deliveries { get; set; }
         public DbSet<ProductModel> Products { get; set; }
@@ -44,6 +45,7 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<PeriodModel> Periods { get; set; }
         public DbSet<CarSharingModel> CarSharings { get; set; }
         public DbSet<TaxiModel> Taxi { get; set; }
+        public DbSet<NewsItemModel> NewsItems { get; set; }
 
 
 
@@ -55,9 +57,9 @@ namespace CityWeb.Infrastucture.Data
         //public DbSet<EventType> EventTypes { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<EntertainmentType> EventTypes { get; set; }
-        
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
+        public DbSet<NewsType> NewsType { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -97,7 +99,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithOne(x => x.CarSharing).HasForeignKey(x => x.CarSharingId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);
             builder.Entity<EntertainmentModel>().HasMany(x => x.Event).WithOne(x => x.Entertaiment).HasForeignKey(x => x.EntertaimentId).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<HousePayModel>().HasMany(x => x.CounterModels).WithOne(x => x.HouseHold).HasForeignKey(x => x.HouseId);
+            builder.Entity<HousePayModel>().HasMany(x => x.CounterModels).WithOne(x => x.HouseHold).HasForeignKey(x => x.HousePaymentId);
 
             //builder.Entity<ServiceModel>().HasMany(x => x.Users).WithOne(x => x.Services).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
 

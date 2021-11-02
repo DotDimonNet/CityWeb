@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class ServiceContext //: IServiceContext
+    public class ServiceContext : IServiceContext
     {
         private IEnumerable<IServiceMetadata> Services { get; set; } = new List<IServiceMetadata>();
 
-        /*public IServiceMetadata GetService(string serviceName)
+        public IServiceMetadata GetService(string serviceName)
         {
             return Services.FirstOrDefault(x => x.Title == serviceName);
-        }*/
+        }
 
         public void SetServices(IEnumerable<IServiceMetadata> services)
         {

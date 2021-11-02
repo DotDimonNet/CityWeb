@@ -1,6 +1,7 @@
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastucture.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -62,6 +63,11 @@ namespace CityWeb.Tests
 
             UserManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
+
+            var _contextAccessor = new Mock<IHttpContextAccessor>();
+            var _userPrincipalFactory = new Mock<IUserClaimsPrincipalFactory<ApplicationUserModel>>();
+            SignInManagerMock = new Mock<SignInManager<ApplicationUserModel>>(UserManagerMock.Object,
+                           _contextAccessor.Object, _userPrincipalFactory.Object, null, null, null);
 
             var storeRoles = new Mock<IRoleStore<ApplicationUserRole>>();
             RoleManagerMock = new Mock<RoleManager<ApplicationUserRole>>(storeRoles.Object, null, null, null, null);
@@ -143,22 +149,22 @@ namespace CityWeb.Tests
                     {
                         new EventModel()
                         {
-                            Title = $"Event1 in Entertainment{i + 1}",
+                            Title = $"Event1",
                             EventPrice = new PriceModel()
                             {
-                                Value = 300+i,
-                                VAT = 10+i,
-                                Tax = 10+i,
+                                Value = 300,
+                                VAT = 10,
+                                Tax = 10,
                             }
                         },
                         new EventModel()
                         {
-                            Title = $"Event2 in Entertainment{i + 1}",
+                            Title = $"Event2",
                             EventPrice = new PriceModel()
                             {
-                                Value = 300+i,
-                                VAT = 10+i,
-                                Tax = 10+i,
+                                Value = 300,
+                                VAT = 10,
+                                Tax = 10,
                             }
                         }
                     }
@@ -166,8 +172,9 @@ namespace CityWeb.Tests
                 entertainments.Add(entertainment);
             }
             await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
-            await ApplicationContext.SaveChangesAsync();
 
+
+            #region Transport
             var carSharings = new List<CarSharingModel>();
             for (int i = 0; i < 10; i++)
             {
@@ -176,8 +183,13 @@ namespace CityWeb.Tests
                     Title = $"CarSharing{i + 1}",
                     Description = $"Default description {i}",
                     Payment = new PaymentModel(),
-                    Service = service,
-                    ServiceId = service.Id,
+                    //Service = service,
+                    //ServiceId = service.Id,
+                    Location = new AddressModel()
+                    {
+                        StreetName = "Porika",
+                        HouseNumber = $"{i+1}"
+                    },
                     Vehicle =
                     {
                         new RentCarModel()
@@ -186,7 +198,7 @@ namespace CityWeb.Tests
                             VINCode = $"VAG489645{i+1}",
                             RentPeriod =
                             {
-                                new PeriodModel(){ },
+                                new PeriodModel()
                             },
                             Color = "red",
                             Mark = "Honda",
@@ -201,8 +213,90 @@ namespace CityWeb.Tests
                 };
                 carSharings.Add(carSharing);
             }
+
+            var rentCars = new List<RentCarModel>();
+            for (int i = 0; i < carSharings.Count; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    var rentCar = new RentCarModel()
+                    {
+                        CarSharingId = carSharings[i].Id,
+                        Type = Domain.Enums.TransportType.RentCar,
+                        VINCode = $"BAG489645{i}{j}",
+                        RentPeriod =
+                        {
+                            new PeriodModel() 
+                            {       
+                                StartTime = DateTime.Now,
+                                EndTime = DateTime.Now.AddDays(j + 1)
+                            },
+                        },
+                        Color = "red",
+                        Mark = "Honda",
+                        Number = $"AB 55{j}{i} CC",
+                        Seats = 2,
+                        Price = new PriceModel()
+                        {
+                            Value = i * j * 10
+                        }
+                    };
+                    rentCars.Add(rentCar);
+                }
+            }
+
+            var taxi = new List<TaxiModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var oneTaxi = new TaxiModel()
+                {
+                    Title = $"Taxi{i + 1}",
+                    Description = $"Default description {i}",
+                    Service = service,
+                    ServiceId = service.Id
+                };
+                taxi.Add(oneTaxi);
+            };
+
+            var taxiCars = new List<TaxiCarModel>();
+            for (int i = 0; i < taxi.Count; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    var taxiCar = new TaxiCarModel()
+                    {
+                        TaxiId = taxi[i].Id,
+                        Type = Domain.Enums.TransportType.RentCar,
+                        VINCode = $"TAG489645{i}{j}",
+                        Color = "yellow",
+                        Mark = "BMW",
+                        Number = $"AB 88{j}{i} SS",
+                        Seats = 5,
+                        Price = new PriceModel()
+                        {
+                            Value = i * j * 10
+                        },
+                        StartAddress = new AddressModel()
+                        {
+                            StreetName = "Soborna",
+                            HouseNumber = $"{j+1}"
+                        },
+                        DestinationAddresses = { },
+                        JourneyPeriod = new PeriodModel()
+                        {
+                            StartTime = DateTime.Now,
+                            EndTime = DateTime.Now.AddMinutes(j + 5)
+                        }
+                    };
+                    taxiCars.Add(taxiCar);
+                }
+            }
+
             await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
-            await ApplicationContext.SaveChangesAsync();
+            await ApplicationContext.RentCars.AddRangeAsync(rentCars);
+            await ApplicationContext.Taxi.AddRangeAsync(taxi);
+            await ApplicationContext.TaxiCar.AddRangeAsync(taxiCars);
+            #endregion
 
 
             //Create Deliverys company
@@ -220,6 +314,13 @@ namespace CityWeb.Tests
                         {
                             ProductName = $"Product{i + 1}",
                             ProductPrice = new PriceModel()
+                            {
+                                Value = i *10,
+                                Tax = i*2,
+                                VAT = i +1,
+                            },
+                            ProductType = Domain.Enums.ProductType.AlcoholicDrinks,
+                            ProductImage = $"img{i+1}"
                         }
                     },
                     DeliveryPrice = new PriceModel(),
@@ -237,6 +338,23 @@ namespace CityWeb.Tests
             //Create Hotels
             await ApplicationContext.Hotels.AddRangeAsync(await GenerateHotels(10));
             await ApplicationContext.SaveChangesAsync();
+
+
+            //Create Ratings
+
+            var ratings = new List<RatingModel>();
+            for (int i = 1; i < 5; i++)
+            {
+                var rating = new RatingModel()
+                {
+                    ServiceId = Guid.NewGuid(),
+                    Value = i
+                };
+                ratings.Add(rating);
+            }
+            await ApplicationContext.Ratings.AddRangeAsync(ratings);
+            await ApplicationContext.SaveChangesAsync();
+
         }
     }
 }

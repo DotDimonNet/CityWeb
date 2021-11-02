@@ -11,15 +11,15 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class DTOEntertainmentExtension
     {
-        public static EntertainmentModelDTO ToEntertainmentModelDTO(this EntertainmentModel entModel)
+        
+        public static EntertainmentModelDTO ToEntertainmentModelDTO(this EntertainmentModel addData)
         {
             return new EntertainmentModelDTO()
             {
-                EntertainmentId = entModel.Id,
-                EntertainmentTitle = entModel.Title,
-                Description = entModel.Description,
-                Type = entModel.EntertainmentType,
-                Address = entModel.Address
+                EntertainmentTitle = addData.Title,
+                Description = addData.Description,
+                Type = addData.EntertainmentType,
+                
             };
         }
 
@@ -31,22 +31,79 @@ namespace CityWeb.Infrastructure.Extentions
                 Value = eventModel.EventPrice.Value,
                 Tax = eventModel.EventPrice.Tax,
                 VAT = eventModel.EventPrice.VAT,
+                Total = eventModel.EventPrice.Total
             };
         }
 
-
-
-        public static EntertainmentModelDTO ToAddEntertainmentModel(this AddEntertainmentModelDTO entModel)
+        public static EventModelDTO ToEventModelDTO(this GetEventFromEventsDTO eventModel)
         {
-            return new EntertainmentModelDTO()
+            return new EventModelDTO()
             {
-                EntertainmentTitle = entModel.EntertainmentTitle,
-                Type = entModel.Type,
+                EventTitle = eventModel.EventTitle,
+                Total = eventModel.Total,
+                isAvailable = eventModel.isAvailable
+            };
+        }
+
+        public static EntertainmentModel UpdateFromDTO(this UpdateEntertainmentDTO updateData)
+        {
+            return  new EntertainmentModel()
+            {
+                Title = updateData.EntertainmentTitle,
+                Description = updateData.Description,
+                EntertainmentType = updateData.Type,
+                Address = new AddressModel()
+                {
+                    StreetName = updateData.StreetName,
+                    HouseNumber = updateData.HouseNumber
+                }
+            };
+        }
+
+        public static EventModel UpdateFromDTO(this UpdateEventDTO updateData)
+        {
+            return new EventModel()
+            {
+                Title = updateData.EventTitle,
+                EventPrice = new PriceModel()
+                {
+                    Value = updateData.Value,
+                    Tax = updateData.Tax,
+                    VAT = updateData.VAT
+                }
+            };
+        }
+        #region AddEntertainment
+        public static EntertainmentModel ToEntertainmentModel(this AddEntertainmentModelDTO entModel)
+        {
+            return new EntertainmentModel()
+            {
+
+                Title = entModel.EntertainmentTitle,
                 Description = entModel.Description,
-                Address = entModel.Address
+                EntertainmentType = entModel.Type,
 
             };
         }
+        #endregion
+
+        #region AddEvent
+        public static EventModel ToEventModel(this AddEventModelDTO addData)
+        {
+            return new EventModel()
+            {
+                Title = addData.EventTitle,
+                EventPrice = new PriceModel()
+                {
+                    Value = addData.Value,
+                    Tax = addData.Tax,
+                    VAT = addData.VAT
+                }
+            };
+        }
+        #endregion
 
     }
 }
+
+

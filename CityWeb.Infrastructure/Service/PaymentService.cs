@@ -10,5 +10,10 @@ namespace CityWeb.Infrastructure.Service
     public class PaymentService
     {
         private readonly ApplicationContext _context;
+
+        public PaymentService(ApplicationContext context)
+        {
+            _context = context;
+        }
     }
 }

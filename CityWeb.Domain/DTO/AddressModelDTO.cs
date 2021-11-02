@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class HouseHoldDTO
+    public class AddressModelDTO
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
+        public string ApartmentNubmer { get; set; }
     }
 }

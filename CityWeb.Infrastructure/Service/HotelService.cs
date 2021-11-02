@@ -14,7 +14,7 @@ namespace CityWeb.Infrastructure.Service
 {
     public class HotelService
     {
-        private HotelBuilderResult _builderResult;
+        private readonly HotelBuilderResult _builderResult;
         private readonly ApplicationContext _context;
         public HotelService(ApplicationContext context)
         {
@@ -57,7 +57,11 @@ namespace CityWeb.Infrastructure.Service
         }
         public async Task RemoveRoom(DeleteRoomDTO room)
         {
-            var removeRoom = await _context.Rooms.FirstOrDefaultAsync(x => x.Hotel.Id == room.HotelId && x.Hotel.Title == room.HotelTitle && x.Number == room.RoomNumber);
+            var removeRoom = await _context.Rooms.FirstOrDefaultAsync(
+                x => x.Hotel.Id == room.HotelId 
+                    && x.Hotel.Title == room.HotelTitle 
+                    && x.Number == room.RoomNumber);
+
             if (room != null)
             {             
                 _context.Rooms.Remove(removeRoom);
@@ -74,6 +78,7 @@ namespace CityWeb.Infrastructure.Service
         public async Task<HotelModel> AddHotel(HotelDTO hotelDTO)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.Title);
+
             if (hotel == null)
             {
                 var newHotel = new HotelModel
@@ -89,6 +94,7 @@ namespace CityWeb.Infrastructure.Service
                 };
                 await _context.Hotels.AddAsync(newHotel);                
                 await _context.SaveChangesAsync();
+
                 return newHotel;
             }
             else
@@ -189,7 +195,7 @@ namespace CityWeb.Infrastructure.Service
             }
             return result;
         }
-        public async Task<HotelBuilderResult> StepTwo(HotelBuilderResult result, HotelRoomType type )
+        public async Task<HotelBuilderResult> StepTwo(HotelBuilderResult result, HotelRoomType type)
         {
             result.RoomType = type;
             var rooms = _context.Rooms.Where(x => x.Hotel.Title == result.HotelTitle && x.IsFree && x.Type == result.RoomType);    

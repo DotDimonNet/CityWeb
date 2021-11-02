@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Domain.DTO.HousePayDTO
+namespace CityWeb.Domain.DTO.RatingDTO
 {
-    public class DeleteCounterModelDTO
+    public class MaxServiceRateDTO
     {
-        public int Number { get; set; }
+        public Guid ServiceId { get; set; }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
-using CityWeb.Infrastructure.Service;
-using CityWeb.Infrastucture.Data;
+using CityWeb.Infrastructure.Authorization;
+using CityWeb.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Threading.Tasks;
 
@@ -16,13 +14,11 @@ namespace Taste.Web.Controllers
     [Route("api/account")]
     public class AccountController : Controller
     {
-        private readonly SignInManager<ApplicationUserModel> _signInManager;
-        private readonly ApplicationContext _context;
+        private readonly IAccountService _accountService;
 
-        public AccountController(SignInManager<ApplicationUserModel> signInManager, ApplicationContext context)
+        public AccountController(IAccountService accountService)
         {
-            _signInManager = signInManager;
-            _context = context;
+            _accountService = accountService;
         }
 
         [HttpPost("login")]
@@ -30,9 +26,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var user = await _signInManager.UserManager.FindByEmailAsync(request.Login);
-                await _signInManager.SignInAsync(user, true);
-                return Ok();
+                var user = await _accountService.LoginUser(request);
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -46,8 +41,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var service = new AccountService(_context, _signInManager);
-                var user = await service.RegisterUser(request);
+                var user = await _accountService.RegisterUser(request);
                 return Json(user);
             }
             catch (Exception ex)
@@ -56,13 +50,41 @@ namespace Taste.Web.Controllers
             }
         }
 
+        [HttpPut("update-account")]
+        public async Task<IActionResult> UpdateData([FromBody] UpdateUserDataDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserData(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> UpdateUserPassword([FromBody] UpdateUserPasswordDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserPassword(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _accountService.SignOut();
             return NoContent();
         }
+
+        
     }
 }
