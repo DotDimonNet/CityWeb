@@ -50,12 +50,67 @@ namespace Taste.Web.Controllers
             }
         }
 
+        [HttpPut("update-account")]
+        public async Task<IActionResult> UpdateData([FromBody] UpdateUserDataDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserData(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserPasswordDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserPassword(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("change-email")]
+        public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailDTO request)
+        {
+            try
+            {
+                var user = await _accountService.ChangeEmail(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
             await _accountService.SignOut();
             return NoContent();
+        }
+        
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = await _accountService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

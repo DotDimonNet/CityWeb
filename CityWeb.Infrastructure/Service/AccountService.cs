@@ -1,4 +1,5 @@
-﻿using CityWeb.Domain.DTO;
+﻿using AutoMapper;
+using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Interfaces;
@@ -17,31 +18,23 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
         private readonly SignInManager<ApplicationUserModel> _signInManager;
-        public AccountService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager)
+        private readonly IMapper _mapper;
+        public AccountService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager, IMapper mapper)
         {
             _context = context;
             _signInManager = signInManager;
+            _mapper = mapper;
         }
 
         public async Task<ApplicationUserModel> RegisterUser(RegisterModelDTO registerModel)
         {
-            var user = new ApplicationUserModel() 
-            {
-                UserName = registerModel.UserName,
-                Email = registerModel.Email,                
-                Profile = new UserProfileModel() 
-                {
-                    FirstName = registerModel.FirstName,
-                    LastName = registerModel.LastName,
-                    Birthday = registerModel.Birthday,
-                    Gender = registerModel.Gender,
-                }
-            };
-            var result = await _signInManager.UserManager.CreateAsync(user, registerModel.Password);
+            var user = _mapper.Map<ApplicationUserModel>(registerModel);
+            user.Profile = _mapper.Map<UserProfileModel>(registerModel.Profile);
+            var result = await _signInManager.UserManager.CreateAsync(user, registerModel.Profile.Password);
 
             if (result.Succeeded)
             {
-                 await _context.Users.AddAsync(user);
+                await _context.Users.AddAsync(user);
                 return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.UserName);
             }
             else
@@ -100,7 +93,6 @@ namespace CityWeb.Infrastructure.Service
             {
                 throw new Exception("User not exist!");
             }
-
         }
 
         public async Task<UserDTO> ChangeEmail(ChangeEmailDTO changeEmail)
@@ -133,6 +125,11 @@ namespace CityWeb.Infrastructure.Service
             {
                 throw new Exception("User not exists!");
             }
+        }
+
+        public async Task<ICollection<UserProfileModelDTO>> GetAllUsers(int skip = 0, int take = 10)
+        {
+            return await _context.Users.Skip(skip).Take(take).Select(x => x.ToUserProfileModelDTO()).ToListAsync();
         }
     }
 }
