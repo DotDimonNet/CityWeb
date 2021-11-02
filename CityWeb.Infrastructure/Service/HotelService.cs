@@ -2,6 +2,7 @@
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Domain.ValueTypes;
+using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastucture.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class HotelService
+    public class HotelService : IHotelService
     {
         private readonly HotelBuilderResult _builderResult;
         private readonly ApplicationContext _context;
@@ -55,7 +56,7 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Hotel does not exist!");
             }
         }
-        public async Task RemoveRoom(DeleteRoomDTO room)
+        public async Task<bool> RemoveRoom(DeleteRoomDTO room)
         {
             var removeRoom = await _context.Rooms.FirstOrDefaultAsync(
                 x => x.Hotel.Id == room.HotelId 
@@ -67,7 +68,7 @@ namespace CityWeb.Infrastructure.Service
                 _context.Rooms.Remove(removeRoom);
                 _context.Update(_context.Rooms);
                 await _context.SaveChangesAsync();
-                return;
+                return true;
             }
             else
             {
@@ -102,14 +103,14 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Hotel with this title already exist!");
             }
         }
-        public async Task RemoveHotel(DeleteHotelDTO hotelDTO)
+        public async Task<bool> RemoveHotel(DeleteHotelDTO hotelDTO)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.HotelTitle && x.Id == hotelDTO.HotelId);
             if (hotel != null)
             {
                 _context.Hotels.Remove(hotel);
                 await _context.SaveChangesAsync();
-                return;
+                return true;
             }
             else
             {
