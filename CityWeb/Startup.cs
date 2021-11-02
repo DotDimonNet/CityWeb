@@ -109,6 +109,7 @@ namespace CityWeb
             services.AddAutoMapper(x =>
             {
                 x.AddProfile<MappingProfile>();
+                x.AddProfile<MappingEntertainmentProfile>();
             });
             services.AddOptions();
             services.AddScoped<DbInitializer>();

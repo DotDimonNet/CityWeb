@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
@@ -18,10 +19,13 @@ namespace CityWeb.Infrastructure.Service
     public class EntertainmentService : IEntertainmentService
     {
         private readonly ApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public EntertainmentService(ApplicationContext context)
+        public EntertainmentService(ApplicationContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
+            
         }
 
         public async Task<EntertainmentModelDTO> UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
@@ -29,9 +33,10 @@ namespace CityWeb.Infrastructure.Service
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
             if (entertainment != null)
             {
-                var model = _context.Entertaiments.Update(entertainment.UpdateFromDTO(updateData));
+                entertainment = _mapper.Map<EntertainmentModel>(updateData);
+                _context.Entertaiments.Update(entertainment);
                 await _context.SaveChangesAsync();
-                return model.Entity.ToEntertainmentModelDTO();
+                return _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
             }
             else
             {
@@ -44,9 +49,10 @@ namespace CityWeb.Infrastructure.Service
             var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle);
             if (eventModel != null)
             {
-                var model = _context.Events.Update(eventModel.UpdateFromDTO(updateEvent));
+                eventModel = _mapper.Map<EventModel>(updateEvent);
+                _context.Events.Update(eventModel);
                 await _context.SaveChangesAsync();
-                return model.Entity.ToEventModelDTO();
+                return _mapper.Map<EventModel, EventModelDTO>(eventModel);
             }
             else
             {
@@ -91,10 +97,10 @@ namespace CityWeb.Infrastructure.Service
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.EntertainmentTitle);
             if (entertainment == null)
             {
-                var addEntModel = addData.ToEntertainmentModel();
-                var model = await _context.Entertaiments.AddAsync(addEntModel);
+                entertainment = _mapper.Map<EntertainmentModel>(addData);
+                await _context.Entertaiments.AddAsync(entertainment);
                 await _context.SaveChangesAsync();
-                return model.Entity.ToEntertainmentModelDTO();
+                return _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
             }
             else
             {
@@ -105,13 +111,13 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task<EventModelDTO> AddEventModel(AddEventModelDTO addData)
         {    
-            var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
-            if (events == null)
+            var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
+            if (eventModel == null)
             {
-                var addEventModel = addData.ToEventModel();
-                var model = await _context.Events.AddAsync(addEventModel);
+                eventModel = _mapper.Map<EventModel>(addData);
+                await _context.Events.AddAsync(eventModel);
                 await _context.SaveChangesAsync();
-                return model.Entity.ToEventModelDTO();
+                return _mapper.Map<EventModel, EventModelDTO>(eventModel);
             }
             else
             {
@@ -124,7 +130,7 @@ namespace CityWeb.Infrastructure.Service
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentTitle == x.Title);
             if(entertainment != null)
             {
-                return entertainment.Event.Select(x => x.ToEventModelDTO());
+                return entertainment.Event.Select(x => _mapper.Map<EventModel, EventModelDTO>(x));
             }
             else
             {
@@ -138,7 +144,7 @@ namespace CityWeb.Infrastructure.Service
             var eventModel = await _context.Events.FirstOrDefaultAsync(x => getEventModel.EventTitle == x.Title && x.isAvailable);
             if(eventModel != null)
             {
-                return getEventModel.ToEventModelDTO();
+                return _mapper.Map<EventModel, EventModelDTO>(eventModel);
             }
             else
             {

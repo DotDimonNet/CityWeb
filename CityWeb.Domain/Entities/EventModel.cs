@@ -17,19 +17,6 @@ namespace CityWeb.Domain.Entities
         public virtual EntertainmentModel Entertaiment { get; set;}
         public virtual bool isAvailable { get; set; }
         public virtual Guid EntertaimentId { get; set; }
-
-        public EventModel UpdateFromDTO(UpdateEventDTO updateEvent)
-        {
-            return new EventModel()
-            {
-                Title = updateEvent.EventTitle,
-                EventPrice = new PriceModel()
-                {
-                    Value = updateEvent.Value,
-                    Tax = updateEvent.Tax,
-                    VAT = updateEvent.VAT
-                }
-            };
-        }
+        
     }
 }
