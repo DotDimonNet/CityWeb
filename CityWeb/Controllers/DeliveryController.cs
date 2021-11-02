@@ -150,22 +150,8 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var product = _deliveryService.CheckoutBusket(request);
+                var product = await _deliveryService.CheckoutBusket(request);
                 return Json(product);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("Get")]
-        public async Task<IActionResult> GetDeliveries(int skip = 0, int take = 10)
-        {
-            try
-            {
-                var deliverys = _deliveryService.GetDeliveries();
-                return Json(deliverys);
             }
             catch (Exception ex)
             {

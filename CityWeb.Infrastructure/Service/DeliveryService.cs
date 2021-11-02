@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Interfaces.Service;
-using CityWeb.Domain.DTO.DeliveryDTO;
 using CityWeb.Domain.Entities;
 using AutoMapper;
 
@@ -23,19 +22,35 @@ namespace CityWeb.Infrastructure.Service
             _context = context;
         }
 
-        public async Task<DeliveryModel> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel)
+        public async Task<DeliveryModelDTO> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel)
         {
-            try
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
+            if(delivery == null)
             {
-                var model = deliveryModel.CreateFromDTO();
-                await _context.Deliveries.AddAsync(model);
-                await _context.SaveChangesAsync();
-                return model;
+                try
+                {
+                    var newDelivery = _mapper.Map<CreateDeliveryModelDTO, DeliveryModel>(deliveryModel);
+                    newDelivery.DeliveryAdress = _mapper.Map<AddressModelDTO, AddressModel>(deliveryModel.DeliveryAdress);
+                    newDelivery.Service = new ServiceModel();
+                    newDelivery.DeliveryPrice = _mapper.Map<PriceModelDTO, PriceModel>(deliveryModel.DeliveryPrice);
+                    newDelivery.WorkSchedule = _mapper.Map<PeriodModelDTO, PeriodModel>(deliveryModel.WorkSchedule);
+                    await _context.Deliveries.AddAsync(newDelivery);
+                    await _context.SaveChangesAsync();
+                    var result = _mapper.Map<DeliveryModel, DeliveryModelDTO>(newDelivery);
+                    result.WorkShedyle = _mapper.Map<PeriodModel, PeriodModelDTO>(newDelivery.WorkSchedule);
+                    result.DeliveryPrice = _mapper.Map<PriceModel, PriceModelDTO>(newDelivery.DeliveryPrice);
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Company was already created");
             }
+            
         }
 
         public async Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel)
@@ -43,7 +58,9 @@ namespace CityWeb.Infrastructure.Service
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
             if (delivery != null)
             {
-                delivery.UpdateFromDTO(deliveryModel);
+                delivery = _mapper.Map<UpdateDeliveryModelDTO, DeliveryModel>(deliveryModel);
+                delivery.DeliveryPrice = _mapper.Map<PriceModelDTO, PriceModel>(deliveryModel.DeliveryPrice);
+                delivery.WorkSchedule = _mapper.Map<PeriodModelDTO, PeriodModel>(deliveryModel.WorkShedyle);
                 _context.Deliveries.Update(delivery);
                 await _context.SaveChangesAsync();
                 return _mapper.Map<DeliveryModel, DeliveryModelDTO>(delivery);
@@ -77,9 +94,12 @@ namespace CityWeb.Infrastructure.Service
                 if (checkProductName == null)
                 {
                     var product = delivery.CreateProductFromDTO(productModel);
+                    product.ProductType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Name == productModel.ProductType);
                     var model = await _context.Products.AddAsync(product);
                     await _context.SaveChangesAsync();
-                    return model.Entity.ToCreateProductDTO();
+                    var result = _mapper.Map<ProductModel, CreateProductDTO>(product);
+                    result.Price = _mapper.Map<PriceModel, PriceModelDTO>(product.ProductPrice);
+                    return result;
                 }
                 else
                 {
@@ -103,7 +123,7 @@ namespace CityWeb.Infrastructure.Service
                     product.UpdateProductFromDTO(productModel);
                     _context.Update(product);
                     await _context.SaveChangesAsync();
-                    return product.ToProductUpdateDTO();
+                    return _mapper.Map<ProductModel, ProductUpdateDTO>(product);
                 }
                 else
                 {
@@ -139,14 +159,9 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<ICollection<DeliveryModelDTO>> GetAllDelivery()
+        public async Task<ICollection<DeliveryModelDTO>> GetAllDelivery(int skip = 0, int take = 10)
         {
-            return await _context.Deliveries.Select(x => x.ToDeliveryModelDTO()).ToListAsync();
-        }
-
-        public IEnumerable<DeliveryModelDTO> GetDeliveries(int skip = 0, int take = 10)
-        {
-            return _context.Deliveries.Skip(skip).Take(take).Select(x => x.ToDeliveryModelDTO());
+            return await _context.Deliveries.Skip(skip).Take(take).Select(x => x.ToDeliveryModelDTO()).ToListAsync();
         }
 
         // Methods for steps

@@ -10,10 +10,7 @@ namespace CityWeb.Domain.DTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public  DateTime StartTime { get; set; }
-        public  DateTime EndTime { get; set; }
-        public double Value { get; set; }
-        public double Tax { get; set; }
-        public double VAT { get; set; }
+        public PeriodModelDTO WorkShedyle { get; set; }
+        public PriceModelDTO DeliveryPrice { get; set; }
     }
 }

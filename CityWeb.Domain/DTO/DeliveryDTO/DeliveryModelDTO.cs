@@ -1,4 +1,5 @@
 ﻿
+using CityWeb.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,13 @@ namespace CityWeb.Domain.DTO
         public string Title { get; set; }
     }
 
-    public class CreateDeliveryModelDTO
-    {
-        public string Title { get; set; }
-        public string Description { get; set; }
-    }
-
     public class DeliveryModelDTO
     {
         public Guid DeliveryId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string DeliveryImage { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public double Value { get; set; }
-        public double Tax { get; set; }
-        public double VAT { get; set; }
+        public PeriodModelDTO WorkShedyle { get; set; }
+        public PriceModelDTO DeliveryPrice { get; set; }
     }
 }
