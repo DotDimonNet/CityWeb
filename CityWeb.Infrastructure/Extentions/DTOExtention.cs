@@ -88,9 +88,9 @@ namespace CityWeb.Infrastructure.Extentions
                 Description = carSharingModel.Description,
                 Location = new AddressModelDTO()
                 {
-                     StreetName = carSharingModel.Location.StreetName,
-                     HouseNumber = carSharingModel.Location.HouseNumber,
-                     ApartmentNubmer = carSharingModel.Location.ApartmentNumber
+                    StreetName = carSharingModel.Location.StreetName,
+                    HouseNumber = carSharingModel.Location.HouseNumber,
+                    ApartmentNubmer = carSharingModel.Location.ApartmentNumber
                 }
             };
         }
@@ -307,23 +307,6 @@ namespace CityWeb.Infrastructure.Extentions
                 Title = model.Title
             };
         }
-        public static CounterModel FromCreateCounterModelDTO(this CreateCounterModelDTO counterModelDTO)
-        {
-            return new CounterModel()
-            {
-                Number = counterModelDTO.Number,
-                StartCount = counterModelDTO.StartCount,
-                Type = counterModelDTO.Type
-            };
-        }
-        public static UpdateCounterModelDTO ToUpdateCounterModelDTO(this CounterModel counterModel)
-        {
-            return new UpdateCounterModelDTO()
-            {
-                StartCount = counterModel.StartCount,
-                EndCount = counterModel.EndCount,
-                PriceByItem = counterModel.PriceByItem
-
         public static DeliveryModel CreateFromDTO(this CreateDeliveryModelDTO deliveryModel)
         {
             return new DeliveryModel()
@@ -379,7 +362,82 @@ namespace CityWeb.Infrastructure.Extentions
             productModel.ProductPrice.VAT = productModelDTO.VAT;
             productModel.ProductPrice.Tax = productModelDTO.Tax;
         }
-      
+
+        public static HousePayModelDTO ToHousePayModelDTO(this HousePayModel model)
+        {
+            return new HousePayModelDTO()
+            {
+                Title = model.Title,
+                Description = model.Description,
+                Counter = new CounterModel()
+            };
+        }
+        public static HousePayModel CreateFromDTO(this HousePayModel housePayModel, CreateHousePayModelDTO housePayModelDTO)
+        {
+            return new HousePayModel()
+            {
+                Title = housePayModelDTO.Title,
+                Description = housePayModelDTO.Description,
+                Service = new ServiceModel(),
+                HouseHoldAdress = new AddressModel(),
+            };
+        }
+        public static CreateHousePayModelDTO ToCreatedHousePayModelDTO(this HousePayModel housePayModel)
+        {
+            return new CreateHousePayModelDTO()
+            {
+                Title = housePayModel.Title,
+                Description = housePayModel.Description,
+            };
+        }
+
+        public static SelectHousePayModelDTO ToSelectHousePayModelDTO(this HousePayModel model)
+        {
+            return new SelectHousePayModelDTO()
+            {
+                Title = model.Title
+            };
+        }
+        public static void UpdateFromlDTO(this HousePayModel housePayModel, HousePayModelDTO housePayModelDTO )
+        {
+            housePayModel.Title = housePayModelDTO.Title;
+            housePayModel.Description = housePayModelDTO.Description;
+        }
+        public static CounterModel CreateCounterFromlDTO(this CreateCounterModelDTO counterModelDTO)
+        {
+            return new CounterModel()
+            {
+                Number = counterModelDTO.Number,
+                StartCount = counterModelDTO.StartCount,
+                Type = counterModelDTO.Type
+            };
+        }
+        public static SelectCounterModelDTO ToSelectCounterModelDTO(this CounterModel model)
+        {
+            return new SelectCounterModelDTO()
+            {
+                Number = model.Number
+            };
+        }
+            public static UpdateCounterModelDTO ToUpdateCounterModelDTO(this CounterModel counterModel)
+        {
+            return new UpdateCounterModelDTO()
+            {
+                StartCount = counterModel.StartCount,
+                EndCount = counterModel.EndCount,
+                PriceByItem = counterModel.PriceByItem
+            };
+        }
+
+        public static CounterModel CreateFromDTO(this CreateCounterModelDTO counterModel)
+        {
+            return new CounterModel()
+            {
+                Number = counterModel.Number,
+                StartCount = counterModel.StartCount,
+                Type = counterModel.Type
+            };
+        }
         public static AddressModelDTO ToAddressModelDTO(this AddressModel model)
         {
             return new AddressModelDTO()

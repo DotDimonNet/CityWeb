@@ -21,6 +21,11 @@ namespace CityWeb.Domain.DTO
         public double StartCount { get; set; }
         public HousePaymentType Type { get; set; }
     }
+
+    public class SelectCounterModelDTO
+    {
+        public string Number { get; set; }
+    }
     public class DeleteCounterModelDTO
     {
         public string Number { get; set; }
