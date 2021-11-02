@@ -90,7 +90,7 @@ namespace CityWeb.Infrastructure.Extentions
                 {
                      StreetName = carSharingModel.Location.StreetName,
                      HouseNumber = carSharingModel.Location.HouseNumber,
-                     ApartmentNubmer = carSharingModel.Location.ApartmentNumber
+                     ApartmentNumber = carSharingModel.Location.ApartmentNumber
                 }
             };
         }
@@ -114,7 +114,7 @@ namespace CityWeb.Infrastructure.Extentions
                 {
                     StreetName = carSharingModelDTO.Location.StreetName,
                     HouseNumber = carSharingModelDTO.Location.HouseNumber,
-                    ApartmentNumber = carSharingModelDTO.Location.ApartmentNubmer,
+                    ApartmentNumber = carSharingModelDTO.Location.ApartmentNumber,
                 }
             };
         }
@@ -148,7 +148,7 @@ namespace CityWeb.Infrastructure.Extentions
             carSharing.Description = updateDTO.Description;
             carSharing.Location.StreetName = updateDTO.Location.StreetName;
             carSharing.Location.HouseNumber = updateDTO.Location.HouseNumber;
-            carSharing.Location.ApartmentNumber = updateDTO.Location.ApartmentNubmer;
+            carSharing.Location.ApartmentNumber = updateDTO.Location.ApartmentNumber;
         }
 
         public static UpdateTaxiCarDTO ToUpdateTaxiCarDTO(this TaxiCarModel taxiCar)
@@ -388,7 +388,7 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 StreetName = model.StreetName,
                 HouseNumber = model.HouseNumber,
-                ApartmentNubmer = model.ApartmentNumber
+                ApartmentNumber = model.ApartmentNumber
             };
         }
 

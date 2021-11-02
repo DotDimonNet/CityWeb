@@ -14,8 +14,7 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
         public string Description { get; set; }
 
         public EntertainmentType Type { get; set; }
-        public string StreetName { get; set; }
-        public string HouseNumber { get; set; }
+        public AddressModelDTO Location { get; set; }
 
     }
 }
