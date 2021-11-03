@@ -13,6 +13,8 @@ namespace CityWeb.Domain.DTO
         public string Description { get; set; }
         public CounterModel Counter { get; set; }
         public double Price { get; set; }
+
+        public AddressModelDTO HouseAdress { get; set; }
     }
     public class CreateHousePayModelDTO
     {

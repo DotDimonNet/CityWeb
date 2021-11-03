@@ -61,14 +61,14 @@ namespace Taste.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        /*
-        [HttpPost("product")]
-        public async Task<IActionResult> CreateMenu([FromBody] ProductModelDTO request)
+
+        [HttpPost("counter-create")]
+        public async Task<IActionResult> CreateCounterModel([FromBody] CreateCounterModelDTO request)
         {
             try
             {
-                var product = await _deliveryService.CreateProduct(request);
-                return Json(product);
+                var housePay = await _housePayService.CreateCounterModel(request);
+                return Json(housePay);
             }
             catch (Exception ex)
             {
@@ -76,13 +76,13 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("product")]
-        public async Task<IActionResult> UpdateProduct([FromBody] ProductModelDTO request)
+        [HttpPut("counter-update")]
+        public IActionResult UpdateCounterModel([FromBody] UpdateCounterModelDTO request)
         {
             try
             {
-                var product = await _deliveryService.UpdateProduct(request);
-                return Json(product);
+                var housePay = _housePayService.UpdateCounterModel(request);
+                return Json(housePay.Result);
             }
             catch (Exception ex)
             {
@@ -90,12 +90,12 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("product")]
-        public async Task<IActionResult> DeleteProduct([FromBody] DeleteProductDTO request)
+        [HttpDelete("delete-counter")]
+        public async Task<IActionResult> DeleteCounterModel([FromBody] DeleteCounterModelDTO request)
         {
             try
             {
-                var isDeleted = await _deliveryService.DeleteProduct(request);
+                var isDeleted = await _housePayService.DeleteCounterModel(request);
                 return Ok(isDeleted);
             }
             catch (Exception ex)
@@ -104,13 +104,13 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("step-one")]
-        public async Task<IActionResult> ShowWorkingCompany([FromBody] DeliveryCompanySheduleDTO request)
+        [HttpGet("get-all-counters")]
+        public async Task<IActionResult> GetAllCounters()
         {
             try
             {
-                var workingCompany = _deliveryService.ShowWorkingCompany(request);
-                return Json(workingCompany);
+                var counters = await _housePayService.GetAllCounters();
+                return Ok(counters);
             }
             catch (Exception ex)
             {
@@ -118,60 +118,18 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("step-two")]
-        public async Task<IActionResult> SelectDeliveryCompany([FromBody] SelectDeliveryModelDTO request)
+        [HttpGet("get-all-house-pays")]
+        public async Task<IActionResult> GetAllHousePays()
         {
             try
             {
-                var delivery = _deliveryService.SelectDeliveryCompany(request);
-                return Ok(delivery);
+                var housePays = await _housePayService.GetAllHousePays();
+                return Ok(housePays);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpPost("step-three")]
-        public async Task<IActionResult> GetProductsByType([FromBody] ProductByTypeDTO request)
-        {
-            try
-            {
-                var product = _deliveryService.GetProductsByType(request);
-                return Json(product);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("step-four")]
-        public async Task<IActionResult> CheckoutBusket([FromBody] BusketModelDTO request)
-        {
-            try
-            {
-                var product = await _deliveryService.CheckoutBusket(request);
-                return Json(product);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("GetAll")]
-        public IActionResult GetAllDelivery()
-        {
-            try
-            {
-                var deliverys = _deliveryService.GetAllDelivery();
-                return Json(deliverys);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }*/
     }
 }

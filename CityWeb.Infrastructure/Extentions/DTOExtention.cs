@@ -311,7 +311,7 @@ namespace CityWeb.Infrastructure.Extentions
             productModel.ProductPrice.VAT = productModelDTO.VAT;
             productModel.ProductPrice.Tax = productModelDTO.Tax;
         }
-        /*
+        
         public static HousePayModelDTO ToHousePayModelDTO(this HousePayModel model)
         {
             return new HousePayModelDTO()
@@ -357,7 +357,7 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Number = counterModelDTO.Number,
                 StartCount = counterModelDTO.StartCount,
-                Type = counterModelDTO.Type
+
             };
         }
         public static CounterModel FromCreateCounterModelDTO(this CreateCounterModelDTO counterModelDTO)
@@ -366,7 +366,7 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Number = counterModelDTO.Number,
                 StartCount = counterModelDTO.StartCount,
-                Type = counterModelDTO.Type
+        
             };
         }
         public static SelectCounterModelDTO ToSelectCounterModelDTO(this CounterModel model)
@@ -391,7 +391,7 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Number = counterModel.Number,
                 StartCount = counterModel.StartCount,
-                Type = counterModel.Type
+        
             };
         }
         public static CounterModelDTO ToCounterModelDTO(this CounterModel counterModel)
@@ -402,7 +402,7 @@ namespace CityWeb.Infrastructure.Extentions
                 StartCount = counterModel.StartCount,
                 EndCount = counterModel.EndCount,
             };
-        }*/
+        }
         public static AddressModelDTO ToAddressModelDTO(this AddressModel model)
         {
             return new AddressModelDTO()

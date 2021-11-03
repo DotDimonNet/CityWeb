@@ -27,8 +27,10 @@ namespace CityWeb.Mapping
             //Counter
             CreateMap<CounterModel, CounterModelDTO>();
             CreateMap<CounterModelDTO, CounterModel>();
-            CreateMap<CounterModel, CreateCounterModelDTO>();
-            CreateMap<CreateCounterModelDTO, CounterModel>();
+            CreateMap<CounterModel, CreateCounterModelDTO>()
+                .ForMember(x => x.Type, o => o.Ignore());
+            CreateMap<CreateCounterModelDTO, CounterModel>()
+                .ForMember(x => x.Type, o => o.Ignore());
         }
     }
 }
