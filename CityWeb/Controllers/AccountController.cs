@@ -99,13 +99,27 @@ namespace Taste.Web.Controllers
             return NoContent();
         }
         
-        [HttpGet("GetAll")]
+        [HttpGet("getAll")]
         public async Task<IActionResult> GetAllUsers()
         {
             try
             {
                 var users = await _accountService.GetAllUsers();
                 return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-user-by-user-name")]
+        public async Task<IActionResult> GetByName([FromQuery] GetUserByUserNameDTO request)
+        {
+            try
+            {
+                var user = await _accountService.GetUserByUserName(request);
+                return Ok(user);
             }
             catch (Exception ex)
             {
