@@ -12,7 +12,7 @@ namespace CityWeb.Domain.ValueTypes
     public class TaxiBuilderResult
     {
         public string TaxiTitle { get; set; }
-        public ICollection<AddressModelDTO> VisitedAddresses { get; set; } = new List<AddressModelDTO>();
+        public IEnumerable<AddressModelDTO> VisitedAddresses { get; set; }
         public string TaxiType { get; set; }
         public double Price { get; set; }
     }

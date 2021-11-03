@@ -26,12 +26,12 @@ namespace CityWeb.Infrastructure.Service.Transport
             _context = context;
         }
 
-        public async Task<ICollection<TaxiModelDTO>> GetAllTaxi()
+        public async Task<IEnumerable<TaxiModelDTO>> GetAllTaxi()
         {
             return await _context.Taxi.Select(x => _mapper.Map<TaxiModel, TaxiModelDTO>(x)).ToListAsync();
         }
 
-        public async Task<ICollection<TaxiCarModelDTO>> GetAllTaxiCars()
+        public async Task<IEnumerable<TaxiCarModelDTO>> GetAllTaxiCars()
         {
             return await _context.TaxiCar.Select(x => _mapper.Map<TaxiCarModel, TaxiCarModelDTO>(x)).ToListAsync();
         }
@@ -88,7 +88,6 @@ namespace CityWeb.Infrastructure.Service.Transport
                 if (taxi != null)
                 {
                     car = _mapper.Map<AddTaxiCarDTO, TaxiCarModel>(addTaxiCarDTO);
-                    car.Price = _mapper.Map<PriceModelDTO, PriceModel>(addTaxiCarDTO.Price);
                     car.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == addTaxiCarDTO.Type);
                     car.Taxi = taxi;
                     car.IsFree = true;
@@ -150,7 +149,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         /// <param name="builderResult"></param>
         /// <param name="addresses"></param>
         /// <returns></returns>
-        public async Task<ICollection<TaxiModelDTO>> GetTaxi(TaxiBuilderResult builderResult, ICollection<AddressModelDTO> addresses)
+        public async Task<IEnumerable<TaxiModelDTO>> GetTaxi(TaxiBuilderResult builderResult, IEnumerable<AddressModelDTO> addresses)
         {
             builderResult.VisitedAddresses = addresses;
             return await GetAllTaxi();
@@ -162,18 +161,12 @@ namespace CityWeb.Infrastructure.Service.Transport
         /// <param name="builderResult"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public async Task<ICollection<TransportType>> GetTaxiTypes(TaxiBuilderResult builderResult, string title)
+        public async Task<IEnumerable<string>> GetTaxiTypes(TaxiBuilderResult builderResult, string title)
         {
             builderResult.TaxiTitle = title;
-            return await _context.TaxiCar.Where(x => x.IsFree && x.Taxi.Title == title).Select(x => x.Type).Distinct().ToListAsync(); 
+            return await _context.TaxiCar.Where(x => x.IsFree && x.Taxi.Title == title).Select(x => x.Type.Name).Distinct().ToListAsync(); 
         }
 
-        /// <summary>
-        /// Check is exist free car and calculate price
-        /// </summary>
-        /// <param name="builderResult"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
         public async Task<bool> CheckOrder(TaxiBuilderResult builderResult, string type)
         {
             builderResult.TaxiType = type;

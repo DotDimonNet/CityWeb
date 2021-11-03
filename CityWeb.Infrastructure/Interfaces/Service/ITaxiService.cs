@@ -14,16 +14,16 @@ namespace CityWeb.Infrastructure.Interfaces.Service
 {
     public interface ITaxiService
     {
-        public Task<ICollection<TaxiModelDTO>> GetAllTaxi();
-        public Task<ICollection<TaxiCarModelDTO>> GetAllTaxiCars();
+        public Task<IEnumerable<TaxiModelDTO>> GetAllTaxi();
+        public Task<IEnumerable<TaxiCarModelDTO>> GetAllTaxiCars();
         public Task<TaxiModelDTO> CreateTaxi(CreateTaxiModelDTO createTaxiDTO);
         public Task<bool> DeleteTaxi(DeleteTaxiModelDTO deleteTaxiDTO);
         public Task<TaxiModelDTO> UpdateTaxi(UpdateTaxiModelDTO updateTaxiDTO);
         public Task<TaxiCarModelDTO> AddTaxiCar(AddTaxiCarDTO addTaxiCarDTO);
         public Task<TaxiCarModelDTO> UpdateTaxiCar(UpdateTaxiCarDTO updateCarDTO);
         public Task<bool> DeleteTaxiCar(DeleteTaxiCarDTO deleteCarDTO);
-        public Task<ICollection<TaxiModelDTO>> GetTaxi(TaxiBuilderResult builderResult, ICollection<AddressModelDTO> addresses);
-        public Task<ICollection<TransportType>> GetTaxiTypes(TaxiBuilderResult builderResult, string title);
+        public Task<IEnumerable<TaxiModelDTO>> GetTaxi(TaxiBuilderResult builderResult, IEnumerable<AddressModelDTO> addresses);
+        public Task<IEnumerable<string>> GetTaxiTypes(TaxiBuilderResult builderResult, string title);
         public Task<bool> CheckOrder(TaxiBuilderResult builderResult, string type);
         public Task OrderTaxi(TaxiBuilderResult builderResult);
         public  Task EndJourney(string vinCode);

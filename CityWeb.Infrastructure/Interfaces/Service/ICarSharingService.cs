@@ -19,11 +19,17 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<RentCarsModelDTO> AddRentCar(AddRentCarDTO addRentCarDTO);
         public Task<RentCarsModelDTO> UpdateRentCar(UpdateRentCarDTO updateCarDTO);
         public Task<bool> DeleteRentCar(DeleteRentCarDTO deleteCarDTO);
-        public Task<ICollection<CarSharingModelDTO>> GetAllCarSharings();
-        public Task<ICollection<RentCarsModelDTO>> GetAllRentCars();
+        public Task<IEnumerable<CarSharingModelDTO>> GetAllCarSharings();
+        public Task<IEnumerable<RentCarsModelDTO>> GetAllRentCars();
         public CarSharingBuilderResult SetupCarSharingBuilderResult();
         public Task<IEnumerable<RentCarsModelDTO>> GetAllCarsOfCarSharing(CarSharingBuilderResult builderResult, string title);
-        public Task<ICollection<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, string vinCode);
+        public Task<IEnumerable<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, string vinCode);
+        /// <summary>
+        /// Check is exist free car and calculate price
+        /// </summary>
+        /// <param name="builderResult"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
         public Task<bool> CheckRent(CarSharingBuilderResult builderResult, PeriodModelDTO period);
         public Task RentACar(CarSharingBuilderResult builderResult);
     }

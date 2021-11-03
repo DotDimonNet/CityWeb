@@ -167,7 +167,7 @@ namespace Taste.Web.Controllers
             try
             {
                 var carSharings = _carSharingService.GetAllCarSharings();
-                return Json(carSharings.Result);
+                return Json(carSharings);
             }
             catch (Exception ex)
             {
@@ -181,7 +181,7 @@ namespace Taste.Web.Controllers
             try
             {
                 var rentCars = _carSharingService.GetAllRentCars();
-                return Json(rentCars.Result);
+                return Json(rentCars);
             }
             catch (Exception ex)
             {
