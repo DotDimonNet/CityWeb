@@ -14,57 +14,7 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class DTOExtention
     {
-        public static UserDTO ToUserDTO(this ApplicationUserModel userModel)
-        {
-            return new UserDTO()
-            {
-                StreetName = userModel.Profile.Address.StreetName,
-                HouseNumber = userModel.Profile.Address.HouseNumber,
-                ApartmentNumber = userModel.Profile.Address.ApartmentNumber,
-                Avatar = userModel.Profile.Avatar,
-            };
-        }
 
-        public static UpdatePasswordDTO ToPasswordDTO(this ApplicationUserModel userModel)
-        {
-            return new UpdatePasswordDTO()
-            {
-                UserName = userModel.UserName,
-                OldPassword = userModel.PasswordHash
-            };
-        }
-
-        public static LoginModelDTO ToLoginModelDTO(this ApplicationUserModel userModel)
-        {
-            return new LoginModelDTO()
-            {
-                Login = userModel.UserName,
-                Password = userModel.PasswordHash,
-                Attempts = 0
-            };
-        }
-
-        public static EmailDTO ToEmailDTO(this ApplicationUserModel userModel)
-        {
-            return new EmailDTO()
-            {
-                Email = userModel.Email,
-            };
-        }
-
-        public static UserProfileModelDTO ToUserProfileModelDTO(this ApplicationUserModel userModel)
-        {
-            return new UserProfileModelDTO()
-            {
-                FirstName = userModel.Profile.FirstName,
-                LastName = userModel.Profile.LastName,
-                Avatar = userModel.Profile.Avatar,
-                Birthday = userModel.Profile.Birthday,
-                Gender = userModel.Profile.Gender,
-                Password = userModel.Profile.Password,
-                Email = userModel.Email,
-            };
-        }
         public static TaxiModelDTO ToTaxiModelDTO(this TaxiModel taxiModel)
         {
             return new TaxiModelDTO()
@@ -206,20 +156,6 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
         //for delivery
-        public static UpdatedDeliveryDTO ToUpdatedDeliveryDTO(this DeliveryModel deliveryModel)
-        {
-            return new UpdatedDeliveryDTO()
-            {
-                Title = deliveryModel.Title,
-                DeliveryImage = deliveryModel.DeliveryImage,
-                Description = deliveryModel.Description,
-                StartTime = deliveryModel.WorkSchedule.StartTime,
-                EndTime = deliveryModel.WorkSchedule.EndTime,
-                Value = deliveryModel.DeliveryPrice.Value,
-                Tax = deliveryModel.DeliveryPrice.Tax,
-                VAT = deliveryModel.DeliveryPrice.VAT,
-            };
-        }
 
         public static ProductUpdateDTO ToProductUpdateDTO(this ProductModel productModel)
         {
@@ -239,9 +175,9 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 ProductName = productModel.ProductName,
                 ProductImage = productModel.ProductImage,
-                Value = productModel.ProductPrice.Value,
-                Tax = productModel.ProductPrice.Tax,
-                VAT = productModel.ProductPrice.VAT,
+                //Value = productModel.ProductPrice.Value,
+                //Tax = productModel.ProductPrice.Tax,
+                //VAT = productModel.ProductPrice.VAT,
             };
         }
 
@@ -250,7 +186,7 @@ namespace CityWeb.Infrastructure.Extentions
             return new DeliveryModelDTO()
             {
                 Title = model.Title,
-                DeliveryId = model.Id,
+                //DeliveryId = model.Id,
                 Description = model.Description,
                 DeliveryImage = model.DeliveryImage,
                 WorkShedyle = new PeriodModelDTO()
@@ -315,9 +251,9 @@ namespace CityWeb.Infrastructure.Extentions
                 //ProductType = productModelDTO.ProductType,
                 ProductPrice = new PriceModel()
                 {
-                    Value = productModelDTO.Value,
-                    VAT = productModelDTO.VAT,
-                    Tax = productModelDTO.Tax,
+                   // Value = productModelDTO.Value,
+                    //VAT = productModelDTO.VAT,
+                    //Tax = productModelDTO.Tax,
                 },
             };
         }
@@ -326,9 +262,9 @@ namespace CityWeb.Infrastructure.Extentions
         {
             productModel.ProductImage = productModelDTO.ProductImage;
             //productModel.ProductType = productModelDTO.ProductType;
-            productModel.ProductPrice.Value = productModelDTO.Value;
-            productModel.ProductPrice.VAT = productModelDTO.VAT;
-            productModel.ProductPrice.Tax = productModelDTO.Tax;
+            //productModel.ProductPrice.Value = productModelDTO.Value;
+            //productModel.ProductPrice.VAT = productModelDTO.VAT;
+            //productModel.ProductPrice.Tax = productModelDTO.Tax;
         }
 
         public static HousePayModelDTO ToHousePayModelDTO(this HousePayModel model)
