@@ -34,6 +34,7 @@ namespace CityWeb.Tests
             await dbInitializer.Initialize();
             await GenerateData();
         }
+        
 
         private static async Task SetupManagementMocks()
         {

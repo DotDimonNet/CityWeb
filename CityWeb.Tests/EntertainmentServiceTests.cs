@@ -23,7 +23,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddEntertainmentModelTest()
         {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, );
             var dto = new AddEntertainmentModelDTO()
             {
                 EntertainmentTitle = "asdasd",
