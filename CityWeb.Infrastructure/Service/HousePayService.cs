@@ -10,15 +10,18 @@ using CityWeb.Domain.Enums;
 using CityWeb.Infrastructure.Extentions;
 using Microsoft.EntityFrameworkCore;
 using CityWeb.Infrastructure.Interfaces.Service;
+using AutoMapper;
 
 namespace CityWeb.Infrastructure.Service
 {
     public class HousePayService : IHousePayService
     {
         private readonly ApplicationContext _context;
-        public HousePayService(ApplicationContext context)
+        private readonly IMapper _mapper;
+        public HousePayService(ApplicationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<HousePayModel> CreateHousePayModel(CreateHousePayModelDTO housePayModel)
@@ -28,7 +31,11 @@ namespace CityWeb.Infrastructure.Service
                 var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == housePayModel.Title);
                 if (housePay == null)
                 {
-                    housePay.CreateFromDTO(housePayModel);
+                    housePay = _mapper.Map<CreateHousePayModelDTO, HousePayModel>(housePayModel);
+                    housePay.HouseHoldAdress = _mapper.Map<AddressModelDTO, AddressModel>(housePayModel.Address);
+                    housePay.Service = new ServiceModel();
+
+                    //housePay.CreateFromDTO(housePayModel);
                     await _context.HousePays.AddAsync(housePay);
                     await _context.SaveChangesAsync();
                     return housePay;
@@ -42,7 +49,7 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<bool> DeleteHousePay(HousePayModelDTO dtoModel)
+        public async Task<bool> DeleteHousePay(DeleteHousePayModelDTO dtoModel)
         {
             var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
             if (housePay != null)
@@ -56,6 +63,24 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("HousePay does not exist!");
             }
         }
+        public async Task<HousePayModelDTO> UpdateHousePay(UpdateHousePayModelDTO dtoModel)
+        {
+            var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
+            if (housePay != null)
+            {
+                _mapper.Map<UpdateHousePayModelDTO, HousePayModel>(dtoModel, housePay);
+                _mapper.Map<AddressModelDTO, AddressModel>(dtoModel.Address, housePay.HouseHoldAdress);
+
+                _context.HousePays.Update(housePay);
+                await _context.SaveChangesAsync();
+                return _mapper.Map<HousePayModel, HousePayModelDTO>(housePay);
+            }
+            else
+            {
+                throw new Exception("HousePay does not exist!");
+            }
+        }
+
         public async Task<ICollection<HousePayModelDTO>> GetAllHousePay()
         {
             return await _context.HousePays.Select(x => x.ToHousePayModelDTO()).ToListAsync();
@@ -64,13 +89,36 @@ namespace CityWeb.Infrastructure.Service
         {
             return _context.HousePays.Skip(skip).Take(take).Select(x => x.ToHousePayModelDTO());
         }
-        public async Task<CounterModel> CreateCounterModel(CreateCounterModelDTO counterModel)
+        public async Task<CounterModelDTO> CreateCounterModel(CreateCounterModelDTO createcounterModelDTO)
         {
-            var counter = counterModel.CreateCounterFromlDTO();
+            if (await _context.Counters.FirstOrDefaultAsync(x => x.Number == createcounterModelDTO.Number) == null)
+            {
+                var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == createcounterModelDTO.HousePayTitle);
+                if (housePay != null)
+                {
+                    try
+                    {
+                        var counterModel = _mapper.Map<CreateCounterModelDTO, CounterModel>(createcounterModelDTO);
+                        counterModel.Type = await _context.HousePaymentType.FirstOrDefaultAsync(x => x.Name == createcounterModelDTO.Type);
+                        counterModel.HousePayment = housePay;
 
-            await _context.Counters.AddAsync(counter);
-            await _context.SaveChangesAsync();
-            return counter;
+                        await _context.Counters.AddAsync(counterModel);
+                        _context.Update(counterModel);
+                        await _context.SaveChangesAsync();
+                        return _mapper.Map<CounterModel, CounterModelDTO>(counterModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+                else
+                    throw new Exception("HousePay does not exist");
+            }
+            else
+            {
+                throw new Exception("Counter already exist, cant create one more with same VIN code!");
+            }
         }
         public async Task<bool> DeleteCounterModel(DeleteCounterModelDTO deleteCounterModel)
         {
@@ -110,5 +158,8 @@ namespace CityWeb.Infrastructure.Service
             return _context.Counters.Skip(skip).Take(take).Select(x => x.ToCounterModelDTO());
         }
     }
+
 }
+
+
 

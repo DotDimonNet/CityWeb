@@ -18,7 +18,7 @@ namespace CityWeb.Domain.DTO
     {
         public string  Title { get; set; }
         public string Description { get; set; }
-        public CounterModel Counter { get; set; }
+        public AddressModelDTO Address { get; set; }
     }
     public class SelectHousePayModelDTO
     {
@@ -33,7 +33,7 @@ namespace CityWeb.Domain.DTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public CounterModel Counter { get; set; }
+        public AddressModelDTO Address { get; set; }
     }
 
 }
