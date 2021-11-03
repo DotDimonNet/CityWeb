@@ -28,11 +28,9 @@ namespace CityWeb.Infrastucture.Data
             if (!_context.TransportTypes.Any())
             {
                 _context.AddRange(
-
-                    TransportType.RentCar,
-                    TransportType.TaxiBusiness,
-                    TransportType.TaxiEconom,
-                    TransportType.TaxiStandart);
+                    TransportType.Econom,
+                    TransportType.Standart,
+                    TransportType.Business);
 
                 _context.SaveChanges();
             }
