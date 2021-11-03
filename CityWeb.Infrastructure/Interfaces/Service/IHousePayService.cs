@@ -1,6 +1,7 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.HousePayDTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.ValueTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,15 @@ namespace CityWeb.Infrastructure.Interfaces.Service
 {
     public interface IHousePayService
     {
+        public HousePayBuilderResult SetupHousePayBuilderResult();
         public Task<HousePayModel> CreateHousePayModel(CreateHousePayModelDTO housepayModel);
-        public Task<CounterModel> CreateCounterModel(CreateCounterModelDTO counterModel);
+        public Task<CounterModelDTO> CreateCounterModel(CreateCounterModelDTO createcounterModelDTO);
         public Task<bool> DeleteCounterModel(DeleteCounterModelDTO deleteCounterModel);
-        public Task<ICollection<HousePayModelDTO>> GetAllHousePay();
-        public IEnumerable<HousePayModelDTO> GetHousePays(int skip = 0, int take = 20);
+        public Task<IEnumerable<HousePayModelDTO>> GetAllHousePays();
         public Task<UpdateCounterModelDTO> UpdateCounterModel(UpdateCounterModelDTO updateCounterModelDTO);
-        public Task<bool> DeleteHousePay(HousePayModelDTO dtoModel);
+        public Task<bool> DeleteHousePay(DeleteHousePayModelDTO dtoModel);
         public Task<ICollection<CounterModelDTO>> GetAllCounters();
-        public IEnumerable<CounterModelDTO> GetCounters(int skip = 0, int take = 20);
-
+        public Task<HousePayModelDTO> UpdateHousePay(UpdateHousePayModelDTO dtoModel);
 
 
     }
