@@ -176,7 +176,8 @@ namespace CityWeb.Infrastructure.Service
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentTitle == x.Title);
             if(entertainment != null)
             {
-                return entertainment.Event.Select(x => _mapper.Map<EventModel, EventModelDTO>(x));
+                var result =  entertainment.Event.Select(x => _mapper.Map<EventModel, EventModelDTO>(x)).ToList();
+                return result;
             }
             else
             {
