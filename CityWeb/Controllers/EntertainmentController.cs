@@ -22,7 +22,7 @@ namespace CityWeb.Controllers
             _entertainmentService = entertainmentService;
         }
 
-        [HttpGet("events")]
+        [HttpPost("events")]
         public async Task<IActionResult> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO request)
         {
             try
@@ -78,7 +78,7 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("events/event")]
+        [HttpPost("events/event")]
         public async Task<IActionResult> GetEventFromEvents(GetEventFromEventsDTO request)
         {
             try

@@ -1,4 +1,4 @@
-﻿using CityWeb.Domain.Entities;
+using CityWeb.Domain.Entities;
 using CityWeb.Infrastructure.Authorization;
 using CityWeb.Infrastructure.Interfaces;
 using CityWeb.Infrastructure.Interfaces.Service;
@@ -109,11 +109,16 @@ namespace CityWeb
             services.AddAutoMapper(x =>
             {
                 x.AddProfile<MappingProfile>();
+                x.AddProfile<CarSharingMappingProfile>();
+                x.AddProfile<TaxiMappingProfile>();
+                x.AddProfile<HotelMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
+                x.AddProfile<MappingEntertainmentProfile>();
             });
             services.AddOptions();
             services.AddScoped<DbInitializer>();
+            services.AddTransient<IHotelService, HotelService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IDeliveryService, DeliveryService>();
             services.AddTransient<ICarSharingService, CarSharingService>();

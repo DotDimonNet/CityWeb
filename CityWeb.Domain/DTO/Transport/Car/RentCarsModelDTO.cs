@@ -10,7 +10,7 @@ namespace CityWeb.Domain.DTO.Transport.Car
     public class RentCarsModelDTO
     {
         public string VINCode { get; set; }
-
+         
         public TransportType Type { get; set; }
         public string Mark { get; set; }
         public string Color { get; set; }
