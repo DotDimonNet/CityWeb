@@ -12,16 +12,16 @@ namespace CityWeb.Infrastructure.Extentions
     public static class DTOEntertainmentExtension
     {
         
-        public static EntertainmentModelDTO ToEntertainmentModelDTO(this EntertainmentModel addData)
-        {
-            return new EntertainmentModelDTO()
-            {
-                EntertainmentTitle = addData.Title,
-                Description = addData.Description,
-                Type = addData.EntertainmentType,
+        //public static EntertainmentModelDTO ToEntertainmentModelDTO(this EntertainmentModel addData)
+        //{
+        //    return new EntertainmentModelDTO()
+        //    {
+        //        EntertainmentTitle = addData.Title,
+        //        Description = addData.Description,
+        //        Type = addData.EntertainmentType,
                 
-            };
-        }
+        //    };
+        //}
 
         //public static EventModelDTO ToEventModelDTO(this EventModel eventModel)
         //{

@@ -49,6 +49,7 @@ namespace CityWeb.Tests
             });
             TestMapper = new Mapper(config);
         }
+        
 
         private static async Task SetupManagementMocks()
         {
