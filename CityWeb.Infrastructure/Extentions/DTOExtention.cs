@@ -1,5 +1,4 @@
 using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.DeliveryDTO;
 using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.DTO.Transport.Taxi;
@@ -53,6 +52,19 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+        public static UserProfileModelDTO ToUserProfileModelDTO(this ApplicationUserModel userModel)
+        {
+            return new UserProfileModelDTO()
+            {
+                FirstName = userModel.Profile.FirstName,
+                LastName = userModel.Profile.LastName,
+                Avatar = userModel.Profile.Avatar,
+                Birthday = userModel.Profile.Birthday,
+                Gender = userModel.Profile.Gender,
+                Password = userModel.Profile.Password,
+                Email = userModel.Email,
+            };
+        }
         public static TaxiModelDTO ToTaxiModelDTO(this TaxiModel taxiModel)
         {
             return new TaxiModelDTO()
@@ -128,7 +140,7 @@ namespace CityWeb.Infrastructure.Extentions
                 Number = rentCarDTO.Number,
                 Seats = rentCarDTO.Seats,
                 VINCode = rentCarDTO.VINCode,
-                Color = rentCarDTO.Color,
+                Color = rentCarDTO.Color
                 //Type. = TransportType
             };
         }
@@ -169,44 +181,6 @@ namespace CityWeb.Infrastructure.Extentions
             return new TransportTypeDTO()
             {
                 Name = rentCar.Type.Name
-            };
-        }
-
-        public static AddRentCarDTO ToAddRentCarDTO(this RentCarModel rentCar)
-        {
-            return new AddRentCarDTO()
-            {
-                VINCode = rentCar.VINCode,
-                Type = rentCar.Type,
-                Mark = rentCar.Mark,
-                Color = rentCar.Color,
-                Number = rentCar.Number,
-                Seats = rentCar.Seats
-            };
-        }
-
-        public static RentCarModel FromAddRentCarDTO(this AddRentCarDTO rentCarDTO)
-        {
-            return new RentCarModel()
-            {
-                Mark = rentCarDTO.Mark,
-                Number = rentCarDTO.Number,
-                Color = rentCarDTO.Color,
-                Seats = rentCarDTO.Seats,
-                Type = rentCarDTO.Type
-            };
-        }
-
-        public static UpdateRentCarDTO ToUpdateRentCarDTO(this RentCarModel rentCar)
-        {
-            return new UpdateRentCarDTO()
-            {
-                VINCode = rentCar.VINCode,
-                Type = rentCar.Type,
-                Mark = rentCar.Mark,
-                Color = rentCar.Color,
-                Number = rentCar.Number,
-                Seats = rentCar.Seats
             };
         }
 
@@ -253,22 +227,9 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 ProductName = productModel.ProductName,
                 ProductImage = productModel.ProductImage,
-                Value = productModel.ProductPrice.Value,
-                Tax = productModel.ProductPrice.Tax,
-                VAT = productModel.ProductPrice.VAT,
-            };
-        }
-
-        public static CreateProductDTO ToCreateProductDTO(this ProductModel productModel)
-        {
-            return new CreateProductDTO()
-            {
-                ProductName = productModel.ProductName,
-                ProductImage = productModel.ProductImage,
-                ProductType = productModel.ProductType,
-                Value = productModel.ProductPrice.Value,
-                Tax = productModel.ProductPrice.Tax,
-                VAT = productModel.ProductPrice.VAT,
+                //Value = productModel.ProductPrice.Value,
+                //Tax = productModel.ProductPrice.Tax,
+                //VAT = productModel.ProductPrice.VAT,
             };
         }
 
@@ -292,11 +253,17 @@ namespace CityWeb.Infrastructure.Extentions
                 DeliveryId = model.Id,
                 Description = model.Description,
                 DeliveryImage = model.DeliveryImage,
-                StartTime = model.WorkSchedule.StartTime,
-                EndTime = model.WorkSchedule.EndTime,
-                Value = model.DeliveryPrice.Value,
-                Tax = model.DeliveryPrice.Tax,
-                VAT = model.DeliveryPrice.VAT,
+                WorkShedyle = new PeriodModelDTO()
+                {
+                    StartTime = model.WorkSchedule.StartTime,
+                    EndTime = model.WorkSchedule.EndTime,
+                },
+                DeliveryPrice = new PriceModelDTO()
+                {
+                    Value = model.DeliveryPrice.Value,
+                    Tax = model.DeliveryPrice.Tax,
+                    VAT = model.DeliveryPrice.VAT,
+                }
             };
         }
 
@@ -326,36 +293,6 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
-        public static DeliveryModel CreateFromDTO(this CreateDeliveryModelDTO deliveryModel)
-        {
-            return new DeliveryModel()
-            {
-                Title = deliveryModel.Title,
-                Description = deliveryModel.Description,
-                Service = new ServiceModel(),
-                DeliveryAdress = new AddressModel(),
-                WorkSchedule = new PeriodModel(),
-                DeliveryPrice = new PriceModel()
-            };
-        }
-        public static CreatedDeliveryModelDTO ToCreatedDeliveryModelDTO(this DeliveryModel deliveryModel)
-        {
-            return new CreatedDeliveryModelDTO()
-            {
-                Title = deliveryModel.Title,
-                Description = deliveryModel.Description,
-            };
-        }
-        public static void UpdateFromDTO(this DeliveryModel delivery, UpdateDeliveryModelDTO deliveryModel)
-        {
-            delivery.Description = deliveryModel.Description;
-            delivery.WorkSchedule.StartTime = deliveryModel.StartTime;
-            delivery.WorkSchedule.EndTime = deliveryModel.EndTime;
-            delivery.DeliveryPrice.Value = deliveryModel.Value;
-            delivery.DeliveryPrice.Tax = deliveryModel.Tax;
-            delivery.DeliveryPrice.VAT = deliveryModel.VAT;
-        }
-
         public static ProductModel CreateProductFromDTO(this DeliveryModel deliveryModel, ProductModelDTO productModelDTO)
         {
             return new ProductModel()
@@ -363,7 +300,7 @@ namespace CityWeb.Infrastructure.Extentions
                 DeliveryId = deliveryModel.Id,
                 ProductImage = productModelDTO.ProductImage,
                 ProductName = productModelDTO.ProductName,
-                ProductType = productModelDTO.ProductType,
+                //ProductType = productModelDTO.ProductType,
                 ProductPrice = new PriceModel()
                 {
                     Value = productModelDTO.Value,
@@ -376,7 +313,7 @@ namespace CityWeb.Infrastructure.Extentions
         public static void UpdateProductFromDTO(this ProductModel productModel, ProductModelDTO productModelDTO)
         {
             productModel.ProductImage = productModelDTO.ProductImage;
-            productModel.ProductType = productModelDTO.ProductType;
+            //productModel.ProductType = productModelDTO.ProductType;
             productModel.ProductPrice.Value = productModelDTO.Value;
             productModel.ProductPrice.VAT = productModelDTO.VAT;
             productModel.ProductPrice.Tax = productModelDTO.Tax;

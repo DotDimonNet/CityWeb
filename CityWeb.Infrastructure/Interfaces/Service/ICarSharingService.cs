@@ -17,13 +17,14 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<ICollection<RentCarsModelDTO>> GetAllRentCars();
         public CarSharingBuilderResult SetupCarSharingBuilderResult();
         public Task<IEnumerable<RentCarsModelDTO>> GetAllCarsOfCarSharing(CarSharingBuilderResult builderResult, string title);
-        public Task<RentCarsModelDTO> ChooseCar(CarSharingBuilderResult builderResult, string vinCode);
+        public Task<ICollection<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, string vinCode);
         public Task<bool> CheckRent(CarSharingBuilderResult builderResult, PeriodModelDTO period);
-        public Task<CarSharingModel> CreateCarSharing(CreateCarSharingModelDTO createCarSharingDTO);
+        public Task<CarSharingModelDTO> CreateCarSharing(CreateCarSharingModelDTO createCarSharingDTO);
         public Task<bool> DeleteCarSharing(DeleteCarSharingModelDTO deleteCarSharingDTO);
         public Task<UpdateCarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO);
-        public Task<RentCarModel> AddRentCar(AddRentCarDTO addRentCarDTO);
-        public Task<UpdateRentCarDTO> UpdateRentCar(UpdateRentCarDTO updateCarDTO);
+        public Task<RentCarsModelDTO> AddRentCar(AddRentCarDTO addRentCarDTO);
+        public Task<RentCarsModelDTO> UpdateRentCar(UpdateRentCarDTO updateCarDTO);
         public Task<bool> DeleteRentCar(DeleteRentCarDTO deleteCarDTO);
+
     }
 }

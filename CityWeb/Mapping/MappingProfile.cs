@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
 using System;
@@ -20,9 +20,13 @@ namespace CityWeb.Mapping
             CreateMap<PeriodModel, PeriodModelDTO>();
             CreateMap<PeriodModelDTO, PeriodModel>();
 
+            //Price
             CreateMap<PriceModel, PriceModelDTO>();
             CreateMap<PriceModelDTO, PriceModel>();
 
+            //Profile
+            CreateMap<UserProfileModel, UserProfileModelDTO>();
+            CreateMap<UserProfileModelDTO, UserProfileModel>();
         }
     }
 }

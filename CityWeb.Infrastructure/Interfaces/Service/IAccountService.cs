@@ -1,5 +1,6 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CityWeb.Infrastructure.Interfaces
@@ -12,5 +13,6 @@ namespace CityWeb.Infrastructure.Interfaces
         public Task<UserDTO> LoginUser(LoginModelDTO loginModel);
         public Task<UserDTO> ChangeEmail(ChangeEmailDTO changeEmail);
         public Task SignOut();
+        public Task<ICollection<UserProfileModelDTO>> GetAllUsers(int skip = 0, int take = 10);
     }
 }
