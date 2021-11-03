@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 
 namespace CityWeb.Domain.ValueTypes
 {
@@ -14,8 +15,8 @@ namespace CityWeb.Domain.ValueTypes
         public AddressModel HousePaymentAddress { get; set; }
         //Step 2 
         public string PaymentInfo { get; set; }
-        public double Price { get; set; }
-        public string ProviderName { get; set; }
+        public PriceModel Price { get; set; }
+        public  HousePaymentType HousePaymnet{ get; set; }
         //Step 3
         public int Number { get; set; }
         public double StartCount { get; set; }

@@ -9,19 +9,64 @@ using CityWeb.Domain.DTO;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastructure.Extentions;
 using Microsoft.EntityFrameworkCore;
+using CityWeb.Infrastructure.Interfaces.Service;
 
 namespace CityWeb.Infrastructure.Service
 {
-    public class HousePayService
+    public class HousePayService : IHousePayService
     {
         private readonly ApplicationContext _context;
         public HousePayService(ApplicationContext context)
         {
             _context = context;
         }
+
+        public async Task<HousePayModel> CreateHousePayModel(CreateHousePayModelDTO housePayModel)
+        {
+            try
+            {
+                var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == housePayModel.Title);
+                if (housePay == null)
+                {
+                    housePay.CreateFromDTO(housePayModel);
+                    await _context.HousePays.AddAsync(housePay);
+                    await _context.SaveChangesAsync();
+                    return housePay;
+                }
+                else
+                    throw new Exception("HousePay does not exist");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> DeleteHousePay(HousePayModelDTO dtoModel)
+        {
+            var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
+            if (housePay != null)
+            {
+                _context.Remove(housePay);
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                throw new Exception("HousePay does not exist!");
+            }
+        }
+        public async Task<ICollection<HousePayModelDTO>> GetAllHousePay()
+        {
+            return await _context.HousePays.Select(x => x.ToHousePayModelDTO()).ToListAsync();
+        }
+        public IEnumerable<HousePayModelDTO> GetHousePays(int skip = 0, int take = 20)
+        {
+            return _context.HousePays.Skip(skip).Take(take).Select(x => x.ToHousePayModelDTO());
+        }
         public async Task<CounterModel> CreateCounterModel(CreateCounterModelDTO counterModel)
         {
-            var counter = counterModel.FromCreateCounterModelDTO();
+            var counter = counterModel.CreateCounterFromlDTO();
 
             await _context.Counters.AddAsync(counter);
             await _context.SaveChangesAsync();
@@ -54,7 +99,15 @@ namespace CityWeb.Infrastructure.Service
                 return counter.ToUpdateCounterModelDTO();
             }
             else
-                throw new Exception("Couter does not exist");
+                throw new Exception("Counter does not exist");
+        }
+        public async Task<ICollection<CounterModelDTO>> GetAllCounters()
+        {
+            return await _context.Counters.Select(x => x.ToCounterModelDTO()).ToListAsync();
+        }
+        public IEnumerable<CounterModelDTO> GetCounters(int skip = 0, int take = 20)
+        {
+            return _context.Counters.Skip(skip).Take(take).Select(x => x.ToCounterModelDTO());
         }
     }
 }

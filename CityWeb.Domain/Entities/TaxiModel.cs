@@ -13,8 +13,6 @@ namespace CityWeb.Domain.Entities
         public virtual ServiceModel Service { get; set; }
         public virtual Guid ServiceId { get; set; }
         public virtual PaymentModel Payments { get; set; }
-
-
         public virtual ICollection<TaxiCarModel> Vehicle { get; set; } = new List<TaxiCarModel>();
         
     }
