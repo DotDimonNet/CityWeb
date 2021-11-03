@@ -113,7 +113,7 @@ namespace Taste.Web.Controllers
             try
             {
                 var Taxis = _taxiService.GetAllTaxi();
-                return Json(Taxis.Result);
+                return Json(Taxis);
             }
             catch (Exception ex)
             {
@@ -127,7 +127,7 @@ namespace Taste.Web.Controllers
             try
             {
                 var taxiCars = _taxiService.GetAllTaxiCars();
-                return Json(taxiCars.Result);
+                return Json(taxiCars);
             }
             catch (Exception ex)
             {

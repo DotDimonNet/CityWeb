@@ -17,5 +17,6 @@ namespace CityWeb.Domain.DTO.Transport.Car
         public string Color { get; set; }
         public int Seats { get; set; }
         public string Number { get; set; }
+        public PriceModelDTO Price { get; set; }
     }
 }

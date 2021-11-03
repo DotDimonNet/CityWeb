@@ -26,12 +26,12 @@ namespace CityWeb.Infrastructure.Service.Transport
             _context = context;
         }
 
-        public async Task<ICollection<CarSharingModelDTO>> GetAllCarSharings()
+        public async Task<IEnumerable<CarSharingModelDTO>> GetAllCarSharings()
         {
             return await _context.CarSharings.Select(x => _mapper.Map<CarSharingModel, CarSharingModelDTO>(x)).ToListAsync();
         }
 
-        public async Task<ICollection<RentCarsModelDTO>> GetAllRentCars()
+        public async Task<IEnumerable<RentCarsModelDTO>> GetAllRentCars()
         {
             return await _context.RentCars.Select(x => _mapper.Map<RentCarModel, RentCarsModelDTO>(x)).ToListAsync();
         }
@@ -189,7 +189,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         /// <param name="builderResult"></param>
         /// <param name="vinCode"></param>
         /// <returns></returns>
-        public async Task<ICollection<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, string vinCode)
+        public async Task<IEnumerable<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, string vinCode)
         {
             var car = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == builderResult.CarSharingTitle && x.VINCode == vinCode);
             if (car != null)
