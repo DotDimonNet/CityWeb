@@ -14,6 +14,10 @@ namespace CityWeb.Mapping
         public HotelMappingProfile()
         {
             CreateMap<HotelModel, HotelDTO>();
+            CreateMap<HotelDTO, HotelModel>()
+                .ForMember(x => x.RentAddress, o => o.Ignore())
+                .ForMember(x => x.Rooms, o => o.Ignore())
+                .ForMember(x => x.Service, o => o.Ignore());
             CreateMap<RoomModel, RoomDTO>();
                 //.ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
             CreateMap<RoomModel, UpdateRoomDTO>()
@@ -23,6 +27,9 @@ namespace CityWeb.Mapping
             CreateMap<RoomDTO, PriceDTO>();
             CreateMap<RoomModel, PriceDTO>();
             CreateMap<AddressModel, HotelAddressDTO>();
+            CreateMap<HotelAddressDTO,AddressModel>();
+            CreateMap<UpdateRoomDTO, RoomModel>()
+                .ForMember(x => x.Price, o => o.Ignore());
 
 
         }

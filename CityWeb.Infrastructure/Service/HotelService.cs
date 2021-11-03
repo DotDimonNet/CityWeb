@@ -100,29 +100,36 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task<HotelModel> AddHotel(HotelDTO hotelDTO)
         {
-            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.Title);
+            try
+            {
+                var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.Title);
 
-            if (hotel == null)
-            {
-                var newHotel = _mapper.Map<HotelModel>(hotelDTO);
-                newHotel.RentAddress = _mapper.Map<HotelAddressDTO, AddressModel>(hotelDTO.Address); 
-                await _context.Hotels.AddAsync(newHotel);                
-                await _context.SaveChangesAsync();
-                return newHotel;
+                if (hotel == null)
+                {
+                    hotel = _mapper.Map<HotelDTO, HotelModel>(hotelDTO);
+                    hotel.RentAddress = _mapper.Map<HotelAddressDTO, AddressModel>(hotelDTO.Address);
+                    hotel.Service = new ServiceModel();
+                    await _context.Hotels.AddAsync(hotel);
+                    await _context.SaveChangesAsync();
+                    return hotel;
+                }
+                else
+                {
+                    throw new Exception("Hotel with this title already exist!");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception("Hotel with this title already exist!");
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<HotelModel> UpdateHotel(HotelDTO DTO)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == DTO.Title);
-
             if (hotel != null)
             {
-                var updatedHotel = _mapper.Map<HotelModel>(DTO);
+                var updatedHotel = _mapper.Map<HotelDTO, HotelModel>(DTO, hotel);
                 updatedHotel.RentAddress = _mapper.Map<HotelAddressDTO, AddressModel>(DTO.Address);
                 updatedHotel.Rooms = hotel.Rooms;
                 hotel = updatedHotel;
@@ -137,7 +144,7 @@ namespace CityWeb.Infrastructure.Service
         }
         public async Task<bool> RemoveHotel(DeleteHotelDTO hotelDTO)
         {
-            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.HotelTitle && x.Id == hotelDTO.HotelId);
+            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.HotelTitle   );
             if (hotel != null)
             {
                 _context.Hotels.Remove(hotel);

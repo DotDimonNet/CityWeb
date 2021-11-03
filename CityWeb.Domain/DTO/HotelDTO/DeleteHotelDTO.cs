@@ -9,6 +9,5 @@ namespace CityWeb.Domain.DTO.HotelDTO
     public class DeleteHotelDTO
     {
         public string HotelTitle { get; set; }
-        public Guid HotelId { get; set; }
     }
 }
