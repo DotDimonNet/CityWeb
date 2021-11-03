@@ -1,4 +1,4 @@
-﻿using CityWeb.Domain.Entities;
+using CityWeb.Domain.Entities;
 using CityWeb.Infrastructure.Authorization;
 using CityWeb.Infrastructure.Interfaces;
 using CityWeb.Infrastructure.Interfaces.Service;
@@ -114,6 +114,7 @@ namespace CityWeb
                 x.AddProfile<HotelMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
+                x.AddProfile<MappingEntertainmentProfile>();
             });
             services.AddOptions();
             services.AddScoped<DbInitializer>();

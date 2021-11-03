@@ -102,7 +102,7 @@ namespace CityWeb.Infrastructure.Extentions
                 {
                      StreetName = carSharingModel.Location.StreetName,
                      HouseNumber = carSharingModel.Location.HouseNumber,
-                    ApartmentNumber = carSharingModel.Location.ApartmentNumber
+                     ApartmentNumber = carSharingModel.Location.ApartmentNumber
                 }
             };
         }

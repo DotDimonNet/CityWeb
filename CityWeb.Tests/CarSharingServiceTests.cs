@@ -32,7 +32,7 @@ namespace CityWeb.Tests
                 {
                     StreetName = "Yangelya",
                     HouseNumber = "25",
-                    ApartmentNubmer = "1"
+                    ApartmentNumber = "1"
                 }
             };
 
@@ -99,7 +99,7 @@ namespace CityWeb.Tests
                 {
                     StreetName = "Yangelya",
                     HouseNumber = "25",
-                    ApartmentNubmer = "1"
+                    ApartmentNumber = "1"
                 }
             };
 
