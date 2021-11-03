@@ -1,4 +1,5 @@
-﻿using CityWeb.Domain.DTO.Transport.Car;
+﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.Taxi;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
@@ -22,7 +23,7 @@ namespace Taste.Web.Controllers
             _taxiService = taxiService;
         }
 
-        [HttpPost("taxi")]
+        [HttpPost("manage-taxi")]
         public async Task<IActionResult> CreateTaxi([FromBody] CreateTaxiModelDTO request)
         {
             try
@@ -36,7 +37,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("taxi")]
+        [HttpPut("manage-taxi")]
         public async Task<IActionResult> UpdateTaxi([FromBody] UpdateTaxiModelDTO request)
         {
             try
@@ -50,7 +51,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("taxi")]
+        [HttpDelete("manage-taxi")]
         public async Task<IActionResult> DeleteTaxi([FromBody] DeleteTaxiModelDTO request)
         {
             try
@@ -111,8 +112,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var Taxis = _taxiService.GetAllTaxis();
-                return Json(Taxis);
+                var Taxis = _taxiService.GetAllTaxi();
+                return Json(Taxis.Result);
             }
             catch (Exception ex)
             {
@@ -126,7 +127,77 @@ namespace Taste.Web.Controllers
             try
             {
                 var taxiCars = _taxiService.GetAllTaxiCars();
-                return Json(taxiCars);
+                return Json(taxiCars.Result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("get-taxi")]
+        public async Task<IActionResult> GetTaxi([FromBody] TaxiBuilderResult builder, [FromQuery] ICollection<AddressModelDTO> addresses)
+        {
+            try
+            {
+                var stepOneResult = await _taxiService.GetTaxi(builder, addresses);
+                return Json(stepOneResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("get-taxi-types")]
+        public async Task<IActionResult> GetTaxiTypes([FromBody] TaxiBuilderResult builder, [FromQuery] string title)
+        {
+            try
+            {
+                var stepTwoResult = await _taxiService.GetTaxiTypes(builder, title);
+                return Json(stepTwoResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("check-order")]
+        public async Task<IActionResult> CheckOrder([FromBody] TaxiBuilderResult builder, [FromQuery] string type)
+        {
+            try
+            {
+                var stepThreeResult = await _taxiService.CheckOrder(builder, type);
+                return Ok(stepThreeResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("oreder-taxi")]
+        public IActionResult OrderTaxi([FromBody] TaxiBuilderResult builder)
+        {
+            try
+            {
+                var car = _taxiService.OrderTaxi(builder);
+                return Json(car);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("end-journey")]
+        public IActionResult EndJourney([FromQuery] string vinCode)
+        {
+            try
+            {
+                var car = _taxiService.EndJourney(vinCode);
+                return Json(car);
             }
             catch (Exception ex)
             {

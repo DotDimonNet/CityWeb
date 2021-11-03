@@ -167,7 +167,7 @@ namespace Taste.Web.Controllers
             try
             {
                 var carSharings = _carSharingService.GetAllCarSharings();
-                return Json(carSharings);
+                return Json(carSharings.Result);
             }
             catch (Exception ex)
             {
@@ -181,7 +181,21 @@ namespace Taste.Web.Controllers
             try
             {
                 var rentCars = _carSharingService.GetAllRentCars();
-                return Json(rentCars);
+                return Json(rentCars.Result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("rent-a-car")]
+        public IActionResult RentACar([FromBody] CarSharingBuilderResult builder)
+        {
+            try
+            {
+                var car = _carSharingService.RentACar(builder);
+                return Json(car);
             }
             catch (Exception ex)
             {
