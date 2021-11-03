@@ -284,6 +284,8 @@ namespace CityWeb.Infrastructure.Extentions
                 DeliveryAdress = new AddressModel(),
                 WorkSchedule = new PeriodModel(),
                 DeliveryPrice = new PriceModel()
+            };
+        }
         public static CounterModel FromCreateCounterModelDTO(this CreateCounterModelDTO counterModelDTO)
         {
             return new CounterModel()
@@ -383,15 +385,6 @@ namespace CityWeb.Infrastructure.Extentions
             return new SelectCounterModelDTO()
             {
                 Number = model.Number
-            };
-        }
-            public static UpdateCounterModelDTO ToUpdateCounterModelDTO(this CounterModel counterModel)
-        {
-            return new UpdateCounterModelDTO()
-            {
-                StartCount = counterModel.StartCount,
-                EndCount = counterModel.EndCount,
-                PriceByItem = counterModel.PriceByItem
             };
         }
 
