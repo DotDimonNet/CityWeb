@@ -20,7 +20,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task CreateDeliveryCompanyTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new CreateDeliveryModelDTO()
             {
                 Title = "Delivery Company",

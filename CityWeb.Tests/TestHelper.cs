@@ -1,6 +1,8 @@
+using AutoMapper;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastucture.Data;
+using CityWeb.Mapping;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +18,11 @@ namespace CityWeb.Tests
     {
         public static ApplicationContext ApplicationContext { get; set; }
 
-        public static Mock<UserManager<ApplicationUserModel>> UserManagerMock;
-        public static Mock<SignInManager<ApplicationUserModel>> SignInManagerMock;
-        public static Mock<RoleManager<ApplicationUserRole>> RoleManagerMock;
+        public static Mock<UserManager<ApplicationUserModel>> UserManagerMock { get; set; }
+        public static Mock<SignInManager<ApplicationUserModel>> SignInManagerMock { get; set; }
+        public static Mock<RoleManager<ApplicationUserRole>> RoleManagerMock { get; set; }
+        public static IMapper TestMapper { get; set; }
+
 
         public static async Task SetupDbContext()
         {
@@ -33,7 +37,19 @@ namespace CityWeb.Tests
             var dbInitializer = new DbInitializer(ApplicationContext, UserManagerMock.Object, RoleManagerMock.Object);
             await dbInitializer.Initialize();
             await GenerateData();
+            var config = new MapperConfiguration(x => 
+            {
+                x.AddProfile<MappingProfile>();
+                x.AddProfile<CarSharingMappingProfile>();
+                x.AddProfile<TaxiMappingProfile>();
+                x.AddProfile<HotelMappingProfile>();
+                x.AddProfile<DeliveryMappingProfile>();
+                x.AddProfile<AccountMappingProfile>();
+                x.AddProfile<MappingEntertainmentProfile>();
+            });
+            TestMapper = new Mapper(config);
         }
+        
 
         private static async Task SetupManagementMocks()
         {
