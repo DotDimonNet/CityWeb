@@ -28,9 +28,10 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task<ApplicationUserModel> RegisterUser(RegisterModelDTO registerModel)
         {
-            var user = _mapper.Map<ApplicationUserModel>(registerModel);
-            user.Profile = _mapper.Map<UserProfileModel>(registerModel.Profile);
-            var result = await _signInManager.UserManager.CreateAsync(user, registerModel.Profile.Password);
+            var user = _mapper.Map<RegisterModelDTO, ApplicationUserModel>(registerModel);
+            user.Profile = _mapper.Map<UserProfileModelDTO, UserProfileModel>(registerModel.Profile);
+            user.Profile.Address = _mapper.Map<AddressModelDTO, AddressModel>(registerModel.Address);
+            var result = await _signInManager.UserManager.CreateAsync(user, registerModel.Password);
 
             if (result.Succeeded)
             {
@@ -57,7 +58,7 @@ namespace CityWeb.Infrastructure.Service
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, loginModel.Attempts > 5);
                 return result switch
                 {
-                    var value when result.Succeeded => user.ToUserDTO(),
+                    var value when result.Succeeded => _mapper.Map<ApplicationUserModel, UserDTO>(user),
                     var value when result.IsLockedOut => throw new Exception("Locked out"),
                     _ => throw new Exception("Unknown Error")
                 };
@@ -70,24 +71,27 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task<UserDTO> UpdateUserData(UpdateUserDataDTO updateData)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.Login);
+            await _context.Users.LoadAsync();
+            await _context.UserProfiles.LoadAsync();
+
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.UserName);
             if (user != null)
             {
-                user.Profile.FirstName = updateData.FirstName;
-                user.Profile.LastName = updateData.LastName;
-                user.Profile.Gender = updateData.Gender;
-                user.Profile.Address = new AddressModel()
+                try
                 {
-                    
-                    StreetName = updateData.StreetName,
-                    HouseNumber = updateData.HouseNumber,
-                    ApartmentNumber = updateData.ApartmentNumber,
-                };
-                user.Profile.Avatar = updateData.Avatar;
-
-                _context.Update(user);
-                await _context.SaveChangesAsync();
-                return user.ToUserDTO();
+                    user.Profile = _mapper.Map<UserProfileModelDTO, UserProfileModel>(updateData.Profile, user.Profile);
+                    user.Profile.Address = _mapper.Map<AddressModelDTO, AddressModel>(updateData.Address, user.Profile.Address);
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                    var userDTO = _mapper.Map<ApplicationUserModel, UserDTO>(user);
+                    userDTO.Profile = _mapper.Map<UserProfileModel, UserProfileModelDTO>(user.Profile);
+                    userDTO.Address = _mapper.Map<AddressModel, AddressModelDTO>(user.Profile.Address);
+                    return userDTO;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
             else
             {
@@ -103,7 +107,7 @@ namespace CityWeb.Infrastructure.Service
                 user.Email = changeEmail.Email;
                 _context.Update(user);
                 await _context.SaveChangesAsync();
-                return user.ToUserDTO();
+                return _mapper.Map<ApplicationUserModel, UserDTO>(user);
             }
             else
             {
@@ -127,9 +131,17 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<ICollection<UserProfileModelDTO>> GetAllUsers(int skip = 0, int take = 10)
+        public async Task<ICollection<UserDTO>> GetAllUsers(int skip = 0, int take = 10)
         {
-            return await _context.Users.Skip(skip).Take(take).Select(x => x.ToUserProfileModelDTO()).ToListAsync();
+            return await _context.Users.Skip(skip).Take(take).Select(x => _mapper.Map<ApplicationUserModel, UserDTO>(x)).ToListAsync();
         }
+
+        public async Task<UserDTO> GetUserByUserName(GetUserByUserNameDTO byUserName)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == byUserName.UserName);
+            return _mapper.Map<ApplicationUserModel, UserDTO>(user); 
+        }
+
+
     }
 }

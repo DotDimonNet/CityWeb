@@ -13,6 +13,7 @@ namespace CityWeb.Infrastructure.Interfaces
         public Task<UserDTO> LoginUser(LoginModelDTO loginModel);
         public Task<UserDTO> ChangeEmail(ChangeEmailDTO changeEmail);
         public Task SignOut();
-        public Task<ICollection<UserProfileModelDTO>> GetAllUsers(int skip = 0, int take = 10);
+        public Task<ICollection<UserDTO>> GetAllUsers(int skip = 0, int take = 10);
+        public Task<UserDTO> GetUserByUserName(GetUserByUserNameDTO byUserName);
     }
 }

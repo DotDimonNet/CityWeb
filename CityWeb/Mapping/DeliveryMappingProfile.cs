@@ -12,6 +12,7 @@ namespace CityWeb.Mapping
     {
         public DeliveryMappingProfile()
         {
+            //Mapper for delivery company
             CreateMap<CreateDeliveryModelDTO, DeliveryModel>()
                 .ForMember(x => x.DeliveryAdress, o => o.Ignore())
                 .ForMember(x => x.DeliveryPrice, o => o.Ignore())
@@ -19,6 +20,8 @@ namespace CityWeb.Mapping
                 .ForMember(x => x.WorkSchedule, o => o.Ignore());
 
             CreateMap<DeliveryModel, CreateDeliveryModelDTO>();//??
+
+            CreateMap<DeliveryModel, SelectDeliveryModelDTO>();
 
             CreateMap<DeliveryModelDTO, DeliveryModel>()
                 .ForMember(x => x.Service, o => o.Ignore());
@@ -30,6 +33,10 @@ namespace CityWeb.Mapping
             CreateMap<UpdateDeliveryModelDTO, DeliveryModel>()
                 .ForMember(x => x.WorkSchedule, o => o.Ignore())
                 .ForMember(x => x.DeliveryPrice, o => o.Ignore());
+
+            //Mapper for product
+            CreateMap<ProductModelDTO, ProductModel>()
+                .ForMember(x => x.ProductType, o => o.Ignore());
 
             CreateMap<ProductModel, CreateProductDTO>()
                 .ForMember(x => x.ProductType, o => o.Ignore())

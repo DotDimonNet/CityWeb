@@ -13,10 +13,4 @@ namespace CityWeb.Domain.DTO
         public string UserName { get; set; }
         public AddressModel Address { get; set; }
     }
-
-    public class BusketItemModelDTO 
-    {
-        public Guid ProductId { get; set; }
-        public int Quantity { get; set; }
-    }
 }
