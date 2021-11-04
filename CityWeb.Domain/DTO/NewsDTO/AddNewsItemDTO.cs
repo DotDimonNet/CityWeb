@@ -8,7 +8,9 @@ namespace CityWeb.Domain.DTO.NewsDTO
 {
     public class AddNewsItemDTO
     {
+        public string NewsServiceTitle { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Image { get; set; }
     }
 }

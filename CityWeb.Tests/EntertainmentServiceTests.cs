@@ -20,7 +20,7 @@ namespace CityWeb.Tests
         {
             await TestHelper.SetupDbContext();
         }
-        /*[Test]
+        [Test]
         public async Task AddEntertainmentModelTest()
         {
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper);
@@ -38,12 +38,13 @@ namespace CityWeb.Tests
             };
 
             var entertainment = await entertainmentService.AddEntertainmentModel(dto);
-            var entertainmentFromContext = TestHelper.ApplicationContext.Entertaiments.FirstOrDefault(x => x.Title == dto.EntertainmentTitle);
+            
+            
 
             Assert.IsNotNull(entertainment);
-            Assert.AreEqual(dto.EntertainmentTitle, entertainmentFromContext.Title);
-            Assert.AreEqual(dto.Description, entertainmentFromContext.Description);
-            Assert.AreEqual(dto.Type, entertainmentFromContext.EntertainmentType);
+            Assert.AreEqual(dto.EntertainmentTitle, entertainment.EntertainmentTitle);
+            Assert.AreEqual(dto.Description, entertainment.Description);
+            Assert.AreEqual(dto.Type, entertainment.Type);
 
         }
         //[Test]

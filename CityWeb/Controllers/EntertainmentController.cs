@@ -22,13 +22,13 @@ namespace CityWeb.Controllers
             _entertainmentService = entertainmentService;
         }
 
-        [HttpPost("events")]
-        public async Task<IActionResult> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO request)
+        [HttpGet("events")]
+        public async Task<IActionResult> GetEventsFromEntertainment([FromQuery]GetEventsFromEntertainmentsDTO request)
         {
             try
             {
                 var entertainment = await _entertainmentService.GetEventsFromEntertainment(request);
-                return Ok(entertainment);
+                return Json(entertainment);
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace CityWeb.Controllers
             try
             {
                 var entertainment = await _entertainmentService.DeleteEntertainmentModel(request);
-                return Ok(entertainment);
+                return Json(entertainment);
             }
             catch (Exception ex)
             {
@@ -78,13 +78,13 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpPost("events/event")]
-        public async Task<IActionResult> GetEventFromEvents(GetEventFromEventsDTO request)
+        [HttpGet("events/event")]
+        public async Task<IActionResult> GetEventFromEvents([FromQuery]GetEventFromEventsDTO request)
         {
             try
             {
                 var eventModel = await _entertainmentService.GetEventFromEventTitles(request);
-                return Ok(eventModel);
+                return Json(eventModel);
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@ namespace CityWeb.Controllers
             try
             {
                 var eventModel = await _entertainmentService.DeleteEventModel(request);
-                return Ok(eventModel);
+                return Json(eventModel);
             }
             catch (Exception ex)
             {

@@ -14,8 +14,8 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         //public Task<IEnumerable<string>> GetNewsOfService(GetServiceDTO getNews);
         public Task<NewsModelDTO> AddNewsService(AddNewsModelDTO addService);
         public Task<NewsItemModelDTO> AddNews(AddNewsItemDTO addNewsItem);
-        public Task<NewsModelDTO> UpdateNewsService(UpdateNewsModelDTO updateService);
-        public Task<NewsItemModelDTO> UpdateNewsItem(UpdateNewsItemDTO updateNews);
+        //public Task<NewsModelDTO> UpdateNewsService(UpdateNewsModelDTO updateService);
+        //public Task<NewsItemModelDTO> UpdateNewsItem(UpdateNewsItemDTO updateNews);
         public Task<bool> DeleteNewsService(DeleteNewsModelDTO deleteService);
         public Task<bool> DeleteNews(DeleteNewsItemDTO deleteNews);
     }

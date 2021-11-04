@@ -16,7 +16,7 @@ namespace CityWeb.Domain.Entities
         public virtual PriceModel Price { get; set; }
         public virtual AddressModel Address { get; set; }        
         public virtual PeriodModel WorkSchedule { get; set; }
-        public virtual ICollection<EventModel> Event { get; set; } = new List<EventModel>();
+        public virtual ICollection<EventModel> Events { get; set; } = new List<EventModel>();
         public string Title { get ; set ; }
         public string Description { get ; set ; }
         public virtual ApplicationUserModel User { get; set; }
