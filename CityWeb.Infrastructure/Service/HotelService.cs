@@ -41,10 +41,7 @@ namespace CityWeb.Infrastructure.Service
                     await _context.SaveChangesAsync();
                     return room;
                 }
-                else
-                {
-                    throw new Exception("Room with this number already exist!");
-                }            
+                throw new Exception("Room with this number already exist!");           
             }
             throw new Exception("Hotel does not exist!");
         }
@@ -65,10 +62,7 @@ namespace CityWeb.Infrastructure.Service
                     await _context.SaveChangesAsync();
                     return room;
                 }
-                else
-                {
-                    throw new Exception("Room with this number doesnt exist!");
-                }               
+                throw new Exception("Room with this number doesnt exist!");             
             }
             throw new Exception("Hotel with this title doesnt exist!");
         }
