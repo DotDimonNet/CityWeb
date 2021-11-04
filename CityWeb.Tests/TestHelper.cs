@@ -196,129 +196,119 @@ namespace CityWeb.Tests
             await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
 
 
-            //#region Transport
-            //var carSharings = new List<CarSharingModel>();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    var carSharing = new CarSharingModel()
-            //    {
-            //        Title = $"CarSharing{i + 1}",
-            //        Description = $"Default description {i}",
-            //        Payment = new PaymentModel(),
-            //        //Service = service,
-            //        //ServiceId = service.Id,
-            //        Location = new AddressModel()
-            //        {
-            //            StreetName = "Porika",
-            //            HouseNumber = $"{i+1}"
-            //        },
-            //        Vehicle =
-            //        {
-            //            new RentCarModel()
-            //            {
-            //                Type = Domain.Enums.TransportType.RentCar,
-            //                VINCode = $"VAG489645{i+1}",
-            //                RentPeriod =
-            //                {
-            //                    new PeriodModel()
-            //                },
-            //                Color = "red",
-            //                Mark = "Honda",
-            //                Number = $"AB 55{i} CC",
-            //                Seats = 2,
-            //                Price = new PriceModel()
-            //                {
-            //                    Value = i*100
-            //                }
-            //            }
-            //        }
-            //    };
-            //    carSharings.Add(carSharing);
-            //}
+            #region Transport
+            var carSharings = new List<CarSharingModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var carSharing = new CarSharingModel()
+                {
+                    Title = $"CarSharing{i + 1}",
+                    Description = $"Default description {i}",
+                    Payment = new PaymentModel(),
+                    Service = service,
+                    ServiceId = service.Id,
+                    Location = new AddressModel()
+                    {
+                        StreetName = "Porika",
+                        HouseNumber = $"{i + 1}"
+                    },
+                    Vehicle =
+                    {
+                        new RentCarModel()
+                        {
+                            Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                            VINCode = $"VAG489645{i+1}",
+                            RentPeriod =
+                            {
+                                new PeriodModel()
+                            },
+                            Color = "red",
+                            Mark = "Honda",
+                            Number = $"AB 55{i} CC",
+                            Seats = 2,
+                            Price = new PriceModel()
+                            {
+                                Value = i*100
+                            }
+                        }
+                    }
+                };
+                carSharings.Add(carSharing);
+            }
 
-            //var rentCars = new List<RentCarModel>();
-            //for (int i = 0; i < carSharings.Count; i++)
-            //{
-            //    for (int j = 0; j < 10; j++)
-            //    {
-            //        var rentCar = new RentCarModel()
-            //        {
-            //            CarSharingId = carSharings[i].Id,
-            //            Type = Domain.Enums.TransportType.RentCar,
-            //            VINCode = $"BAG489645{i}{j}",
-            //            RentPeriod =
-            //            {
-            //                new PeriodModel() 
-            //                {       
-            //                    StartTime = DateTime.Now,
-            //                    EndTime = DateTime.Now.AddDays(j + 1)
-            //                },
-            //            },
-            //            Color = "red",
-            //            Mark = "Honda",
-            //            Number = $"AB 55{j}{i} CC",
-            //            Seats = 2,
-            //            Price = new PriceModel()
-            //            {
-            //                Value = i * j * 10
-            //            }
-            //        };
-            //        rentCars.Add(rentCar);
-            //    }
-            //}
+            var rentCars = new List<RentCarModel>();
+            for (int i = 0; i < carSharings.Count; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    var rentCar = new RentCarModel()
+                    {
+                        CarSharingId = carSharings[i].Id,
+                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                        VINCode = $"BAG489645{i}{j}",
+                        RentPeriod =
+                        {
+                            new PeriodModel()
+                            {
+                                StartTime = DateTime.Now,
+                                EndTime = DateTime.Now.AddDays(j + 1)
+                            },
+                        },
+                        Color = "red",
+                        Mark = "Honda",
+                        Number = $"AB 55{j}{i} CC",
+                        Seats = 2,
+                        Price = new PriceModel()
+                        {
+                            Value = i * j * 10
+                        }
+                    };
+                    rentCars.Add(rentCar);
+                }
+            }
 
-            //var taxi = new List<TaxiModel>();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    var oneTaxi = new TaxiModel()
-            //    {
-            //        Title = $"Taxi{i + 1}",
-            //        Description = $"Default description {i}",
-            //        Service = service,
-            //        ServiceId = service.Id
-            //    };
-            //    taxi.Add(oneTaxi);
-            //};
+            var taxi = new List<TaxiModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var oneTaxi = new TaxiModel()
+                {
+                    Title = $"Taxi{i + 1}",
+                    Description = $"Default description {i}",
+                    Service = service,
+                    ServiceId = service.Id
+                };
+                taxi.Add(oneTaxi);
+            };
 
-            //var taxiCars = new List<TaxiCarModel>();
-            //for (int i = 0; i < taxi.Count; i++)
-            //{
-            //    for (int j = 0; j < 10; j++)
-            //    {
-            //        var taxiCar = new TaxiCarModel()
-            //        {
-            //            TaxiId = taxi[i].Id,
-            //            Type = Domain.Enums.TransportType.RentCar,
-            //            VINCode = $"TAG489645{i}{j}",
-            //            Color = "yellow",
-            //            Mark = "BMW",
-            //            Number = $"AB 88{j}{i} SS",
-            //            Seats = 5,
-            //            Price = new PriceModel()
-            //            {
-            //                Value = i * j * 10
-            //            },
-            //            StartAddress = new AddressModel()
-            //            {
-            //                StreetName = "Soborna",
-            //                HouseNumber = $"{j+1}"
-            //            },
-            //            DestinationAddresses = { },
-            //            JourneyPeriod = new PeriodModel()
-            //            {
-            //                StartTime = DateTime.Now,
-            //                EndTime = DateTime.Now.AddMinutes(j + 5)
-            //            }
-            //        };
-            //        taxiCars.Add(taxiCar);
-            //    }
-            //}
+            var taxiCars = new List<TaxiCarModel>();
+            for (int i = 0; i < taxi.Count; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    var taxiCar = new TaxiCarModel()
+                    {
+                        TaxiId = taxi[i].Id,
+                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                        VINCode = $"TAG489645{i}{j}",
+                        Color = "yellow",
+                        Mark = "BMW",
+                        Number = $"AB 88{j}{i} SS",
+                        Seats = 5,
+                        IsFree = true,
+                        Price = new PriceModel()
+                        {
+                            Value = i * j * 10
+                        }
+                    };
+                    taxiCars.Add(taxiCar);
+                }
+            }
 
-            //await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
-            //await ApplicationContext.RentCars.AddRangeAsync(rentCars);
-            //await ApplicationContext.Taxi.AddRangeAsync(taxi);
-            //await ApplicationContext.TaxiCar.AddRangeAsync(taxiCars);
-            //#endregion
+            await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
+            await ApplicationContext.RentCars.AddRangeAsync(rentCars);
+            await ApplicationContext.Taxi.AddRangeAsync(taxi);
+            await ApplicationContext.TaxiCar.AddRangeAsync(taxiCars);
+            #endregion
 
 
             //Create Deliverys company
