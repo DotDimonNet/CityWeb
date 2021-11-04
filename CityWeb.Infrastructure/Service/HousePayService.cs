@@ -94,33 +94,36 @@ namespace CityWeb.Infrastructure.Service
         }
         public async Task<CounterModelDTO> CreateCounterModel(CreateCounterModelDTO createcounterModelDTO)
         {
-            if (await _context.Counters.FirstOrDefaultAsync(x => x.Number == createcounterModelDTO.Number) == null)
+            try
             {
-                var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == createcounterModelDTO.HousePayTitle);
-                if (housePay != null)
+                if (await _context.Counters.FirstOrDefaultAsync(x => x.Number == createcounterModelDTO.Number) == null)
                 {
-                    try
+                    var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == createcounterModelDTO.HousePayTitle);
+                    if (housePay != null)
                     {
                         var counterModel = _mapper.Map<CreateCounterModelDTO, CounterModel>(createcounterModelDTO);
                         counterModel.Type = await _context.HousePaymentType.FirstOrDefaultAsync(x => x.Name == createcounterModelDTO.Type);
-                        counterModel.HousePayment = housePay;
-                        counterModel.Price = new PriceModel();
-
-                        await _context.Counters.AddAsync(counterModel);
-                        await _context.SaveChangesAsync();
-                        return _mapper.Map<CounterModel, CounterModelDTO>(counterModel);
+                        counterModel.HousePaymentId = housePay.Id;
+                        if (counterModel.Type != null)
+                        {
+                            await _context.Counters.AddAsync(counterModel);
+                            await _context.SaveChangesAsync();
+                            var result = _mapper.Map<CounterModel, CounterModelDTO>(counterModel);
+                            result.Type = counterModel.Type.Name;
+                            return result;
+                        }
+                        else
+                            throw new Exception("Couner type does not exoist");
                     }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
+                    else
+                        throw new Exception("HousePay does not exist");
                 }
                 else
-                    throw new Exception("HousePay does not exist");
+                    throw new Exception("Counter already exist, cant create one more with same VIN code!");
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception("Counter already exist, cant create one more with same VIN code!");
+                throw new Exception(ex.Message);
             }
         }
         public async Task<bool> DeleteCounterModel(DeleteCounterModelDTO deleteCounterModel)
