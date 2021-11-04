@@ -129,11 +129,9 @@ namespace CityWeb.Infrastructure.Service
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == DTO.Title);
             if (hotel != null)
             {
-                var updatedHotel = _mapper.Map<HotelDTO, HotelModel>(DTO, hotel);
-                updatedHotel.RentAddress = _mapper.Map<HotelAddressDTO, AddressModel>(DTO.Address);
-                updatedHotel.Rooms = hotel.Rooms;
-                hotel = updatedHotel;
-                _context.Hotels.Update(hotel);
+                 _mapper.Map<HotelDTO, HotelModel>(DTO, hotel);
+                 _mapper.Map<HotelAddressDTO, AddressModel>(DTO.Address, hotel.RentAddress);
+                _context.Update(hotel);
                 await _context.SaveChangesAsync();
                 return hotel;
             }
@@ -194,6 +192,15 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
+        public async Task<IEnumerable<HotelDTO>> GetAllHotels()
+        {
+            return await _context.Hotels.Select(x => _mapper.Map<HotelModel, HotelDTO>(x)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<RoomDTO>> GetAllRooms()
+        {
+            return await _context.Rooms.Select(x => _mapper.Map<RoomModel, RoomDTO>(x)).ToListAsync();
+        }
 
         //Step 1
         public async Task<ICollection<RoomModel>> GetAllFreeRooms(HotelTitleDTO DTO)

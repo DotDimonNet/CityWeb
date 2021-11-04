@@ -18,6 +18,12 @@ namespace CityWeb.Mapping
                 .ForMember(x => x.RentAddress, o => o.Ignore())
                 .ForMember(x => x.Rooms, o => o.Ignore())
                 .ForMember(x => x.Service, o => o.Ignore());
+            CreateMap<RoomDTO, RoomModel>()
+                .ForMember(x => x.Hotel, o => o.Ignore())
+                .ForMember(x => x.Price, o => o.Ignore())
+                .ForMember(x => x.RentPeriod, o => o.Ignore());
+            CreateMap<PriceDTO, PriceModel>();
+
             CreateMap<RoomModel, RoomDTO>();
                 //.ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
             CreateMap<RoomModel, UpdateRoomDTO>()
