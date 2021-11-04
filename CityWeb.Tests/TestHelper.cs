@@ -43,19 +43,20 @@ namespace CityWeb.Tests
             var dbInitializer = new DbInitializer(ApplicationContext, UserManagerMock.Object, RoleManagerMock.Object);
             await dbInitializer.Initialize();
             await GenerateData();
-            var config = new MapperConfiguration(x => 
+            var config = new MapperConfiguration(x =>
             {
                 x.AddProfile<MappingProfile>();
                 x.AddProfile<CarSharingMappingProfile>();
                 x.AddProfile<TaxiMappingProfile>();
                 x.AddProfile<HotelMappingProfile>();
+                x.AddProfile<HousePayMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
                 x.AddProfile<MappingEntertainmentProfile>();
             });
             TestMapper = new Mapper(config);
         }
-        
+
 
         private static async Task SetupManagementMocks()
         {
@@ -102,7 +103,7 @@ namespace CityWeb.Tests
         private static async Task<ICollection<RoomModel>> GenerateRooms(int amount)
         {
             var rooms = new List<RoomModel>();
-            for(int i = 1; i <= amount; i++)
+            for (int i = 1; i <= amount; i++)
             {
                 var room = new RoomModel()
                 {
@@ -337,10 +338,10 @@ namespace CityWeb.Tests
                     },
                     DeliveryPrice = new PriceModel(),
                     WorkSchedule = new PeriodModel()
-                    { 
+                    {
                         StartTime = DateTime.Now.AddHours(-2),
                         EndTime = DateTime.Now.AddHours(+2),
-                    },    
+                    },
                 };
                 deliverys.Add(delivery);
             }
@@ -367,6 +368,40 @@ namespace CityWeb.Tests
             await ApplicationContext.Ratings.AddRangeAsync(ratings);
             await ApplicationContext.SaveChangesAsync();
 
+            //Create HousePay
+
+            var housePays = new List<HousePayModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var housePay = new HousePayModel()
+                {
+                    Title = $"HousePay{i + 1}",
+                    Description = $"Default description {i}",
+                    Service = service,
+                    ServiceId = service.Id,
+                    HouseHoldAdress = new AddressModel()
+                    {
+                        StreetName = "Soborna",
+                        HouseNumber = $"{i + 1}"
+                    },
+                    CounterModels =
+                    {
+                        new CounterModel()
+                        {
+                            Number = $"NA/000000{i+1}",
+                            Type = await ApplicationContext.HousePaymentType.FirstOrDefaultAsync(),
+                            Price = new PriceModel()
+                            {
+                                Value = i*10
+                            },
+                            PriceByItem = 1.25,
+                            StartCount = 10,
+                            EndCount = 25
+                        }
+                    }
+                };
+                housePays.Add(housePay);
+            }
         }
     }
 }
