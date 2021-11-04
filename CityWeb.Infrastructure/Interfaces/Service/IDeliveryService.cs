@@ -18,6 +18,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<bool> DeleteDeliveryCompany(DeleteCompanyDTO dtoModel);
         public Task<bool> DeleteProduct(DeleteProductDTO dtoModel);
         public Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryName(DeliveryNameDTO deliveryName);
+        public Task<ICollection<ProductModelDTO>> GetAllProductByPriceFilter(ProductPriceFilterDTO priceFilter, int skip = 0, int take = 10);
         // Methods for steps
         public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companyShedule);
         public Task<ICollection<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel);

@@ -6,6 +6,7 @@ using CityWeb.Infrastructure.Interfaces;
 using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,13 @@ namespace CityWeb.Infrastructure.Service
         private readonly ApplicationContext _context;
         private readonly SignInManager<ApplicationUserModel> _signInManager;
         private readonly IMapper _mapper;
-        public AccountService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager, IMapper mapper)
+        private readonly ILogger<AccountService> _logger;
+        public AccountService(ApplicationContext context, SignInManager<ApplicationUserModel> signInManager, IMapper mapper, ILogger<AccountService> logger)
         {
             _context = context;
             _signInManager = signInManager;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<ApplicationUserModel> RegisterUser(RegisterModelDTO registerModel)
@@ -36,10 +39,12 @@ namespace CityWeb.Infrastructure.Service
             if (result.Succeeded)
             {
                 await _context.Users.AddAsync(user);
+                _logger.LogInformation("User was created");
                 return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.UserName);
             }
             else
             {
+                _logger.LogError("User was not created!");
                 throw new Exception("User was not created!");
             }
         }
