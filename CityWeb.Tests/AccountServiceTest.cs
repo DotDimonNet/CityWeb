@@ -32,12 +32,15 @@ namespace CityWeb.Tests
             var dto = new RegisterModelDTO()
             {
                 UserName = "User1",
-                //FirstName = "FirstName1",
-                //LastName = " LastName1",
-                //Birthday = DateTime.Now,
-               // Gender = "male",
+                Profile = new UserProfileModelDTO()
+                {
+                    FirstName = "FirstName1",
+                    LastName = " LastName1",
+                    Birthday = DateTime.Now,
+                    Gender = "male",
+                },
                 Email = "emailTest@gmail.com",
-                //Password = "qwerty123",
+                Password = "qwerty123",
             };
 
             var user = await accountService.RegisterUser(dto);
