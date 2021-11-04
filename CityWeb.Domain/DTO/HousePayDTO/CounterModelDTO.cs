@@ -19,7 +19,6 @@ namespace CityWeb.Domain.DTO
         public string HousePayTitle { get; set; }
         public string Number { get; set; }
         public string Type { get; set; }
-        public string TypeOfCounter { get; set; }
         public double StartCount { get; set; }
     }
     public class SelectCounterModelDTO
