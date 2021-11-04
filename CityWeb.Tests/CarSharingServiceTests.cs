@@ -137,7 +137,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = null
+                Type = "Business"
             };
 
             var rentCar = await rentCarService.AddRentCar(carDTO);
@@ -163,7 +163,6 @@ namespace CityWeb.Tests
                 Seats = 2,
                 Type = null
             };
-
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.AddRentCar(carDTO));
             Assert.AreEqual(exept.Message, "Car already exist, cant create one more with same VIN code!");
         }
@@ -277,7 +276,7 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
             var stepOneResult = await rentCarService.GetAllCarsOfCarSharing(builder, "CarSharing1");
-            var stepOneResultFromContext = TestHelper.ApplicationContext.RentCars.Where(x => x.CarSharing.Title == builder.CarSharingTitle);
+            var stepOneResultFromContext = await TestHelper.ApplicationContext.RentCars.Where(x => x.CarSharing.Title == builder.CarSharingTitle).ToListAsync();
 
             foreach (var item in stepOneResult.ToList())
             {
@@ -285,7 +284,7 @@ namespace CityWeb.Tests
                 Assert.Contains(item.Mark, stepOneResultFromContext.Select(x => x.Mark).ToList());
                 Assert.Contains(item.Number, stepOneResultFromContext.Select(x => x.Number).ToList());
                 Assert.Contains(item.Seats, stepOneResultFromContext.Select(x => x.Seats).ToList());
-                Assert.Contains(item.Type, stepOneResultFromContext.Select(x => x.Type).ToList());
+                Assert.Contains(item.Type, stepOneResultFromContext.Select(x => x.Type.Name).ToList());
                 Assert.Contains(item.VINCode, stepOneResultFromContext.Select(x => x.VINCode).ToList());
             }
         }

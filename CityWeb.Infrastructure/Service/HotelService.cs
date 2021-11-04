@@ -46,10 +46,7 @@ namespace CityWeb.Infrastructure.Service
                     throw new Exception("Room with this number already exist!");
                 }            
             }
-            else
-            {
-                throw new Exception("Hotel does not exist!");
-            }
+            throw new Exception("Hotel does not exist!");
         }
         public async Task<RoomModel> UpdateRoom(UpdateRoomDTO DTO)
         {
@@ -73,10 +70,7 @@ namespace CityWeb.Infrastructure.Service
                     throw new Exception("Room with this number doesnt exist!");
                 }               
             }
-            else
-            {
-                throw new Exception("Hotel with this title doesnt exist!");
-            }
+            throw new Exception("Hotel with this title doesnt exist!");
         }
         public async Task<bool> RemoveRoom(DeleteRoomDTO room)
         {
@@ -92,28 +86,21 @@ namespace CityWeb.Infrastructure.Service
                 await _context.SaveChangesAsync();
                 return true;
             }
-            else
-            {
-                throw new Exception("Hotel does not exist!");
-            }
+            throw new Exception("Hotel does not exist!");
         }
 
         public async Task<HotelModel> AddHotel(HotelDTO hotelDTO)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.Title);
-
             if (hotel == null)
             {
-                var newHotel = _mapper.Map<HotelModel>(hotelDTO);
+                var newHotel = _mapper.Map<HotelDTO, HotelModel>(hotelDTO);
                 newHotel.RentAddress = _mapper.Map<HotelAddressDTO, AddressModel>(hotelDTO.Address); 
                 await _context.Hotels.AddAsync(newHotel);                
                 await _context.SaveChangesAsync();
                 return newHotel;
             }
-            else
-            {
-                throw new Exception("Hotel with this title already exist!");
-            }
+            throw new Exception("Hotel with this title already exist!");
         }
 
         public async Task<HotelModel> UpdateHotel(HotelDTO DTO)
@@ -130,24 +117,18 @@ namespace CityWeb.Infrastructure.Service
                 await _context.SaveChangesAsync();
                 return hotel;
             }
-            else
-            {
-                throw new Exception("Hotel with this title doesnt exist!");
-            }
+            throw new Exception("Hotel with this title doesnt exist!");          
         }
         public async Task<bool> RemoveHotel(DeleteHotelDTO hotelDTO)
         {
-            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.HotelTitle && x.Id == hotelDTO.HotelId);
+            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.HotelTitle);
             if (hotel != null)
             {
                 _context.Hotels.Remove(hotel);
                 await _context.SaveChangesAsync();
                 return true;
             }
-            else
-            {
-                throw new Exception("Hotel with this title doesnt exist!");
-            }
+            throw new Exception("Hotel with this title doesnt exist!");
         }
         public async Task<HotelModel> FindHotelById(HotelIdDTO DTO)
         {
@@ -156,10 +137,7 @@ namespace CityWeb.Infrastructure.Service
             {
                 return res;
             }    
-            else
-            {
-                throw new Exception("Hotel with this ID doesnt exist!");
-            }
+            throw new Exception("Hotel with this ID doesnt exist!");     
         }
 
         public async Task<HotelModel> FindHotelByTitle(HotelTitleDTO DTO)
@@ -169,10 +147,7 @@ namespace CityWeb.Infrastructure.Service
             {
                 return res;
             }
-            else
-            {
-                throw new Exception("Hotel with this title doesnt exist!");
-            }
+            throw new Exception("Hotel with this title doesnt exist!");         
         }
         public async Task<List<HotelRoomType>> GetAllRoomTypesByHotelTitle(HotelTitleDTO DTO)
         {
@@ -181,12 +156,18 @@ namespace CityWeb.Infrastructure.Service
             {
                 return await _context.Rooms.Where(x => x.Hotel.Title == DTO.Title).Select(x => x.Type).Distinct().ToListAsync();
             }
-            else
-            {
-                throw new Exception("Hotel with this title doesnt exist!");
-            }
+            throw new Exception("Hotel with this title doesnt exist!");
+            
+        }
+        public async Task<IEnumerable<HotelDTO>> GetAllHotels()
+        {
+            return await _context.Hotels.Select(x => _mapper.Map<HotelModel, HotelDTO>(x)).ToListAsync();
         }
 
+        public async Task<IEnumerable<RoomDTO>> GetAllRooms()
+        {
+            return await _context.Rooms.Select(x => _mapper.Map<RoomModel, RoomDTO>(x)).ToListAsync();
+        }
 
         //Step 1
         public async Task<ICollection<RoomModel>> GetAllFreeRooms(HotelTitleDTO DTO)

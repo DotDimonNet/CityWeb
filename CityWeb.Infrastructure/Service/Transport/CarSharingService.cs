@@ -176,8 +176,8 @@ namespace CityWeb.Infrastructure.Service.Transport
             var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == title);
             if (carSharing != null)
             {
-                builderResult.Location = carSharing.Location.ToAddressModelDTO();
-                return _context.RentCars.Where(x => x.CarSharingId == carSharing.Id).Select(y => _mapper.Map<RentCarModel,RentCarsModelDTO>(y));
+                builderResult.Location = _mapper.Map<AddressModel, AddressModelDTO>(carSharing.Location);
+                return await _context.RentCars.Where(x => x.CarSharingId == carSharing.Id).Select(y => _mapper.Map<RentCarModel, RentCarsModelDTO>(y)).ToListAsync(); ;
             }
             else
                 throw new Exception("CarSharing does not exist!");
