@@ -10,18 +10,17 @@ namespace CityWeb.Domain.DTO
     public class CounterModelDTO
     {
         public string Number { get; set; }
-        public string TypeOfValue { get; set; }
+        public HousePaymentType Type { get; set; }
         public double StartCount { get; set; }
         public double EndCount { get; set; }
     }
-     
     public class CreateCounterModelDTO
     {
+        public string HousePayTitle { get; set; }
         public string Number { get; set; }
+        public string Type { get; set; }
         public double StartCount { get; set; }
-        public HousePaymentType Type { get; set; }
     }
-
     public class SelectCounterModelDTO
     {
         public string Number { get; set; }

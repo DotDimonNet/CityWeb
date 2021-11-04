@@ -110,8 +110,9 @@ namespace CityWeb
             {
                 x.AddProfile<MappingProfile>();
                 x.AddProfile<CarSharingMappingProfile>();
-                x.AddProfile<TaxiMappingProfile>();
+                x.AddProfile<HousePayMappingProfile>();
                 x.AddProfile<HotelMappingProfile>();
+                x.AddProfile<HousePayMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
                 x.AddProfile<MappingEntertainmentProfile>();
@@ -121,6 +122,7 @@ namespace CityWeb
             services.AddTransient<IHotelService, HotelService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IDeliveryService, DeliveryService>();
+            services.AddTransient<IHousePayService, HousePayService>();
             services.AddTransient<ICarSharingService, CarSharingService>();
             services.AddTransient<ITaxiService, TaxiService>();
             services.AddTransient<IEntertainmentService, EntertainmentService>();

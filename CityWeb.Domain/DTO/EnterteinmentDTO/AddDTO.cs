@@ -13,13 +13,16 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
         public string EntertainmentTitle { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
+        public AddressModelDTO Location { get; set; }
     }
 
     public class AddEventModelDTO
     {
+        public string EntertainmentTitle { get; set; }
         public string EventTitle { get; set; }
         public string Description { get; set; }
         public PriceModelDTO EventPrice { get; set; }
+        public bool isAvailable { get; set; }
         
         
 

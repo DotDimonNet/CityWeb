@@ -15,6 +15,7 @@ namespace CityWeb.Infrastructure.Extentions
     public static class DTOExtention
     {
 
+
         public static TaxiModelDTO ToTaxiModelDTO(this TaxiModel taxiModel)
         {
             return new TaxiModelDTO()
@@ -77,9 +78,56 @@ namespace CityWeb.Infrastructure.Extentions
                     StreetName = carSharingModelDTO.Location.StreetName,
                     HouseNumber = carSharingModelDTO.Location.HouseNumber,
                     ApartmentNumber = carSharingModelDTO.Location.ApartmentNumber,
+
+        //for delivery
+
+        public static ProductUpdateDTO ToProductUpdateDTO(this ProductModel productModel)
+        {
+            return new ProductUpdateDTO()
+            {
+                ProductName = productModel.ProductName,
+                ProductImage = productModel.ProductImage,
+                //Value = productModel.ProductPrice.Value,
+                //Tax = productModel.ProductPrice.Tax,
+                //VAT = productModel.ProductPrice.VAT,
+            };
+        }
+
+        public static ProductModelDTO ToProductDTO(this ProductModel productModel)
+        {
+            return new ProductModelDTO()
+            {
+                ProductName = productModel.ProductName,
+                ProductImage = productModel.ProductImage,
+                //Value = productModel.ProductPrice.Value,
+                //Tax = productModel.ProductPrice.Tax,
+                //VAT = productModel.ProductPrice.VAT,
+            };
+        }
+
+        public static DeliveryModelDTO ToDeliveryModelDTO(this DeliveryModel model)
+        {
+            return new DeliveryModelDTO()
+            {
+                Title = model.Title,
+                //DeliveryId = model.Id,
+                Description = model.Description,
+                DeliveryImage = model.DeliveryImage,
+                WorkShedyle = new PeriodModelDTO()
+                {
+                    StartTime = model.WorkSchedule.StartTime,
+                    EndTime = model.WorkSchedule.EndTime,
+                },
+                DeliveryPrice = new PriceModelDTO()
+                {
+                    Value = model.DeliveryPrice.Value,
+                    Tax = model.DeliveryPrice.Tax,
+                    VAT = model.DeliveryPrice.VAT,
+
                 }
             };
         }
+
 
         public static RentCarModel FromAddRentCarModelDTO(this CarSharingModel carSharing, AddRentCarDTO rentCarDTO)
         {
@@ -157,6 +205,53 @@ namespace CityWeb.Infrastructure.Extentions
             };
         }
 
+
+        public static SelectDeliveryModelDTO ToSelectDeliveryModelDTO(this DeliveryModel model)
+        {
+            return new SelectDeliveryModelDTO()
+            {
+                Title = model.Title
+            };
+        }
+        public static DeliveryModel CreateFromDTO(this CreateDeliveryModelDTO deliveryModel)
+        {
+            return new DeliveryModel()
+            {
+                Title = deliveryModel.Title,
+                Description = deliveryModel.Description,
+                Service = new ServiceModel(),
+                DeliveryAdress = new AddressModel(),
+                WorkSchedule = new PeriodModel(),
+                DeliveryPrice = new PriceModel()
+            };
+        }
+        public static ProductModel CreateProductFromDTO(this DeliveryModel deliveryModel, ProductModelDTO productModelDTO)
+        {
+            return new ProductModel()
+            {
+                DeliveryId = deliveryModel.Id,
+                ProductImage = productModelDTO.ProductImage,
+                ProductName = productModelDTO.ProductName,
+                //ProductType = productModelDTO.ProductType,
+                ProductPrice = new PriceModel()
+                {
+                   // Value = productModelDTO.Value,
+                    //VAT = productModelDTO.VAT,
+                    //Tax = productModelDTO.Tax,
+                },
+            };
+        }
+
+        public static void UpdateProductFromDTO(this ProductModel productModel, ProductModelDTO productModelDTO)
+        {
+            productModel.ProductImage = productModelDTO.ProductImage;
+            //productModel.ProductType = productModelDTO.ProductType;
+            //productModel.ProductPrice.Value = productModelDTO.Value;
+            //productModel.ProductPrice.VAT = productModelDTO.VAT;
+            //productModel.ProductPrice.Tax = productModelDTO.Tax;
+        }
+        
+
         public static HousePayModelDTO ToHousePayModelDTO(this HousePayModel model)
         {
             return new HousePayModelDTO()
@@ -184,7 +279,6 @@ namespace CityWeb.Infrastructure.Extentions
                 Description = housePayModel.Description,
             };
         }
-
         public static SelectHousePayModelDTO ToSelectHousePayModelDTO(this HousePayModel model)
         {
             return new SelectHousePayModelDTO()
@@ -192,7 +286,7 @@ namespace CityWeb.Infrastructure.Extentions
                 Title = model.Title
             };
         }
-        public static void UpdateFromlDTO(this HousePayModel housePayModel, HousePayModelDTO housePayModelDTO )
+        public static void UpdateHousePaymodelDTO(this HousePayModel housePayModel, UpdateHousePayModelDTO housePayModelDTO )
         {
             housePayModel.Title = housePayModelDTO.Title;
             housePayModel.Description = housePayModelDTO.Description;
@@ -203,7 +297,16 @@ namespace CityWeb.Infrastructure.Extentions
             {
                 Number = counterModelDTO.Number,
                 StartCount = counterModelDTO.StartCount,
-                Type = counterModelDTO.Type
+
+            };
+        }
+        public static CounterModel FromCreateCounterModelDTO(this CreateCounterModelDTO counterModelDTO)
+        {
+            return new CounterModel()
+            {
+                Number = counterModelDTO.Number,
+                StartCount = counterModelDTO.StartCount,
+        
             };
         }
         public static SelectCounterModelDTO ToSelectCounterModelDTO(this CounterModel model)
@@ -213,14 +316,22 @@ namespace CityWeb.Infrastructure.Extentions
                 Number = model.Number
             };
         }
-
+        public static UpdateCounterModelDTO ToUpdateCounterModelDTO(this CounterModel counterModel)
+        {
+            return new UpdateCounterModelDTO()
+            {
+                StartCount = counterModel.StartCount,
+                EndCount = counterModel.EndCount,
+                PriceByItem = counterModel.PriceByItem
+            };
+        }
         public static CounterModel CreateFromDTO(this CreateCounterModelDTO counterModel)
         {
             return new CounterModel()
             {
                 Number = counterModel.Number,
                 StartCount = counterModel.StartCount,
-                Type = counterModel.Type
+        
             };
         }
         public static CounterModelDTO ToCounterModelDTO(this CounterModel counterModel)
@@ -239,15 +350,6 @@ namespace CityWeb.Infrastructure.Extentions
                 StreetName = model.StreetName,
                 HouseNumber = model.HouseNumber,
                 ApartmentNumber = model.ApartmentNumber
-            };
-        }
-
-        public static PeriodModelDTO ToPeriodModelDTO(this PeriodModel model)
-        {
-            return new PeriodModelDTO()
-            {
-                StartTime = model.StartTime,
-                EndTime = model.EndTime
             };
         }
     }

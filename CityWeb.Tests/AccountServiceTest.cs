@@ -1,6 +1,9 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Infrastructure.Service;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,16 +15,20 @@ namespace CityWeb.Tests
 {
     public class AccountServiceTest
     {
+        private Mock<ILogger<AccountService>> _loggerMock;
+        private AccountService _service;
+
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
+            _loggerMock = TestHelper.SetupTestLogger(new NullLogger<AccountService>());
         }
 
         [Test]
         public async Task RegisterUserTest()
         {
-            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object);
+            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper);
             var dto = new RegisterModelDTO()
             {
                 UserName = "User1",
