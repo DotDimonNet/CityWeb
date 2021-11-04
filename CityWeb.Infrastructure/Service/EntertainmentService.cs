@@ -41,7 +41,7 @@ namespace CityWeb.Infrastructure.Service
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
                 result.Location = _mapper.Map<AddressModel, AddressModelDTO>(entertainment.Address);
-                result.Type = entertainment.EntertainmentType.Name;
+                result.Type = entertainment.EntertainmentType.Name.ToString();
                 return result;
             }
             else
@@ -147,6 +147,7 @@ namespace CityWeb.Infrastructure.Service
                         eventModel.Entertaiment = new EntertainmentModel();
                         eventModel.Entertaiment.Service = new ServiceModel();
                         await _context.Events.AddAsync(eventModel);
+                        entertainment.Events.Add(eventModel);
                         await _context.SaveChangesAsync();
                         var result = _mapper.Map<EventModel, EventModelDTO>(eventModel);
                         result.EventPrice = _mapper.Map<PriceModel, PriceModelDTO>(eventModel.EventPrice);
@@ -156,6 +157,7 @@ namespace CityWeb.Infrastructure.Service
                     {
                         throw new Exception("Event already exists");
                     }
+                    
                 }
                 else
                 {
@@ -176,8 +178,8 @@ namespace CityWeb.Infrastructure.Service
             var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentTitle == x.Title);
             if(entertainment != null)
             {
-                var result =  entertainment.Event.Select(x => _mapper.Map<EventModel, EventModelDTO>(x)).ToList();
-                return result;
+                return  entertainment.Events.Select(x => _mapper.Map<EventModel, EventModelDTO>(x));
+                
             }
             else
             {
