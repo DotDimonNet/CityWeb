@@ -1,4 +1,5 @@
-﻿using CityWeb.Domain.DTO;
+﻿using AutoMapper;
+using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.Entities;
@@ -23,7 +24,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task CreateCarSharingTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new CreateCarSharingModelDTO()
             {
                 Title = "CarSharing Company",
@@ -47,7 +48,7 @@ namespace CityWeb.Tests
         [Test]
         public void CreateCarSharingAlreadyExistTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new CreateCarSharingModelDTO()
             {
                 Title = "CarSharing1",
@@ -61,7 +62,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteCarSharingTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteCarSharingModelDTO()
             {
                 Title = "CarSharing1"
@@ -77,7 +78,7 @@ namespace CityWeb.Tests
         [Test]
         public void DeleteCarSharingDoesNotExistTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteCarSharingModelDTO()
             {
                 Title = " "
@@ -90,7 +91,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateCarSharingTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new UpdateCarSharingModelDTO()
             {
                 Title = "CarSharing1",
@@ -113,7 +114,7 @@ namespace CityWeb.Tests
         [Test]
         public void UpdateCarSharingDoesNotExistTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new UpdateCarSharingModelDTO()
             {
                 Title = " ",
@@ -127,7 +128,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddRentCarTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddRentCarDTO()
             {
                 VINCode = "GAG4896451C",
@@ -151,7 +152,7 @@ namespace CityWeb.Tests
         [Test]
         public void AddRentCarAlreadyExistTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddRentCarDTO()
             {
                 VINCode = "BAG48964500",
@@ -170,7 +171,7 @@ namespace CityWeb.Tests
         [Test]
         public void AddRentCarCarSharingNotExistTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddRentCarDTO()
             {
                 VINCode = "GAG4896451C",
@@ -189,7 +190,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteRentCarTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteRentCarDTO()
             {
                 VINCode = "BAG48964501",
@@ -205,7 +206,7 @@ namespace CityWeb.Tests
         [Test]
         public void DeleteRentCarDoesNotExistTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteRentCarDTO()
             {
                 VINCode = " ",
@@ -218,7 +219,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateRentCarTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateRentCarDTO()
             {
                 VINCode = "BAG48964500",
@@ -246,7 +247,7 @@ namespace CityWeb.Tests
         [Test]
         public void UpdateRentCarDoesNotExistTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateRentCarDTO()
             {
                 VINCode = " ",
@@ -264,7 +265,7 @@ namespace CityWeb.Tests
         [Test]
         public void SetupCarSharingBuilderResultTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = rentCarService.SetupCarSharingBuilderResult();
 
             Assert.IsNotNull(builder);
@@ -273,7 +274,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task GetAllCarsOfCarSharingTest()
         {
-            var rentCarService = new CarSharingService(TestHelper.ApplicationContext);
+            var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
             var stepOneResult = await rentCarService.GetAllCarsOfCarSharing(builder, "CarSharing1");
             var stepOneResultFromContext = TestHelper.ApplicationContext.RentCars.Where(x => x.CarSharing.Title == builder.CarSharingTitle);
@@ -292,7 +293,7 @@ namespace CityWeb.Tests
         [Test]
         public void GetAllCarsOfCarSharingNotExistTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
             var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.GetAllCarsOfCarSharing(builder, " "));
             Assert.AreEqual(exept.Message, "CarSharing does not exist!");
@@ -301,7 +302,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task ChooseCarTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
             await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
             var stepTwoResult = await carSharingService.ChooseCar(builder, "BAG48964500");
@@ -313,7 +314,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task ChooseCarDoesNotExistTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
             await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
             var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.ChooseCar(builder, " "));
@@ -323,7 +324,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task CheckRentTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
             await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
             await carSharingService.ChooseCar(builder, "BAG48964500");
@@ -352,7 +353,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task CheckRentIsCarFreeTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
             await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
             await carSharingService.ChooseCar(builder, "BAG48964500");
@@ -369,7 +370,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task GetAllCarSharingsTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carSharings = await carSharingService.GetAllCarSharings();
             var carSharingsFromContext = TestHelper.ApplicationContext.CarSharings.ToList();
 
@@ -382,7 +383,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task GetAllRentCarsTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var rentCars = await carSharingService.GetAllRentCars();
             var rentCarsFromContext = TestHelper.ApplicationContext.RentCars;
 

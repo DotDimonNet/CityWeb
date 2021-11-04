@@ -18,7 +18,7 @@ namespace CityWeb.Tests
 
         public async Task CreateTaxiTest()
         {
-            var taxiService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new CreateTaxiModelDTO()
             {
                 Title = "Taxi Company",
@@ -36,7 +36,7 @@ namespace CityWeb.Tests
         [Test]
         public void CreateTaxiAlreadyExistTest()
         {
-            var taxiService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new CreateTaxiModelDTO()
             {
                 Title = "Taxi1",
@@ -50,7 +50,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteTaxiTest()
         {
-            var taxiService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteTaxiModelDTO()
             {
                 Title = "Taxi1"
@@ -66,7 +66,7 @@ namespace CityWeb.Tests
         [Test]
         public void DeleteTaxiDoesNotExistTest()
         {
-            var taxiService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteTaxiModelDTO()
             {
                 Title = " "
@@ -79,7 +79,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateTaxiTest()
         {
-            var taxiService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new UpdateTaxiModelDTO()
             {
                 Title = "Taxi1",
@@ -96,7 +96,7 @@ namespace CityWeb.Tests
         [Test]
         public void UpdateTaxiDoesNotExistTest()
         {
-            var taxiService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new UpdateTaxiModelDTO()
             {
                 Title = " ",
@@ -110,7 +110,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddTaxiCarTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddTaxiCarDTO()
             {
                 VINCode = "AAD48964500",
@@ -134,7 +134,7 @@ namespace CityWeb.Tests
         [Test]
         public void AddTaxiCarAlreadyExistTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddTaxiCarDTO()
             {
                 VINCode = "TAG48964500",
@@ -153,7 +153,7 @@ namespace CityWeb.Tests
         [Test]
         public void AddTaxiCarTaxiNotExistTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddTaxiCarDTO()
             {
                 VINCode = "aAG4896451C",
@@ -172,7 +172,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteTaxiCarTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteTaxiCarDTO()
             {
                 VINCode = "TAG48964500",
@@ -188,7 +188,7 @@ namespace CityWeb.Tests
         [Test]
         public void DeleteTaxiCarDoesNotExistTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteTaxiCarDTO()
             {
                 VINCode = " ",
@@ -201,7 +201,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateTaxiCarTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateTaxiCarDTO()
             {
                 VINCode = "TAG48964500",
@@ -229,7 +229,7 @@ namespace CityWeb.Tests
         [Test]
         public void UpdateTaxiCarDoesNotExistTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateTaxiCarDTO()
             {
                 VINCode = " ",
@@ -247,7 +247,7 @@ namespace CityWeb.Tests
         [Test]
         public void SetupTaxiBuilderResultTest()
         {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
+            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = taxiCarService.SetupTaxiBuilderResult();
 
             Assert.IsNotNull(builder);
