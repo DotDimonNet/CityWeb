@@ -17,6 +17,7 @@ namespace CityWeb.Tests
             await TestHelper.SetupDbContext();
         }
 
+        [Test]
         public async Task CreateHHousePayTest()
         {
             var housePayService = new HousePayService(TestHelper.ApplicationContext, TestHelper.TestMapper);
@@ -35,17 +36,15 @@ namespace CityWeb.Tests
         }
 
         [Test]
-        public void CreateHousePayTest()
+        public void DeleteHousePayTest()
         {
             var housePayService = new HousePayService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new CreateHousePayModelDTO()
+            var dto = new DeleteHousePayModelDTO()
             {
-                Title = "Gas",
-
-                Description = "Payment october"
+                Title = "HousePPay1",
             };
 
-            var exept = Assert.ThrowsAsync<Exception>(async () => await housePayService.CreateHousePayModel(dto));
+            var exept = Assert.ThrowsAsync<Exception>(async () => await housePayService.DeleteHousePay(dto));
             Assert.AreEqual(exept.Message, "Payment already exist, cant create one more with same title!");
         }
     }
