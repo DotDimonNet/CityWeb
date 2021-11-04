@@ -43,19 +43,20 @@ namespace CityWeb.Tests
             var dbInitializer = new DbInitializer(ApplicationContext, UserManagerMock.Object, RoleManagerMock.Object);
             await dbInitializer.Initialize();
             await GenerateData();
-            var config = new MapperConfiguration(x => 
+            var config = new MapperConfiguration(x =>
             {
                 x.AddProfile<MappingProfile>();
                 x.AddProfile<CarSharingMappingProfile>();
                 x.AddProfile<TaxiMappingProfile>();
                 x.AddProfile<HotelMappingProfile>();
+                x.AddProfile<HousePayMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
                 x.AddProfile<MappingEntertainmentProfile>();
             });
             TestMapper = new Mapper(config);
         }
-        
+
 
         private static async Task SetupManagementMocks()
         {
@@ -102,7 +103,7 @@ namespace CityWeb.Tests
         private static async Task<ICollection<RoomModel>> GenerateRooms(int amount)
         {
             var rooms = new List<RoomModel>();
-            for(int i = 1; i <= amount; i++)
+            for (int i = 1; i <= amount; i++)
             {
                 var room = new RoomModel()
                 {
@@ -196,129 +197,119 @@ namespace CityWeb.Tests
             await ApplicationContext.Entertaiments.AddRangeAsync(entertainments);
 
 
-            //#region Transport
-            //var carSharings = new List<CarSharingModel>();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    var carSharing = new CarSharingModel()
-            //    {
-            //        Title = $"CarSharing{i + 1}",
-            //        Description = $"Default description {i}",
-            //        Payment = new PaymentModel(),
-            //        //Service = service,
-            //        //ServiceId = service.Id,
-            //        Location = new AddressModel()
-            //        {
-            //            StreetName = "Porika",
-            //            HouseNumber = $"{i+1}"
-            //        },
-            //        Vehicle =
-            //        {
-            //            new RentCarModel()
-            //            {
-            //                Type = Domain.Enums.TransportType.RentCar,
-            //                VINCode = $"VAG489645{i+1}",
-            //                RentPeriod =
-            //                {
-            //                    new PeriodModel()
-            //                },
-            //                Color = "red",
-            //                Mark = "Honda",
-            //                Number = $"AB 55{i} CC",
-            //                Seats = 2,
-            //                Price = new PriceModel()
-            //                {
-            //                    Value = i*100
-            //                }
-            //            }
-            //        }
-            //    };
-            //    carSharings.Add(carSharing);
-            //}
+            #region Transport
+            var carSharings = new List<CarSharingModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var carSharing = new CarSharingModel()
+                {
+                    Title = $"CarSharing{i + 1}",
+                    Description = $"Default description {i}",
+                    Payment = new PaymentModel(),
+                    Service = service,
+                    ServiceId = service.Id,
+                    Location = new AddressModel()
+                    {
+                        StreetName = "Porika",
+                        HouseNumber = $"{i + 1}"
+                    },
+                    Vehicle =
+                    {
+                        new RentCarModel()
+                        {
+                            Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                            VINCode = $"VAG489645{i+1}",
+                            RentPeriod =
+                            {
+                                new PeriodModel()
+                            },
+                            Color = "red",
+                            Mark = "Honda",
+                            Number = $"AB 55{i} CC",
+                            Seats = 2,
+                            Price = new PriceModel()
+                            {
+                                Value = i*100
+                            }
+                        }
+                    }
+                };
+                carSharings.Add(carSharing);
+            }
 
-            //var rentCars = new List<RentCarModel>();
-            //for (int i = 0; i < carSharings.Count; i++)
-            //{
-            //    for (int j = 0; j < 10; j++)
-            //    {
-            //        var rentCar = new RentCarModel()
-            //        {
-            //            CarSharingId = carSharings[i].Id,
-            //            Type = Domain.Enums.TransportType.RentCar,
-            //            VINCode = $"BAG489645{i}{j}",
-            //            RentPeriod =
-            //            {
-            //                new PeriodModel() 
-            //                {       
-            //                    StartTime = DateTime.Now,
-            //                    EndTime = DateTime.Now.AddDays(j + 1)
-            //                },
-            //            },
-            //            Color = "red",
-            //            Mark = "Honda",
-            //            Number = $"AB 55{j}{i} CC",
-            //            Seats = 2,
-            //            Price = new PriceModel()
-            //            {
-            //                Value = i * j * 10
-            //            }
-            //        };
-            //        rentCars.Add(rentCar);
-            //    }
-            //}
+            var rentCars = new List<RentCarModel>();
+            for (int i = 0; i < carSharings.Count; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    var rentCar = new RentCarModel()
+                    {
+                        CarSharingId = carSharings[i].Id,
+                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                        VINCode = $"BAG489645{i}{j}",
+                        RentPeriod =
+                        {
+                            new PeriodModel()
+                            {
+                                StartTime = DateTime.Now,
+                                EndTime = DateTime.Now.AddDays(j + 1)
+                            },
+                        },
+                        Color = "red",
+                        Mark = "Honda",
+                        Number = $"AB 55{j}{i} CC",
+                        Seats = 2,
+                        Price = new PriceModel()
+                        {
+                            Value = i * j * 10
+                        }
+                    };
+                    rentCars.Add(rentCar);
+                }
+            }
 
-            //var taxi = new List<TaxiModel>();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    var oneTaxi = new TaxiModel()
-            //    {
-            //        Title = $"Taxi{i + 1}",
-            //        Description = $"Default description {i}",
-            //        Service = service,
-            //        ServiceId = service.Id
-            //    };
-            //    taxi.Add(oneTaxi);
-            //};
+            var taxi = new List<TaxiModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var oneTaxi = new TaxiModel()
+                {
+                    Title = $"Taxi{i + 1}",
+                    Description = $"Default description {i}",
+                    Service = service,
+                    ServiceId = service.Id
+                };
+                taxi.Add(oneTaxi);
+            };
 
-            //var taxiCars = new List<TaxiCarModel>();
-            //for (int i = 0; i < taxi.Count; i++)
-            //{
-            //    for (int j = 0; j < 10; j++)
-            //    {
-            //        var taxiCar = new TaxiCarModel()
-            //        {
-            //            TaxiId = taxi[i].Id,
-            //            Type = Domain.Enums.TransportType.RentCar,
-            //            VINCode = $"TAG489645{i}{j}",
-            //            Color = "yellow",
-            //            Mark = "BMW",
-            //            Number = $"AB 88{j}{i} SS",
-            //            Seats = 5,
-            //            Price = new PriceModel()
-            //            {
-            //                Value = i * j * 10
-            //            },
-            //            StartAddress = new AddressModel()
-            //            {
-            //                StreetName = "Soborna",
-            //                HouseNumber = $"{j+1}"
-            //            },
-            //            DestinationAddresses = { },
-            //            JourneyPeriod = new PeriodModel()
-            //            {
-            //                StartTime = DateTime.Now,
-            //                EndTime = DateTime.Now.AddMinutes(j + 5)
-            //            }
-            //        };
-            //        taxiCars.Add(taxiCar);
-            //    }
-            //}
+            var taxiCars = new List<TaxiCarModel>();
+            for (int i = 0; i < taxi.Count; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    var taxiCar = new TaxiCarModel()
+                    {
+                        TaxiId = taxi[i].Id,
+                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                        VINCode = $"TAG489645{i}{j}",
+                        Color = "yellow",
+                        Mark = "BMW",
+                        Number = $"AB 88{j}{i} SS",
+                        Seats = 5,
+                        IsFree = true,
+                        Price = new PriceModel()
+                        {
+                            Value = i * j * 10
+                        }
+                    };
+                    taxiCars.Add(taxiCar);
+                }
+            }
 
-            //await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
-            //await ApplicationContext.RentCars.AddRangeAsync(rentCars);
-            //await ApplicationContext.Taxi.AddRangeAsync(taxi);
-            //await ApplicationContext.TaxiCar.AddRangeAsync(taxiCars);
-            //#endregion
+            await ApplicationContext.CarSharings.AddRangeAsync(carSharings);
+            await ApplicationContext.RentCars.AddRangeAsync(rentCars);
+            await ApplicationContext.Taxi.AddRangeAsync(taxi);
+            await ApplicationContext.TaxiCar.AddRangeAsync(taxiCars);
+            #endregion
 
 
             //Create Deliverys company
@@ -347,10 +338,10 @@ namespace CityWeb.Tests
                     },
                     DeliveryPrice = new PriceModel(),
                     WorkSchedule = new PeriodModel()
-                    { 
+                    {
                         StartTime = DateTime.Now.AddHours(-2),
                         EndTime = DateTime.Now.AddHours(+2),
-                    },    
+                    },
                 };
                 deliverys.Add(delivery);
             }
@@ -377,6 +368,40 @@ namespace CityWeb.Tests
             await ApplicationContext.Ratings.AddRangeAsync(ratings);
             await ApplicationContext.SaveChangesAsync();
 
+            //Create HousePay
+
+            var housePays = new List<HousePayModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                var housePay = new HousePayModel()
+                {
+                    Title = $"HousePay{i + 1}",
+                    Description = $"Default description {i}",
+                    Service = service,
+                    ServiceId = service.Id,
+                    HouseHoldAdress = new AddressModel()
+                    {
+                        StreetName = "Soborna",
+                        HouseNumber = $"{i + 1}"
+                    },
+                    CounterModels =
+                    {
+                        new CounterModel()
+                        {
+                            Number = $"NA/000000{i+1}",
+                            Type = await ApplicationContext.HousePaymentType.FirstOrDefaultAsync(),
+                            Price = new PriceModel()
+                            {
+                                Value = i*10
+                            },
+                            PriceByItem = 1.25,
+                            StartCount = 10,
+                            EndCount = 25
+                        }
+                    }
+                };
+                housePays.Add(housePay);
+            }
         }
     }
 }

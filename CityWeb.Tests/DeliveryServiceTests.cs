@@ -17,7 +17,7 @@ namespace CityWeb.Tests
             await TestHelper.SetupDbContext();
         }
 
-        [Test]
+        /*[Test]
         public async Task CreateDeliveryCompanyTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
@@ -358,7 +358,7 @@ namespace CityWeb.Tests
             //    UserName = "Volodya"
             //};
 
-            //var delivery = deliveryService.CheckoutBusket(dto);
-        //}
+            var delivery = deliveryService.CheckoutBusket(dto);
+        }*/
     }
 }

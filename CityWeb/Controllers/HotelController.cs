@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using CityWeb.Infrastructure.Authorization;
 using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Domain.DTO.HotelDTO;
+using CityWeb.Domain.Entities;
 
 namespace CityWeb.Controllers
 {
     [ApiController]
     [Route("api/Hotel")]
-    [Authorize(Policy = Policies.RequireUserRole)]
+    //[Authorize(Policy = Policies.RequireUserRole)]
     public class HotelController : Controller
     {
         private readonly IHotelService _hotelService;
@@ -29,7 +30,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var hotel = await _hotelService.AddHotel(request);
+                var hotel = await _hotelService.AddHotel(request);                
                 return Json(hotel);
             }
             catch(Exception ex)
@@ -103,10 +104,32 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetRooms()
+        [HttpGet("get-free-rooms")]
+        public async Task<IActionResult> GetFreeRoomsInHotel([FromBody] HotelTitleDTO request)
         {
-            return  new JsonResult(1);
+            try
+            {
+                var freeRooms = await _hotelService.GetAllFreeRooms(request);
+                return Json(freeRooms);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-all-room-tybes")]
+        public async Task<IActionResult> GetAllRoomTypesByHotelTitle([FromBody] HotelTitleDTO request)
+        {
+            try
+            {
+                var roomTypes = await _hotelService.GetAllRoomTypesByHotelTitle(request);
+                return Json(roomTypes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

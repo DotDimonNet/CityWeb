@@ -20,7 +20,7 @@ namespace CityWeb.Tests
         {
             await TestHelper.SetupDbContext();
         }
-        [Test]
+        /*[Test]
         public async Task AddEntertainmentModelTest()
         {
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper);
@@ -212,9 +212,6 @@ namespace CityWeb.Tests
         //public async Task SelectEntertainmentTest()
         //{
 
-        //}
-
+        //}*/
     }
-
-
 }
