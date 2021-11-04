@@ -48,7 +48,7 @@ namespace CityWeb.Infrastructure.Service
                     return housePay;
                 }
                 else
-                    throw new Exception("HousePay does not exist");
+                    throw new Exception("HousePay does exist");
             }
             catch (Exception ex)
             {
@@ -116,7 +116,7 @@ namespace CityWeb.Infrastructure.Service
                     }
                 }
                 else
-                    throw new Exception("HousePay does not exist");
+                    throw new Exception("HousePay does exist");
             }
             else
             {
