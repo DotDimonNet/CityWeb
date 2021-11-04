@@ -46,11 +46,7 @@ namespace CityWeb.Infrastructure.Service
                     throw new Exception(ex.Message);
                 }
             }
-            else
-            {
-                throw new Exception("Company was already created");
-            }
-            
+            throw new Exception("Company was already created");
         }
 
         public async Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel)
@@ -68,10 +64,7 @@ namespace CityWeb.Infrastructure.Service
                 updateDelivery.WorkShedyle = _mapper.Map<PeriodModel, PeriodModelDTO>(delivery.WorkSchedule);
                 return updateDelivery;
             }
-            else
-            {
-                throw new Exception("Company does not exist!");
-            }
+            throw new Exception("Company does not exist!");
         }
 
         public async Task<bool> DeleteDeliveryCompany(DeleteCompanyDTO dtoModel)
@@ -83,10 +76,7 @@ namespace CityWeb.Infrastructure.Service
                 _context.SaveChanges();
                 return true;
             }
-            else
-            {
-                throw new Exception("Company does not exist!");
-            }
+            throw new Exception("Company does not exist!");
         }
         public async Task<CreateProductDTO> CreateProduct(ProductModelDTO productModel)
         {
@@ -107,15 +97,9 @@ namespace CityWeb.Infrastructure.Service
                     result.Price = _mapper.Map<PriceModel, PriceModelDTO>(product.ProductPrice);
                     return result;
                 }
-                else
-                {
-                    throw new Exception("Product was already created!");
-                }
+                throw new Exception("Product was already created!");
             }
-            else
-            {
-                throw new Exception("Company was not created!");
-            }
+            throw new Exception("Company was not created!");
         }
 
         public async Task<ProductUpdateDTO> UpdateProduct(ProductModelDTO productModel)
@@ -135,15 +119,9 @@ namespace CityWeb.Infrastructure.Service
                     updateProduct.Price = _mapper.Map<PriceModel, PriceModelDTO>(product.ProductPrice);
                     return updateProduct;
                 }
-                else
-                {
-                    throw new Exception("Product was not created!");
-                }
+                throw new Exception("Product was not created!");
             }
-            else
-            {
-                throw new Exception("Company was not created!");
-            }
+            throw new Exception("Company was not created!");
         }
 
         public async Task<bool> DeleteProduct(DeleteProductDTO dtoModel)
@@ -158,15 +136,9 @@ namespace CityWeb.Infrastructure.Service
                     _context.SaveChanges();
                     return true;
                 }
-                else
-                {
-                    throw new Exception("Product does not exist!");
-                }
+                throw new Exception("Product does not exist!");
             }
-            else
-            {
-                throw new Exception("Company does not exist!");
-            }
+            throw new Exception("Company does not exist!");
         }
 
         public async Task<ICollection<DeliveryModelDTO>> GetAllDelivery(int skip = 0, int take = 10)
@@ -181,10 +153,19 @@ namespace CityWeb.Infrastructure.Service
             {
                 return await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
             }
-            else
+            throw new Exception("Company does not exist!");
+        }
+
+        public async Task<ICollection<ProductModelDTO>> GetAllProductByPriceFilter(ProductPriceFilterDTO priceFilter, int skip = 0, int take = 10)
+        {
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == priceFilter.Title);
+            if (delivery != null)
             {
-                throw new Exception("");
+                var result = await _context.Products.Where(x => x.DeliveryId == delivery.Id && x.ProductPrice.Total >= priceFilter.MinPrice && x.ProductPrice.Total <= priceFilter.MaxPrice)
+                    .Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+                return result;
             }
+            throw new Exception("Company does not exist!");
         }
 
         // Methods for steps

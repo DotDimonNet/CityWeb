@@ -158,6 +158,5 @@ namespace CityWeb.Tests
             var exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.RemoveHotel(dto));
             Assert.AreEqual(exept.Message, "Hotel with this title doesnt exist!");
         }
-
     }
 }
