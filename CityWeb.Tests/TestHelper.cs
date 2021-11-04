@@ -49,6 +49,7 @@ namespace CityWeb.Tests
                 x.AddProfile<CarSharingMappingProfile>();
                 x.AddProfile<TaxiMappingProfile>();
                 x.AddProfile<HotelMappingProfile>();
+                x.AddProfile<HousePayMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
                 x.AddProfile<MappingEntertainmentProfile>();
