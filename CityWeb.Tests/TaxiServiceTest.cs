@@ -119,7 +119,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = null
             };
 
             var taxiCar = await taxiCarService.AddTaxiCar(carDTO);
@@ -143,7 +143,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = null
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.AddTaxiCar(carDTO));
@@ -162,7 +162,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = null
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.AddTaxiCar(carDTO));
@@ -209,7 +209,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = null
             };
 
             var taxiCar = await taxiCarService.UpdateTaxiCar(carDTO);
@@ -237,20 +237,11 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = null
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.UpdateTaxiCar(carDTO));
             Assert.AreEqual(exept.Message, "Car does not exist");
-        }
-
-        [Test]
-        public void SetupTaxiBuilderResultTest()
-        {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var builder = taxiCarService.SetupTaxiBuilderResult();
-
-            Assert.IsNotNull(builder);
         }
     }
 }
