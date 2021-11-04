@@ -209,7 +209,6 @@ namespace CityWeb.Tests
                     Description = $"Default description {i}",
                     Payment = new PaymentModel(),
                     Service = service,
-                    ServiceId = service.Id,
                     Location = new AddressModel()
                     {
                         StreetName = "Porika",

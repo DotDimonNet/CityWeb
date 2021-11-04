@@ -40,12 +40,11 @@ namespace CityWeb.Infrastructure.Service.Transport
         {
             if (await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == createCarSharingDTO.Title) == null)
             {
-                var carSharing = _mapper.Map<CreateCarSharingModelDTO, CarSharingModel>(createCarSharingDTO);
-                carSharing.Location = _mapper.Map<AddressModel>(createCarSharingDTO.Location);
+                CarSharingModel carSharing = _mapper.Map<CreateCarSharingModelDTO, CarSharingModel>(createCarSharingDTO);
                 carSharing.Service = new ServiceModel();
                 await _context.CarSharings.AddAsync(carSharing);
                 await _context.SaveChangesAsync();
-                var result = _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
+                CarSharingModelDTO result = _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
                 result.Location = _mapper.Map<AddressModel, AddressModelDTO>(carSharing.Location);
                 return result;
             }
@@ -74,7 +73,6 @@ namespace CityWeb.Infrastructure.Service.Transport
             if (carSharing != null)
             {
                 _mapper.Map<UpdateCarSharingModelDTO, CarSharingModel>(updateCarSharingDTO, carSharing);
-                _mapper.Map<AddressModelDTO, AddressModel>(updateCarSharingDTO.Location, carSharing.Location);
 
                 _context.Update(carSharing);
                 await _context.SaveChangesAsync();
@@ -97,7 +95,7 @@ namespace CityWeb.Infrastructure.Service.Transport
                     {
                         var rentCarModel = _mapper.Map<AddRentCarDTO, RentCarModel>(addRentCarDTO);
                         rentCarModel.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == addRentCarDTO.Type);
-                        rentCarModel.CarSharingId = carSharing.Id;
+                        rentCarModel.CarSharing = carSharing;
                         if (rentCarModel.Type != null)
                         {
                             await _context.RentCars.AddAsync(rentCarModel);
