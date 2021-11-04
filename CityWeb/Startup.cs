@@ -116,6 +116,7 @@ namespace CityWeb
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
                 x.AddProfile<MappingEntertainmentProfile>();
+                
             });
             services.AddOptions();
             services.AddScoped<DbInitializer>();
@@ -126,6 +127,7 @@ namespace CityWeb
             services.AddTransient<ICarSharingService, CarSharingService>();
             services.AddTransient<ITaxiService, TaxiService>();
             services.AddTransient<IEntertainmentService, EntertainmentService>();
+            services.AddTransient<INewsService, NewsService>();
             services.Configure<AuthSettings>(Configuration.GetSection("Auth"));
             services.AddMvc();
             services.AddControllers(options =>

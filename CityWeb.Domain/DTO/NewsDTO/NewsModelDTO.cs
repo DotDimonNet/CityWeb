@@ -1,4 +1,5 @@
 ﻿using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace CityWeb.Domain.DTO.NewsDTO
     {
         public string ServiceTitle { get; set; }
         public string Description { get; set; }
-        
-
+        public virtual NewsType Type { get; set; }
     }
 }
