@@ -13,12 +13,14 @@ namespace CityWeb.Domain.DTO
         public string Description { get; set; }
         public CounterModel Counter { get; set; }
         public double Price { get; set; }
+
+        public AddressModelDTO HouseAdress { get; set; }
     }
     public class CreateHousePayModelDTO
     {
         public string  Title { get; set; }
         public string Description { get; set; }
-        public CounterModel Counter { get; set; }
+        public AddressModelDTO Address { get; set; }
     }
     public class SelectHousePayModelDTO
     {
@@ -33,7 +35,7 @@ namespace CityWeb.Domain.DTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public CounterModel Counter { get; set; }
+        public AddressModelDTO Address { get; set; }
     }
 
 }

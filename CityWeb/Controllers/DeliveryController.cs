@@ -123,7 +123,7 @@ namespace CityWeb.Controllers
             try
             {
                 var delivery = _deliveryService.SelectDeliveryCompany(request);
-                return Ok(delivery);
+                return Ok(delivery.Result);
             }
             catch (Exception ex)
             {
@@ -137,7 +137,7 @@ namespace CityWeb.Controllers
             try
             {
                 var product = _deliveryService.GetProductsByType(request);
-                return Json(product);
+                return Json(product.Result);
             }
             catch (Exception ex)
             {
@@ -159,13 +159,27 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("get-all")]
         public IActionResult GetAllDelivery()
         {
             try
             {
                 var deliverys = _deliveryService.GetAllDelivery();
-                return Json(deliverys);
+                return Json(deliverys.Result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-all-product")]
+        public IActionResult GetAllProductByDeliveryName([FromQuery] DeliveryNameDTO request)
+        {
+            try
+            {
+                var deliverys = _deliveryService.GetAllProductByDeliveryName(request);
+                return Json(deliverys.Result);
             }
             catch (Exception ex)
             {

@@ -174,6 +174,19 @@ namespace CityWeb.Infrastructure.Service
             return await _context.Deliveries.Skip(skip).Take(take).Select(x => _mapper.Map<DeliveryModel, DeliveryModelDTO>(x)).ToListAsync();
         }
 
+        public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryName(DeliveryNameDTO deliveryName)
+        {
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryName.Title);
+            if (delivery != null)
+            {
+                return await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+            }
+            else
+            {
+                throw new Exception("");
+            }
+        }
+
         // Methods for steps
         public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companyShedule)
         {
@@ -183,16 +196,17 @@ namespace CityWeb.Infrastructure.Service
             return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
         }
         
-        public async Task<IEnumerable<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel)
+        public async Task<ICollection<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => dtoModel.Title == x.Title );
-            return delivery.Products.Select(x => x.ProductType.Name);
+            return await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => x.ProductType.Name).Distinct().ToListAsync();
         }
 
-        public IEnumerable<ProductModelDTO> GetProductsByType(ProductByTypeDTO dtoModel)
+        public async Task<IEnumerable<ProductModelDTO>> GetProductsByType(ProductByTypeDTO dtoModel)
         {
-            var products = _context.Products.Where(x => dtoModel.ProductName == x.ProductName && x.ProductType.Name == dtoModel.TypeName).Distinct();
-            return products.Select(x => x.ToProductDTO());
+            var result = await _context.Products.Where(x => x.ProductType.Name == dtoModel.TypeName).
+                Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+            return result;
         }
 
         public async Task<PaymentModelDTO> CheckoutBusket(BusketModelDTO busketModelDTO)

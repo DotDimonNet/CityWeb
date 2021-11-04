@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
 
 namespace CityWeb.Domain.ValueTypes
@@ -11,9 +12,10 @@ namespace CityWeb.Domain.ValueTypes
     {
         //Step1
         public string EntertainmentTitle { get; set; }
+        public string Description { get; set; }
         //Step2
-        public string EventTitle { get; set; }
-        //Step3
-        public BalanceModel Balance { get; set; }
+        public EventModelDTO Event { get; set; }
+        
+        
     }
 }
