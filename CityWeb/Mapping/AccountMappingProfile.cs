@@ -16,6 +16,8 @@ namespace CityWeb.Mapping
                 .ForMember(x => x.UserName, o => o.MapFrom(z => z.UserName))
                 .ForMember(x => x.Email, o => o.MapFrom(z => z.Email))
                 .ForMember(x => x.Profile, o => o.Ignore());
+
+            CreateMap<ApplicationUserModel, UserDTO>();
         }
     }
 }

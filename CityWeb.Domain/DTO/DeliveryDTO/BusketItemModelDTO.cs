@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class EmailDTO
+    public class BusketItemModelDTO
     {
-        public string Email { get; set; } 
+        public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
     }
 }

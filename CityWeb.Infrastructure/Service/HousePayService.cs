@@ -7,18 +7,30 @@ using System.Threading.Tasks;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.DTO;
 using CityWeb.Domain.Enums;
+using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Extentions;
 using Microsoft.EntityFrameworkCore;
 using CityWeb.Infrastructure.Interfaces.Service;
+using AutoMapper;
 
 namespace CityWeb.Infrastructure.Service
 {
     public class HousePayService : IHousePayService
     {
         private readonly ApplicationContext _context;
-        public HousePayService(ApplicationContext context)
+        private readonly IMapper _mapper;
+        public HousePayService(ApplicationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+
+        public HousePayBuilderResult SetupHousePayBuilderResult()
+        {
+            return new HousePayBuilderResult()
+            {
+
+            };
         }
 
         public async Task<HousePayModel> CreateHousePayModel(CreateHousePayModelDTO housePayModel)
@@ -28,7 +40,9 @@ namespace CityWeb.Infrastructure.Service
                 var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == housePayModel.Title);
                 if (housePay == null)
                 {
-                    housePay.CreateFromDTO(housePayModel);
+                    housePay = _mapper.Map<CreateHousePayModelDTO, HousePayModel>(housePayModel);
+                    housePay.HouseHoldAdress = _mapper.Map<AddressModelDTO, AddressModel>(housePayModel.Address);
+                    housePay.Service = new ServiceModel();
                     await _context.HousePays.AddAsync(housePay);
                     await _context.SaveChangesAsync();
                     return housePay;
@@ -42,7 +56,7 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<bool> DeleteHousePay(HousePayModelDTO dtoModel)
+        public async Task<bool> DeleteHousePay(DeleteHousePayModelDTO dtoModel)
         {
             var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
             if (housePay != null)
@@ -56,21 +70,58 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("HousePay does not exist!");
             }
         }
-        public async Task<ICollection<HousePayModelDTO>> GetAllHousePay()
+        public async Task<HousePayModelDTO> UpdateHousePay(UpdateHousePayModelDTO dtoModel)
         {
-            return await _context.HousePays.Select(x => x.ToHousePayModelDTO()).ToListAsync();
-        }
-        public IEnumerable<HousePayModelDTO> GetHousePays(int skip = 0, int take = 20)
-        {
-            return _context.HousePays.Skip(skip).Take(take).Select(x => x.ToHousePayModelDTO());
-        }
-        public async Task<CounterModel> CreateCounterModel(CreateCounterModelDTO counterModel)
-        {
-            var counter = counterModel.CreateCounterFromlDTO();
+            var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
+            if (housePay != null)
+            {
+                _mapper.Map<UpdateHousePayModelDTO, HousePayModel>(dtoModel, housePay);
+                _mapper.Map<AddressModelDTO, AddressModel>(dtoModel.Address, housePay.HouseHoldAdress);
 
-            await _context.Counters.AddAsync(counter);
-            await _context.SaveChangesAsync();
-            return counter;
+                _context.HousePays.Update(housePay);
+                await _context.SaveChangesAsync();
+                return _mapper.Map<HousePayModel, HousePayModelDTO>(housePay);
+            }
+            else
+            {
+                throw new Exception("HousePay does not exist!");
+            }
+        }
+
+        public async Task<IEnumerable<HousePayModelDTO>> GetAllHousePays()
+        {
+            return await _context.HousePays.Select(x => _mapper.Map<HousePayModel,HousePayModelDTO>(x)).ToListAsync();
+        }
+        public async Task<CounterModelDTO> CreateCounterModel(CreateCounterModelDTO createcounterModelDTO)
+        {
+            if (await _context.Counters.FirstOrDefaultAsync(x => x.Number == createcounterModelDTO.Number) == null)
+            {
+                var housePay = await _context.HousePays.FirstOrDefaultAsync(x => x.Title == createcounterModelDTO.HousePayTitle);
+                if (housePay != null)
+                {
+                    try
+                    {
+                        var counterModel = _mapper.Map<CreateCounterModelDTO, CounterModel>(createcounterModelDTO);
+                        counterModel.Type = await _context.HousePaymentType.FirstOrDefaultAsync(x => x.Name == createcounterModelDTO.Type);
+                        counterModel.HousePayment = housePay;
+                        counterModel.Price = new PriceModel();
+
+                        await _context.Counters.AddAsync(counterModel);
+                        await _context.SaveChangesAsync();
+                        return _mapper.Map<CounterModel, CounterModelDTO>(counterModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+                else
+                    throw new Exception("HousePay does not exist");
+            }
+            else
+            {
+                throw new Exception("Counter already exist, cant create one more with same VIN code!");
+            }
         }
         public async Task<bool> DeleteCounterModel(DeleteCounterModelDTO deleteCounterModel)
         {
@@ -103,12 +154,10 @@ namespace CityWeb.Infrastructure.Service
         }
         public async Task<ICollection<CounterModelDTO>> GetAllCounters()
         {
-            return await _context.Counters.Select(x => x.ToCounterModelDTO()).ToListAsync();
-        }
-        public IEnumerable<CounterModelDTO> GetCounters(int skip = 0, int take = 20)
-        {
-            return _context.Counters.Skip(skip).Take(take).Select(x => x.ToCounterModelDTO());
+            return await _context.Counters.Select(x => _mapper.Map<CounterModel,CounterModelDTO>(x)).ToListAsync();
         }
     }
 }
+
+
 

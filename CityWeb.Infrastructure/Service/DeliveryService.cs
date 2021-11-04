@@ -58,12 +58,15 @@ namespace CityWeb.Infrastructure.Service
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
             if (delivery != null)
             {
-                delivery = _mapper.Map<UpdateDeliveryModelDTO, DeliveryModel>(deliveryModel);
-                delivery.DeliveryPrice = _mapper.Map<PriceModelDTO, PriceModel>(deliveryModel.DeliveryPrice);
-                delivery.WorkSchedule = _mapper.Map<PeriodModelDTO, PeriodModel>(deliveryModel.WorkShedyle);
+                delivery = _mapper.Map<UpdateDeliveryModelDTO, DeliveryModel>(deliveryModel, delivery);
+                delivery.DeliveryPrice = _mapper.Map<PriceModelDTO, PriceModel>(deliveryModel.DeliveryPrice, delivery.DeliveryPrice);
+                delivery.WorkSchedule = _mapper.Map<PeriodModelDTO, PeriodModel>(deliveryModel.WorkShedyle, delivery.WorkSchedule);
                 _context.Deliveries.Update(delivery);
                 await _context.SaveChangesAsync();
-                return _mapper.Map<DeliveryModel, DeliveryModelDTO>(delivery);
+                var updateDelivery = _mapper.Map<DeliveryModel, DeliveryModelDTO>(delivery);
+                updateDelivery.DeliveryPrice = _mapper.Map<PriceModel, PriceModelDTO>(delivery.DeliveryPrice);
+                updateDelivery.WorkShedyle = _mapper.Map<PeriodModel, PeriodModelDTO>(delivery.WorkSchedule);
+                return updateDelivery;
             }
             else
             {
@@ -90,14 +93,17 @@ namespace CityWeb.Infrastructure.Service
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
             if (delivery != null)
             {
-                var checkProductName = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
-                if (checkProductName == null)
+                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
+                if (product == null)
                 {
-                    var product = delivery.CreateProductFromDTO(productModel);
+                    product = _mapper.Map<ProductModelDTO, ProductModel>(productModel);
                     product.ProductType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Name == productModel.ProductType);
-                    var model = await _context.Products.AddAsync(product);
+                    product.ProductPrice = _mapper.Map<PriceModelDTO, PriceModel>(productModel.Price);
+                    product.Delivery = delivery; 
+                    await _context.Products.AddAsync(product);
                     await _context.SaveChangesAsync();
                     var result = _mapper.Map<ProductModel, CreateProductDTO>(product);
+                    result.ProductType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Name == productModel.ProductType);
                     result.Price = _mapper.Map<PriceModel, PriceModelDTO>(product.ProductPrice);
                     return result;
                 }
@@ -120,10 +126,14 @@ namespace CityWeb.Infrastructure.Service
                 var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id) ;
                 if (product != null)
                 {
-                    product.UpdateProductFromDTO(productModel);
+                    product = _mapper.Map<ProductModelDTO, ProductModel>(productModel, product);
+                    product.ProductType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Name == productModel.ProductType);
+                    product.ProductPrice = _mapper.Map<PriceModelDTO, PriceModel>(productModel.Price, product.ProductPrice);
                     _context.Update(product);
                     await _context.SaveChangesAsync();
-                    return _mapper.Map<ProductModel, ProductUpdateDTO>(product);
+                    var updateProduct = _mapper.Map<ProductModel, ProductUpdateDTO>(product);
+                    updateProduct.Price = _mapper.Map<PriceModel, PriceModelDTO>(product.ProductPrice);
+                    return updateProduct;
                 }
                 else
                 {
@@ -161,7 +171,20 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task<ICollection<DeliveryModelDTO>> GetAllDelivery(int skip = 0, int take = 10)
         {
-            return await _context.Deliveries.Skip(skip).Take(take).Select(x => x.ToDeliveryModelDTO()).ToListAsync();
+            return await _context.Deliveries.Skip(skip).Take(take).Select(x => _mapper.Map<DeliveryModel, DeliveryModelDTO>(x)).ToListAsync();
+        }
+
+        public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryName(DeliveryNameDTO deliveryName)
+        {
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryName.Title);
+            if (delivery != null)
+            {
+                return await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+            }
+            else
+            {
+                throw new Exception("");
+            }
         }
 
         // Methods for steps
@@ -170,19 +193,20 @@ namespace CityWeb.Infrastructure.Service
             var delivery = _context.Deliveries.Where(x => 
                 x.WorkSchedule.StartTime.TimeOfDay < companyShedule.WorkTime.TimeOfDay &&
                 x.WorkSchedule.EndTime.TimeOfDay > companyShedule.WorkTime.TimeOfDay);
-            return delivery.Select(x => x.ToSelectDeliveryModelDTO());
+            return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
         }
         
-        public async Task<IEnumerable<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel)
+        public async Task<ICollection<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => dtoModel.Title == x.Title );
-            return delivery.Products.Select(x => x.ProductType.Name);
+            return await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => x.ProductType.Name).Distinct().ToListAsync();
         }
 
-        public IEnumerable<ProductModelDTO> GetProductsByType(ProductByTypeDTO dtoModel)
+        public async Task<IEnumerable<ProductModelDTO>> GetProductsByType(ProductByTypeDTO dtoModel)
         {
-            var products = _context.Products.Where(x => dtoModel.ProductName == x.ProductName && x.ProductType.Name == dtoModel.TypeName).Distinct();
-            return products.Select(x => x.ToProductDTO());
+            var result = await _context.Products.Where(x => x.ProductType.Name == dtoModel.TypeName).
+                Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+            return result;
         }
 
         public async Task<PaymentModelDTO> CheckoutBusket(BusketModelDTO busketModelDTO)

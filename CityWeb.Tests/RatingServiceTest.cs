@@ -16,7 +16,7 @@ namespace CityWeb.Tests
             await TestHelper.SetupDbContext();
         }
 
-        [Test]
+        /*[Test]
         public async Task RateServiceTest()
         {
             var ratingServise = new RatingService(TestHelper.ApplicationContext);
@@ -28,6 +28,6 @@ namespace CityWeb.Tests
             };
 
 
-        }
+        }*/
     }
 }
