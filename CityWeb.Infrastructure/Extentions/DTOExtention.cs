@@ -14,6 +14,71 @@ namespace CityWeb.Infrastructure.Extentions
 {
     public static class DTOExtention
     {
+
+
+        public static TaxiModelDTO ToTaxiModelDTO(this TaxiModel taxiModel)
+        {
+            return new TaxiModelDTO()
+            {
+                Title = taxiModel.Title,
+                Description = taxiModel.Description
+            };
+        }
+
+        public static CreateTaxiModelDTO ToCreateTaxiModelDTO(this TaxiModel taxiModel)
+        {
+            return new CreateTaxiModelDTO()
+            {
+                Title = taxiModel.Title,
+                Description = taxiModel.Description
+            };
+        }
+
+        public static UpdateTaxiModelDTO ToUpdateTaxiModelDTO(this TaxiModel taxiModel)
+        {
+            return new UpdateTaxiModelDTO()
+            {
+                Title = taxiModel.Title,
+                Description = taxiModel.Description
+            };
+        }
+
+        public static CarSharingModelDTO ToCarSharingModelDTO(this CarSharingModel carSharingModel)
+        {
+            return new CarSharingModelDTO()
+            {
+                Title = carSharingModel.Title,
+                Description = carSharingModel.Description,
+                Location = new AddressModelDTO()
+                {
+                    StreetName = carSharingModel.Location.StreetName,
+                    HouseNumber = carSharingModel.Location.HouseNumber,
+                    ApartmentNumber = carSharingModel.Location.ApartmentNumber
+                }
+            };
+        }
+
+        public static CreateCarSharingModelDTO ToCreateCarSharingModelDTO(this CarSharingModel carSharingModel)
+        {
+            return new CreateCarSharingModelDTO()
+            {
+                Title = carSharingModel.Title,
+                Description = carSharingModel.Description
+            };
+        }
+
+        public static CarSharingModel FromCreateCarSharingModelDTO(this CreateCarSharingModelDTO carSharingModelDTO)
+        {
+            return new CarSharingModel()
+            {
+                Title = carSharingModelDTO.Title,
+                Description = carSharingModelDTO.Description,
+                Location = new AddressModel()
+                {
+                    StreetName = carSharingModelDTO.Location.StreetName,
+                    HouseNumber = carSharingModelDTO.Location.HouseNumber,
+                    ApartmentNumber = carSharingModelDTO.Location.ApartmentNumber,
+
         //for delivery
 
         public static ProductUpdateDTO ToProductUpdateDTO(this ProductModel productModel)
@@ -58,9 +123,88 @@ namespace CityWeb.Infrastructure.Extentions
                     Value = model.DeliveryPrice.Value,
                     Tax = model.DeliveryPrice.Tax,
                     VAT = model.DeliveryPrice.VAT,
+
                 }
             };
         }
+
+
+        public static RentCarModel FromAddRentCarModelDTO(this CarSharingModel carSharing, AddRentCarDTO rentCarDTO)
+        {
+            return new RentCarModel()
+            {
+                CarSharingId = carSharing.Id,
+                Mark = rentCarDTO.Mark,
+                Number = rentCarDTO.Number,
+                Seats = rentCarDTO.Seats,
+                VINCode = rentCarDTO.VINCode,
+                Color = rentCarDTO.Color
+                //Type. = TransportType
+            };
+        }
+
+        public static UpdateCarSharingModelDTO ToUpdateCarSharingModelDTO(this CarSharingModel carSharingModel)
+        {
+            return new UpdateCarSharingModelDTO()
+            {
+                Title = carSharingModel.Title,
+                Description = carSharingModel.Description,
+                Location = carSharingModel.Location.ToAddressModelDTO()
+            };
+        }
+
+        public static void FromUpdateCarSharingModelDTO(this CarSharingModel carSharing, UpdateCarSharingModelDTO updateDTO)
+        {
+            carSharing.Description = updateDTO.Description;
+            carSharing.Location.StreetName = updateDTO.Location.StreetName;
+            carSharing.Location.HouseNumber = updateDTO.Location.HouseNumber;
+            carSharing.Location.ApartmentNumber = updateDTO.Location.ApartmentNumber;
+        }
+
+        public static UpdateTaxiCarDTO ToUpdateTaxiCarDTO(this TaxiCarModel taxiCar)
+        {
+            return new UpdateTaxiCarDTO()
+            {
+                VINCode = taxiCar.VINCode,
+                Type = taxiCar.Type,
+                Mark = taxiCar.Mark,
+                Color = taxiCar.Color,
+                Number = taxiCar.Number,
+                Seats = taxiCar.Seats
+            };
+        }
+
+        public static TransportTypeDTO ToTransportTypeDTO(this RentCarModel rentCar)
+        {
+            return new TransportTypeDTO()
+            {
+                Name = rentCar.Type.Name
+            };
+        }
+
+        public static RentCarsModelDTO ToRentCarsModelDTO(this RentCarModel rentCar)
+        {
+            return new RentCarsModelDTO()
+            {
+                VINCode = rentCar.VINCode,
+                Type = rentCar.Type,
+                Mark = rentCar.Mark,
+                Color = rentCar.Color,
+                Number = rentCar.Number,
+                Seats = rentCar.Seats
+            };
+        }
+
+        public static UpdateCounterModelDTO ToUpdateCounterModelDTO(this CounterModel counterModel)
+        {
+            return new UpdateCounterModelDTO()
+            {
+                StartCount = counterModel.StartCount,
+                EndCount = counterModel.EndCount,
+                PriceByItem = counterModel.PriceByItem
+            };
+        }
+
 
         public static SelectDeliveryModelDTO ToSelectDeliveryModelDTO(this DeliveryModel model)
         {
@@ -107,6 +251,7 @@ namespace CityWeb.Infrastructure.Extentions
             //productModel.ProductPrice.Tax = productModelDTO.Tax;
         }
         
+
         public static HousePayModelDTO ToHousePayModelDTO(this HousePayModel model)
         {
             return new HousePayModelDTO()
