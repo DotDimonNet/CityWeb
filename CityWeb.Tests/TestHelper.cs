@@ -168,12 +168,12 @@ namespace CityWeb.Tests
                         StreetName = "Soborna",
                         HouseNumber = "25A"
                     },
-                    Event =
+                    Events =
                     {
                         new EventModel()
                         {
                             Title = $"Event1",
-                            EventPrice = new PriceModel()
+                            Price = new PriceModel()
                             {
                                 Value = 300,
                                 VAT = 10,
@@ -183,7 +183,7 @@ namespace CityWeb.Tests
                         new EventModel()
                         {
                             Title = $"Event2",
-                            EventPrice = new PriceModel()
+                            Price = new PriceModel()
                             {
                                 Value = 300,
                                 VAT = 10,
