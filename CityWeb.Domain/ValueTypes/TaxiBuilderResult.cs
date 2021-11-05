@@ -11,9 +11,9 @@ namespace CityWeb.Domain.ValueTypes
 {
     public class TaxiBuilderResult
     {
-        public string TaxiTitle { get; set; }
+        public Guid Id { get; set; }
         public IEnumerable<AddressModelDTO> VisitedAddresses { get; set; }
-        public string TaxiType { get; set; }
+        public int TaxiType { get; set; }
         public double Price { get; set; }
     }
 }

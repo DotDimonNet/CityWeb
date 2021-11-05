@@ -9,7 +9,7 @@ namespace CityWeb.Domain.DTO.Transport.Car
 {
     public class UpdateTaxiCarDTO
     {
-        public string VINCode { get; set; }
+        public Guid Id { get; set; }
 
         public string TaxiTitle { get; set; }
         public string Type { get; set; }

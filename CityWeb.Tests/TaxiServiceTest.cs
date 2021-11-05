@@ -53,11 +53,11 @@ namespace CityWeb.Tests
             var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteTaxiModelDTO()
             {
-                Title = "Taxi1"
+                Id = Guid.NewGuid()
             };
 
             var taxi = await taxiService.DeleteTaxi(dto);
-            var taxiFromContext = TestHelper.ApplicationContext.Taxi.FirstOrDefault(x => x.Title == dto.Title);
+            var taxiFromContext = TestHelper.ApplicationContext.Taxi.FirstOrDefault(x => x.Id == dto.Id);
 
             Assert.IsTrue(taxi);
             Assert.IsNull(taxiFromContext);
@@ -69,7 +69,7 @@ namespace CityWeb.Tests
             var taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteTaxiModelDTO()
             {
-                Title = " "
+                Id = Guid.NewGuid()
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiService.DeleteTaxi(dto));
@@ -113,8 +113,6 @@ namespace CityWeb.Tests
             var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddTaxiCarDTO()
             {
-                VINCode = "AAD48964500",
-                TaxiTitle = "Taxi1",
                 Color = "red",
                 Mark = "Honda",
                 Number = "AB 5555 CC",
@@ -123,12 +121,12 @@ namespace CityWeb.Tests
             };
 
             var taxiCar = await taxiCarService.AddTaxiCar(carDTO);
-            var taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.VINCode == taxiCar.VINCode);
-            var dublicateCount = TestHelper.ApplicationContext.TaxiCar.Count(x => x.VINCode == taxiCar.VINCode);
+            var taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.Id == taxiCar.Id);
+            var dublicateCount = TestHelper.ApplicationContext.TaxiCar.Count(x => x.Id == taxiCar.Id);
 
             Assert.IsNotNull(taxiCar);
             Assert.Less(dublicateCount, 2);
-            Assert.AreEqual(taxiCar.VINCode, taxiCarFromContext.VINCode);
+            Assert.AreEqual(taxiCar.Id, taxiCarFromContext.Id);
         }
 
         [Test]
@@ -137,8 +135,6 @@ namespace CityWeb.Tests
             var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddTaxiCarDTO()
             {
-                VINCode = "TAG48964500",
-                TaxiTitle = "Taxi1",
                 Color = "red",
                 Mark = "Honda",
                 Number = "AB 5555 CC",
@@ -147,7 +143,7 @@ namespace CityWeb.Tests
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.AddTaxiCar(carDTO));
-            Assert.AreEqual(exept.Message, "Car already exist, cant create with same VINCode!");
+            Assert.AreEqual(exept.Message, "Car already exist, cant create with same Id!");
         }
 
         [Test]
@@ -156,8 +152,6 @@ namespace CityWeb.Tests
             var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddTaxiCarDTO()
             {
-                VINCode = "aAG4896451C",
-                TaxiTitle = " ",
                 Color = "red",
                 Mark = "Honda",
                 Number = "AB 5555 CC",
@@ -175,11 +169,11 @@ namespace CityWeb.Tests
             var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteTaxiCarDTO()
             {
-                VINCode = "TAG48964500",
+                Id = Guid.NewGuid()
             };
 
             var taxiCar = await taxiCarService.DeleteTaxiCar(carDTO);
-            var taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.VINCode == carDTO.VINCode);
+            var taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.Id == carDTO.Id);
 
             Assert.IsNull(taxiCarFromContext);
             Assert.IsTrue(taxiCar);
@@ -191,7 +185,7 @@ namespace CityWeb.Tests
             var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteTaxiCarDTO()
             {
-                VINCode = " ",
+                Id = Guid.NewGuid()
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.DeleteTaxiCar(carDTO));
@@ -204,7 +198,6 @@ namespace CityWeb.Tests
             var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateTaxiCarDTO()
             {
-                VINCode = "TAG48964500",
                 Color = "white",
                 Mark = "Honda",
                 Number = "AB 5855 CC",
@@ -213,12 +206,12 @@ namespace CityWeb.Tests
             };
 
             var taxiCar = await taxiCarService.UpdateTaxiCar(carDTO);
-            var taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.VINCode == carDTO.VINCode);
+            var taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.Id == carDTO.Id);
 
             Assert.IsNotNull(taxiCar);
             Assert.IsNotNull(taxiCarFromContext);
 
-            Assert.AreEqual(taxiCarFromContext.VINCode, taxiCar.VINCode);
+            Assert.AreEqual(taxiCarFromContext.Id, taxiCar.Id);
             Assert.AreEqual(taxiCarFromContext.Color, taxiCar.Color);
             Assert.AreEqual(taxiCarFromContext.Mark, taxiCar.Mark);
             Assert.AreEqual(taxiCarFromContext.Number, taxiCar.Number);
@@ -232,7 +225,6 @@ namespace CityWeb.Tests
             var taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateTaxiCarDTO()
             {
-                VINCode = " ",
                 Color = "white",
                 Mark = "Honda",
                 Number = "AB 5855 CC",

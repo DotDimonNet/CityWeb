@@ -216,7 +216,6 @@ namespace CityWeb.Tests
                         new RentCarModel()
                         {
                             Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
-                            VINCode = $"VAG489645{i+1}",
                             RentPeriod =
                             {
                                 new PeriodModel()
@@ -244,7 +243,6 @@ namespace CityWeb.Tests
                     {
                         CarSharingId = carSharings[i].Id,
                         Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
-                        VINCode = $"BAG489645{i}{j}",
                         RentPeriod =
                         {
                             new PeriodModel()
@@ -288,7 +286,6 @@ namespace CityWeb.Tests
                     {
                         TaxiId = taxi[i].Id,
                         Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
-                        VINCode = $"TAG489645{i}{j}",
                         Color = "yellow",
                         Mark = "BMW",
                         Number = $"AB 88{j}{i} SS",

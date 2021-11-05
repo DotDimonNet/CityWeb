@@ -32,7 +32,6 @@ namespace CityWeb.Mapping
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<UpdateTaxiCarDTO, TaxiCarModel>()
                 .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModel() { Value = z.Price.Value }))
-                .ForMember(x => x.VINCode, o => o.Ignore())
                 .ForMember(x => x.Type, o => o.Ignore());
         }
     }

@@ -14,67 +14,34 @@ namespace CityWeb.Mapping
     {
         public CarSharingMappingProfile()
         {
+            //Price
+            CreateMap<PriceModel, PriceModelDTO>();
+            CreateMap<PriceModelDTO, PriceModel>();
+
+            //Address
+            CreateMap<AddressModel, AddressModelDTO>();
+            CreateMap<AddressModelDTO, AddressModel>();
+
             //CarSharing
-            CreateMap<CarSharingModel, CarSharingModelDTO>()
-                .ForMember(x => x.Location, o => o.MapFrom(z => new AddressModelDTO()
-                {
-                    StreetName = z.Location.StreetName,
-                    HouseNumber = z.Location.HouseNumber,
-                    ApartmentNumber = z.Location.ApartmentNumber
-                }));
-            CreateMap<CarSharingModelDTO, CarSharingModel>()
-                .ForMember(x => x.Location, o => o.MapFrom(z => new AddressModel()
-                {
-                    StreetName = z.Location.StreetName,
-                    HouseNumber = z.Location.HouseNumber,
-                    ApartmentNumber = z.Location.ApartmentNumber
-                }));
-            CreateMap<CarSharingModel, CreateCarSharingModelDTO>()
-                .ForMember(x => x.Location, o => o.MapFrom(z => new AddressModelDTO()
-                {
-                    StreetName = z.Location.StreetName,
-                    HouseNumber = z.Location.HouseNumber,
-                    ApartmentNumber = z.Location.ApartmentNumber
-                }));
-            CreateMap<CreateCarSharingModelDTO, CarSharingModel>()
-                .ForMember(x => x.Location, o => o.MapFrom(z => new AddressModel()
-                {
-                    StreetName = z.Location.StreetName,
-                    HouseNumber = z.Location.HouseNumber,
-                    ApartmentNumber = z.Location.ApartmentNumber
-                }));
-            CreateMap<UpdateCarSharingModelDTO, CarSharingModel>()
-                .ForMember(x => x.Location, o => o.MapFrom(z => new AddressModel()
-                {
-                    StreetName = z.Location.StreetName,
-                    HouseNumber = z.Location.HouseNumber,
-                    ApartmentNumber = z.Location.ApartmentNumber
-                }));
-            CreateMap<CarSharingModel, UpdateCarSharingModelDTO>()
-                .ForMember(x => x.Location, o => o.MapFrom(z => new AddressModelDTO() 
-                { 
-                    StreetName = z.Location.StreetName,
-                    HouseNumber = z.Location.HouseNumber,
-                    ApartmentNumber = z.Location.ApartmentNumber
-                }));
+            CreateMap<CarSharingModel, CarSharingModelDTO>();
+            CreateMap<CarSharingModelDTO, CarSharingModel>();
+            CreateMap<CarSharingModel, CreateCarSharingModelDTO>();
+            CreateMap<CreateCarSharingModelDTO, CarSharingModel>();
+            CreateMap<UpdateCarSharingModelDTO, CarSharingModel>();
+            CreateMap<CarSharingModel, UpdateCarSharingModelDTO>();
 
             //RentCar
             CreateMap<RentCarModel, RentCarsModelDTO>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.Price.Value }))
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<RentCarsModelDTO, RentCarModel>()
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<RentCarModel, AddRentCarDTO>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.Price.Value}))
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<AddRentCarDTO, RentCarModel>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModel() { Value = z.Price.Value}))
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<RentCarModel, UpdateRentCarDTO>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.Price.Value }))
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<UpdateRentCarDTO, RentCarModel>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModel() { Value = z.Price.Value }))
                 .ForMember(x => x.Type, o => o.Ignore());
         }
     }

@@ -150,11 +150,11 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("get-taxi-types")]
-        public async Task<IActionResult> GetTaxiTypes([FromBody] TaxiBuilderResult builder, [FromQuery] string title)
+        public async Task<IActionResult> GetTaxiTypes([FromBody] TaxiBuilderResult builder, [FromQuery] Guid id)
         {
             try
             {
-                var stepTwoResult = await _taxiService.GetTaxiTypes(builder, title);
+                var stepTwoResult = await _taxiService.GetTaxiTypes(builder, id);
                 return Json(stepTwoResult);
             }
             catch (Exception ex)
@@ -164,7 +164,7 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("check-order")]
-        public async Task<IActionResult> CheckOrder([FromBody] TaxiBuilderResult builder, [FromQuery] string type)
+        public async Task<IActionResult> CheckOrder([FromBody] TaxiBuilderResult builder, [FromQuery] int type)
         {
             try
             {
@@ -192,11 +192,11 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("end-journey")]
-        public IActionResult EndJourney([FromQuery] string vinCode)
+        public IActionResult EndJourney([FromQuery] Guid id)
         {
             try
             {
-                var car = _taxiService.EndJourney(vinCode);
+                var car = _taxiService.EndJourney(id);
                 return Json(car);
             }
             catch (Exception ex)
