@@ -186,5 +186,19 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("get-all-product-by-price-filter")]
+        public IActionResult GetAllProductByDeliveryName([FromQuery] ProductPriceFilterDTO request)
+        {
+            try
+            {
+                var deliverys = _deliveryService.GetAllProductByPriceFilter(request);
+                return Json(deliverys.Result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
