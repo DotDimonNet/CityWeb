@@ -9,6 +9,7 @@ using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastucture.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,12 @@ namespace CityWeb.Infrastructure.Service.Transport
     {
         private readonly IMapper _mapper;
         private readonly ApplicationContext _context;
-        public CarSharingService(ApplicationContext context, IMapper mapper)
+        private readonly ILogger<AccountService> _logger;
+        public CarSharingService(ApplicationContext context, IMapper mapper, ILogger<AccountService> logger)
         {
             _mapper = mapper;
             _context = context;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<CarSharingModelDTO>> GetAllCarSharings()
@@ -38,7 +41,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<CarSharingModelDTO> CreateCarSharing(CreateCarSharingModelDTO createCarSharingDTO)
         {
-            if (await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == createCarSharingDTO.Title) == null)
+            try
             {
                 CarSharingModel carSharing = _mapper.Map<CreateCarSharingModelDTO, CarSharingModel>(createCarSharingDTO);
                 carSharing.Service = new ServiceModel();
@@ -46,11 +49,36 @@ namespace CityWeb.Infrastructure.Service.Transport
                 await _context.SaveChangesAsync();
                 CarSharingModelDTO result = _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
                 result.Location = _mapper.Map<AddressModel, AddressModelDTO>(carSharing.Location);
+                _logger.LogInformation($"CarSharing {carSharing.Title}({carSharing.Id}) was created.");
                 return result;
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("CarSharing already exist, cant create one more with same title!");
+                _logger.LogError(ex.Message);
+                return null;
+            }
+            
+        }
+
+        public async Task<CarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO)
+        {
+            try
+            {
+                CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == updateCarSharingDTO.Id);
+                if (carSharing != null)
+                {
+                    _mapper.Map<UpdateCarSharingModelDTO, CarSharingModel>(updateCarSharingDTO, carSharing);
+                    _context.Update(carSharing);
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation($"CarSharing {carSharing.Id} was updated.");
+                    return _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
+                }
+                throw new Exception($"CarSharing {updateCarSharingDTO.Id} does not exist!");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return null;
             }
         }
 
@@ -58,64 +86,37 @@ namespace CityWeb.Infrastructure.Service.Transport
         {
             CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == deleteCarSharingDTO.Id);
             if (carSharing != null)
-            { 
+            {
                 _context.CarSharings.Remove(carSharing);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation($"CarSharing {deleteCarSharingDTO.Id} was deleted.");
                 return true;
-            } 
-            else
-                throw new Exception("CarSharing does not exist");
-        }
-
-        public async Task<CarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO)
-        {
-            CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == updateCarSharingDTO.Title);
-            if (carSharing != null)
-            {
-                _mapper.Map<UpdateCarSharingModelDTO, CarSharingModel>(updateCarSharingDTO, carSharing);
-
-                _context.Update(carSharing);
-                await _context.SaveChangesAsync();
-                CarSharingModelDTO result = _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
-                result.Location = _mapper.Map<AddressModel, AddressModelDTO>(carSharing.Location);
-                return result;
             }
-            else
-                throw new Exception("CarSharing does not exist");
+            _logger.LogWarning($"CarSharing {deleteCarSharingDTO.Id} does not exist!");
+            throw new Exception("CarSharing does not exist");
         }
 
         public async Task<RentCarsModelDTO> AddRentCar(AddRentCarDTO addRentCarDTO)
         {
             try
             {
-                if (await _context.RentCars.FirstOrDefaultAsync(x => x.Id == addRentCarDTO.Id) == null)
+                CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == addRentCarDTO.CarSharingId);
+                if (carSharing != null)
                 {
-                    CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == addRentCarDTO.CarSharingId);
-                    if (carSharing != null)
-                    {
-                        RentCarModel rentCarModel = _mapper.Map<AddRentCarDTO, RentCarModel>(addRentCarDTO);
-                        rentCarModel.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == addRentCarDTO.Type);
-                        rentCarModel.CarSharing = carSharing;
-                        if (rentCarModel.Type != null)
-                        {
-                            await _context.RentCars.AddAsync(rentCarModel);
-                            await _context.SaveChangesAsync();
-                            RentCarsModelDTO result = _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCarModel);
-                            result.Type = rentCarModel.Type.Name;
-                            return result;
-                        }
-                        else
-                            throw new Exception("Transport type does not exist");
-                    }
-                    else
-                        throw new Exception("CarSharing does not exist!");
+                    RentCarModel rentCarModel = _mapper.Map<AddRentCarDTO, RentCarModel>(addRentCarDTO);
+                    rentCarModel.Type = addRentCarDTO.Type;
+                    rentCarModel.CarSharing = carSharing;
+                    await _context.RentCars.AddAsync(rentCarModel);
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation($"RentCar {rentCarModel.Id} was added to {carSharing.Title}({carSharing.Id}).");
+                    return _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCarModel);
                 }
-                else
-                    throw new Exception("Car already exist, cant create one more with same VIN code!");
+                throw new Exception($"CarSharing {addRentCarDTO.CarSharingId} does not exist!");
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                _logger.LogError(ex.Message);
+                return null;
             }
         }
 
@@ -124,21 +125,15 @@ namespace CityWeb.Infrastructure.Service.Transport
             RentCarModel rentCar = await _context.RentCars.FirstOrDefaultAsync(x => x.Id == updateCarDTO.Id);
             if (rentCar != null)
             {
-                _mapper.Map<UpdateRentCarDTO, RentCarModel> (updateCarDTO, rentCar);
-                rentCar.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == updateCarDTO.Type);
-                if (rentCar.Type != null)
-                {
-                    _context.Update(rentCar);
-                    await _context.SaveChangesAsync();
-                    RentCarsModelDTO result = _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCar);
-                    result.Type = rentCar.Type.Name;
-                    return result;
-                }
-                else
-                    throw new Exception("Transport type does not exist");
+                _mapper.Map<UpdateRentCarDTO, RentCarModel>(updateCarDTO, rentCar);
+                rentCar.Type = updateCarDTO.Type;
+                _context.Update(rentCar);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"RentCar {rentCar.Id} was updated.");
+                return _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCar);
             }
-            else
-                throw new Exception("Car does not exist");
+            _logger.LogWarning($"Rent car {updateCarDTO.Id} doe not exist!");
+            throw new Exception("Car does not exist");
         }
 
         public async Task<bool> DeleteRentCar(DeleteRentCarDTO deleteCarDTO)
@@ -148,10 +143,11 @@ namespace CityWeb.Infrastructure.Service.Transport
             {
                 _context.RentCars.Remove(rentCar);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation($"Rent car {deleteCarDTO.Id} was deleted.");
                 return true;
             }
-            else
-                throw new Exception("Car does not exist");
+            _logger.LogWarning($"Rent car {deleteCarDTO.Id} does not exist!");
+            throw new Exception("Car does not exist");
         }
 
         public CarSharingBuilderResult SetupCarSharingBuilderResult()

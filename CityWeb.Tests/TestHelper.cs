@@ -193,7 +193,6 @@ namespace CityWeb.Tests
                     {
                         new RentCarModel()
                         {
-                            Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
                             RentPeriod =
                             {
                                 new PeriodModel()
@@ -220,7 +219,6 @@ namespace CityWeb.Tests
                     var rentCar = new RentCarModel()
                     {
                         CarSharingId = carSharings[i].Id,
-                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
                         RentPeriod =
                         {
                             new PeriodModel()

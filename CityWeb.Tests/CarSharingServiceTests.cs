@@ -135,7 +135,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = "Business"
+                Type = 1
             };
 
             var rentCar = await rentCarService.AddRentCar(carDTO);
@@ -157,7 +157,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = null
+                Type = 0
             };
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.AddRentCar(carDTO));
             Assert.AreEqual(exept.Message, "Car already exist, cant create one more with same VIN code!");
@@ -173,7 +173,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = null
+                Type = 1
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.AddRentCar(carDTO));
@@ -219,7 +219,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = null
+                Type = 1
             };
 
             var rentCar = await rentCarService.UpdateRentCar(carDTO);
@@ -246,7 +246,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = null
+                Type = 1
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.UpdateRentCar(carDTO));
@@ -276,7 +276,6 @@ namespace CityWeb.Tests
                 Assert.Contains(item.Mark, stepOneResultFromContext.Select(x => x.Mark).ToList());
                 Assert.Contains(item.Number, stepOneResultFromContext.Select(x => x.Number).ToList());
                 Assert.Contains(item.Seats, stepOneResultFromContext.Select(x => x.Seats).ToList());
-                Assert.Contains(item.Type, stepOneResultFromContext.Select(x => x.Type.Name).ToList());
                 Assert.Contains(item.Id, stepOneResultFromContext.Select(x => x.Id).ToList());
             }
         }
