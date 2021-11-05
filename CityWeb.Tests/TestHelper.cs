@@ -170,29 +170,6 @@ namespace CityWeb.Tests
                         StreetName = "Soborna",
                         HouseNumber = "25A"
                     },
-                    Event =
-                    {
-                        new EventModel()
-                        {
-                            Title = $"Event1",
-                            EventPrice = new PriceModel()
-                            {
-                                Value = 300,
-                                VAT = 10,
-                                Tax = 10,
-                            }
-                        },
-                        new EventModel()
-                        {
-                            Title = $"Event2",
-                            EventPrice = new PriceModel()
-                            {
-                                Value = 300,
-                                VAT = 10,
-                                Tax = 10,
-                            }
-                        }
-                    }
                 };
                 entertainments.Add(entertainment);
             }
