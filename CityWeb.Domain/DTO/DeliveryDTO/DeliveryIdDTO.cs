@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class DeliveryNameDTO
+    public class DeliveryIdDTO
     {
-        public string Title { get; set; }
+        public Guid DeliveryId { get; set; }
     }
 }

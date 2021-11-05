@@ -25,10 +25,10 @@ namespace CityWeb.Tests
             _loggerMock = TestHelper.SetupTestLogger(new NullLogger<AccountService>());
         }
 
-        /*[Test]
+        [Test]
         public async Task RegisterUserTest()
         {
-            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper);
+            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper, TestHelper.);
             var dto = new RegisterModelDTO()
             {
                 UserName = "User1",
@@ -50,6 +50,6 @@ namespace CityWeb.Tests
             Assert.AreEqual(user.Email, userFromContext.Email);
             Assert.AreEqual(user.UserName, userFromContext.UserName);
             Assert.AreEqual(user.PasswordHash, userFromContext.PasswordHash);
-        }*/
+        }
     }
 }

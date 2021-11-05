@@ -24,7 +24,6 @@ namespace CityWeb.Tests
         public static Mock<RoleManager<ApplicationUserRole>> RoleManagerMock { get; set; }
         public static IMapper TestMapper { get; set; }
 
-
         public static Mock<ILogger<T>> SetupTestLogger<T>(ILogger<T> logger) where T : class
         {
             return new Mock<ILogger<T>>();

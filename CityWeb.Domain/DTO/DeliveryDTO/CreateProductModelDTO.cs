@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class ProductModelDTO
+    public class CreateProductModelDTO
     {
+        public Guid DeliveryId { get; set; }
         public string ProductName { get; set; }
         public string ProductType { get; set; }
         public string ProductImage { get; set; }
-        public PriceModelDTO ProductPrice{ get; set; }
+        public PriceModelDTO ProductPrice { get; set; }
     }
 }
