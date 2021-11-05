@@ -10,6 +10,14 @@ namespace CityWeb.Mapping
     {
         public TaxiMappingProfile()
         {
+            //Price
+            CreateMap<PriceModel, PriceModelDTO>();
+            CreateMap<PriceModelDTO, PriceModel>();
+
+            //Address
+            CreateMap<AddressModel, AddressModelDTO>();
+            CreateMap<AddressModelDTO, AddressModel>();
+
             //Taxi
             CreateMap<TaxiModel, TaxiModelDTO>();
             CreateMap<TaxiModelDTO, TaxiModel>();
@@ -17,22 +25,16 @@ namespace CityWeb.Mapping
             CreateMap<CreateTaxiModelDTO, TaxiModel>();
             CreateMap<UpdateTaxiModelDTO, TaxiModel>();
             CreateMap<TaxiModel, UpdateTaxiModelDTO>();
-            CreateMap<UpdateTaxiModelDTO, TaxiModel>()
-                .ForMember(x => x.Title, o => o.Ignore());
+            CreateMap<UpdateTaxiModelDTO, TaxiModel>();
 
             //TaxiCar
             CreateMap<TaxiCarModel, TaxiCarModelDTO>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.Price.Value }))
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<TaxiCarModelDTO, TaxiCarModel>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModel() { Value = z.Price.Value }))
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<AddTaxiCarDTO, TaxiCarModel>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModel() { Value = z.Price.Value }))
                 .ForMember(x => x.Type, o => o.Ignore());
             CreateMap<UpdateTaxiCarDTO, TaxiCarModel>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModel() { Value = z.Price.Value }))
-                .ForMember(x => x.VINCode, o => o.Ignore())
                 .ForMember(x => x.Type, o => o.Ignore());
         }
     }

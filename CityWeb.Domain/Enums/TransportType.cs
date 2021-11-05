@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Enums
 {
+    /*public enum TransportType
+    {
+        Econom,
+        Standart,
+        Business
+    }*/
+
     public class TransportType : Enumeration
     {
         public static readonly TransportType Econom = new(1, "Econom");

@@ -8,6 +8,6 @@ namespace CityWeb.Domain.DTO.Transport.Car
 {
     public class DeleteRentCarDTO
     {
-        public string VINCode { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace CityWeb.Domain.DTO.Transport.CarSharing
 {
     public class DeleteCarSharingModelDTO
     {
-        public string Title { get; set; }
+        public Guid Id { get; set; }
     }
 }

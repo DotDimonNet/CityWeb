@@ -65,11 +65,11 @@ namespace CityWeb.Tests
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteCarSharingModelDTO()
             {
-                Title = "CarSharing1"
+                Id = Guid.NewGuid()
             };
 
             var carSharing = await carSharingService.DeleteCarSharing(dto);
-            var carSharingFromContext = TestHelper.ApplicationContext.CarSharings.FirstOrDefault(x => x.Title == dto.Title);
+            var carSharingFromContext = TestHelper.ApplicationContext.CarSharings.FirstOrDefault(x => x.Id == dto.Id);
 
             Assert.IsTrue(carSharing);
             Assert.IsNull(carSharingFromContext);
@@ -81,7 +81,7 @@ namespace CityWeb.Tests
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteCarSharingModelDTO()
             {
-                Title = " "
+                Id = Guid.NewGuid()
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.DeleteCarSharing(dto));
@@ -131,22 +131,20 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddRentCarDTO()
             {
-                VINCode = "GAG4896451C",
-                CarSharingTitle = "CarSharing1",
                 Color = "red",
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = "Business"
+                Type = 1
             };
 
             var rentCar = await rentCarService.AddRentCar(carDTO);
-            var rentCarFromContext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.VINCode == rentCar.VINCode);
-            var dublicateCount = TestHelper.ApplicationContext.RentCars.Count(x => x.VINCode == rentCar.VINCode);
+            var rentCarFromContext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.Id == rentCar.Id);
+            var dublicateCount = TestHelper.ApplicationContext.RentCars.Count(x => x.Id == rentCar.Id);
 
             Assert.IsNotNull(rentCar);
             Assert.Less(dublicateCount, 2);
-            Assert.AreEqual(rentCar.VINCode, rentCarFromContext.VINCode);
+            Assert.AreEqual(rentCar.Id, rentCarFromContext.Id);
         }
 
         [Test]
@@ -155,13 +153,11 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddRentCarDTO()
             {
-                VINCode = "BAG48964500",
-                CarSharingTitle = "CarSharing1",
                 Color = "red",
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = null
+                Type = 0
             };
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.AddRentCar(carDTO));
             Assert.AreEqual(exept.Message, "Car already exist, cant create one more with same VIN code!");
@@ -173,13 +169,11 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new AddRentCarDTO()
             {
-                VINCode = "GAG4896451C",
-                CarSharingTitle = " ",
                 Color = "red",
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = null
+                Type = 1
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.AddRentCar(carDTO));
@@ -192,11 +186,11 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteRentCarDTO()
             {
-                VINCode = "BAG48964501",
+                Id = Guid.NewGuid()
             };
 
             var rentCar = await rentCarService.DeleteRentCar(carDTO);
-            var rentCarFromContext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.VINCode == carDTO.VINCode);
+            var rentCarFromContext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.Id == carDTO.Id);
 
             Assert.IsNull(rentCarFromContext);
             Assert.IsTrue(rentCar);
@@ -208,7 +202,7 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new DeleteRentCarDTO()
             {
-                VINCode = " ",
+                Id = Guid.NewGuid()
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.DeleteRentCar(carDTO));
@@ -221,21 +215,20 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateRentCarDTO()
             {
-                VINCode = "BAG48964500",
                 Color = "white",
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = null
+                Type = 1
             };
 
             var rentCar = await rentCarService.UpdateRentCar(carDTO);
-            var rentCarFromContext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.VINCode == carDTO.VINCode);
+            var rentCarFromContext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.Id == carDTO.Id);
 
             Assert.IsNotNull(rentCar);
             Assert.IsNotNull(rentCarFromContext);
 
-            Assert.AreEqual(rentCarFromContext.VINCode, rentCar.VINCode);
+            Assert.AreEqual(rentCarFromContext.Id, rentCar.Id);
             Assert.AreEqual(rentCarFromContext.Color, rentCar.Color);
             Assert.AreEqual(rentCarFromContext.Mark, rentCar.Mark);
             Assert.AreEqual(rentCarFromContext.Number, rentCar.Number);
@@ -249,12 +242,11 @@ namespace CityWeb.Tests
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var carDTO = new UpdateRentCarDTO()
             {
-                VINCode = " ",
                 Color = "white",
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = null
+                Type = 1
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await rentCarService.UpdateRentCar(carDTO));
@@ -275,8 +267,8 @@ namespace CityWeb.Tests
         {
             var rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
-            var stepOneResult = await rentCarService.GetAllCarsOfCarSharing(builder, "CarSharing1");
-            var stepOneResultFromContext = await TestHelper.ApplicationContext.RentCars.Where(x => x.CarSharing.Title == builder.CarSharingTitle).ToListAsync();
+            var stepOneResult = await rentCarService.GetAllCarsOfCarSharing(builder, Guid.NewGuid());
+            var stepOneResultFromContext = await TestHelper.ApplicationContext.RentCars.Where(x => x.CarSharing.Id == builder.CarSharingId).ToListAsync();
 
             foreach (var item in stepOneResult.ToList())
             {
@@ -284,8 +276,7 @@ namespace CityWeb.Tests
                 Assert.Contains(item.Mark, stepOneResultFromContext.Select(x => x.Mark).ToList());
                 Assert.Contains(item.Number, stepOneResultFromContext.Select(x => x.Number).ToList());
                 Assert.Contains(item.Seats, stepOneResultFromContext.Select(x => x.Seats).ToList());
-                Assert.Contains(item.Type, stepOneResultFromContext.Select(x => x.Type.Name).ToList());
-                Assert.Contains(item.VINCode, stepOneResultFromContext.Select(x => x.VINCode).ToList());
+                Assert.Contains(item.Id, stepOneResultFromContext.Select(x => x.Id).ToList());
             }
         }
 
@@ -294,7 +285,7 @@ namespace CityWeb.Tests
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
-            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.GetAllCarsOfCarSharing(builder, " "));
+            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.GetAllCarsOfCarSharing(builder, Guid.NewGuid()));
             Assert.AreEqual(exept.Message, "CarSharing does not exist!");
         }
 
@@ -303,11 +294,11 @@ namespace CityWeb.Tests
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
-            var stepTwoResult = await carSharingService.GetCarResersedPeriods(builder, "BAG48964500");
-            var stepTwoResultFromComtext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.VINCode == "BAG48964500");
+            await carSharingService.GetAllCarsOfCarSharing(builder, Guid.NewGuid());
+            var stepTwoResult = await carSharingService.GetCarResersedPeriods(builder, Guid.NewGuid());
+            var stepTwoResultFromComtext = TestHelper.ApplicationContext.RentCars.FirstOrDefault(x => x.Id == Guid.NewGuid());
 
-            //Assert.AreEqual(stepTwoResult., stepTwoResultFromComtext.VINCode);
+            //Assert.AreEqual(stepTwoResult., stepTwoResultFromComtext.Id);
         }
 
         [Test]
@@ -315,8 +306,8 @@ namespace CityWeb.Tests
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
-            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.GetCarResersedPeriods(builder, " "));
+            await carSharingService.GetAllCarsOfCarSharing(builder, Guid.NewGuid());
+            var exept = Assert.ThrowsAsync<Exception>(async () => await carSharingService.GetCarResersedPeriods(builder, Guid.NewGuid()));
             Assert.AreEqual(exept.Message, "Car does not exist!");
         }
 
@@ -325,8 +316,8 @@ namespace CityWeb.Tests
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
-            await carSharingService.GetCarResersedPeriods(builder, "BAG48964500");
+            await carSharingService.GetAllCarsOfCarSharing(builder, Guid.NewGuid());
+            await carSharingService.GetCarResersedPeriods(builder, Guid.NewGuid());
          
             var period = new PeriodModelDTO()
             {
@@ -340,7 +331,7 @@ namespace CityWeb.Tests
                 EndTime = period.EndTime
             };
             builder2.RentPeriod.EndTime = period.EndTime;
-            var car = await TestHelper.ApplicationContext.RentCars.FirstOrDefaultAsync(x => x.VINCode == "BAG48964500");
+            var car = await TestHelper.ApplicationContext.RentCars.FirstOrDefaultAsync(x => x.Id == Guid.NewGuid());
             builder2.Price = (period.EndTime.Day - period.StartTime.Day) * car.Price.Total;
 
             var result = await carSharingService.CheckRent(builder, period);
@@ -354,8 +345,8 @@ namespace CityWeb.Tests
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var builder = new CarSharingBuilderResult();
-            await carSharingService.GetAllCarsOfCarSharing(builder, "CarSharing1");
-            await carSharingService.GetCarResersedPeriods(builder, "BAG48964500");
+            await carSharingService.GetAllCarsOfCarSharing(builder, Guid.NewGuid());
+            await carSharingService.GetCarResersedPeriods(builder, Guid.NewGuid());
             var period = new PeriodModelDTO()
             {
                 StartTime = DateTime.Now,
@@ -388,7 +379,7 @@ namespace CityWeb.Tests
 
             foreach (var item in rentCars)
             {
-                Assert.Contains(item.VINCode, rentCarsFromContext.Select(x => x.VINCode).ToList());
+                Assert.Contains(item.Id, rentCarsFromContext.Select(x => x.Id).ToList());
             }
         }
     }

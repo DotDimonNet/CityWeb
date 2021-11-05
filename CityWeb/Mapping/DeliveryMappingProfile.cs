@@ -39,7 +39,7 @@ namespace CityWeb.Mapping
                 .ForMember(x => x.ProductType, o => o.Ignore());
 
             CreateMap<ProductModel, ProductModelDTO>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.ProductPrice.Value, Total = z.ProductPrice.Total}))
+                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.ProductPrice.Value}))
                 .ForMember(x => x.ProductType, o => o.Ignore());
 
             CreateMap<ProductModel, CreateProductDTO>()

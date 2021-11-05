@@ -11,7 +11,6 @@ namespace CityWeb.Domain.Entities
     {
         public virtual TaxiModel Taxi { get; set; }
         public virtual Guid TaxiId { get; set; }
-        public string VINCode { get; set; }
         public virtual TransportType Type { get; set; }
         public string Mark { get; set; }
         public string Color { get; set; }
