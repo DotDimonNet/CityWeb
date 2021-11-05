@@ -117,7 +117,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = 1
             };
 
             var taxiCar = await taxiCarService.AddTaxiCar(carDTO);
@@ -139,7 +139,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = 1
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.AddTaxiCar(carDTO));
@@ -156,7 +156,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5555 CC",
                 Seats = 2,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = 1
             };
 
         //    var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.AddTaxiCar(carDTO));
@@ -202,7 +202,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = 1
             };
 
             var taxiCar = await taxiCarService.UpdateTaxiCar(carDTO);
@@ -229,7 +229,7 @@ namespace CityWeb.Tests
                 Mark = "Honda",
                 Number = "AB 5855 CC",
                 Seats = 1,
-                Type = Domain.Enums.TransportType.TaxiBusiness
+                Type = 1
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await taxiCarService.UpdateTaxiCar(carDTO));

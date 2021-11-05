@@ -11,6 +11,5 @@ namespace CityWeb.Domain.DTO
         public double Value { get; set; }
         public double Tax { get; set; }
         public double VAT { get; set; }
-        public double Total { get; set; }
     }
 }

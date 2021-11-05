@@ -31,18 +31,12 @@ namespace CityWeb.Mapping
             CreateMap<CarSharingModel, UpdateCarSharingModelDTO>();
 
             //RentCar
-            CreateMap<RentCarModel, RentCarsModelDTO>()
-                .ForMember(x => x.Type, o => o.Ignore());
-            CreateMap<RentCarsModelDTO, RentCarModel>()
-                .ForMember(x => x.Type, o => o.Ignore());
-            CreateMap<RentCarModel, AddRentCarDTO>()
-                .ForMember(x => x.Type, o => o.Ignore());
-            CreateMap<AddRentCarDTO, RentCarModel>()
-                .ForMember(x => x.Type, o => o.Ignore());
-            CreateMap<RentCarModel, UpdateRentCarDTO>()
-                .ForMember(x => x.Type, o => o.Ignore());
-            CreateMap<UpdateRentCarDTO, RentCarModel>()
-                .ForMember(x => x.Type, o => o.Ignore());
+            CreateMap<RentCarModel, RentCarsModelDTO>();
+            CreateMap<RentCarsModelDTO, RentCarModel>();
+            CreateMap<RentCarModel, AddRentCarDTO>();
+            CreateMap<AddRentCarDTO, RentCarModel>();
+            CreateMap<RentCarModel, UpdateRentCarDTO>();
+            CreateMap<UpdateRentCarDTO, RentCarModel>();
         }
     }
 }

@@ -43,7 +43,8 @@ namespace CityWeb.Mapping
             CreateMap<ProductModelDTO, ProductModel>();
 
             CreateMap<ProductModel, ProductModelDTO>()
-                .ForMember(x => x.ProductType, o => o.MapFrom(z => z.ProductType.ToString()));
+                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.ProductPrice.Value}))
+                .ForMember(x => x.ProductType, o => o.Ignore());
 
             CreateMap<CreateProductModelDTO, ProductModel>()
                 .ForMember(x => x.ProductType, o => o.MapFrom((z) => Enum.Parse<ProductType>(z.ProductType)));
