@@ -13,6 +13,18 @@ namespace CityWeb.Mapping
     {
         public HousePayMappingProfile()
         {
+            //Address
+            CreateMap<AddressModel,AddressModelDTO>();
+            CreateMap<AddressModelDTO, AddressModel>();
+
+            //Period
+            CreateMap<PeriodModel, PeriodModelDTO>();
+            CreateMap<PeriodModelDTO, PeriodModel>();
+
+            //Price
+            CreateMap<PriceModel, PriceModelDTO>();
+            CreateMap<PriceModelDTO, PriceModel>();
+
             //HousePay
             CreateMap<HousePayModel, HousePayModelDTO>();
             CreateMap<HousePayModelDTO, HousePayModel>();
@@ -29,8 +41,10 @@ namespace CityWeb.Mapping
             CreateMap<CounterModelDTO, CounterModel>();
             CreateMap<CounterModel, CreateCounterModelDTO>()
                 .ForMember(x => x.Type, o => o.Ignore());
-            CreateMap<CreateCounterModelDTO, CounterModel>()
-                .ForMember(x => x.Type, o => o.Ignore());
+            CreateMap<CreateCounterModelDTO, CounterModel>();
+             
+            CreateMap<CounterModelDTO, UpdateCounterModelDTO>();
+            CreateMap<UpdateCounterModelDTO, CounterModelDTO>();
         }
     }
 }
