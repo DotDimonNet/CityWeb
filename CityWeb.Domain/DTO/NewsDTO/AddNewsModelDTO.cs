@@ -11,6 +11,6 @@ namespace CityWeb.Domain.DTO.NewsDTO
     {
         public string ServiceTitle { get; set; }
         public string Description { get; set; }
-        public NewsType ServiceType { get; set; }
+        public NewsType Type { get; set; }
     }
 }

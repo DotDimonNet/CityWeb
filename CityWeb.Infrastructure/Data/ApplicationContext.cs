@@ -28,7 +28,6 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<PriceModel> Prices { get; set; }
         public DbSet<RatingModel> Ratings { get; set; }
         public DbSet<ServiceModel> Services { get; set; }
-        public DbSet<TransportJourneyModel> TransportJourneys { get; set; }
         public DbSet<RentCarModel> RentCars { get; set; }
         public DbSet<TaxiCarModel> TaxiCar { get; set; }
         public DbSet<NewsModel> News { get; set; }
@@ -94,7 +93,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<HotelModel>().HasMany(x => x.Rooms).WithOne(x => x.Hotel).HasForeignKey(x => x.HotelId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<CarSharingModel>().HasMany(x => x.Vehicle).WithOne(x => x.CarSharing).HasForeignKey(x => x.CarSharingId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);
-            builder.Entity<EntertainmentModel>().HasMany(x => x.Event).WithOne(x => x.Entertaiment).HasForeignKey(x => x.EntertaimentId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<EntertainmentModel>().HasMany(x => x.Events).WithOne(x => x.Entertaiment).HasForeignKey(x => x.EntertaimentId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<HousePayModel>().HasMany(x => x.CounterModels).WithOne(x => x.HousePayment).HasForeignKey(x => x.HousePaymentId);
 
             //builder.Entity<ServiceModel>().HasMany(x => x.Users).WithOne(x => x.Services).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);

@@ -22,7 +22,7 @@ namespace CityWeb.Tests
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
-            _loggerMock = TestHelper.SetupTestLogger(new NullLogger<AccountService>());
+            _loggerMock = TestHelper.SetupTestLogger<AccountService>();
         }
 
         [Test]
