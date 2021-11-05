@@ -17,7 +17,7 @@ namespace CityWeb.Tests
             await TestHelper.SetupDbContext();
         }
 
-        /*[Test]
+        [Test]
         public async Task CreateDeliveryCompanyTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
@@ -84,7 +84,7 @@ namespace CityWeb.Tests
             Assert.AreEqual(exeption.Message, "Company does not exist!");
         }
 
-            [Test]
+        [Test]
         public async Task CreateProductTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
@@ -92,7 +92,7 @@ namespace CityWeb.Tests
             {
                 Title = "DeliveryCompany2",
                 ProductName = "Product",
-                //ProductType = ProductType.AlcoholicDrinks,
+                ProductType = TestHelper.ApplicationContext.ProductTypes.FirstOrDefault().Name,
                 ProductImage = "img",
                 Price = new PriceModelDTO()
                 {
@@ -107,7 +107,7 @@ namespace CityWeb.Tests
 
             Assert.IsNotNull(product);
             Assert.AreEqual(product.ProductName, productFromContext.ProductName);
-            //Assert.AreEqual(product.ProductType.Name, productFromContext.ProductType.Name);
+            Assert.AreEqual(product.ProductType.Name, productFromContext.ProductType.Name);
             Assert.AreEqual(product.ProductImage, productFromContext.ProductImage);
             Assert.AreEqual(product.Price.VAT, productFromContext.ProductPrice.VAT);
             Assert.AreEqual(product.Price.Tax, productFromContext.ProductPrice.Tax);
@@ -225,7 +225,7 @@ namespace CityWeb.Tests
 
             await deliveryService.DeleteDeliveryCompany(dto);
             var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == dto.Title);
-            Assert.IsNull(deliveryFromContext);    
+            Assert.IsNull(deliveryFromContext);
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace CityWeb.Tests
             Assert.AreEqual(exeption.Message, "Company does not exist!");
         }
 
-            [Test]
+        [Test]
         public async Task DeleteProductTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
@@ -349,16 +349,16 @@ namespace CityWeb.Tests
         //                Quantity = 5,
         //            }
         //        },
-            //    Address = new AddressModel()
-            //    {
-            //        StreetName = "Vatytina",
-            //        HouseNumber = "58",
-            //        ApartmentNumber = "101",
-            //    },
-            //    UserName = "Volodya"
-            //};
+        //    Address = new AddressModel()
+        //    {
+        //        StreetName = "Vatytina",
+        //        HouseNumber = "58",
+        //        ApartmentNumber = "101",
+        //    },
+        //    UserName = "Volodya"
+        //};
 
-            var delivery = deliveryService.CheckoutBusket(dto);
-        }*/
+        //var delivery = deliveryService.CheckoutBusket(dto);
+        //}
     }
 }

@@ -8,10 +8,10 @@ namespace CityWeb.Domain.DTO
 {
     public class UpdateDeliveryModelDTO
     {
-        public string Title { get; set; }
+        public Guid Id { get; set; }
         public string Description { get; set; }
         public string DeliveryImage { get; set; }
-        public PeriodModelDTO WorkShedyle { get; set; }
+        public PeriodModelDTO WorkShedule { get; set; }
         public PriceModelDTO DeliveryPrice { get; set; }
     }
 }

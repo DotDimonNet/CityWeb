@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,45 +13,47 @@ namespace CityWeb.Mapping
     {
         public DeliveryMappingProfile()
         {
+            //Address
+            CreateMap<AddressModel, AddressModelDTO>();
+            CreateMap<AddressModelDTO, AddressModel>();
+
+            //Period
+            CreateMap<PeriodModel, PeriodModelDTO>();
+            CreateMap<PeriodModelDTO, PeriodModel>();
+
+            //Price
+            CreateMap<PriceModel, PriceModelDTO>();
+            CreateMap<PriceModelDTO, PriceModel>();
+
             //Mapper for delivery company
             CreateMap<CreateDeliveryModelDTO, DeliveryModel>()
-                .ForMember(x => x.DeliveryAdress, o => o.Ignore())
-                .ForMember(x => x.DeliveryPrice, o => o.Ignore())
-                .ForMember(x => x.Service, o => o.Ignore())
-                .ForMember(x => x.WorkSchedule, o => o.Ignore());
+                .ForMember(x => x.Service, o => o.Ignore());
 
-            CreateMap<DeliveryModel, CreateDeliveryModelDTO>();//??
+            CreateMap<DeliveryModel, DeliveryModelDTO>();
 
             CreateMap<DeliveryModel, SelectDeliveryModelDTO>();
 
             CreateMap<DeliveryModelDTO, DeliveryModel>()
                 .ForMember(x => x.Service, o => o.Ignore());
 
-            CreateMap<DeliveryModel, DeliveryModelDTO>()
-                .ForMember(x => x.Description, o => o.MapFrom(z => z.Description))
-                .ForMember(x => x.Title, o => o.MapFrom(z => z.Title));
+            CreateMap<UpdateDeliveryModelDTO, DeliveryModel>();
 
-            CreateMap<UpdateDeliveryModelDTO, DeliveryModel>()
-                .ForMember(x => x.WorkSchedule, o => o.Ignore())
-                .ForMember(x => x.DeliveryPrice, o => o.Ignore());
 
             //Mapper for product
-            CreateMap<ProductModelDTO, ProductModel>()
-                .ForMember(x => x.ProductType, o => o.Ignore());
+            CreateMap<ProductModelDTO, ProductModel>();
 
             CreateMap<ProductModel, ProductModelDTO>()
-                .ForMember(x => x.Price, o => o.MapFrom(z => new PriceModelDTO() { Value = z.ProductPrice.Value, Total = z.ProductPrice.Total}))
-                .ForMember(x => x.ProductType, o => o.Ignore());
+                .ForMember(x => x.ProductType, o => o.MapFrom(z => z.ProductType.ToString()));
 
-            CreateMap<ProductModel, CreateProductDTO>()
-                .ForMember(x => x.ProductType, o => o.Ignore())
-                .ForMember(x => x.Price, o => o.Ignore());
+            CreateMap<CreateProductModelDTO, ProductModel>()
+                .ForMember(x => x.ProductType, o => o.MapFrom((z) => Enum.Parse<ProductType>(z.ProductType)));
 
-
+            CreateMap<UpdateProductModelDTO, ProductModel>()
+                .ForMember(x => x.ProductType, o => o.MapFrom((z) => Enum.Parse<ProductType>(z.ProductType)));
+            
             CreateMap<ProductModel, ProductUpdateDTO>();
                 
             CreateMap<ProductModel, SelectDeliveryModelDTO>();
-           
         }
     }
 }

@@ -50,21 +50,6 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
             }
 
-            if (!_context.ProductTypes.Any())
-            {
-                _context.AddRange(
-                    ProductType.AlcoholicDrinks,
-                    ProductType.FastFood,
-                    ProductType.Burgers,
-                    ProductType.Pizza,
-                    ProductType.Salads,
-                    ProductType.Sushi,
-                    ProductType.Sweets
-                    );
-
-                _context.SaveChanges();
-            }
-
             if (!_context.HousePaymentType.Any())
             {
                 _context.AddRange(
