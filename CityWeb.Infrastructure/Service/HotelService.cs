@@ -7,6 +7,7 @@ using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastucture.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,33 +22,47 @@ namespace CityWeb.Infrastructure.Service
         private readonly HotelBuilderResult _builderResult;
         private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
-        public HotelService(ApplicationContext context, IMapper mapper)
+        private readonly ILogger<HotelService> _logger;
+
+        public HotelService(ApplicationContext context, IMapper mapper, ILogger<HotelService> logger)
         {
             _mapper = mapper;
             _context = context;
+            _logger = logger;
         }
 
         public async Task<RoomModel> AddRoom(RoomDTO DTO)
         {
-            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == DTO.HotelTitle);
-            if(hotel != null)
+            try
             {
-                var roomNum = await _context.Rooms.Select(x => x.Number).FirstOrDefaultAsync(x => x == DTO.Number);
-                if(roomNum != DTO.Number)
+                var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == DTO.HotelTitle);
+                if (hotel != null)
                 {
-                    var room = _mapper.Map<RoomDTO, RoomModel>(DTO);
-                    room.Price = _mapper.Map<PriceDTO,PriceModel>(DTO.Price);
-                    await _context.Rooms.AddAsync(room);
-                    await _context.SaveChangesAsync();
-                    return room;
-                }
-                else
-                {
+                    var roomNum = await _context.Rooms.Select(x => x.Number).FirstOrDefaultAsync(x => x == DTO.Number);
+
+                    if (roomNum != DTO.Number)
+                    {
+                        var room = _mapper.Map<RoomDTO, RoomModel>(DTO);
+                        room.Type = await _context.Rooms.Select(x => x.Type).FirstOrDefaultAsync(x => x == DTO.Type);
+                        await _context.Rooms.AddAsync(room);
+                        await _context.SaveChangesAsync();
+                        _logger.LogInformation($"Room {room.Number} succsesfully added to {DTO.HotelTitle} hotel.");
+                        return room;
+                    }
+                    _logger.LogWarning($"Room {DTO.Number} in hotel {DTO.HotelTitle} already exist.");
                     throw new Exception("Room with this number already exist!");
-                }            
+                }
+                _logger.LogWarning($"Hotel {DTO.HotelTitle} does not exist.");
+                throw new Exception("Hotel does not exist!");
             }
-            throw new Exception("Hotel does not exist!");
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+
         }
+
         public async Task<RoomModel> UpdateRoom(UpdateRoomDTO DTO)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == DTO.HotelTitle);
@@ -55,23 +70,24 @@ namespace CityWeb.Infrastructure.Service
             if (hotel != null)
             {
                 var room = await _context.Rooms.FirstOrDefaultAsync(x => x.Hotel.Title == hotel.Title && x.Number == DTO.Number);
+
                 if(room != null)
                 {
                     room = _mapper.Map<UpdateRoomDTO, RoomModel>(DTO);
                     room.RentPeriod = _mapper.Map<PeriodModelDTO, PeriodModel>(DTO.RentPeriod);
-                    room.Price = _mapper.Map<PriceDTO, PriceModel>(DTO.Price);
                     room.Type = await _context.Rooms.Select(x => x.Type).FirstOrDefaultAsync(x => x == DTO.Type);
                     _context.Hotels.Update(hotel);
                     await _context.SaveChangesAsync();
+                    _logger.LogInformation($"Room {room.Number} in hotel {room.Hotel.Title} succsesfully updated.");
                     return room;
                 }
-                else
-                {
-                    throw new Exception("Room with this number doesnt exist!");
-                }               
+                _logger.LogWarning($"Room {DTO.Number} in hotel {DTO.HotelTitle} doesnt exist.");
+                throw new Exception("Room with this number doesnt exist!");             
             }
+            _logger.LogWarning($"Hotel with title {DTO.HotelTitle} doesnt exist.");
             throw new Exception("Hotel with this title doesnt exist!");
         }
+
         public async Task<bool> RemoveRoom(DeleteRoomDTO room)
         {
             var removeRoom = await _context.Rooms.FirstOrDefaultAsync(
@@ -80,27 +96,39 @@ namespace CityWeb.Infrastructure.Service
                     && x.Number == room.RoomNumber);
 
             if (room != null)
-            {             
+            {        
                 _context.Rooms.Remove(removeRoom);
                 _context.Update(_context.Rooms);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation($"Room {room.RoomNumber} in hotel {room.HotelTitle} succsesfully removed.");
                 return true;
             }
+            _logger.LogWarning($"Hotel {room.HotelTitle} does not exist.");
             throw new Exception("Hotel does not exist!");
         }
 
         public async Task<HotelModel> AddHotel(HotelDTO hotelDTO)
         {
-            var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.Title);
-            if (hotel == null)
+            try 
             {
-                var newHotel = _mapper.Map<HotelDTO, HotelModel>(hotelDTO);
-                newHotel.RentAddress = _mapper.Map<HotelAddressDTO, AddressModel>(hotelDTO.Address); 
-                await _context.Hotels.AddAsync(newHotel);                
-                await _context.SaveChangesAsync();
-                return newHotel;
+                var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.Title);
+
+                if (hotel == null)
+                {
+                    hotel = _mapper.Map<HotelDTO, HotelModel>(hotelDTO);
+                    hotel.Service = new ServiceModel();
+                    await _context.Hotels.AddAsync(hotel);
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation($"Hotel {hotel.Title} succsesfully added.");
+                    return hotel;
+                }
+                _logger.LogWarning($"Hotel {hotel.Title} already exist.");
+                throw new Exception("Hotel with this title already exist!");
             }
-            throw new Exception("Hotel with this title already exist!");
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<HotelModel> UpdateHotel(HotelDTO DTO)
@@ -109,19 +137,19 @@ namespace CityWeb.Infrastructure.Service
 
             if (hotel != null)
             {
-                var updatedHotel = _mapper.Map<HotelModel>(DTO);
-                updatedHotel.RentAddress = _mapper.Map<HotelAddressDTO, AddressModel>(DTO.Address);
-                updatedHotel.Rooms = hotel.Rooms;
-                hotel = updatedHotel;
+                hotel = _mapper.Map<HotelModel>(DTO);
                 _context.Hotels.Update(hotel);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation($"Hotel {hotel.Title} succsesfully updated.");
                 return hotel;
             }
+            _logger.LogWarning($"Hotel {DTO.Title} doesnt exist.");
             throw new Exception("Hotel with this title doesnt exist!");          
         }
         public async Task<bool> RemoveHotel(DeleteHotelDTO hotelDTO)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == hotelDTO.HotelTitle);
+
             if (hotel != null)
             {
                 _context.Hotels.Remove(hotel);
@@ -133,6 +161,7 @@ namespace CityWeb.Infrastructure.Service
         public async Task<HotelModel> FindHotelById(HotelIdDTO DTO)
         {
             var res = await _context.Hotels.FirstOrDefaultAsync(x => x.Id == DTO.Id);
+
             if(res != null)
             {
                 return res;
@@ -143,6 +172,7 @@ namespace CityWeb.Infrastructure.Service
         public async Task<HotelModel> FindHotelByTitle(HotelTitleDTO DTO)
         {
             var res = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == DTO.Title);
+
             if (res != null)
             {
                 return res;
@@ -152,12 +182,12 @@ namespace CityWeb.Infrastructure.Service
         public async Task<List<HotelRoomType>> GetAllRoomTypesByHotelTitle(HotelTitleDTO DTO)
         {
             var res = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == DTO.Title);
+
             if (res != null)
             {
                 return await _context.Rooms.Where(x => x.Hotel.Title == DTO.Title).Select(x => x.Type).Distinct().ToListAsync();
             }
-            throw new Exception("Hotel with this title doesnt exist!");
-            
+            throw new Exception("Hotel with this title doesnt exist!");          
         }
         public async Task<IEnumerable<HotelDTO>> GetAllHotels()
         {
@@ -202,11 +232,6 @@ namespace CityWeb.Infrastructure.Service
             var result =  new HotelBuilderResult();
             result.HotelTitle = hotelTitle;
             var roomTypes = await _context.Rooms.Where(x => x.Hotel.Title == result.HotelTitle ).Select(x => x.Type).Distinct().ToListAsync();
-            //Front-end simulation 
-            foreach(var type in roomTypes)
-            {
-                Console.WriteLine(type);
-            }
             return result;
         }
         public async Task<HotelBuilderResult> StepTwo(HotelBuilderResult result, HotelRoomType type)
