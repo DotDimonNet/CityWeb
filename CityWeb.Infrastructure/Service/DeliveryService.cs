@@ -9,6 +9,8 @@ using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Domain.Entities;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
+using CityWeb.Domain.Enums;
 
 namespace CityWeb.Infrastructure.Service
 {
@@ -16,190 +18,291 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
-        public DeliveryService(ApplicationContext context, IMapper mapper)
+        private readonly ILogger<DeliveryService> _logger;
+        public DeliveryService(ApplicationContext context, IMapper mapper, ILogger<DeliveryService> logger)
         {
+            _logger = logger;
             _mapper = mapper;
             _context = context;
         }
 
         public async Task<DeliveryModelDTO> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
-            if(delivery == null)
+            var delivery = await _context.Deliveries.AnyAsync(x => x.Title == deliveryModel.Title);
+            if(!delivery)
             {
                 try
                 {
                     var newDelivery = _mapper.Map<CreateDeliveryModelDTO, DeliveryModel>(deliveryModel);
-                    newDelivery.DeliveryAdress = _mapper.Map<AddressModelDTO, AddressModel>(deliveryModel.DeliveryAdress);
                     newDelivery.Service = new ServiceModel();
-                    newDelivery.DeliveryPrice = _mapper.Map<PriceModelDTO, PriceModel>(deliveryModel.DeliveryPrice);
-                    newDelivery.WorkSchedule = _mapper.Map<PeriodModelDTO, PeriodModel>(deliveryModel.WorkSchedule);
                     await _context.Deliveries.AddAsync(newDelivery);
                     await _context.SaveChangesAsync();
-                    var result = _mapper.Map<DeliveryModel, DeliveryModelDTO>(newDelivery);
-                    result.WorkShedyle = _mapper.Map<PeriodModel, PeriodModelDTO>(newDelivery.WorkSchedule);
-                    result.DeliveryPrice = _mapper.Map<PriceModel, PriceModelDTO>(newDelivery.DeliveryPrice);
-                    return result;
+
+                    _logger.LogInformation($"Delivery company {newDelivery.Title} was created");
+
+                    return _mapper.Map<DeliveryModel, DeliveryModelDTO>(newDelivery); 
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex.Message);
                     throw new Exception(ex.Message);
                 }
             }
+            _logger.LogError($"Company {deliveryModel.Title} was already created");
             throw new Exception("Company was already created");
         }
 
         public async Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryModel.Title);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryModel.Id);
             if (delivery != null)
             {
-                delivery = _mapper.Map<UpdateDeliveryModelDTO, DeliveryModel>(deliveryModel, delivery);
-                delivery.DeliveryPrice = _mapper.Map<PriceModelDTO, PriceModel>(deliveryModel.DeliveryPrice, delivery.DeliveryPrice);
-                delivery.WorkSchedule = _mapper.Map<PeriodModelDTO, PeriodModel>(deliveryModel.WorkShedyle, delivery.WorkSchedule);
-                _context.Deliveries.Update(delivery);
-                await _context.SaveChangesAsync();
-                var updateDelivery = _mapper.Map<DeliveryModel, DeliveryModelDTO>(delivery);
-                updateDelivery.DeliveryPrice = _mapper.Map<PriceModel, PriceModelDTO>(delivery.DeliveryPrice);
-                updateDelivery.WorkShedyle = _mapper.Map<PeriodModel, PeriodModelDTO>(delivery.WorkSchedule);
-                return updateDelivery;
+                try
+                {
+                    delivery = _mapper.Map<UpdateDeliveryModelDTO, DeliveryModel>(deliveryModel, delivery);
+                    _context.Deliveries.Update(delivery);
+                    await _context.SaveChangesAsync();
+
+                    _logger.LogInformation($"Delivery company {delivery.Title} was updated");
+
+                    return _mapper.Map<DeliveryModel, DeliveryModelDTO>(delivery);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                } 
             }
+            _logger.LogError($"Company {deliveryModel.Id} does not exist!");
             throw new Exception("Company does not exist!");
         }
 
-        public async Task<bool> DeleteDeliveryCompany(DeleteCompanyDTO dtoModel)
+        public async Task<bool> DeleteDeliveryCompany(DeleteCompanyDTO deleteModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deleteModel.DeliveryId);
             if (delivery != null)
             {
-                _context.Remove(delivery);
-                _context.SaveChanges();
-                return true;
+                try
+                {
+                    _context.Remove(delivery);
+                    _context.SaveChanges();
+
+                    _logger.LogInformation($"Delivery company {delivery.Title} was deleted");
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }
             }
+            _logger.LogError($"Company {deleteModel.DeliveryId} does not exist!");
             throw new Exception("Company does not exist!");
         }
-        public async Task<CreateProductDTO> CreateProduct(ProductModelDTO productModel)
+
+        public async Task<ProductModelDTO> CreateProduct(CreateProductModelDTO createProductDTO)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == createProductDTO.DeliveryId);
             if (delivery != null)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id);
-                if (product == null)
+                var isExistProduct = await _context.Products.AnyAsync(x => x.ProductName == createProductDTO.ProductName && x.DeliveryId == delivery.Id);
+                if (!isExistProduct)
                 {
-                    product = _mapper.Map<ProductModelDTO, ProductModel>(productModel);
-                    product.ProductType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Name == productModel.ProductType);
-                    product.ProductPrice = _mapper.Map<PriceModelDTO, PriceModel>(productModel.Price);
-                    product.Delivery = delivery; 
-                    await _context.Products.AddAsync(product);
-                    await _context.SaveChangesAsync();
-                    var result = _mapper.Map<ProductModel, CreateProductDTO>(product);
-                    result.ProductType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Name == productModel.ProductType);
-                    result.Price = _mapper.Map<PriceModel, PriceModelDTO>(product.ProductPrice);
-                    return result;
+                    try
+                    {
+                        var newProduct = _mapper.Map<CreateProductModelDTO, ProductModel>(createProductDTO);
+                        newProduct.Delivery = delivery;
+                        await _context.Products.AddAsync(newProduct);
+                        await _context.SaveChangesAsync();
+
+                        _logger.LogInformation($"Product {createProductDTO.ProductName} was created");
+
+                        return _mapper.Map<ProductModel, ProductModelDTO>(newProduct);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex.Message);
+                        throw new Exception(ex.Message);
+                    }
                 }
+                _logger.LogError($"Product {createProductDTO.ProductName} was already created!");
                 throw new Exception("Product was already created!");
             }
-            throw new Exception("Company was not created!");
+            _logger.LogError($"Company {createProductDTO.DeliveryId} does not exist!");
+            throw new Exception("Company does not exist!");
         }
 
-        public async Task<ProductUpdateDTO> UpdateProduct(ProductModelDTO productModel)
+        public async Task<ProductModelDTO> UpdateProduct(UpdateProductModelDTO updateProductDTO)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == productModel.Title);
-            if (delivery != null)
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == updateProductDTO.ProductId);
+            if (product != null)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == productModel.ProductName && x.DeliveryId == delivery.Id) ;
-                if (product != null)
+                try
                 {
-                    product = _mapper.Map<ProductModelDTO, ProductModel>(productModel, product);
-                    product.ProductType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Name == productModel.ProductType);
-                    product.ProductPrice = _mapper.Map<PriceModelDTO, PriceModel>(productModel.Price, product.ProductPrice);
+                    product = _mapper.Map<UpdateProductModelDTO, ProductModel>(updateProductDTO, product);
                     _context.Update(product);
                     await _context.SaveChangesAsync();
-                    var updateProduct = _mapper.Map<ProductModel, ProductUpdateDTO>(product);
-                    updateProduct.Price = _mapper.Map<PriceModel, PriceModelDTO>(product.ProductPrice);
-                    return updateProduct;
+
+                    _logger.LogInformation($"Product {updateProductDTO.ProductId} was updated");
+
+                    return _mapper.Map<ProductModel, ProductModelDTO>(product);
                 }
-                throw new Exception("Product was not created!");
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }
             }
-            throw new Exception("Company was not created!");
+            _logger.LogError($"Product {updateProductDTO.ProductName} does not exist!");
+            throw new Exception("Product does not exist!");
         }
 
-        public async Task<bool> DeleteProduct(DeleteProductDTO dtoModel)
+        public async Task<bool> DeleteProduct(DeleteProductDTO deleteProductDTO)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == dtoModel.Title);
-            if(delivery != null)
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == deleteProductDTO.ProductId);
+            if (product != null)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductName == dtoModel.ProductName && x.DeliveryId == delivery.Id);
-                if (product != null)
+                try
                 {
                     _context.Products.Remove(product);
                     _context.SaveChanges();
+                    _logger.LogInformation($"Product {deleteProductDTO.ProductId} was deleted");
                     return true;
                 }
-                throw new Exception("Product does not exist!");
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }   
             }
-            throw new Exception("Company does not exist!");
+            _logger.LogError($"Product {deleteProductDTO.ProductId} does not exist!");
+            throw new Exception("Product does not exist!");
         }
 
         public async Task<ICollection<DeliveryModelDTO>> GetAllDelivery(int skip = 0, int take = 10)
         {
-            return await _context.Deliveries.Skip(skip).Take(take).Select(x => _mapper.Map<DeliveryModel, DeliveryModelDTO>(x)).ToListAsync();
+            try
+            {
+                return await _context.Deliveries.Skip(skip).Take(take).Select(x => _mapper.Map<DeliveryModel, DeliveryModelDTO>(x)).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+            
         }
 
-        public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryName(DeliveryNameDTO deliveryName)
+        public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(DeliveryIdDTO deliveryIdDTO)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == deliveryName.Title);
-            if (delivery != null)
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryIdDTO.DeliveryId);
+            try
             {
-                return await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+                if (delivery != null)
+                {
+                    var result = await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+                    _logger.LogInformation($"Received all products for delivery company with id:{deliveryIdDTO.DeliveryId}");
+                    return result;
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+            _logger.LogError("Company does not exist!");
             throw new Exception("Company does not exist!");
         }
 
         public async Task<ICollection<ProductModelDTO>> GetAllProductByPriceFilter(ProductPriceFilterDTO priceFilter, int skip = 0, int take = 10)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Title == priceFilter.Title);
-            if (delivery != null)
+            var delivery = await _context.Deliveries.AnyAsync(x => x.Id == priceFilter.DeliveryId);
+            if (!delivery)
             {
-                var result = await _context.Products.Where(x => x.DeliveryId == delivery.Id && x.ProductPrice.Total >= priceFilter.MinPrice && x.ProductPrice.Total <= priceFilter.MaxPrice)
-                    .Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
-                return result;
+                try
+                {
+                    var result = await _context.Products.Where(x => x.DeliveryId == priceFilter.DeliveryId && x.ProductPrice.Total >= priceFilter.MinPrice && x.ProductPrice.Total <= priceFilter.MaxPrice)
+                   .Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+                    _logger.LogInformation($"Received all products for delivery company with id:{priceFilter.DeliveryId} using price filter");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }
             }
+            _logger.LogError("Company does not exist!");
             throw new Exception("Company does not exist!");
         }
 
         // Methods for steps
         public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companyShedule)
         {
-            var delivery = _context.Deliveries.Where(x => 
+            try
+            {
+                var delivery = _context.Deliveries.Where(x =>
                 x.WorkSchedule.StartTime.TimeOfDay < companyShedule.WorkTime.TimeOfDay &&
                 x.WorkSchedule.EndTime.TimeOfDay > companyShedule.WorkTime.TimeOfDay);
-            return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
+                _logger.LogInformation("Show all working delivery company in this time");
+                return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
         
         public async Task<ICollection<string>> SelectDeliveryCompany(SelectDeliveryModelDTO dtoModel)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => dtoModel.Title == x.Title );
-            return await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => x.ProductType.Name).Distinct().ToListAsync();
+            try
+            {
+                return await _context.Products.Where(x => x.DeliveryId == dtoModel.DeliveryId).Select(x => x.ProductType.ToString()).Distinct().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            } 
         }
 
         public async Task<IEnumerable<ProductModelDTO>> GetProductsByType(ProductByTypeDTO dtoModel)
         {
-            var result = await _context.Products.Where(x => x.ProductType.Name == dtoModel.TypeName).
-                Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
-            return result;
+            try
+            {
+                var result = await _context.Products.Where(x => x.ProductType.ToString() == dtoModel.TypeName).
+                                Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+                _logger.LogInformation("Shown all product with carent product type");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<PaymentModelDTO> CheckoutBusket(BusketModelDTO busketModelDTO)
         {
-            var productIds = busketModelDTO.Busket.Select(x => x.ProductId);
-            var products = _context.Products.Where(x => productIds.Contains(x.Id));
-            var price = await products.SumAsync(x => x.ProductPrice.Total * busketModelDTO.Busket.FirstOrDefault(z => z.ProductId == x.Id).Quantity);
-            
-            return new PaymentModelDTO()
+            try
             {
-                TotalPrice = price
-            };
+                var productIds = busketModelDTO.Busket.Select(x => x.ProductId);
+                var products = _context.Products.Where(x => productIds.Contains(x.Id));
+                var price = await products.SumAsync(x => x.ProductPrice.Total * busketModelDTO.Busket.FirstOrDefault(z => z.ProductId == x.Id).Quantity);
+                _logger.LogInformation($"Product with id {busketModelDTO.Busket.Select(x => x.ProductId)} add to basket");
+
+                return new PaymentModelDTO()
+                {
+                    TotalPrice = price
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
     }
 

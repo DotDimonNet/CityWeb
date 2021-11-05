@@ -62,7 +62,7 @@ namespace CityWeb.Controllers
         }
 
         [HttpPost("product")]
-        public async Task<IActionResult> CreateMenu([FromBody] ProductModelDTO request)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductModelDTO request)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace CityWeb.Controllers
         }
 
         [HttpPut("product")]
-        public async Task<IActionResult> UpdateProduct([FromBody] ProductModelDTO request)
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductModelDTO request)
         {
             try
             {
@@ -174,11 +174,11 @@ namespace CityWeb.Controllers
         }
 
         [HttpGet("get-all-product")]
-        public IActionResult GetAllProductByDeliveryName([FromQuery] DeliveryNameDTO request)
+        public IActionResult GetAllProductByDeliveryName([FromQuery] DeliveryIdDTO request)
         {
             try
             {
-                var deliverys = _deliveryService.GetAllProductByDeliveryName(request);
+                var deliverys = _deliveryService.GetAllProductByDeliveryId(request);
                 return Json(deliverys.Result);
             }
             catch (Exception ex)
