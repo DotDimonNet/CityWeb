@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -23,8 +24,10 @@ namespace CityWeb.Tests
         public static Mock<SignInManager<ApplicationUserModel>> SignInManagerMock { get; set; }
         public static Mock<RoleManager<ApplicationUserRole>> RoleManagerMock { get; set; }
         public static IMapper TestMapper { get; set; }
+    
 
-        public static Mock<ILogger<T>> SetupTestLogger<T>(ILogger<T> logger) where T : class
+
+        public static Mock<ILogger<T>> SetupTestLogger<T>() where T : class
         {
             return new Mock<ILogger<T>>();
         }
