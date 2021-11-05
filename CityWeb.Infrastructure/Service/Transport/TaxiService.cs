@@ -40,21 +40,19 @@ namespace CityWeb.Infrastructure.Service.Transport
         { 
             if (await _context.Taxi.FirstOrDefaultAsync(x => x.Title == createTaxiDTO.Title) == null)
             {
-                var taxiModel = _mapper.Map<CreateTaxiModelDTO, TaxiModel>(createTaxiDTO);
+                TaxiModel taxiModel = _mapper.Map<CreateTaxiModelDTO, TaxiModel>(createTaxiDTO);
                 taxiModel.Service = new ServiceModel();
                 _context.Taxi.Add(taxiModel);
                 _context.SaveChanges();
                 return _mapper.Map<TaxiModel, TaxiModelDTO>(taxiModel);
             }
             else
-            {
                 throw new Exception("Taxi already exist, cant create one more with same title!");
-            }
         }
 
         public async Task<bool> DeleteTaxi(DeleteTaxiModelDTO deleteTaxiDTO)
         {
-            var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == deleteTaxiDTO.Title);
+            TaxiModel taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Id == deleteTaxiDTO.Id);
             if (taxi != null)
             {
                 _context.Taxi.Remove(taxi);
@@ -67,7 +65,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<TaxiModelDTO> UpdateTaxi(UpdateTaxiModelDTO updateTaxiDTO)
         {
-            var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == updateTaxiDTO.Title);
+            TaxiModel taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == updateTaxiDTO.Title);
             if (taxi != null)
             {
                 taxi = _mapper.Map<UpdateTaxiModelDTO, TaxiModel>(updateTaxiDTO, taxi);
@@ -81,17 +79,17 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<TaxiCarModelDTO> AddTaxiCar(AddTaxiCarDTO addTaxiCarDTO)
         {
-            var car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.VINCode == addTaxiCarDTO.VINCode);
+            TaxiCarModel car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.Id == addTaxiCarDTO.Id);
             if (car == null)
             {
-                var taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Title == addTaxiCarDTO.TaxiTitle);
+                TaxiModel taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Id == addTaxiCarDTO.Id);
                 if (taxi != null)
                 {
                     car = _mapper.Map<AddTaxiCarDTO, TaxiCarModel>(addTaxiCarDTO);
                     car.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == addTaxiCarDTO.Type);
                     car.Taxi = taxi;
                     car.IsFree = true;
-                    var result = _mapper.Map<TaxiCarModel, TaxiCarModelDTO>(car);
+                    TaxiCarModelDTO result = _mapper.Map<TaxiCarModel, TaxiCarModelDTO>(car);
                     if (car.Type != null)
                     {
                         await _context.TaxiCar.AddAsync(car);
@@ -106,12 +104,12 @@ namespace CityWeb.Infrastructure.Service.Transport
                     throw new Exception("Taxi does not exist!");
             }
             else
-                throw new Exception("Car already exist, cant create with same VINCode!");
+                throw new Exception("Car already exist, cant create with same Id!");
         }
 
         public async Task<TaxiCarModelDTO> UpdateTaxiCar(UpdateTaxiCarDTO updateCarDTO)
         {
-            var taxiCar = await _context.TaxiCar.FirstOrDefaultAsync(x => x.VINCode == updateCarDTO.VINCode);
+            TaxiCarModel taxiCar = await _context.TaxiCar.FirstOrDefaultAsync(x => x.Id == updateCarDTO.Id);
             if (taxiCar != null)
             {
                 _mapper.Map<UpdateTaxiCarDTO, TaxiCarModel>(updateCarDTO, taxiCar);
@@ -132,7 +130,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<bool> DeleteTaxiCar(DeleteTaxiCarDTO deleteCarDTO)
         {
-            var taxiCar = await _context.TaxiCar.FirstOrDefaultAsync(x => x.VINCode == deleteCarDTO.VINCode);
+            TaxiCarModel taxiCar = await _context.TaxiCar.FirstOrDefaultAsync(x => x.Id == deleteCarDTO.Id);
             if (taxiCar != null)
             {
                 _context.TaxiCar.Remove(taxiCar);
@@ -161,17 +159,17 @@ namespace CityWeb.Infrastructure.Service.Transport
         /// <param name="builderResult"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<string>> GetTaxiTypes(TaxiBuilderResult builderResult, string title)
+        public async Task<IEnumerable<string>> GetTaxiTypes(TaxiBuilderResult builderResult, Guid id)
         {
-            builderResult.TaxiTitle = title;
-            return await _context.TaxiCar.Where(x => x.IsFree && x.Taxi.Title == title).Select(x => x.Type.Name).Distinct().ToListAsync(); 
+            builderResult.Id = id;
+            return await _context.TaxiCar.Where(x => x.IsFree && x.Taxi.Id == id).Select(x => x.Type.Name).Distinct().ToListAsync(); 
         }
 
-        public async Task<bool> CheckOrder(TaxiBuilderResult builderResult, string type)
+        public async Task<bool> CheckOrder(TaxiBuilderResult builderResult, int type)
         {
             builderResult.TaxiType = type;
-            var typeFromContext = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == type);
-            var car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.IsFree && x.Type == typeFromContext);
+            TransportType typeFromContext = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Id == type);
+            TaxiCarModel car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.IsFree && x.Type == typeFromContext);
             if (car != null)
             {
                 builderResult.Price = car.Price.Total;
@@ -183,14 +181,14 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task OrderTaxi(TaxiBuilderResult builderResult)
         {
-            var type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == builderResult.TaxiType);
-            var car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.IsFree && x.Type == type);
+            TransportType type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Id == builderResult.TaxiType);
+            TaxiCarModel car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.IsFree && x.Type == type);
             car.IsFree = false;
         }
 
-        public async Task EndJourney(string vinCode)
+        public async Task EndJourney(Guid id)
         {
-            var car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.VINCode == vinCode);
+            TaxiCarModel car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.Id == id);
             car.IsFree = true;
         }
     }

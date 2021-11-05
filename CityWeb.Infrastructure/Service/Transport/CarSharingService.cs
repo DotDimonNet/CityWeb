@@ -56,7 +56,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<bool> DeleteCarSharing(DeleteCarSharingModelDTO deleteCarSharingDTO)
         {
-            var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == deleteCarSharingDTO.Title);
+            CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == deleteCarSharingDTO.Id);
             if (carSharing != null)
             { 
                 _context.CarSharings.Remove(carSharing);
@@ -69,14 +69,14 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<CarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO)
         {
-            var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == updateCarSharingDTO.Title);
+            CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == updateCarSharingDTO.Title);
             if (carSharing != null)
             {
                 _mapper.Map<UpdateCarSharingModelDTO, CarSharingModel>(updateCarSharingDTO, carSharing);
 
                 _context.Update(carSharing);
                 await _context.SaveChangesAsync();
-                var result = _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
+                CarSharingModelDTO result = _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
                 result.Location = _mapper.Map<AddressModel, AddressModelDTO>(carSharing.Location);
                 return result;
             }
@@ -88,19 +88,19 @@ namespace CityWeb.Infrastructure.Service.Transport
         {
             try
             {
-                if (await _context.RentCars.FirstOrDefaultAsync(x => x.VINCode == addRentCarDTO.VINCode) == null)
+                if (await _context.RentCars.FirstOrDefaultAsync(x => x.Id == addRentCarDTO.Id) == null)
                 {
-                    var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == addRentCarDTO.CarSharingTitle);
+                    CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == addRentCarDTO.CarSharingId);
                     if (carSharing != null)
                     {
-                        var rentCarModel = _mapper.Map<AddRentCarDTO, RentCarModel>(addRentCarDTO);
+                        RentCarModel rentCarModel = _mapper.Map<AddRentCarDTO, RentCarModel>(addRentCarDTO);
                         rentCarModel.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Name == addRentCarDTO.Type);
                         rentCarModel.CarSharing = carSharing;
                         if (rentCarModel.Type != null)
                         {
                             await _context.RentCars.AddAsync(rentCarModel);
                             await _context.SaveChangesAsync();
-                            var result = _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCarModel);
+                            RentCarsModelDTO result = _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCarModel);
                             result.Type = rentCarModel.Type.Name;
                             return result;
                         }
@@ -121,7 +121,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<RentCarsModelDTO> UpdateRentCar(UpdateRentCarDTO updateCarDTO)
         {
-            var rentCar = await FindRentByVIN(updateCarDTO.VINCode);
+            RentCarModel rentCar = await _context.RentCars.FirstOrDefaultAsync(x => x.Id == updateCarDTO.Id);
             if (rentCar != null)
             {
                 _mapper.Map<UpdateRentCarDTO, RentCarModel> (updateCarDTO, rentCar);
@@ -130,7 +130,7 @@ namespace CityWeb.Infrastructure.Service.Transport
                 {
                     _context.Update(rentCar);
                     await _context.SaveChangesAsync();
-                    var result = _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCar);
+                    RentCarsModelDTO result = _mapper.Map<RentCarModel, RentCarsModelDTO>(rentCar);
                     result.Type = rentCar.Type.Name;
                     return result;
                 }
@@ -143,7 +143,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task<bool> DeleteRentCar(DeleteRentCarDTO deleteCarDTO)
         {
-            var rentCar = await FindRentByVIN(deleteCarDTO.VINCode);
+            RentCarModel rentCar = await _context.RentCars.FirstOrDefaultAsync(x => x.Id == deleteCarDTO.Id);
             if (rentCar != null)
             {
                 _context.RentCars.Remove(rentCar);
@@ -168,10 +168,10 @@ namespace CityWeb.Infrastructure.Service.Transport
         /// <param name="builderResult"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<RentCarsModelDTO>> GetAllCarsOfCarSharing(CarSharingBuilderResult builderResult, string title)
+        public async Task<IEnumerable<RentCarsModelDTO>> GetAllCarsOfCarSharing(CarSharingBuilderResult builderResult, Guid id)
         {
-            builderResult.CarSharingTitle = title;
-            var carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Title == title);
+            builderResult.CarSharingId = id;
+            CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == id);
             if (carSharing != null)
             {
                 builderResult.Location = _mapper.Map<AddressModel, AddressModelDTO>(carSharing.Location);
@@ -187,9 +187,9 @@ namespace CityWeb.Infrastructure.Service.Transport
         /// <param name="builderResult"></param>
         /// <param name="vinCode"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, string vinCode)
+        public async Task<IEnumerable<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, Guid id)
         {
-            var car = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Title == builderResult.CarSharingTitle && x.VINCode == vinCode);
+            RentCarModel car = await _context.RentCars.FirstOrDefaultAsync(x => x.CarSharing.Id == builderResult.CarSharingId && x.Id == id);
             if (car != null)
             {
                 builderResult.Car = _mapper.Map<RentCarModel,RentCarsModelDTO>(car);
@@ -207,7 +207,7 @@ namespace CityWeb.Infrastructure.Service.Transport
         /// <returns></returns>
         public async Task<bool> CheckRent(CarSharingBuilderResult builderResult, PeriodModelDTO period)
         {
-            var car = await FindRentByVIN(builderResult.Car.VINCode);
+            RentCarModel car = await FindRentById(builderResult.Car.Id);
             if (car.IsFree(period))
             {
                 builderResult.RentPeriod.StartTime = period.StartTime;
@@ -221,13 +221,13 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task RentACar(CarSharingBuilderResult builderResult)
         {
-            var car = await FindRentByVIN(builderResult.Car.VINCode);
+            RentCarModel car = await FindRentById(builderResult.Car.Id);
             car.RentPeriod.Add(_mapper.Map<PeriodModelDTO, PeriodModel>(builderResult.RentPeriod));
         }
 
-        public async Task<RentCarModel> FindRentByVIN(string vinCode)
+        public async Task<RentCarModel> FindRentById(Guid id)
         {
-            return await _context.RentCars.FirstOrDefaultAsync(x => x.VINCode == vinCode);
+            return await _context.RentCars.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

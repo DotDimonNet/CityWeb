@@ -11,8 +11,7 @@ namespace CityWeb.Domain.ValueTypes
 {
     public class CarSharingBuilderResult
     {
-        public string CarSharingTitle { get; set; }
-        public string CarSharingDescription { get; set; }
+        public Guid CarSharingId { get; set; }
         public RentCarsModelDTO Car { get; set; }
         public PeriodModelDTO RentPeriod { get; set; }
         public double Price { get; set; }

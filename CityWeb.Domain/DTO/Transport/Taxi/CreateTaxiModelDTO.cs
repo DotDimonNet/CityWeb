@@ -10,6 +10,5 @@ namespace CityWeb.Domain.DTO.Transport.Taxi
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        //public virtual ServiceModel Service { get; set; }
     }
 }

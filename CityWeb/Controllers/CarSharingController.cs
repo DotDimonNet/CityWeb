@@ -120,11 +120,11 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("get-all-cars-of-car-sharing")]
-        public async Task<IActionResult> GetAllCarsOfCarSharing([FromBody] CarSharingBuilderResult builder, [FromQuery] string title)
+        public async Task<IActionResult> GetAllCarsOfCarSharing([FromBody] CarSharingBuilderResult builder, [FromQuery] Guid id)
         {
             try
             {
-                var stepOneResult = await _carSharingService.GetAllCarsOfCarSharing(builder, title);
+                var stepOneResult = await _carSharingService.GetAllCarsOfCarSharing(builder, id);
                 return Json(stepOneResult);
             }
             catch (Exception ex)
@@ -134,11 +134,11 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("get-car-rent-periods")]
-        public async Task<IActionResult> GetCarRentPeriods([FromBody] CarSharingBuilderResult builder, [FromQuery] string vinCode)
+        public async Task<IActionResult> GetCarRentPeriods([FromBody] CarSharingBuilderResult builder, [FromQuery] Guid id)
         {
             try
             {
-                var stepTwoResult = await _carSharingService.GetCarResersedPeriods(builder, vinCode);
+                var stepTwoResult = await _carSharingService.GetCarResersedPeriods(builder, id);
                 return Json(stepTwoResult);
             }
             catch (Exception ex)

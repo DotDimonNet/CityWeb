@@ -10,9 +10,8 @@ namespace CityWeb.Domain.DTO.Transport.Car
 {
     public class AddRentCarDTO
     {
-        public string CarSharingTitle { get; set; }
-        public string VINCode { get; set; }
-
+        public Guid Id { get; set; }
+        public Guid CarSharingId { get; set; }
         public string Type { get; set; }
         public string Mark { get; set; }
         public string Color { get; set; }
