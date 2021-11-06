@@ -25,7 +25,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var housePay = await _housePayService.CreateHousePayModel(request);
+                var housePay = await _housePayService.CreateHousePay(request);
                 return Json(housePay);
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var housePay = await _housePayService.CreateCounterModel(request);
+                var housePay = await _housePayService.CreateCounter(request);
                 return Json(housePay);
             }
             catch (Exception ex)
@@ -81,7 +81,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var housePay = _housePayService.UpdateCounterModel(request);
+                var housePay = _housePayService.UpdateCounter(request);
                 return Json(housePay.Result);
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var isDeleted = await _housePayService.DeleteCounterModel(request);
+                var isDeleted = await _housePayService.DeleteCounter(request);
                 return Ok(isDeleted);
             }
             catch (Exception ex)

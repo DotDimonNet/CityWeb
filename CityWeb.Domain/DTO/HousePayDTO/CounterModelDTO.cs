@@ -13,13 +13,13 @@ namespace CityWeb.Domain.DTO
         public string Type { get; set; }
         public double StartCount { get; set; }
         public double EndCount { get; set; }
+        public PriceModelDTO Price { get; set; }
     }
     public class CreateCounterModelDTO
     {
         public string HousePayTitle { get; set; }
         public string Number { get; set; }
         public string Type { get; set; }
-        public string TypeOfCounter { get; set; }
         public double StartCount { get; set; }
     }
     public class SelectCounterModelDTO
@@ -35,7 +35,7 @@ namespace CityWeb.Domain.DTO
         public string Number { get; set; }
         public double StartCount { get; set; }
         public double EndCount { get; set; }
-        public double PriceByItem { get; set; }
+        public PriceModelDTO Price { get; set; }
     }
 }
 

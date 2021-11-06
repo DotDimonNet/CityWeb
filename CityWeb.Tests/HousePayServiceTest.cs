@@ -27,7 +27,7 @@ namespace CityWeb.Tests
                 Description = "October"
             };
 
-            var housePay = await housePayService.CreateHousePayModel(dto);
+            var housePay = await housePayService.CreateHousePay(dto);
             var counterFromContext = TestHelper.ApplicationContext.HousePays.FirstOrDefault(x => x.Title == housePay.Title);
 
             Assert.IsNotNull(housePay);

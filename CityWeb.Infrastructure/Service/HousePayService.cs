@@ -33,7 +33,7 @@ namespace CityWeb.Infrastructure.Service
             };
         }
 
-        public async Task<HousePayModel> CreateHousePayModel(CreateHousePayModelDTO housePayModel)
+        public async Task<HousePayModel> CreateHousePay(CreateHousePayModelDTO housePayModel)
         {
             try
             {
@@ -41,14 +41,13 @@ namespace CityWeb.Infrastructure.Service
                 if (housePay == null)
                 {
                     housePay = _mapper.Map<CreateHousePayModelDTO, HousePayModel>(housePayModel);
-                    housePay.HouseHoldAdress = _mapper.Map<AddressModelDTO, AddressModel>(housePayModel.Address);
                     housePay.Service = new ServiceModel();
                     await _context.HousePays.AddAsync(housePay);
                     await _context.SaveChangesAsync();
                     return housePay;
                 }
                 else
-                    throw new Exception("HousePay does not exist");
+                    throw new Exception("HousePay does exist");
             }
             catch (Exception ex)
             {
@@ -76,7 +75,6 @@ namespace CityWeb.Infrastructure.Service
             if (housePay != null)
             {
                 _mapper.Map<UpdateHousePayModelDTO, HousePayModel>(dtoModel, housePay);
-                _mapper.Map<AddressModelDTO, AddressModel>(dtoModel.Address, housePay.HouseHoldAdress);
 
                 _context.HousePays.Update(housePay);
                 await _context.SaveChangesAsync();
@@ -92,7 +90,7 @@ namespace CityWeb.Infrastructure.Service
         {
             return await _context.HousePays.Select(x => _mapper.Map<HousePayModel,HousePayModelDTO>(x)).ToListAsync();
         }
-        public async Task<CounterModelDTO> CreateCounterModel(CreateCounterModelDTO createcounterModelDTO)
+        public async Task<CounterModelDTO> CreateCounter(CreateCounterModelDTO createcounterModelDTO)
         {
             try
             {
@@ -112,21 +110,18 @@ namespace CityWeb.Infrastructure.Service
                             result.Type = counterModel.Type.Name;
                             return result;
                         }
-                        else
-                            throw new Exception("Couner type does not exoist");
+                        throw new Exception("Couner type does not exoist");
                     }
-                    else
-                        throw new Exception("HousePay does not exist");
+                    throw new Exception("HousePay does not exist");
                 }
-                else
-                    throw new Exception("Counter already exist, cant create one more with same VIN code!");
+                throw new Exception("Counter already exist, cant create one more with same VIN code!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<bool> DeleteCounterModel(DeleteCounterModelDTO deleteCounterModel)
+        public async Task<bool> DeleteCounter(DeleteCounterModelDTO deleteCounterModel)
         {
             var counter = await _context.Counters.FirstOrDefaultAsync(x => x.Number == deleteCounterModel.Number);
             if (counter != null)
@@ -140,20 +135,20 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception("Counter does not exist!");
             }
         }
-        public async Task<UpdateCounterModelDTO> UpdateCounterModel(UpdateCounterModelDTO updateCounterModelDTO)
-        {
-            var counter = await _context.Counters.FirstOrDefaultAsync(x => x.Number == updateCounterModelDTO.Number);
+        public async Task<CounterModelDTO> UpdateCounter(UpdateCounterModelDTO counterModel)
+        {   
+            var counter = await _context.Counters.FirstOrDefaultAsync(x => x.Number == counterModel.Number);
             if (counter != null)
             {
-                counter.StartCount = updateCounterModelDTO.StartCount;
-                counter.EndCount = updateCounterModelDTO.EndCount;
-                counter.PriceByItem = updateCounterModelDTO.PriceByItem;
+                counter = _mapper.Map<UpdateCounterModelDTO, CounterModel>(counterModel, counter);
                 _context.Update(counter);
                 await _context.SaveChangesAsync();
-                return counter.ToUpdateCounterModelDTO();
+                var updateCounter = _mapper.Map<CounterModel, CounterModelDTO>(counter);
+                return updateCounter;
             }
             else
                 throw new Exception("Counter does not exist");
+            
         }
         public async Task<ICollection<CounterModelDTO>> GetAllCounters()
         {
