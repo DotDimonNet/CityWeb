@@ -390,7 +390,7 @@ namespace CityWeb.Tests
                         {
                             Number = $"NA/000000{i+1}",
                             Type = await ApplicationContext.HousePaymentType.FirstOrDefaultAsync(),
-                            Price = new PriceModel()
+                            CountPrice = new PriceModel()
                             {
                                 Value = i*10
                             },
