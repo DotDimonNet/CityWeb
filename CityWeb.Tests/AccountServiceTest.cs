@@ -28,7 +28,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task RegisterUserTest()
         {
-            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper, TestHelper.);
+            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper, _loggerMock.Object);
             var dto = new RegisterModelDTO()
             {
                 UserName = "User1",
