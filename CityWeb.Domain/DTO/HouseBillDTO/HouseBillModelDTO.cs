@@ -7,7 +7,7 @@ using CityWeb.Domain.Entities;
 
 namespace CityWeb.Domain.DTO
 {
-    public class HousePayModelDTO
+    public class HouseBillModelDTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -16,22 +16,22 @@ namespace CityWeb.Domain.DTO
 
         public AddressModelDTO HouseAdress { get; set; }
     }
-    public class CreateHousePayModelDTO
+    public class CreateHouseBillModelDTO
     {
         public string  Title { get; set; }
         public string Description { get; set; }
         public AddressModelDTO Address { get; set; }
     }
-    public class SelectHousePayModelDTO
+    public class SelectHouseBillModelDTO
     {
         public string Title { get; set; }
     }
-    public class DeleteHousePayModelDTO
+    public class DeleteHouseBillModelDTO
     {
         public string Title { get; set; }
     }
 
-    public class UpdateHousePayModelDTO
+    public class UpdateHouseBillModelDTO
     {
         public string Title { get; set; }
         public string Description { get; set; }

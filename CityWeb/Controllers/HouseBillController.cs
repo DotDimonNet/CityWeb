@@ -1,5 +1,5 @@
 ﻿using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.HousePayDTO;
+using CityWeb.Domain.DTO.HouseBillDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Interfaces.Service;
@@ -10,23 +10,23 @@ using System.Threading.Tasks;
 namespace Taste.Web.Controllers
 {
     [ApiController]
-    [Route("api/housepay")]
-    public class HousePayController : Controller
+    [Route("api/housebill")]
+    public class HouseBillController : Controller
     {
-        private readonly IHousePayService _housePayService;
+        private readonly IHouseBillService _houseBillService;
 
-        public HousePayController(IHousePayService housePayService)
+        public HouseBillController(IHouseBillService houseBillService)
         {
-            _housePayService = housePayService;
+            _houseBillService = houseBillService;
         }
 
-        [HttpPost("housepay-create")]
-        public async Task<IActionResult> CreateHousePayModel([FromBody] CreateHousePayModelDTO request)
+        [HttpPost("housebill-create")]
+        public async Task<IActionResult> CreateHouseBillModel([FromBody] CreateHouseBillModelDTO request)
         {
             try
             {
-                var housePay = await _housePayService.CreateHousePay(request);
-                return Json(housePay);
+                var houseBill = await _houseBillService.CreateHouseBill(request);
+                return Json(houseBill);
             }
             catch (Exception ex)
             {
@@ -34,13 +34,13 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("housepay-update")]
-        public IActionResult UpdateHousePay([FromBody] UpdateHousePayModelDTO request)
+        [HttpPut("housebill-update")]
+        public IActionResult UpdateHouseBill([FromBody] UpdateHouseBillModelDTO request)
         {
             try
             {
-                var housePay = _housePayService.UpdateHousePay(request);
-                return Json(housePay.Result);
+                var houseBill = _houseBillService.UpdateHouseBill(request);
+                return Json(houseBill.Result);
             }
             catch (Exception ex)
             {
@@ -48,12 +48,12 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("delete-housepay")]
-        public async Task<IActionResult> DeleteHousePay([FromBody] DeleteHousePayModelDTO request)
+        [HttpDelete("delete-housebill")]
+        public async Task<IActionResult> DeleteHousBill([FromBody] DeleteHouseBillModelDTO request)
         {
             try
             {
-                var isDeleted = await _housePayService.DeleteHousePay(request);
+                var isDeleted = await _houseBillService.DeleteHouseBill(request);
                 return Ok(isDeleted);
             }
             catch (Exception ex)
@@ -67,8 +67,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var housePay = await _housePayService.CreateCounter(request);
-                return Json(housePay);
+                var houseBill = await _houseBillService.CreateCounter(request);
+                return Json(houseBill);
             }
             catch (Exception ex)
             {
@@ -81,8 +81,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var housePay = _housePayService.UpdateCounter(request);
-                return Json(housePay.Result);
+                var houseBill = _houseBillService.UpdateCounter(request);
+                return Json(houseBill.Result);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var isDeleted = await _housePayService.DeleteCounter(request);
+                var isDeleted = await _houseBillService.DeleteCounter(request);
                 return Ok(isDeleted);
             }
             catch (Exception ex)
@@ -109,7 +109,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var counters = await _housePayService.GetAllCounters();
+                var counters = await _houseBillService.GetAllCounters();
                 return Ok(counters);
             }
             catch (Exception ex)
@@ -123,8 +123,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var housePays = await _housePayService.GetAllHousePays();
-                return Ok(housePays);
+                var houseBills = await _houseBillService.GetAllHouseBills();
+                return Ok(houseBills);
             }
             catch (Exception ex)
             {

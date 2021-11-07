@@ -51,7 +51,7 @@ namespace CityWeb.Tests
                 x.AddProfile<CarSharingMappingProfile>();
                 x.AddProfile<TaxiMappingProfile>();
                 x.AddProfile<HotelMappingProfile>();
-                x.AddProfile<HousePayMappingProfile>();
+                x.AddProfile<HouseBillMappingProfile>();
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
                 x.AddProfile<MappingEntertainmentProfile>();
@@ -341,14 +341,14 @@ namespace CityWeb.Tests
             await ApplicationContext.Ratings.AddRangeAsync(ratings);
             await ApplicationContext.SaveChangesAsync();
 
-            //Create HousePay
+            //Create HouseBill
 
-            var housePays = new List<HousePayModel>();
+            var houseBills = new List<HouseBillModel>();
             for (int i = 0; i < 10; i++)
             {
-                var housePay = new HousePayModel()
+                var houseBill = new HouseBillModel()
                 {
-                    Title = $"HousePay{i + 1}",
+                    Title = $"HouseBill{i + 1}",
                     Description = $"Default description {i}",
                     Service = service,
                     ServiceId = service.Id,
@@ -362,7 +362,7 @@ namespace CityWeb.Tests
                         new CounterModel()
                         {
                             Number = $"NA/000000{i+1}",
-                            Type = await ApplicationContext.HousePaymentType.FirstOrDefaultAsync(),
+                            Type = await ApplicationContext.HouseBillType.FirstOrDefaultAsync(),
                             CountPrice = new PriceModel()
                             {
                                 Value = i*10
@@ -373,7 +373,7 @@ namespace CityWeb.Tests
                         }
                     }
                 };
-                housePays.Add(housePay);
+                houseBills.Add(houseBill);
             }
         }
     }

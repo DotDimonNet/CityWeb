@@ -50,19 +50,19 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
             }
 
-            if (!_context.HousePaymentType.Any())
+            if (!_context.HouseBillType.Any())
             {
                 _context.AddRange(
-                    HousePaymentType.Electricity,
-                    HousePaymentType.WaterGet,
-                    HousePaymentType.WaterOut,
-                    HousePaymentType.Gas,
-                    HousePaymentType.GasTransport,
-                    HousePaymentType.Intercom,
-                    HousePaymentType.Internet,
-                    HousePaymentType.TV,
-                    HousePaymentType.Trash,
-                    HousePaymentType.Rent);
+                    HouseBillType.Electricity,
+                    HouseBillType.WaterGet,
+                    HouseBillType.WaterOut,
+                    HouseBillType.Gas,
+                    HouseBillType.GasTransport,
+                    HouseBillType.Intercom,
+                    HouseBillType.Internet,
+                    HouseBillType.TV,
+                    HouseBillType.Trash,
+                    HouseBillType.Rent);
 
                 _context.SaveChanges();
             }

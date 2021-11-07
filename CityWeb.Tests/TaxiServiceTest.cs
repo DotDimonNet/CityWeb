@@ -245,4 +245,4 @@ namespace CityWeb.Tests
             Assert.IsNotNull(builder);
         }
     }
-}
+

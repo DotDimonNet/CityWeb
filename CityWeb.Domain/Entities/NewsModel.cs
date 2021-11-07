@@ -16,7 +16,7 @@ namespace CityWeb.Domain.Entities
         public virtual ICollection<NewsItemModel> NewsItems { get; set; } = new List<NewsItemModel>();
         public virtual ICollection<EntertainmentModel> EntertainmentNews {get;set;} = new List<EntertainmentModel>();
         public virtual ICollection<DeliveryModel> DeliveryNews {get;set;} = new List<DeliveryModel>();
-        public virtual ICollection<HousePayModel> HousePayNews {get;set;} = new List<HousePayModel>();
+        public virtual ICollection<HouseBillModel> HousePayNews {get;set;} = new List<HouseBillModel>();
         public virtual ICollection<HotelModel> HotelNews {get;set;} = new List<HotelModel>();
         public virtual ICollection<CarSharingModel> CarSharingNews {get;set;} = new List<CarSharingModel>();
         public virtual ICollection<TaxiModel> TaxiNews {get;set;} = new List<TaxiModel>();
