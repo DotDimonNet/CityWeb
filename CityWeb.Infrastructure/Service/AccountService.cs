@@ -60,7 +60,7 @@ namespace CityWeb.Infrastructure.Service
             {
                 await _signInManager.SignOutAsync();
 
-                _logger.LogInformation("User singout");
+                _logger.LogInformation("User signout");
             }
             catch (Exception ex)
             {
@@ -168,7 +168,7 @@ namespace CityWeb.Infrastructure.Service
                 }
             }
             _logger.LogError($"User {updatePassword.UserId} not exist!");
-            throw new Exception("User not exists!");   
+            throw new Exception("User not exist!");   
         }
 
         public async Task<ICollection<UserDTO>> GetAllUsers(int skip = 0, int take = 10)

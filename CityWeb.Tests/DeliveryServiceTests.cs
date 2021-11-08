@@ -212,9 +212,8 @@ namespace CityWeb.Tests
             };
 
             var product = await deliveryService.UpdateProduct(dto);
-            var productFromContext = TestHelper.ApplicationContext.Products.FirstOrDefault(x => x.Id == dto.ProductId);
             Assert.IsNotNull(product);
-            Assert.AreEqual(product.ProductPrice.Value, productFromContext.ProductPrice.Value);
+            Assert.AreEqual(product.ProductPrice.Value, productId.ProductPrice.Value);
         }
 
         [Test]
@@ -271,9 +270,9 @@ namespace CityWeb.Tests
                 WorkTime = DateTime.Now,
             };
 
-            deliveryService.ShowWorkingCompany(dto);
-            var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.Where(x => x.WorkSchedule.StartTime < dto.WorkTime && x.WorkSchedule.EndTime > dto.WorkTime).Count();
-            Assert.IsTrue(deliveryFromContext == 10);
+            var deliveries = deliveryService.ShowWorkingCompany(dto);
+            var deliverysFromContext = TestHelper.ApplicationContext.Deliveries.Where(x => x.WorkSchedule.StartTime < dto.WorkTime && x.WorkSchedule.EndTime > dto.WorkTime).Count();
+            Assert.AreEqual(deliverysFromContext, deliveries.Count());
         }
 
         [Test]
@@ -286,12 +285,12 @@ namespace CityWeb.Tests
                 DeliveryId = deliveryId.Id,
             };
 
-            var productType = deliveryService.SelectDeliveryCompany(dto);
-            var delivery = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Id == dto.DeliveryId);
-            var productTypeFromContext = delivery.Products.Select(x => x.ProductType.ToString());
+            var productTypes = deliveryService.SelectDeliveryCompany(dto);
+            //var delivery = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Id == dto.DeliveryId);
+            var productTypesFromContext = deliveryId.Products.Select(x => x.ProductType.ToString());
 
-            Assert.IsNotNull(productType);
-            Assert.AreEqual(productType.Result, productTypeFromContext);
+            Assert.IsNotNull(productTypes);
+            Assert.AreEqual(productTypes.Result, productTypesFromContext);
         }
 
         [Test]
@@ -340,10 +339,10 @@ namespace CityWeb.Tests
         public async Task GetAllDeliveryTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
-            var deliverys = deliveryService.GetAllDelivery();
-            var deliverysFromContext = await TestHelper.ApplicationContext.Deliveries.CountAsync();
+            var deliverys = await deliveryService.GetAllDelivery();
+            var deliveriesFromContext = await TestHelper.ApplicationContext.Deliveries.CountAsync();
             Assert.IsNotNull(deliverys);
-            Assert.IsTrue(deliverysFromContext == 10);
+            Assert.AreEqual(deliveriesFromContext, deliverys.Count());
         }
 
         [Test]
@@ -356,10 +355,10 @@ namespace CityWeb.Tests
                 DeliveryId = deliveryId.Id,
             };
 
-            var product = deliveryService.GetAllProductByDeliveryId(dto);
-            var productFromContext = TestHelper.ApplicationContext.Products.Where(x => x.DeliveryId == dto.DeliveryId).Count();
-            Assert.IsNotNull(product);
-            Assert.IsTrue(productFromContext == 1);
+            var products = await deliveryService.GetAllProductByDeliveryId(dto);
+            var productsFromContext = TestHelper.ApplicationContext.Products.Where(x => x.DeliveryId == dto.DeliveryId).Count();
+            Assert.IsNotNull(products);
+            Assert.AreEqual(productsFromContext, products.Count());
         }
 
         [Test]
@@ -384,15 +383,15 @@ namespace CityWeb.Tests
             {
                 DeliveryId = deliveryId.Id,
                 MinPrice = 0,
-                MaxPrice = 1000,
+                MaxPrice = 100000,
             };
 
-            var product = deliveryService.GetAllProductByPriceFilter(dto);
-            var productFromContext = TestHelper.ApplicationContext.Products.Where(x => x.DeliveryId == dto.DeliveryId &&
+            var products = await deliveryService.GetAllProductByPriceFilter(dto);
+            var productsFromContext = TestHelper.ApplicationContext.Products.Where(x => x.DeliveryId == dto.DeliveryId &&
             x.ProductPrice.Value >= dto.MinPrice &&
             x.ProductPrice.Value <= dto.MaxPrice).Count();///TOTAL!!!!
-            Assert.IsNotNull(product);
-            Assert.IsTrue(productFromContext == 1);
+            Assert.IsNotNull(products);
+            Assert.AreEqual(productsFromContext, products.Count());
         }
 
         [Test]

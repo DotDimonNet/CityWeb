@@ -244,7 +244,9 @@ namespace CityWeb.Infrastructure.Service
                 var delivery = _context.Deliveries.Where(x =>
                 x.WorkSchedule.StartTime.TimeOfDay < companyShedule.WorkTime.TimeOfDay &&
                 x.WorkSchedule.EndTime.TimeOfDay > companyShedule.WorkTime.TimeOfDay);
+
                 _logger.LogInformation("Show all working delivery company in this time");
+
                 return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
             }
             catch (Exception ex)

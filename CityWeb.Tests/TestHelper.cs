@@ -89,6 +89,9 @@ namespace CityWeb.Tests
             UserManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
 
+            UserManagerMock.Setup(x => x.ChangePasswordAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success).Verifiable();
+
             SignInManagerMock = new Mock<SignInManager<ApplicationUserModel>>(
                             UserManagerMock.Object,
                             new Mock<IHttpContextAccessor>().Object,
