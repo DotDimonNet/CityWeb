@@ -158,10 +158,9 @@ namespace CityWeb.Tests
         public async Task CreateProductTestExeptionOneTest()
         {
             var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
-            var deliveryId = await TestHelper.ApplicationContext.Deliveries.FirstOrDefaultAsync(x => x.Title == "DeliveryCompany22");
             var dto = new CreateProductModelDTO()
             {
-                DeliveryId = deliveryId.Id,
+                DeliveryId = Guid.NewGuid(),
                 ProductName = "Product",
                 ProductType = "Burgers",
                 ProductImage = "img",
@@ -186,7 +185,7 @@ namespace CityWeb.Tests
             {
                 DeliveryId = deliveryId.Id,
                 ProductName = "Product2",
-                ProductType = "Burgers",
+                //ProductType = ProductType.Burgers.ToString(),
                 ProductImage = "img",
                 ProductPrice = new PriceModelDTO()
                 {
