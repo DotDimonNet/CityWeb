@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class NewsModel : Entity, IDescribe
+    public class NewsModel : Entity
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
         public virtual NewsType Type { get; set; }
         public virtual ICollection<NewsItemModel> NewsItems { get; set; } = new List<NewsItemModel>();
-        public virtual ICollection<EntertainmentModel> EntertainmentNews {get;set;} = new List<EntertainmentModel>();
-        public virtual ICollection<DeliveryModel> DeliveryNews {get;set;} = new List<DeliveryModel>();
-        public virtual ICollection<HouseBillModel> HousePayNews {get;set;} = new List<HouseBillModel>();
-        public virtual ICollection<HotelModel> HotelNews {get;set;} = new List<HotelModel>();
-        public virtual ICollection<CarSharingModel> CarSharingNews {get;set;} = new List<CarSharingModel>();
-        public virtual ICollection<TaxiModel> TaxiNews {get;set;} = new List<TaxiModel>();
+        public virtual ServiceModel Service { get; set; }
+        public virtual Guid ServiceId { get; set; }
+        //public virtual ICollection<EntertainmentModel> EntertainmentNews {get;set;} = new List<EntertainmentModel>();
+        //public virtual ICollection<DeliveryModel> DeliveryNews {get;set;} = new List<DeliveryModel>();
+        //public virtual ICollection<HousePayModel> HousePayNews {get;set;} = new List<HousePayModel>();
+        //public virtual ICollection<HotelModel> HotelNews {get;set;} = new List<HotelModel>();
+        //public virtual ICollection<CarSharingModel> CarSharingNews {get;set;} = new List<CarSharingModel>();
+        //public virtual ICollection<TaxiModel> TaxiNews {get;set;} = new List<TaxiModel>();
     }
 }

@@ -29,29 +29,44 @@ namespace CityWeb.Infrastructure.Service
             _logger = logger;
         }
 
-        public async Task<ApplicationUserModel> RegisterUser(RegisterModelDTO registerModel)
+        public async Task<UserDTO> RegisterUser(RegisterModelDTO registerModel)
         {
             var user = _mapper.Map<RegisterModelDTO, ApplicationUserModel>(registerModel);
-            user.Profile = _mapper.Map<UserProfileModelDTO, UserProfileModel>(registerModel.Profile);
-            user.Profile.Address = _mapper.Map<AddressModelDTO, AddressModel>(registerModel.Address);
             var result = await _signInManager.UserManager.CreateAsync(user, registerModel.Password);
-
             if (result.Succeeded)
             {
-                await _context.Users.AddAsync(user);
-                _logger.LogInformation("User was created");
-                return  await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.UserName);
+                try
+                {
+                    await _context.Users.AddAsync(user);
+
+                    _logger.LogInformation("User was created");
+
+                    var userDTO = await _context.Users.FirstOrDefaultAsync(x => x.UserName == registerModel.UserName);
+                    return _mapper.Map<ApplicationUserModel, UserDTO>(userDTO);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }
             }
-            else
-            {
                 _logger.LogError("User was not created!");
                 throw new Exception("User was not created!");
-            }
-        }
+        }   
 
         public async Task SignOut()
         {
-            await _signInManager.SignOutAsync();
+            try
+            {
+                await _signInManager.SignOutAsync();
+
+                _logger.LogInformation("User signout");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<UserDTO> LoginUser(LoginModelDTO loginModel)
@@ -60,93 +75,141 @@ namespace CityWeb.Infrastructure.Service
 
             if (user != null)
             {
-                var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, loginModel.Attempts > 5);
-                return result switch
+                try
                 {
-                    var value when result.Succeeded => _mapper.Map<ApplicationUserModel, UserDTO>(user),
-                    var value when result.IsLockedOut => throw new Exception("Locked out"),
-                    _ => throw new Exception("Unknown Error")
-                };
+                    var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, loginModel.Attempts > 5);
+                   
+                    _logger.LogInformation($"User {loginModel.Login} try to login with status: {result.Succeeded}");
+                    
+                    return result switch
+                    {
+                        var value when result.Succeeded => _mapper.Map<ApplicationUserModel, UserDTO>(user),
+                        var value when result.IsLockedOut => throw new Exception("Locked out"),
+                        _ => throw new Exception("Unknown Error")
+                    };
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }
             }
-            else
-            {
+                _logger.LogError($"User {loginModel.Login} not exist!");
                 throw new Exception("User not exist!");
-            }
         }
 
         public async Task<UserDTO> UpdateUserData(UpdateUserDataDTO updateData)
         {
-            await _context.Users.LoadAsync();
-            await _context.UserProfiles.LoadAsync();
-
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updateData.UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == updateData.UserId);
             if (user != null)
             {
                 try
                 {
                     user.Profile = _mapper.Map<UserProfileModelDTO, UserProfileModel>(updateData.Profile, user.Profile);
-                    user.Profile.Address = _mapper.Map<AddressModelDTO, AddressModel>(updateData.Address, user.Profile.Address);
                     _context.Users.Update(user);
                     await _context.SaveChangesAsync();
-                    var userDTO = _mapper.Map<ApplicationUserModel, UserDTO>(user);
-                    userDTO.Profile = _mapper.Map<UserProfileModel, UserProfileModelDTO>(user.Profile);
-                    userDTO.Address = _mapper.Map<AddressModel, AddressModelDTO>(user.Profile.Address);
-                    return userDTO;
+
+                    _logger.LogInformation($"User {updateData.UserId} was updated");
+
+                    return _mapper.Map<ApplicationUserModel, UserDTO>(user);
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex.Message);
                     throw new Exception(ex.Message);
                 }
             }
-            else
-            {
-                throw new Exception("User not exist!");
-            }
+            _logger.LogError($"User {updateData.UserId} not exist!");
+            throw new Exception("User not exist!");
         }
 
         public async Task<UserDTO> ChangeEmail(ChangeEmailDTO changeEmail)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == changeEmail.UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == changeEmail.UserId);
             if (user != null)
             {
-                user.Email = changeEmail.Email;
-                _context.Update(user);
-                await _context.SaveChangesAsync();
-                return _mapper.Map<ApplicationUserModel, UserDTO>(user);
+                try
+                {
+                    user.Email = changeEmail.Email;
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+
+                    _logger.LogInformation($"User {changeEmail.UserId} changed email");
+
+                    return _mapper.Map<ApplicationUserModel, UserDTO>(user);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }
             }
-            else
-            {
-                throw new Exception("User not exist!");
-            }
+            _logger.LogError($"User {changeEmail.UserId} not exist!");
+            throw new Exception("User not exist!");
         }
 
         public async Task<bool> UpdateUserPassword(UpdateUserPasswordDTO updatePassword)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == updatePassword.UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == updatePassword.UserId);
             if (user != null)
             {
+                try
+                {
+                    var result = await _signInManager.UserManager.ChangePasswordAsync(user, updatePassword.Password, updatePassword.NewPassword);
 
-                var result = await _signInManager.UserManager.ChangePasswordAsync(user, updatePassword.Password, updatePassword.NewPassword);
+                    _logger.LogInformation($"User {updatePassword.UserId} changed password");
 
-                return result.Succeeded;
+                    return result.Succeeded;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    throw new Exception(ex.Message);
+                }
             }
-            else
-            {
-                throw new Exception("User not exists!");
-            }
+            _logger.LogError($"User {updatePassword.UserId} not exist!");
+            throw new Exception("User not exist!");   
         }
 
         public async Task<ICollection<UserDTO>> GetAllUsers(int skip = 0, int take = 10)
         {
-            return await _context.Users.Skip(skip).Take(take).Select(x => _mapper.Map<ApplicationUserModel, UserDTO>(x)).ToListAsync();
+            try
+            {
+                return await _context.Users.Skip(skip).Take(take).Select(x => _mapper.Map<ApplicationUserModel, UserDTO>(x)).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<UserDTO> GetUserById(GetUserByIdDTO getById)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == getById.UserId);
+                return _mapper.Map<ApplicationUserModel, UserDTO>(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<UserDTO> GetUserByUserName(GetUserByUserNameDTO byUserName)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == byUserName.UserName);
-            return _mapper.Map<ApplicationUserModel, UserDTO>(user); 
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == byUserName.UserName);
+                return _mapper.Map<ApplicationUserModel, UserDTO>(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
-
-
     }
 }

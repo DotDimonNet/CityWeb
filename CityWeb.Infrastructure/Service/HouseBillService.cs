@@ -122,6 +122,7 @@ namespace CityWeb.Infrastructure.Service
                         var counterModel = _mapper.Map<CreateCounterModelDTO, CounterModel>(createCounterDTO);
                         await _context.Counters.AddAsync(counterModel);
                         await _context.SaveChangesAsync();
+                            result.Type = counterModel.Type.Name;
 
                         _logger.LogInformation($"Counter {counterModel.Number} succsesfully created in {houseBill.Title} HouseBill");
 

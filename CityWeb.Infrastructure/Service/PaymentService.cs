@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CityWeb.Domain.DTO.PaymentDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Infrastucture.Data;
 using System;
@@ -18,10 +19,10 @@ namespace CityWeb.Infrastructure.Service
             _mapper = mapper;
             _context = context;
         }
+/*        public async Task<PaymentModel> AddPayment(CreatePaymentDTO model)
+        {
 
-            /*public async Task<PaymentModel> AddPayment()
-            {
+        }*/
 
-            }*/
     }
 }

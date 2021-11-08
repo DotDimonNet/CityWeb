@@ -11,7 +11,7 @@ namespace CityWeb.Domain.DTO.Transport.Car
     public class AddRentCarDTO
     {
         public Guid CarSharingId { get; set; }
-        public int Type { get; set; }
+        public string Type { get; set; }
         public string Mark { get; set; }
         public string Color { get; set; }
         public int Seats { get; set; }

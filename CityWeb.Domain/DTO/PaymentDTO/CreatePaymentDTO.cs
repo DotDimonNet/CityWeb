@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityWeb.Domain.Enums
+namespace CityWeb.Domain.DTO.PaymentDTO
 {
-    public enum TransportType
+    public class CreatePaymentDTO
     {
-        Econom,
-        Standart,
-        Business
+
     }
 }
