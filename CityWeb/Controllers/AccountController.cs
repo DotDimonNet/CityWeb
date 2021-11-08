@@ -126,5 +126,19 @@ namespace Taste.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("get-user-by-id")]
+        public async Task<IActionResult> GetById([FromQuery] GetUserByIdDTO request)
+        {
+            try
+            {
+                var user = await _accountService.GetUserById(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

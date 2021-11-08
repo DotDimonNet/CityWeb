@@ -15,20 +15,20 @@ namespace CityWeb.Tests
 {
     public class AccountServiceTest
     {
-        private Mock<ILogger<AccountService>> _loggerMock;
+        private ILogger<AccountService> _logger;
         private AccountService _service;
 
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
-            _loggerMock = TestHelper.SetupTestLogger<AccountService>();
+            _logger = TestHelper.SetupTestLogger<AccountService>();
         }
 
         [Test]
         public async Task RegisterUserTest()
         {
-            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper, _loggerMock.Object);
+            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper, _logger);
             var dto = new RegisterModelDTO()
             {
                 UserName = "User1",
@@ -38,8 +38,12 @@ namespace CityWeb.Tests
                     LastName = " LastName1",
                     Birthday = DateTime.Now,
                     Gender = "male",
+                    Address = new AddressModelDTO()
+                    {
+                        StreetName = "Vatutina"
+                    }
                 },
-                Email = "emailTest@gmail.com",
+                Email = "bolibokvolodya@gmail.com",
                 Password = "qwerty123",
             };
 
@@ -47,9 +51,32 @@ namespace CityWeb.Tests
             var userFromContext = TestHelper.ApplicationContext.Users.FirstOrDefault(x => x.Email == dto.Email);
 
             Assert.IsNotNull(user);
-            Assert.AreEqual(user.Email, userFromContext.Email);
             Assert.AreEqual(user.UserName, userFromContext.UserName);
-            Assert.AreEqual(user.PasswordHash, userFromContext.PasswordHash);
+            Assert.AreEqual(user.Email, userFromContext.Email);
+            Assert.AreEqual(user.Profile.FirstName, userFromContext.Profile.FirstName);
+            Assert.AreEqual(user.Profile.LastName, userFromContext.Profile.LastName);
+            Assert.AreEqual(user.Profile.Address.StreetName, userFromContext.Profile.Address.StreetName);
+        }
+
+        [Test]
+        public async Task LoginUserTest()
+        {
+            var accountService = new AccountService(TestHelper.ApplicationContext, TestHelper.SignInManagerMock.Object, TestHelper.TestMapper, _logger);
+            var userLogin = TestHelper.ApplicationContext.Users.FirstOrDefault(x => x.UserName == "admin@admin.admin");
+            var dto = new LoginModelDTO()
+            {
+                Login = userLogin.UserName,
+                Password = userLogin.PasswordHash,
+                Attempts = 0,
+            };
+
+            var user = await accountService.LoginUser(dto);
+            var userFromContext = TestHelper.ApplicationContext.Users.FirstOrDefault(x => x.UserName == dto.Login);
+
+            Assert.IsNotNull(user);
+            Assert.AreEqual(user.UserName, userFromContext.UserName);
+            Assert.AreEqual(user.Email, userFromContext.Email);
+            Assert.AreEqual(user.Profile.FirstName, userFromContext.Profile.FirstName);
         }
     }
 }
