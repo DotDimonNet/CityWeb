@@ -138,7 +138,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var stepTwoResult = await _carSharingService.GetCarResersedPeriods(builder, id);
+                var stepTwoResult = await _carSharingService.GetCarReservedPeriods(builder, id);
                 return Json(stepTwoResult);
             }
             catch (Exception ex)

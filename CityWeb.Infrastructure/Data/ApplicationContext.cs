@@ -51,12 +51,8 @@ namespace CityWeb.Infrastucture.Data
         // enums tables
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
-        public DbSet<TransportType> TransportTypes { get; set; }
-        //public DbSet<EventType> EventTypes { get; set; }
-        public DbSet<EntertainmentType> EventTypes { get; set; }
-        public DbSet<HouseBillType> HouseBillType { get; set; }
-        public DbSet<HotelRoomType> HotelRoomType { get; set; }
-        public DbSet<NewsType> NewsType { get; set; }
+        public DbSet<HousePaymentType> HousePaymentType { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -79,14 +75,13 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ServiceModel>().HasMany(x => x.CarSharing).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.Taxi).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.Deliverys).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ServiceModel>().HasMany(x => x.News).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region Enums
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
-            builder.Entity<TransportType>().HasKey(x => x.ValueId).HasName("PK_TransportType");
-            builder.Entity<EntertainmentType>().HasKey(x => x.ValueId).HasName("PK_EventType");
-            builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
-            builder.Entity<HouseBillType>().HasKey(x => x.ValueId).HasName("PK_HouseBillType");
+
+            builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             #endregion
 
             builder.Entity<DeliveryModel>().HasMany(x => x.Products).WithOne(x => x.Delivery).HasForeignKey(x => x.DeliveryId);

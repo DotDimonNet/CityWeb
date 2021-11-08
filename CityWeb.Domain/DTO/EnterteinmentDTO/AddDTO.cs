@@ -10,19 +10,19 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
 {
     public class AddEntertainmentModelDTO
     {
-        public string EntertainmentTitle { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
-        public AddressModelDTO Location { get; set; }
+        public AddressModelDTO Address { get; set; }
     }
 
     public class AddEventModelDTO
     {
         public string EntertainmentTitle { get; set; }
-        public string EventTitle { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
-        public PriceModelDTO EventPrice { get; set; }
-        public bool isAvailable { get; set; }
+        public PriceModelDTO Price { get; set; }
+        public bool isAvailable { get; } = true;
         
         
 

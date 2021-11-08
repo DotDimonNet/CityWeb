@@ -104,18 +104,11 @@ namespace CityWeb.Infrastructure.Service.Transport
                 if (taxi != null)
                 {
                     TaxiCarModel car = _mapper.Map<AddTaxiCarDTO, TaxiCarModel>(addTaxiCarDTO);
-                    car.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Id == addTaxiCarDTO.Type);
                     car.Taxi = taxi;
                     car.IsFree = true;
-                    TaxiCarModelDTO result = _mapper.Map<TaxiCarModel, TaxiCarModelDTO>(car);
-                    if (car.Type != null)
-                    {
-                        await _context.TaxiCar.AddAsync(car);
-                        await _context.SaveChangesAsync();
-                        result.Type = car.Type.Id;
-                        return result;
-                    }
-                    throw new Exception($"Transport type {addTaxiCarDTO.Type} does not exist");
+                    await _context.TaxiCar.AddAsync(car);
+                    await _context.SaveChangesAsync();
+                    return _mapper.Map<TaxiCarModel, TaxiCarModelDTO>(car);
                 }
                 throw new Exception($"Taxi {addTaxiCarDTO.TaxiId} does not exist!");
             }
@@ -134,15 +127,9 @@ namespace CityWeb.Infrastructure.Service.Transport
                 if (taxiCar != null)
                 {
                     _mapper.Map<UpdateTaxiCarDTO, TaxiCarModel>(updateCarDTO, taxiCar);
-                    taxiCar.Type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Id == updateCarDTO.Type);
-                    taxiCar.Taxi = await _context.Taxi.FirstOrDefaultAsync(x => x.Id == updateCarDTO.TaxiId);
-                    if (taxiCar.Taxi != null)
-                    {
-                        _context.TaxiCar.Update(taxiCar);
-                        await _context.SaveChangesAsync();
-                        return _mapper.Map<TaxiCarModel, TaxiCarModelDTO>(taxiCar);
-                    }
-                    throw new Exception($"Taxi {updateCarDTO.TaxiId} does not exist!");
+                    _context.TaxiCar.Update(taxiCar);
+                    await _context.SaveChangesAsync();
+                    return _mapper.Map<TaxiCarModel, TaxiCarModelDTO>(taxiCar);
                 }
                 throw new Exception($"Car {updateCarDTO.Id} does not exist!");
             }
@@ -205,7 +192,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             {
                 builderResult.Id = id;
                 return await _context.TaxiCar.Where(x => x.IsFree && x.Taxi.Id == id)
-                    .Select(x => x.Type.Name).Distinct().ToListAsync();
+                    .Select(x => x.Type.ToString()).Distinct().ToListAsync();
             }
             catch (Exception ex)
             {
@@ -214,12 +201,12 @@ namespace CityWeb.Infrastructure.Service.Transport
             }
         }
 
-        public async Task<bool> CheckOrder(TaxiBuilderResult builderResult, int type)
+        public async Task<bool> CheckOrder(TaxiBuilderResult builderResult, string type)
         {
             try
             {
                 builderResult.TaxiType = type;
-                TransportType typeFromContext = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Id == type);
+                TransportType typeFromContext = Enum.Parse<TransportType>(type);
                 TaxiCarModel car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.IsFree && x.Type == typeFromContext);
                 if (car != null)
                 {
@@ -237,7 +224,7 @@ namespace CityWeb.Infrastructure.Service.Transport
 
         public async Task OrderTaxi(TaxiBuilderResult builderResult)
         {
-            TransportType type = await _context.TransportTypes.FirstOrDefaultAsync(x => x.Id == builderResult.TaxiType);
+            TransportType type = Enum.Parse<TransportType>(builderResult.TaxiType);
             TaxiCarModel car = await _context.TaxiCar.FirstOrDefaultAsync(x => x.IsFree && x.Type == type);
             car.IsFree = false;
         }

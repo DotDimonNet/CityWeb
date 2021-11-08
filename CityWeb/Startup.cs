@@ -117,6 +117,7 @@ namespace CityWeb
                 x.AddProfile<DeliveryMappingProfile>();
                 x.AddProfile<AccountMappingProfile>();
                 x.AddProfile<MappingEntertainmentProfile>();
+                x.AddProfile<MappingNewsProfile>();
                 
             });
             services.AddOptions();

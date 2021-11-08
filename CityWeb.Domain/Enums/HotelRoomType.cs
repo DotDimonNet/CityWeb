@@ -7,7 +7,16 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Enums
 {
-    public class HotelRoomType : Enumeration
+    public enum HotelRoomType
+    { 
+        Lux,
+        Delux,
+        Premium,
+        President,
+        Standart,
+        Econom,
+    }
+    /*public class HotelRoomType : Enumeration
     {
         public static readonly HotelRoomType Lux = new(1, "Lux");
         public static readonly HotelRoomType Delux = new(2, "Delux");
@@ -50,5 +59,5 @@ namespace CityWeb.Domain.Enums
                     return HotelRoomType.Standart;
             }
         }
-    }
+    }*/
 }
