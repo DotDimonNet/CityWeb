@@ -17,7 +17,7 @@ namespace CityWeb.Domain.DTO
     }
     public class CreateCounterModelDTO
     {
-        public string HouseBillTitle { get; set; }
+        public Guid HouseBillId { get; set; }
         public string Number { get; set; }
         public string Type { get; set; }
         public double StartCount { get; set; }

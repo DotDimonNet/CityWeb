@@ -1,6 +1,11 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.HouseBillDTO;
+using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using CityWeb.Infrastructure.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -10,20 +15,23 @@ namespace CityWeb.Tests
 {
     public class HouseBillServiceTest
     {
+        private Mock<ILogger<HouseBillService>> _loggerMock;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
+            _loggerMock = TestHelper.SetupTestLogger<HouseBillService>();
         }
 
         [Test]
         public async Task CreateHHouseBillTest()
         {
-            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
             var dto = new CreateHouseBillModelDTO()
             {
                 Title = "Payment for Gas",
-                Description = "October"
+                Description = "October",
+                HouseHoldAddress = new AddressModelDTO(),
             };
 
             var houseBill = await houseBillService.CreateHouseBill(dto);
@@ -35,12 +43,24 @@ namespace CityWeb.Tests
         }
 
         [Test]
+        public async Task UpdateHouseBillTest()
+        {
+        var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+        var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "houseBill1");
+        var houseBillDTO = new UpdateHouseBillModelDTO()
+            {
+                Id = houseBillId.Id,
+            };
+
+        }
+
+        [Test]
         public void DeleteHouseBillTest()
         {
-            var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
             var dto = new DeleteHouseBillModelDTO()
             {
-                Title = "HouseBill1",
+                HouseBillId = "123456789",
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await housePayService.DeleteHouseBill(dto));

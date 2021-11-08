@@ -14,12 +14,12 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     {
         public HouseBillBuilderResult SetupHouseBillBuilderResult();
         public Task<HouseBillModel> CreateHouseBill(CreateHouseBillModelDTO houseBillModel);
-        public Task<CounterModelDTO> CreateCounter(CreateCounterModelDTO createcounterModelDTO);
+        public Task<CounterModelDTO> CreateCounter(CreateCounterModelDTO createCounterDTO);
         public Task<bool> DeleteCounter(DeleteCounterModelDTO deleteCounterModel);
-        public Task<IEnumerable<HouseBillModelDTO>> GetAllHouseBills();
+        public Task<ICollection<HouseBillModelDTO>> GetAllHouseBills();
         public Task<CounterModelDTO> UpdateCounter(UpdateCounterModelDTO counterModel);
         public Task<bool> DeleteHouseBill(DeleteHouseBillModelDTO dtoModel);
-        public Task<ICollection<CounterModelDTO>> GetAllCounters();
+        Task<ICollection<CounterModelDTO>> GetAllCountersbyHouseBillId(HouseBillIdDTO housebillIdDTO);
         public Task<HouseBillModelDTO> UpdateHouseBill(UpdateHouseBillModelDTO dtoModel);
 
 

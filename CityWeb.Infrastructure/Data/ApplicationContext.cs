@@ -54,7 +54,6 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<TransportType> TransportTypes { get; set; }
         //public DbSet<EventType> EventTypes { get; set; }
         public DbSet<EntertainmentType> EventTypes { get; set; }
-        public DbSet<HouseBillType> HouseBillType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
         public DbSet<NewsType> NewsType { get; set; }
 
@@ -86,7 +85,6 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<TransportType>().HasKey(x => x.ValueId).HasName("PK_TransportType");
             builder.Entity<EntertainmentType>().HasKey(x => x.ValueId).HasName("PK_EventType");
             builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
-            builder.Entity<HouseBillType>().HasKey(x => x.ValueId).HasName("PK_HouseBillType");
             #endregion
 
             builder.Entity<DeliveryModel>().HasMany(x => x.Products).WithOne(x => x.Delivery).HasForeignKey(x => x.DeliveryId);
