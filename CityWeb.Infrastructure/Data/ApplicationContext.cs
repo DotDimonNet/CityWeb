@@ -55,7 +55,6 @@ namespace CityWeb.Infrastucture.Data
         //public DbSet<EventType> EventTypes { get; set; }
         public DbSet<EntertainmentType> EventTypes { get; set; }
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
-        public DbSet<HotelRoomType> HotelRoomType { get; set; }
         public DbSet<NewsType> NewsType { get; set; }
 
 
@@ -85,7 +84,6 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
             builder.Entity<TransportType>().HasKey(x => x.ValueId).HasName("PK_TransportType");
             builder.Entity<EntertainmentType>().HasKey(x => x.ValueId).HasName("PK_EventType");
-            builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
             builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             #endregion
 

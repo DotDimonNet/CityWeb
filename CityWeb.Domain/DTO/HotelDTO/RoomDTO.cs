@@ -10,7 +10,7 @@ namespace CityWeb.Domain.DTO.HotelDTO
 {
     public class RoomDTO
     {
-        public HotelRoomType Type { get; set; }
+        public string Type { get; set; }
         public int Number { get; set; }
         public PriceDTO Price { get; set; }
         public string HotelTitle { get; set; }
