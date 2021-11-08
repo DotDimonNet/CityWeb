@@ -51,7 +51,6 @@ namespace CityWeb.Infrastucture.Data
         // enums tables
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
-        public DbSet<TransportType> TransportTypes { get; set; }
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
         
@@ -82,8 +81,6 @@ namespace CityWeb.Infrastucture.Data
 
             #region Enums
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
-            builder.Entity<TransportType>().HasKey(x => x.ValueId).HasName("PK_TransportType");
-            //builder.Entity<EntertainmentType>().HasKey(x => x.ValueId).HasName("PK_EventType");
             builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
             builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             #endregion

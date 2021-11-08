@@ -190,8 +190,7 @@ namespace CityWeb.Infrastructure.Service
             {
                 _logger.LogError(ex.Message);
                 throw new Exception(ex.Message);
-            }
-            
+            } 
         }
 
         public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(DeliveryIdDTO deliveryIdDTO)
@@ -218,7 +217,7 @@ namespace CityWeb.Infrastructure.Service
         public async Task<ICollection<ProductModelDTO>> GetAllProductByPriceFilter(ProductPriceFilterDTO priceFilter, int skip = 0, int take = 10)
         {
             var delivery = await _context.Deliveries.AnyAsync(x => x.Id == priceFilter.DeliveryId);
-            if (!delivery)
+            if (delivery)
             {
                 try
                 {

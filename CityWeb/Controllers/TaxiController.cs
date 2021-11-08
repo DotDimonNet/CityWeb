@@ -164,7 +164,7 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPost("check-order")]
-        public async Task<IActionResult> CheckOrder([FromBody] TaxiBuilderResult builder, [FromQuery] int type)
+        public async Task<IActionResult> CheckOrder([FromBody] TaxiBuilderResult builder, [FromQuery] string type)
         {
             try
             {
