@@ -52,11 +52,9 @@ namespace CityWeb.Infrastucture.Data
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<TransportType> TransportTypes { get; set; }
-        public DbSet<ProductType> ProductTypes { get; set; }
-        //public DbSet<EntertainmentType> EventTypes { get; set; }
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
-        public DbSet<NewsType> NewsType { get; set; }
+        
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -79,6 +77,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ServiceModel>().HasMany(x => x.CarSharing).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.Taxi).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.Deliverys).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ServiceModel>().HasMany(x => x.News).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region Enums
@@ -95,7 +94,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);
             builder.Entity<EntertainmentModel>().HasMany(x => x.Events).WithOne(x => x.Entertaiment).HasForeignKey(x => x.EntertaimentId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<HousePayModel>().HasMany(x => x.CounterModels).WithOne(x => x.HousePayment).HasForeignKey(x => x.HousePaymentId);
-
+            
             //builder.Entity<ServiceModel>().HasMany(x => x.Users).WithOne(x => x.Services).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
 
 

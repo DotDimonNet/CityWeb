@@ -39,8 +39,6 @@ namespace CityWeb.Infrastructure.Service
                 if (entertainment != null)
                 {
                     _mapper.Map<UpdateEntertainmentDTO, EntertainmentModel>(updateData, entertainment);
-                    Enum.TryParse(updateData.Type, out EntertainmentType type);
-                    entertainment.Type = type;
                     _context.Entertaiments.Update(entertainment);
                     await _context.SaveChangesAsync();
                     var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
@@ -140,8 +138,6 @@ namespace CityWeb.Infrastructure.Service
                 if (entertainment == null)
                 {
                     entertainment = _mapper.Map<AddEntertainmentModelDTO, EntertainmentModel>(addData);
-                    Enum.TryParse(addData.Type, out EntertainmentType type);
-                    entertainment.Type = type;
                     entertainment.Service = new ServiceModel();
                     await _context.Entertaiments.AddAsync(entertainment);
                     await _context.SaveChangesAsync();
