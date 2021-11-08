@@ -15,18 +15,18 @@ namespace CityWeb.Tests
 {
     public class HouseBillServiceTest
     {
-        private Mock<ILogger<HouseBillService>> _loggerMock;
+        private ILogger<HouseBillService> _logger;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
-            _loggerMock = TestHelper.SetupTestLogger<HouseBillService>();
+            _logger = TestHelper.SetupTestLogger<HouseBillService>();
         }
 
         [Test]
         public async Task CreateHHouseBillTest()
         {
-            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new CreateHouseBillModelDTO()
             {
                 Title = "Payment for Gas",
@@ -45,7 +45,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateHouseBillTest()
         {
-        var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+        var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
         var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "houseBill1");
             var houseBillDTO = new UpdateHouseBillModelDTO()
             {
@@ -66,7 +66,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteHouseBillTest()
         {
-            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "HouseBill5");
             var dto = new DeleteHouseBillModelDTO()
             {
