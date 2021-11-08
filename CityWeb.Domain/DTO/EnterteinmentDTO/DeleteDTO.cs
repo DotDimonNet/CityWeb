@@ -18,6 +18,5 @@ namespace CityWeb.Domain.DTO.EnterteinmentDTO
     public class DeleteEventDTO
     {
         public string Title { get; set; }
-        public string EventTitle { get; set; }
     }
 }

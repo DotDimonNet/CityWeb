@@ -25,7 +25,7 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
             }
 
-            if (!_context.TransportTypes.Any())
+            /*if (!_context.TransportTypes.Any())
             {
                 _context.AddRange(
                     TransportType.Econom,
@@ -33,22 +33,22 @@ namespace CityWeb.Infrastucture.Data
                     TransportType.Business);
 
                 _context.SaveChanges();
-            }
+            }*/
 
-            if (!_context.EventTypes.Any())
-            {
-                _context.AddRange(
-                    EntertainmentType.Cinema,
-                    EntertainmentType.Circus,
-                    EntertainmentType.Club,
-                    EntertainmentType.Exhibition,
-                    EntertainmentType.Fest,
-                    EntertainmentType.Museum,
-                    EntertainmentType.Theatre
-                    );
+            //if (!_context.EventTypes.Any())
+            //{
+            //    _context.AddRange(
+            //        EntertainmentType.Cinema,
+            //        EntertainmentType.Circus,
+            //        EntertainmentType.Club,
+            //        EntertainmentType.Exhibition,
+            //        EntertainmentType.Fest,
+            //        EntertainmentType.Museum,
+            //        EntertainmentType.Theatre
+            //        );
 
-                _context.SaveChanges();
-            }
+            //    _context.SaveChanges();
+            //}
 
             if (!_context.HousePaymentType.Any())
             {

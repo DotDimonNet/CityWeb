@@ -12,11 +12,10 @@ namespace CityWeb.Domain.Entities
     {
         public virtual string Title {get; set; }
         public virtual string Description {get; set; }
-        public virtual EntertainmentType Type { get; set; }
-        public virtual PriceModel EventPrice { get; set; }
-        public virtual EntertainmentModel Entertaiment { get; set;}
+        public virtual PriceModel Price { get; set; }
         public virtual bool isAvailable { get; set; }
         public virtual Guid EntertaimentId { get; set; }
-        
+        public virtual EntertainmentModel Entertaiment { get; set; }
+        //public virtual EntertainmentType Type { get; set; }
     }
 }

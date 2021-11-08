@@ -12,12 +12,21 @@ namespace CityWeb.Mapping
     {
         public AccountMappingProfile()
         {
+            //Address
+            CreateMap<AddressModel, AddressModelDTO>();
+            CreateMap<AddressModelDTO, AddressModel>();
+
+            //Profile
+            CreateMap<UserProfileModel, UserProfileModelDTO>();
+            CreateMap<UserProfileModelDTO, UserProfileModel>();
+
             CreateMap<RegisterModelDTO, ApplicationUserModel>()
                 .ForMember(x => x.UserName, o => o.MapFrom(z => z.UserName))
-                .ForMember(x => x.Email, o => o.MapFrom(z => z.Email))
-                .ForMember(x => x.Profile, o => o.Ignore());
+                .ForMember(x => x.Email, o => o.MapFrom(z => z.Email));
 
-            CreateMap<ApplicationUserModel, UserDTO>();
+            CreateMap<UpdateUserDataDTO, ApplicationUserModel>();
+
+            CreateMap<ApplicationUserModel, UserDTO>();   
         }
     }
 }

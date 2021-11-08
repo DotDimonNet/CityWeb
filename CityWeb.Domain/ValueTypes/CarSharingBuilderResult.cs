@@ -12,7 +12,7 @@ namespace CityWeb.Domain.ValueTypes
     public class CarSharingBuilderResult
     {
         public Guid CarSharingId { get; set; }
-        public RentCarsModelDTO Car { get; set; }
+        public RentCarModelDTO Car { get; set; }
         public PeriodModelDTO RentPeriod { get; set; }
         public double Price { get; set; }
         public AddressModelDTO Location { get; set; }

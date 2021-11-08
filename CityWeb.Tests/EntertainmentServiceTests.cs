@@ -26,10 +26,10 @@ namespace CityWeb.Tests
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new AddEntertainmentModelDTO()
             {
-                EntertainmentTitle = "asdasd",
+                Title = "asdasd",
                 Description = "Default description",
                 Type = "Club",
-                Location = new AddressModelDTO()
+                Address = new AddressModelDTO()
                 {
                     StreetName = "soborna",
                     HouseNumber = "43",
@@ -42,7 +42,7 @@ namespace CityWeb.Tests
             
 
             Assert.IsNotNull(entertainment);
-            Assert.AreEqual(dto.EntertainmentTitle, entertainment.EntertainmentTitle);
+            Assert.AreEqual(dto.Title, entertainment.Title);
             Assert.AreEqual(dto.Description, entertainment.Description);
             Assert.AreEqual(dto.Type, entertainment.Type);
 

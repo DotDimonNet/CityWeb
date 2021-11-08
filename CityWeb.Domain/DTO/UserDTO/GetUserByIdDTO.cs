@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.DTO
 {
-    public class UpdateUserDataDTO
+    public class GetUserByIdDTO
     {
         public Guid UserId { get; set; }
-        public UserProfileModelDTO Profile { get; set; }
     }
 }

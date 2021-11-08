@@ -3,11 +3,13 @@ using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastucture.Data;
 using CityWeb.Mapping;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -19,15 +21,14 @@ namespace CityWeb.Tests
     public static class TestHelper
     {
         public static ApplicationContext ApplicationContext { get; set; }
-
         public static Mock<UserManager<ApplicationUserModel>> UserManagerMock { get; set; }
         public static Mock<SignInManager<ApplicationUserModel>> SignInManagerMock { get; set; }
         public static Mock<RoleManager<ApplicationUserRole>> RoleManagerMock { get; set; }
         public static IMapper TestMapper { get; set; }
     
-        public static Mock<ILogger<T>> SetupTestLogger<T>() where T : class
+        public static ILogger<T> SetupTestLogger<T>() where T : class
         {
-            return new Mock<ILogger<T>>();
+            return new NullLogger<T>();
         }
 
         public static async Task SetupDbContext()
@@ -64,6 +65,7 @@ namespace CityWeb.Tests
             {
                 UserName = "admin@admin.admin",
                 Email = "admin@admin.admin",
+                PasswordHash = "qwerty123",
                 EmailConfirmed = true,
                 Profile = new UserProfileModel
                 {
@@ -87,10 +89,20 @@ namespace CityWeb.Tests
             UserManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success).Verifiable();
 
-            var _contextAccessor = new Mock<IHttpContextAccessor>();
-            var _userPrincipalFactory = new Mock<IUserClaimsPrincipalFactory<ApplicationUserModel>>();
-            SignInManagerMock = new Mock<SignInManager<ApplicationUserModel>>(UserManagerMock.Object,
-                           _contextAccessor.Object, _userPrincipalFactory.Object, null, null, null);
+            UserManagerMock.Setup(x => x.ChangePasswordAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success).Verifiable();
+
+            SignInManagerMock = new Mock<SignInManager<ApplicationUserModel>>(
+                            UserManagerMock.Object,
+                            new Mock<IHttpContextAccessor>().Object,
+                            new Mock<IUserClaimsPrincipalFactory<ApplicationUserModel>>().Object,
+                            new Mock<IOptions<IdentityOptions>>().Object,
+                            new Mock<ILogger<SignInManager<ApplicationUserModel>>>().Object,
+                            new Mock<IAuthenticationSchemeProvider>().Object,
+                            new Mock<IUserConfirmation<ApplicationUserModel>>().Object);
+
+            SignInManagerMock.Setup(x => x.CheckPasswordSignInAsync(It.IsAny<ApplicationUserModel>(), It.IsAny<string>(), It.IsAny<bool>()))
+                .ReturnsAsync(SignInResult.Success).Verifiable();
 
             var storeRoles = new Mock<IRoleStore<ApplicationUserRole>>();
             RoleManagerMock = new Mock<RoleManager<ApplicationUserRole>>(storeRoles.Object, null, null, null, null);
@@ -261,7 +273,7 @@ namespace CityWeb.Tests
                     var taxiCar = new TaxiCarModel()
                     {
                         TaxiId = taxi[i].Id,
-                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                        Type = TransportType.Business,
                         Color = "yellow",
                         Mark = "BMW",
                         Number = $"AB 88{j}{i} SS",
@@ -303,7 +315,7 @@ namespace CityWeb.Tests
                                 Tax = i*2,
                                 VAT = i +1,
                             },
-                            ProductType = Domain.Enums.ProductType.AlcoholicDrinks,
+                            ProductType = Domain.Enums.ProductType.Burgers,
                             ProductImage = $"img{i+1}"
                         }
                     },
