@@ -19,9 +19,9 @@ namespace CityWeb.Infrastructure.Service
             _context = context;
         }
 
-            /*public async Task<PaymentModel> AddPayment()
+            public async Task<PaymentModel> AddPayment()
             {
 
-            }*/
+            }
     }
 }
