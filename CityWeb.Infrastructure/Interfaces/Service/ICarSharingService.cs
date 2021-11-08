@@ -22,8 +22,15 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<IEnumerable<CarSharingModelDTO>> GetAllCarSharings();
         public Task<IEnumerable<RentCarModelDTO>> GetAllRentCars();
         public CarSharingBuilderResult SetupCarSharingBuilderResult();
+        
         public Task<IEnumerable<RentCarModelDTO>> GetAllCarsOfCarSharing(CarSharingBuilderResult builderResult, Guid id);
-        public Task<IEnumerable<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, Guid id);
+        /// <summary>
+        /// Check is car free in period and calculate price
+        /// </summary>
+        /// <param name="builderResult"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<PeriodModelDTO>> GetCarReservedPeriods(CarSharingBuilderResult builderResult, Guid id);
         /// <summary>
         /// Check is exist free car and calculate price
         /// </summary>

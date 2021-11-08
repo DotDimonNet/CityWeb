@@ -176,12 +176,6 @@ namespace CityWeb.Infrastructure.Service.Transport
             };
         }
 
-        /// <summary>
-        /// Get all cars which contains CarSharing
-        /// </summary>
-        /// <param name="builderResult"></param>
-        /// <param name="title"></param>
-        /// <returns></returns>
         public async Task<IEnumerable<RentCarModelDTO>> GetAllCarsOfCarSharing(CarSharingBuilderResult builderResult, Guid id)
         {
             try
@@ -202,13 +196,7 @@ namespace CityWeb.Infrastructure.Service.Transport
             }            
         }
 
-        /// <summary>
-        /// Get periods when car is reserved
-        /// </summary>
-        /// <param name="builderResult"></param>
-        /// <param name="vinCode"></param>
-        /// <returns></returns>
-        public async Task<IEnumerable<PeriodModelDTO>> GetCarResersedPeriods(CarSharingBuilderResult builderResult, Guid id)
+        public async Task<IEnumerable<PeriodModelDTO>> GetCarReservedPeriods(CarSharingBuilderResult builderResult, Guid id)
         {
             try
             {
@@ -218,8 +206,7 @@ namespace CityWeb.Infrastructure.Service.Transport
                     builderResult.Car = _mapper.Map<RentCarModel, RentCarModelDTO>(car);
                     return car.RentPeriod.Select(x => _mapper.Map<PeriodModel, PeriodModelDTO>(x)).ToList();
                 }
-                else
-                    throw new Exception($"Car {id} does not exist!");
+                throw new Exception($"Car {id} does not exist!");
             }
             catch (Exception ex)
             {
@@ -228,12 +215,6 @@ namespace CityWeb.Infrastructure.Service.Transport
             }            
         }
 
-        /// <summary>
-        /// Check is car free in period and calculate price
-        /// </summary>
-        /// <param name="builderResult"></param>
-        /// <param name="period"></param>
-        /// <returns></returns>
         public async Task<bool> CheckRent(CarSharingBuilderResult builderResult, PeriodModelDTO period)
         {
             try

@@ -347,7 +347,6 @@ namespace CityWeb.Tests
                 ratings.Add(rating);
             }
             await ApplicationContext.Ratings.AddRangeAsync(ratings);
-            await ApplicationContext.SaveChangesAsync();
 
             //Create HousePay
 
@@ -381,8 +380,9 @@ namespace CityWeb.Tests
                         }
                     }
                 };
-                housePays.Add(housePay);
+                housePays.Add(housePay); 
             }
+            await ApplicationContext.SaveChangesAsync();
         }
     }
 }
