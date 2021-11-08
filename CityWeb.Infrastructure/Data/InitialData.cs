@@ -66,20 +66,6 @@ namespace CityWeb.Infrastucture.Data
 
                 _context.SaveChanges();
             }
-
-            if (!_context.HotelRoomType.Any())
-            {
-                _context.AddRange(
-                    HotelRoomType.Delux,
-                    HotelRoomType.Econom,
-                    HotelRoomType.Lux,
-                    HotelRoomType.Premium,
-                    HotelRoomType.President,
-                    HotelRoomType.Standart
-                    );
-
-                _context.SaveChanges();
-            }
         }
 
         public static void SetupData(ApplicationContext _context)

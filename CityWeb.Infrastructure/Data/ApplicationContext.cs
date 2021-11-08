@@ -52,8 +52,7 @@ namespace CityWeb.Infrastucture.Data
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
-        public DbSet<HotelRoomType> HotelRoomType { get; set; }
-        
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -81,7 +80,7 @@ namespace CityWeb.Infrastucture.Data
 
             #region Enums
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
-            builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
+
             builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             #endregion
 

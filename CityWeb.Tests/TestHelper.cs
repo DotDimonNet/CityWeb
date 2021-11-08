@@ -119,7 +119,7 @@ namespace CityWeb.Tests
             {
                 var room = new RoomModel()
                 {
-                    Type = HotelRoomType.GetRandomRoomType(),
+                    Type = HotelRoomType.Econom,
                     Image = $"Room_img{i}.png",
                     Number = i + 100,
                     IsFree = GetRandomBool(),

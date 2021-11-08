@@ -2,6 +2,7 @@
 using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.HotelDTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +32,21 @@ namespace CityWeb.Mapping
 
             CreateMap<HotelModel, HotelDTO>();
             CreateMap<HotelDTO, HotelModel>();
-            CreateMap<RoomDTO, RoomModel>();
-            CreateMap<PriceDTO, PriceModel>();
+            CreateMap<PriceDTO, PriceModel>();      
 
-            CreateMap<RoomModel, RoomDTO>();
-                //.ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
+            CreateMap<RoomModel, RoomDTO>()
+                 .ForMember(x => x.Type, o => o.MapFrom(z => z.Type.ToString()));
+            CreateMap<RoomDTO, RoomModel>()
+                .ForMember(x => x.Type, o => o.MapFrom((z) => Enum.Parse<HotelRoomType>(z.Type)));
+            //.ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
+
+
             CreateMap<RoomModel, UpdateRoomDTO>()
-                .ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
+                 .ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
+            CreateMap<UpdateRoomDTO, RoomModel>()
+                .ForMember(x => x.Type, o => o.MapFrom((z) => Enum.Parse<HotelRoomType>(z.Type)));
+            
+
             CreateMap<RoomModel, PeriodModel>();
             CreateMap<RoomModel, PriceModel>();
             CreateMap<RoomDTO, PriceDTO>();
