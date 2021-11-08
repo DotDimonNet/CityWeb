@@ -24,7 +24,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<bool> DeleteTaxiCar(DeleteTaxiCarDTO deleteCarDTO);
         public Task<IEnumerable<TaxiModelDTO>> GetTaxi(TaxiBuilderResult builderResult, IEnumerable<AddressModelDTO> addresses);
         public Task<IEnumerable<string>> GetTaxiTypes(TaxiBuilderResult builderResult, Guid Id);
-        public Task<bool> CheckOrder(TaxiBuilderResult builderResult, int type);
+        public Task<bool> CheckOrder(TaxiBuilderResult builderResult, string type);
         public Task OrderTaxi(TaxiBuilderResult builderResult);
         public  Task EndJourney(Guid Id);
     }

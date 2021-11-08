@@ -3,6 +3,7 @@ using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.CarSharing;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +32,18 @@ namespace CityWeb.Mapping
             CreateMap<CarSharingModel, UpdateCarSharingModelDTO>();
 
             //RentCar
-            CreateMap<RentCarModel, RentCarsModelDTO>();
-            CreateMap<RentCarsModelDTO, RentCarModel>();
-            CreateMap<RentCarModel, AddRentCarDTO>();
-            CreateMap<AddRentCarDTO, RentCarModel>();
-            CreateMap<RentCarModel, UpdateRentCarDTO>();
-            CreateMap<UpdateRentCarDTO, RentCarModel>();
+            CreateMap<RentCarModel, RentCarModelDTO>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.Type.ToString()));
+            CreateMap<RentCarModelDTO, RentCarModel>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => Enum.Parse<TransportType>(z.Type)));
+            CreateMap<RentCarModel, AddRentCarDTO>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.Type.ToString()));
+            CreateMap<AddRentCarDTO, RentCarModel>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => Enum.Parse<TransportType>(z.Type)));
+            CreateMap<RentCarModel, UpdateRentCarDTO>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.Type.ToString()));
+            CreateMap<UpdateRentCarDTO, RentCarModel>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => Enum.Parse<TransportType>(z.Type)));
         }
     }
 }
