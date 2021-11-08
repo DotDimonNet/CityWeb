@@ -22,9 +22,9 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
-        private readonly ILogger<AccountService> _logger;
+        private readonly ILogger<EntertainmentService> _logger;
 
-        public EntertainmentService(ApplicationContext context, IMapper mapper, ILogger<AccountService> logger)
+        public EntertainmentService(ApplicationContext context, IMapper mapper, ILogger<EntertainmentService> logger)
         {
             _mapper = mapper;
             _context = context;

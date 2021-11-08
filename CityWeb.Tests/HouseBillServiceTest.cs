@@ -3,9 +3,7 @@ using CityWeb.Domain.DTO.HouseBillDTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastructure.Service;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -66,8 +64,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteHouseBillTest()
         {
-            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
-            var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "HouseBill5");
+            var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new DeleteHouseBillModelDTO()
             {
                 HouseBillId = houseBillId.Id,

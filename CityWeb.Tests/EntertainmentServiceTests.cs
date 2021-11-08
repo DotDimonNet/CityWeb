@@ -9,21 +9,24 @@ using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace CityWeb.Tests
 {
     public class EntertainmentServiceTests
     {
+        private ILogger<EntertainmentService> _logger;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
+            _logger = TestHelper.SetupTestLogger<EntertainmentService>();
         }
         [Test]
         public async Task AddEntertainmentModelTest()
         {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new AddEntertainmentModelDTO()
             {
                 Title = "asdasd",

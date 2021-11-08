@@ -140,4 +140,5 @@ namespace CityWeb.Tests
             Assert.AreEqual(taxiCarFromContext.Type.ToString(), taxiCar.Type);
         }
     }
+}
 
