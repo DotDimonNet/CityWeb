@@ -2,6 +2,9 @@ using CityWeb.Domain.DTO;
 using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastructure.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -11,20 +14,25 @@ namespace CityWeb.Tests
 {
     public class DeliveryServiceTests
     {
+        private Mock<ILogger<DeliveryService>> _loggerMock;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
+            _loggerMock = TestHelper.SetupTestLogger<DeliveryService>();
         }
 
         [Test]
         public async Task CreateDeliveryCompanyTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
             var dto = new CreateDeliveryModelDTO()
             {
                 Title = "Delivery Company",
-                Description = "Default description"
+                Description = "Default description",
+                DeliveryAdress = new AddressModelDTO(),
+                DeliveryPrice = new PriceModelDTO(),
+                WorkSchedule = new PeriodModelDTO(),
             };
 
             var delivery = await deliveryService.CreateDeliveryCompany(dto);
@@ -38,12 +46,13 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateDeliveryCompanyTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var deliveryId = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == "DeliveryCompany2");
             var dto = new UpdateDeliveryModelDTO()
             {
-                Title = "DeliveryCompany2",
+                Id = deliveryId.Id,
                 Description = "Super quick",
-                WorkShedyle = new PeriodModelDTO()
+                WorkSchedule = new PeriodModelDTO()
                 {
                     StartTime = DateTime.Now,
                     EndTime = DateTime.Now,
@@ -56,22 +65,23 @@ namespace CityWeb.Tests
                 },
             };
             var delivery = await deliveryService.UpdateDeliveryCompany(dto);
-            var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == dto.Title);
+            var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Id == dto.Id);
 
             Assert.IsNotNull(delivery);
             Assert.AreEqual(delivery.Description, deliveryFromContext.Description);
-            Assert.AreEqual(delivery.WorkShedyle.StartTime, deliveryFromContext.WorkSchedule.StartTime);
-            Assert.AreEqual(delivery.WorkShedyle.EndTime, deliveryFromContext.WorkSchedule.EndTime);
+            Assert.AreEqual(delivery.WorkSchedule.StartTime, deliveryFromContext.WorkSchedule.StartTime);
+            Assert.AreEqual(delivery.WorkSchedule.EndTime, deliveryFromContext.WorkSchedule.EndTime);
             Assert.AreEqual(delivery.DeliveryPrice.Value, deliveryFromContext.DeliveryPrice.Value);
         }
 
         [Test]
         public async Task UpdateDeliveryCompanyExeptionTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var deliveryId = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == "DeliveryCompany17");
             var dto = new UpdateDeliveryModelDTO()
             {
-                Title = "DeliveryCompany17",
+                Id = deliveryId.Id,// ?????
                 DeliveryPrice = new PriceModelDTO()
                 {
                     Value = 10.00,
@@ -85,16 +95,46 @@ namespace CityWeb.Tests
         }
 
         [Test]
+        public async Task DeleteDeliveryCompanyTest()
+        {
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var deliveryId = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == "DeliveryCompany6");
+            var dto = new DeleteCompanyDTO()
+            {
+                DeliveryId = deliveryId.Id,
+            };
+
+            await deliveryService.DeleteDeliveryCompany(dto);
+            var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Id == dto.DeliveryId);
+            Assert.IsNull(deliveryFromContext);
+        }
+
+        [Test]
+        public async Task DeleteDeliveryCompanyExeptionTest()
+        {
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var deliveryId = await TestHelper.ApplicationContext.Deliveries.FirstOrDefaultAsync(x => x.Title == "DeliveryCompany666");
+            var dto = new DeleteCompanyDTO()
+            {
+                DeliveryId = deliveryId.Id
+            };
+
+            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.DeleteDeliveryCompany(dto));
+            Assert.AreEqual(exeption.Message, "Company does not exist!");
+        }
+
+        [Test]
         public async Task CreateProductTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new ProductModelDTO()
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var deliveryId = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == "DeliveryCompany2");
+            var dto = new CreateProductModelDTO()
             {
-                Title = "DeliveryCompany2",
+                DeliveryId = deliveryId.Id,
                 ProductName = "Product",
-                ProductType = TestHelper.ApplicationContext.ProductTypes.FirstOrDefault().Name,
+                ProductType = "Burgers",
                 ProductImage = "img",
-                Price = new PriceModelDTO()
+                ProductPrice = new PriceModelDTO()
                 {
                     Value = 10.00,
                     Tax = 0.00,
@@ -107,24 +147,24 @@ namespace CityWeb.Tests
 
             Assert.IsNotNull(product);
             Assert.AreEqual(product.ProductName, productFromContext.ProductName);
-            Assert.AreEqual(product.ProductType.Name, productFromContext.ProductType.Name);
+            Assert.AreEqual(product.ProductType, productFromContext.ProductType);
             Assert.AreEqual(product.ProductImage, productFromContext.ProductImage);
-            Assert.AreEqual(product.Price.VAT, productFromContext.ProductPrice.VAT);
-            Assert.AreEqual(product.Price.Tax, productFromContext.ProductPrice.Tax);
-            Assert.AreEqual(product.Price.Value, productFromContext.ProductPrice.Value);
+            Assert.AreEqual(product.ProductPrice.VAT, productFromContext.ProductPrice.VAT);
+            Assert.AreEqual(product.ProductPrice.Tax, productFromContext.ProductPrice.Tax);
+            Assert.AreEqual(product.ProductPrice.Value, productFromContext.ProductPrice.Value);
         }
 
         [Test]
-        public async Task CreateMenuTestExeptionOneTest()
+        public async Task CreateProductTestExeptionOneTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new ProductModelDTO()
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var dto = new CreateProductModelDTO()
             {
-                Title = "DeliveryCompany22",
+                DeliveryId = Guid.NewGuid(),
                 ProductName = "Product",
-                //ProductType = ProductType.AlcoholicDrinks,
+                ProductType = "Burgers",
                 ProductImage = "img",
-                Price = new PriceModelDTO()
+                ProductPrice = new PriceModelDTO()
                 {
                     Value = 10.00,
                     Tax = 0.00,
@@ -133,20 +173,21 @@ namespace CityWeb.Tests
             };
 
             var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.CreateProduct(dto));
-            Assert.AreEqual(exeption.Message, "Company was not created!");
+            Assert.AreEqual(exeption.Message, "Company does not exist!");
         }
 
         [Test]
-        public async Task CreateMenuTestExeptionTwoTest()
+        public async Task CreateProductExeptionTwoTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new ProductModelDTO()
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var deliveryId = await TestHelper.ApplicationContext.Deliveries.FirstOrDefaultAsync(x => x.Title == "DeliveryCompany2");
+            var dto = new CreateProductModelDTO()
             {
-                Title = "DeliveryCompany2",
+                DeliveryId = deliveryId.Id,
                 ProductName = "Product2",
-                //ProductType = ProductType.AlcoholicDrinks,
+                //ProductType = ProductType.Burgers.ToString(),
                 ProductImage = "img",
-                Price = new PriceModelDTO()
+                ProductPrice = new PriceModelDTO()
                 {
                     Value = 10.00,
                     Tax = 0.00,
@@ -161,123 +202,66 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateProductTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new ProductModelDTO()
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var productId = await TestHelper.ApplicationContext.Products.FirstOrDefaultAsync(x => x.ProductName == "Product1");
+            var dto = new UpdateProductModelDTO()
             {
-                Title = "DeliveryCompany1",
+                ProductId = productId.Id,
                 ProductName = "Product1",
-                Price = new PriceModelDTO()
+                ProductPrice = new PriceModelDTO()
                 {
                     Value = 10.00,
                 },
             };
 
             var product = await deliveryService.UpdateProduct(dto);
-            var productFromContext = TestHelper.ApplicationContext.Products.FirstOrDefault(x => x.ProductName == product.ProductName);
+            var productFromContext = TestHelper.ApplicationContext.Products.FirstOrDefault(x => x.Id == dto.ProductId);
             Assert.IsNotNull(product);
-            Assert.AreEqual(product.Price.Value, productFromContext.ProductPrice.Value);
+            Assert.AreEqual(product.ProductPrice.Value, productFromContext.ProductPrice.Value);
         }
 
         [Test]
-        public async Task UpdateProductExeptionOneTest()
+        public async Task UpdateProductExeptionTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new ProductModelDTO()
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var productId = await TestHelper.ApplicationContext.Products.FirstOrDefaultAsync(x => x.ProductName == "Product17");
+            var dto = new UpdateProductModelDTO()
             {
-                Title = "DeliveryCompany15",
+                ProductId = productId.Id,
                 ProductName = "Product1",
-                Price = new PriceModelDTO()
+                ProductPrice = new PriceModelDTO()
                 {
                     Value = 10.00,
                 },
             };
 
             var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.UpdateProduct(dto));
-            Assert.AreEqual(exeption.Message, "Company was not created!");
-        }
-
-        [Test]
-        public async Task UpdateProductExeptionTwoTest()
-        {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new ProductModelDTO()
-            {
-                Title = "DeliveryCompany5",
-                ProductName = "Product6",
-                Price = new PriceModelDTO()
-                {
-                    Value = 10.00,
-                },
-            };
-
-            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.UpdateProduct(dto));
-            Assert.AreEqual(exeption.Message, "Product was not created!");
-        }
-
-        [Test]
-        public async Task DeleteDeliveryCompanyTest()
-        {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new DeleteCompanyDTO()
-            {
-                Title = "DeliveryCompany6"
-            };
-
-            await deliveryService.DeleteDeliveryCompany(dto);
-            var deliveryFromContext = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == dto.Title);
-            Assert.IsNull(deliveryFromContext);
-        }
-
-        [Test]
-        public async Task DeleteDeliveryCompanyExeptionTest()
-        {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new DeleteCompanyDTO()
-            {
-                Title = "DeliveryCompany666"
-            };
-
-            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.DeleteDeliveryCompany(dto));
-            Assert.AreEqual(exeption.Message, "Company does not exist!");
+            Assert.AreEqual(exeption.Message, "Product does not exist!");
         }
 
         [Test]
         public async Task DeleteProductTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var productId = await TestHelper.ApplicationContext.Products.FirstOrDefaultAsync(x => x.ProductName == "Product6");
             var dto = new DeleteProductDTO()
             {
-                Title = "DeliveryCompany6",
-                ProductName = "Product6",
+               ProductId = productId.Id
             };
 
             await deliveryService.DeleteProduct(dto);
-            var productFromContext = TestHelper.ApplicationContext.Products.FirstOrDefault(x => x.ProductName == dto.ProductName);
+            var productFromContext = TestHelper.ApplicationContext.Products.FirstOrDefault(x => x.Id == dto.ProductId);
             Assert.IsNull(productFromContext);
         }
 
         [Test]
-        public async Task DeleteProductExeptionOneTest()
+        public async Task DeleteProductExeptionTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var productId = await TestHelper.ApplicationContext.Products.FirstOrDefaultAsync(x => x.ProductName == "Product66");
             var dto = new DeleteProductDTO()
             {
-                Title = "DeliveryCompany66",
-                ProductName = "Product6",
-            };
-
-            var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.DeleteProduct(dto));
-            Assert.AreEqual(exeption.Message, "Company does not exist!");
-        }
-
-        [Test]
-        public async Task DeleteProductExeptionTwoTest()
-        {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
-            var dto = new DeleteProductDTO()
-            {
-                Title = "DeliveryCompany6",
-                ProductName = "Product66",
+                ProductId = productId.Id
             };
             var exeption = Assert.ThrowsAsync<Exception>(async () => await deliveryService.DeleteProduct(dto));
             Assert.AreEqual(exeption.Message, "Product does not exist!");
@@ -286,7 +270,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task ShowWorkingCompanyTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
             var dto = new DeliveryCompanySheduleDTO()
             {
                 WorkTime = DateTime.Now,
@@ -300,15 +284,16 @@ namespace CityWeb.Tests
         [Test]
         public async Task SelectDeliveryCompanyTest()
         {
-            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var deliveryService = new DeliveryService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var deliveryId = await TestHelper.ApplicationContext.Deliveries.FirstOrDefaultAsync(x => x.Title == "DeliveryCompany2");
             var dto = new SelectDeliveryModelDTO()
             {
-                Title = "DeliveryCompany6",
+                DeliveryId = deliveryId.Id,
             };
 
             var productType = deliveryService.SelectDeliveryCompany(dto);
-            var delivery = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Title == dto.Title);
-            var productTypeFromContext = delivery.Products.Select(x => x.ProductType.Name);
+            var delivery = TestHelper.ApplicationContext.Deliveries.FirstOrDefault(x => x.Id == dto.DeliveryId);
+            var productTypeFromContext = delivery.Products.Select(x => x.ProductType);
 
             Assert.IsNotNull(productType);
             Assert.AreEqual(productType.Result, productTypeFromContext);
