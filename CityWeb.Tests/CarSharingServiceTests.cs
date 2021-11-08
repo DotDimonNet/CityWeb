@@ -18,18 +18,18 @@ namespace CityWeb.Tests
 {
     class CarSharingServiceTests
     {
-        private Mock<ILogger<CarSharingService>> _loggerMock;
+        private ILogger<CarSharingService> _logger;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
-            _loggerMock = TestHelper.SetupTestLogger<CarSharingService>();
+            _logger = TestHelper.SetupTestLogger<CarSharingService>();
         }
 
         [Test]
         public async Task CreateCarSharingTest()
         {
-            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             CreateCarSharingModelDTO dto = new CreateCarSharingModelDTO()
             {
                 Title = "CarSharing Company",
@@ -53,7 +53,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteCarSharingTest()
         {
-            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             DeleteCarSharingModelDTO dto = new DeleteCarSharingModelDTO()
             {
                 Id = TestHelper.ApplicationContext.CarSharings.FirstOrDefault().Id
@@ -69,7 +69,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateCarSharingTest()
         {
-            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             UpdateCarSharingModelDTO dto = new UpdateCarSharingModelDTO()
             {
                 Id = TestHelper.ApplicationContext.CarSharings.FirstOrDefault().Id,
@@ -93,7 +93,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddRentCarTest()
         {
-            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             AddRentCarDTO carDTO = new AddRentCarDTO()
             {
                 CarSharingId = TestHelper.ApplicationContext.CarSharings.FirstOrDefault().Id,
@@ -117,7 +117,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteRentCarTest()
         {
-            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             DeleteRentCarDTO carDTO = new DeleteRentCarDTO()
             {
                 Id = TestHelper.ApplicationContext.RentCars.FirstOrDefault().Id
@@ -133,7 +133,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateRentCarTest()
         {
-            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             UpdateRentCarDTO carDTO = new UpdateRentCarDTO()
             {
                 Id = TestHelper.ApplicationContext.RentCars.FirstOrDefault().Id,
@@ -161,7 +161,7 @@ namespace CityWeb.Tests
         [Test]
         public void SetupCarSharingBuilderResultTest()
         {
-            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             CarSharingBuilderResult builder = rentCarService.SetupCarSharingBuilderResult();
 
             Assert.IsNotNull(builder);
@@ -170,7 +170,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task GetAllCarsOfCarSharingTest()
         {
-            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService rentCarService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             CarSharingBuilderResult builder = new CarSharingBuilderResult();
             IEnumerable<RentCarModelDTO> stepOneResult = await rentCarService.GetAllCarsOfCarSharing(builder, TestHelper.ApplicationContext.CarSharings.FirstOrDefault().Id);
             List<RentCarModel> stepOneResultFromContext = await TestHelper.ApplicationContext.RentCars.Where(x => x.CarSharing.Id == builder.CarSharingId).ToListAsync();
@@ -189,7 +189,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task ChooseCarTest()
         {
-            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             CarSharingBuilderResult builder = new CarSharingBuilderResult();
             await carSharingService.GetAllCarsOfCarSharing(builder, TestHelper.ApplicationContext.CarSharings.FirstOrDefault().Id);
             Guid carId = TestHelper.ApplicationContext.RentCars.FirstOrDefault().Id;
@@ -207,7 +207,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task CheckRentTest()
         {
-            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var builder = new CarSharingBuilderResult();
             await carSharingService.GetAllCarsOfCarSharing(builder, Guid.NewGuid());
             await carSharingService.GetCarResersedPeriods(builder, Guid.NewGuid());
@@ -236,7 +236,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task GetAllCarSharingsTest()
         {
-            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             IEnumerable<CarSharingModelDTO> carSharings = await carSharingService.GetAllCarSharings();
             var carSharingsFromContext = TestHelper.ApplicationContext.CarSharings.ToList();
 
@@ -249,7 +249,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task GetAllRentCarsTest()
         {
-            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            CarSharingService carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             IEnumerable<RentCarModelDTO> rentCars = await carSharingService.GetAllRentCars();
             List<RentCarModelDTO> rentCarsFromContext = await TestHelper.ApplicationContext.RentCars.Select(x => TestHelper.TestMapper.Map<RentCarModel, RentCarModelDTO>(x)).ToListAsync();
 

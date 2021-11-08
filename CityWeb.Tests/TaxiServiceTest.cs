@@ -13,18 +13,18 @@ namespace CityWeb.Tests
 {
     public class TaxiServiceTest
     {
-        private Mock<ILogger<TaxiService>> _loggerMock;
+        private ILogger<TaxiService> _logger;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
-            _loggerMock = TestHelper.SetupTestLogger<TaxiService>();
+            _logger = TestHelper.SetupTestLogger<TaxiService>();
         }
 
         [Test]
         public async Task CreateTaxiTest()
         {
-            TaxiService taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            TaxiService taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             CreateTaxiModelDTO dto = new CreateTaxiModelDTO()
             {
                 Title = "Taxi Company",
@@ -42,7 +42,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteTaxiTest()
         {
-            TaxiService taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            TaxiService taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             DeleteTaxiModelDTO dto = new DeleteTaxiModelDTO()
             {
                 Id = TestHelper.ApplicationContext.Taxi.FirstOrDefault().Id
@@ -58,7 +58,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateTaxiTest()
         {
-            TaxiService taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            TaxiService taxiService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             UpdateTaxiModelDTO dto = new UpdateTaxiModelDTO()
             {
                 Id = TestHelper.ApplicationContext.Taxi.FirstOrDefault().Id,
@@ -76,7 +76,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddTaxiCarTest()
         {
-            TaxiService taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            TaxiService taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             AddTaxiCarDTO carDTO = new AddTaxiCarDTO()
             {
                 TaxiId = TestHelper.ApplicationContext.Taxi.FirstOrDefault().Id,
@@ -99,7 +99,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task DeleteTaxiCarTest()
         {
-            TaxiService taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            TaxiService taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             DeleteTaxiCarDTO carDTO = new DeleteTaxiCarDTO()
             {
                 Id = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault().Id
@@ -108,14 +108,14 @@ namespace CityWeb.Tests
             bool taxiCar = await taxiCarService.DeleteTaxiCar(carDTO);
             TaxiCarModel taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.Id == carDTO.Id);
 
-        //    Assert.IsNull(taxiCarFromContext);
-        //    Assert.IsTrue(taxiCar);
-        //}
+            Assert.IsNull(taxiCarFromContext);
+            Assert.IsTrue(taxiCar);
+        }
 
         [Test]
         public async Task UpdateTaxiCarTest()
         {
-            TaxiService taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            TaxiService taxiCarService = new TaxiService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             UpdateTaxiCarDTO carDTO = new UpdateTaxiCarDTO()
             {
                 Id = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault().Id,
@@ -129,8 +129,8 @@ namespace CityWeb.Tests
             TaxiCarModelDTO taxiCar = await taxiCarService.UpdateTaxiCar(carDTO);
             TaxiCarModel taxiCarFromContext = TestHelper.ApplicationContext.TaxiCar.FirstOrDefault(x => x.Id == carDTO.Id);
 
-        //    Assert.IsNotNull(taxiCar);
-        //    Assert.IsNotNull(taxiCarFromContext);
+            Assert.IsNotNull(taxiCar);
+            Assert.IsNotNull(taxiCarFromContext);
 
             Assert.AreEqual(taxiCarFromContext.Id, taxiCar.Id);
             Assert.AreEqual(taxiCarFromContext.Color, taxiCar.Color);
@@ -138,15 +138,6 @@ namespace CityWeb.Tests
             Assert.AreEqual(taxiCarFromContext.Number, taxiCar.Number);
             Assert.AreEqual(taxiCarFromContext.Seats, taxiCar.Seats);
             Assert.AreEqual(taxiCarFromContext.Type.ToString(), taxiCar.Type);
-        }
-
-        [Test]
-        public void SetupTaxiBuilderResultTest()
-        {
-            var taxiCarService = new TaxiService(TestHelper.ApplicationContext);
-            var builder = taxiCarService.SetupTaxiBuilderResult();
-
-            Assert.IsNotNull(builder);
         }
     }
 }
