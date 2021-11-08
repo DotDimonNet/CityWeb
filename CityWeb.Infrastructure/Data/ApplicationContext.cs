@@ -51,10 +51,9 @@ namespace CityWeb.Infrastucture.Data
         // enums tables
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
-        public DbSet<EntertainmentType> EventTypes { get; set; }
         public DbSet<HousePaymentType> HousePaymentType { get; set; }
         public DbSet<HotelRoomType> HotelRoomType { get; set; }
-        public DbSet<NewsType> NewsType { get; set; }
+        
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -77,11 +76,11 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<ServiceModel>().HasMany(x => x.CarSharing).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.Taxi).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ServiceModel>().HasMany(x => x.Deliverys).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ServiceModel>().HasMany(x => x.News).WithOne(x => x.Service).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region Enums
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
-            builder.Entity<EntertainmentType>().HasKey(x => x.ValueId).HasName("PK_EventType");
             builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
             builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             #endregion
@@ -92,7 +91,7 @@ namespace CityWeb.Infrastucture.Data
             builder.Entity<TaxiModel>().HasMany(x => x.Vehicle).WithOne(x => x.Taxi).HasForeignKey(x => x.TaxiId);
             builder.Entity<EntertainmentModel>().HasMany(x => x.Events).WithOne(x => x.Entertaiment).HasForeignKey(x => x.EntertaimentId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<HousePayModel>().HasMany(x => x.CounterModels).WithOne(x => x.HousePayment).HasForeignKey(x => x.HousePaymentId);
-
+            
             //builder.Entity<ServiceModel>().HasMany(x => x.Users).WithOne(x => x.Services).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
 
 

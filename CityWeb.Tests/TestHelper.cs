@@ -21,7 +21,6 @@ namespace CityWeb.Tests
     public static class TestHelper
     {
         public static ApplicationContext ApplicationContext { get; set; }
-
         public static Mock<UserManager<ApplicationUserModel>> UserManagerMock { get; set; }
         public static Mock<SignInManager<ApplicationUserModel>> SignInManagerMock { get; set; }
         public static Mock<RoleManager<ApplicationUserRole>> RoleManagerMock { get; set; }

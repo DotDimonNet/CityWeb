@@ -38,7 +38,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var entertainment = await _newsService.AddNews(request);
+                var entertainment = await _newsService.AddNewsItem(request);
                 return Json(entertainment);
             }
             catch (Exception ex)
@@ -47,33 +47,33 @@ namespace CityWeb.Controllers
             }
         }
 
-        //[HttpPost("update")]
-        //public async Task<IActionResult> UpdateNewsService([FromBody] UpdateNewsModelDTO request)
-        //{
-        //    try
-        //    {
-        //        var entertainment = await _newsService.UpdateNewsService(request);
-        //        return Json(entertainment);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateNewsService([FromBody] UpdateNewsModelDTO request)
+        {
+            try
+            {
+                var entertainment = await _newsService.UpdateNewsService(request);
+                return Json(entertainment);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-        //[HttpPost("services/add")]
-        //public async Task<IActionResult> UpdateNewsItem([FromBody] UpdateNewsItemDTO request)
-        //{
-        //    try
-        //    {
-        //        var entertainment = await _newsService.UpdateNewsItem(request);
-        //        return Json(entertainment);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+        [HttpPost("services/update")]
+        public async Task<IActionResult> UpdateNewsItem([FromBody] UpdateNewsItemDTO request)
+        {
+            try
+            {
+                var entertainment = await _newsService.UpdateNewsItem(request);
+                return Json(entertainment);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteNewsService([FromBody] DeleteNewsModelDTO request)
@@ -81,7 +81,7 @@ namespace CityWeb.Controllers
             try
             {
                 var entertainment = await _newsService.DeleteNewsService(request);
-                return Ok(entertainment);
+                return Json(entertainment);
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace CityWeb.Controllers
             try
             {
                 var entertainment = await _newsService.DeleteNews(request);
-                return Ok(entertainment);
+                return Json(entertainment);
             }
             catch (Exception ex)
             {
