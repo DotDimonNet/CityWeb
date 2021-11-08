@@ -271,7 +271,7 @@ namespace CityWeb.Tests
                     var taxiCar = new TaxiCarModel()
                     {
                         TaxiId = taxi[i].Id,
-                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
+                        Type = TransportType.Business,
                         Color = "yellow",
                         Mark = "BMW",
                         Number = $"AB 88{j}{i} SS",
