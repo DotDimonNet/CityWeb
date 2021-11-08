@@ -21,8 +21,8 @@ namespace CityWeb.Infrastructure.Service.Transport
     {
         private readonly IMapper _mapper;
         private readonly ApplicationContext _context;
-        private readonly ILogger _logger;
-        public TaxiService(ApplicationContext context, IMapper mapper, ILogger logger)
+        private readonly ILogger<TaxiService> _logger;
+        public TaxiService(ApplicationContext context, IMapper mapper, ILogger<TaxiService> logger)
         {
             _mapper = mapper;
             _context = context;
@@ -233,7 +233,6 @@ namespace CityWeb.Infrastructure.Service.Transport
                 _logger.LogError(ex.Message);
                 return false;
             }
-            
         }
 
         public async Task OrderTaxi(TaxiBuilderResult builderResult)

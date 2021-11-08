@@ -21,8 +21,8 @@ namespace CityWeb.Infrastructure.Service.Transport
     {
         private readonly IMapper _mapper;
         private readonly ApplicationContext _context;
-        private readonly ILogger<AccountService> _logger;
-        public CarSharingService(ApplicationContext context, IMapper mapper, ILogger<AccountService> logger)
+        private readonly ILogger<CarSharingService> _logger;
+        public CarSharingService(ApplicationContext context, IMapper mapper, ILogger<CarSharingService> logger)
         {
             _mapper = mapper;
             _context = context;
