@@ -50,7 +50,7 @@ namespace CityWeb.Infrastucture.Data
             //    _context.SaveChanges();
             //}
 
-            if (!_context.HouseBillType.Any())
+            /*if (!_context.HouseBillType.Any())
             {
                 _context.AddRange(
                     HouseBillType.Electricity,
@@ -65,7 +65,7 @@ namespace CityWeb.Infrastucture.Data
                     HouseBillType.Rent);
 
                 _context.SaveChanges();
-            }
+            }*/
         }
 
         public static void SetupData(ApplicationContext _context)

@@ -51,7 +51,6 @@ namespace CityWeb.Infrastucture.Data
         // enums tables
 
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
-        public DbSet<HousePaymentType> HousePaymentType { get; set; }
 
 
 
@@ -80,8 +79,6 @@ namespace CityWeb.Infrastucture.Data
 
             #region Enums
             builder.Entity<PaymentStatus>().HasKey(x => x.ValueId).HasName("PK_PaymentStatus");
-
-            builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
             #endregion
 
             builder.Entity<DeliveryModel>().HasMany(x => x.Products).WithOne(x => x.Delivery).HasForeignKey(x => x.DeliveryId);

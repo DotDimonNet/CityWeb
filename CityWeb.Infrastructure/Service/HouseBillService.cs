@@ -120,7 +120,6 @@ namespace CityWeb.Infrastructure.Service
                     if (houseBill != null)
                     {
                         var counterModel = _mapper.Map<CreateCounterModelDTO, CounterModel>(createcounterModelDTO);
-                        counterModel.Type = await _context.HouseBillType.FirstOrDefaultAsync(x => x.Name == createcounterModelDTO.Type);
                         counterModel.HouseBillId = houseBill.Id;
                         if (counterModel.Type != null)
                         {
