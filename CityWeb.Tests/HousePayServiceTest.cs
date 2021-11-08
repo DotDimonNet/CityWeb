@@ -27,7 +27,7 @@ namespace CityWeb.Tests
                 Description = "October"
             };
 
-            var housePay = await housePayService.CreateHousePayModel(dto);
+            var housePay = await housePayService.CreateHousePay(dto);
             var counterFromContext = TestHelper.ApplicationContext.HousePays.FirstOrDefault(x => x.Title == housePay.Title);
 
             Assert.IsNotNull(housePay);
@@ -41,11 +41,11 @@ namespace CityWeb.Tests
             var housePayService = new HousePayService(TestHelper.ApplicationContext, TestHelper.TestMapper);
             var dto = new DeleteHousePayModelDTO()
             {
-                Title = "HousePPay1",
+                Title = "HousePay1",
             };
 
             var exept = Assert.ThrowsAsync<Exception>(async () => await housePayService.DeleteHousePay(dto));
-            Assert.AreEqual(exept.Message, "Payment already exist, cant create one more with same title!");
+            Assert.AreEqual(exept.Message, "HousePay does not exist!");
         }
     }
 }

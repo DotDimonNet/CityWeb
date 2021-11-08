@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -23,9 +24,8 @@ namespace CityWeb.Tests
         public static Mock<SignInManager<ApplicationUserModel>> SignInManagerMock { get; set; }
         public static Mock<RoleManager<ApplicationUserRole>> RoleManagerMock { get; set; }
         public static IMapper TestMapper { get; set; }
-
-
-        public static Mock<ILogger<T>> SetupTestLogger<T>(ILogger<T> logger) where T : class
+    
+        public static Mock<ILogger<T>> SetupTestLogger<T>() where T : class
         {
             return new Mock<ILogger<T>>();
         }
@@ -168,29 +168,6 @@ namespace CityWeb.Tests
                         StreetName = "Soborna",
                         HouseNumber = "25A"
                     },
-                    Events =
-                    {
-                        new EventModel()
-                        {
-                            Title = $"Event1",
-                            Price = new PriceModel()
-                            {
-                                Value = 300,
-                                VAT = 10,
-                                Tax = 10,
-                            }
-                        },
-                        new EventModel()
-                        {
-                            Title = $"Event2",
-                            Price = new PriceModel()
-                            {
-                                Value = 300,
-                                VAT = 10,
-                                Tax = 10,
-                            }
-                        }
-                    }
                 };
                 entertainments.Add(entertainment);
             }
@@ -207,7 +184,6 @@ namespace CityWeb.Tests
                     Description = $"Default description {i}",
                     Payment = new PaymentModel(),
                     Service = service,
-                    ServiceId = service.Id,
                     Location = new AddressModel()
                     {
                         StreetName = "Porika",
@@ -217,8 +193,6 @@ namespace CityWeb.Tests
                     {
                         new RentCarModel()
                         {
-                            Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
-                            VINCode = $"VAG489645{i+1}",
                             RentPeriod =
                             {
                                 new PeriodModel()
@@ -245,8 +219,6 @@ namespace CityWeb.Tests
                     var rentCar = new RentCarModel()
                     {
                         CarSharingId = carSharings[i].Id,
-                        Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
-                        VINCode = $"BAG489645{i}{j}",
                         RentPeriod =
                         {
                             new PeriodModel()
@@ -290,7 +262,6 @@ namespace CityWeb.Tests
                     {
                         TaxiId = taxi[i].Id,
                         Type = await ApplicationContext.TransportTypes.FirstOrDefaultAsync(),
-                        VINCode = $"TAG489645{i}{j}",
                         Color = "yellow",
                         Mark = "BMW",
                         Number = $"AB 88{j}{i} SS",
@@ -390,7 +361,7 @@ namespace CityWeb.Tests
                         {
                             Number = $"NA/000000{i+1}",
                             Type = await ApplicationContext.HousePaymentType.FirstOrDefaultAsync(),
-                            Price = new PriceModel()
+                            CountPrice = new PriceModel()
                             {
                                 Value = i*10
                             },

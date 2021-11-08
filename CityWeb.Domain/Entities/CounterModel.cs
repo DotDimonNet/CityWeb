@@ -14,7 +14,7 @@ namespace CityWeb.Domain.Entities
         public virtual HousePaymentType Type { get; set; }
         public virtual HousePayModel HousePayment { get; set; }
         public virtual Guid HousePaymentId { get; set; }
-        public virtual PriceModel Price { get; set; }
+        public virtual PriceModel CountPrice { get; set; }
         public virtual PaymentModel Payment { get; set; }
         public double PriceByItem { get; set; }
         public double StartCount { get; set; }

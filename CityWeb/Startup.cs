@@ -110,6 +110,7 @@ namespace CityWeb
             {
                 x.AddProfile<MappingProfile>();
                 x.AddProfile<CarSharingMappingProfile>();
+                x.AddProfile<TaxiMappingProfile>();
                 x.AddProfile<HousePayMappingProfile>();
                 x.AddProfile<HotelMappingProfile>();
                 x.AddProfile<HousePayMappingProfile>();

@@ -8,7 +8,7 @@ namespace CityWeb.Domain.DTO
 {
     public class ProductPriceFilterDTO
     {
-        public string Title { get; set; }
+        public Guid DeliveryId { get; set; }
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
     }

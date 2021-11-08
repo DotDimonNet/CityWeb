@@ -28,7 +28,6 @@ namespace CityWeb.Infrastucture.Data
         public DbSet<PriceModel> Prices { get; set; }
         public DbSet<RatingModel> Ratings { get; set; }
         public DbSet<ServiceModel> Services { get; set; }
-        public DbSet<TransportJourneyModel> TransportJourneys { get; set; }
         public DbSet<RentCarModel> RentCars { get; set; }
         public DbSet<TaxiCarModel> TaxiCar { get; set; }
         public DbSet<NewsModel> News { get; set; }
@@ -88,7 +87,6 @@ namespace CityWeb.Infrastucture.Data
             //builder.Entity<EntertainmentType>().HasKey(x => x.ValueId).HasName("PK_EventType");
             builder.Entity<HotelRoomType>().HasKey(x => x.ValueId).HasName("PK_HotelRoomType");
             builder.Entity<HousePaymentType>().HasKey(x => x.ValueId).HasName("PK_HousePaymentType");
-            builder.Entity<ProductType>().HasKey(x => x.ValueId).HasName("PK_ProductType");
             #endregion
 
             builder.Entity<DeliveryModel>().HasMany(x => x.Products).WithOne(x => x.Delivery).HasForeignKey(x => x.DeliveryId);

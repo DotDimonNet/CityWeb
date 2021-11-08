@@ -13,15 +13,25 @@ namespace CityWeb.Mapping
     {
         public HotelMappingProfile()
         {
+            //Address
+            CreateMap<AddressModel, HotelAddressDTO>();
+            CreateMap<HotelAddressDTO, AddressModel>();
+
+            //Period
+            CreateMap<PeriodModel, PeriodModelDTO>();
+            CreateMap<PeriodModelDTO, PeriodModel>();
+
+            //Price
+            CreateMap<PriceModel, PriceModelDTO>();
+            CreateMap<PriceModelDTO, PriceModel>();
+
+            //Profile
+            CreateMap<UserProfileModel, UserProfileModelDTO>();
+            CreateMap<UserProfileModelDTO, UserProfileModel>();
+
             CreateMap<HotelModel, HotelDTO>();
-            CreateMap<HotelDTO, HotelModel>()
-                .ForMember(x => x.RentAddress, o => o.Ignore())
-                .ForMember(x => x.Rooms, o => o.Ignore())
-                .ForMember(x => x.Service, o => o.Ignore());
-            CreateMap<RoomDTO, RoomModel>()
-                .ForMember(x => x.Hotel, o => o.Ignore())
-                .ForMember(x => x.Price, o => o.Ignore())
-                .ForMember(x => x.RentPeriod, o => o.Ignore());
+            CreateMap<HotelDTO, HotelModel>();
+            CreateMap<RoomDTO, RoomModel>();
             CreateMap<PriceDTO, PriceModel>();
 
             CreateMap<RoomModel, RoomDTO>();
@@ -32,10 +42,8 @@ namespace CityWeb.Mapping
             CreateMap<RoomModel, PriceModel>();
             CreateMap<RoomDTO, PriceDTO>();
             CreateMap<RoomModel, PriceDTO>();
-            CreateMap<AddressModel, HotelAddressDTO>();
-            CreateMap<HotelAddressDTO,AddressModel>();
-            CreateMap<UpdateRoomDTO, RoomModel>()
-                .ForMember(x => x.Price, o => o.Ignore());
+
+            CreateMap<UpdateRoomDTO, RoomModel>();
 
 
         }

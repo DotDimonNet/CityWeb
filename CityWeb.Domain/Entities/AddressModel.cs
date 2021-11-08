@@ -14,7 +14,7 @@ namespace CityWeb.Domain.Entities
         public string ApartmentNumber { get; set; }
         public override string ToString()
         {
-            return $"Street {StreetName} {HouseNumber}";
+            return $"Street {StreetName} {HouseNumber} {ApartmentNumber}";
         }
     }
 }

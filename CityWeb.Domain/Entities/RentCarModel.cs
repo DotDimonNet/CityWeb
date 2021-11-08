@@ -9,8 +9,7 @@ namespace CityWeb.Domain.Entities
 {
     public class RentCarModel : Entity
     {
-        public string VINCode { get; set; }
-        public virtual TransportType Type { get; set; }
+        public int Type { get; set; }
         public string Mark { get; set; }
         public string Color { get; set; }
         public int Seats { get; set; }
