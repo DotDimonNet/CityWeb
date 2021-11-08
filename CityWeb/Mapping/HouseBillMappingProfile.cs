@@ -14,6 +14,8 @@ namespace CityWeb.Mapping
     {
         public HouseBillMappingProfile()
         {
+
+
             //Address
             CreateMap<AddressModel,AddressModelDTO>();
             CreateMap<AddressModelDTO, AddressModel>();
@@ -31,6 +33,7 @@ namespace CityWeb.Mapping
             CreateMap<HouseBillModelDTO, HouseBillModel>();
             CreateMap<HouseBillModel, CreateHouseBillModelDTO>();
             CreateMap<CreateHouseBillModelDTO, HouseBillModel>()
+                .ForMember(x => x.Service, o => o.MapFrom(z => new ServiceModel()))
                 .ForMember(x => x.HouseHoldAdress, o => o.Ignore());
             CreateMap<UpdateHouseBillModelDTO, HouseBillModel>()
                 .ForMember(x => x.Title, o => o.Ignore())

@@ -105,12 +105,12 @@ namespace Taste.Web.Controllers
         }
 
         [HttpGet("get-all-counters")]
-        public async Task<IActionResult> GetAllCounters()
+        public IActionResult GetAllCounters([FromQuery] HouseBillIdDTO request)
         {
             try
             {
-                var counters = await _houseBillService.GetAllCounters();
-                return Ok(counters);
+                var houseBills = _houseBillService.GetAllCountersbyHouseBillId(request);
+                return Json(houseBills.Result);
             }
             catch (Exception ex)
             {

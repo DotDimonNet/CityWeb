@@ -47,24 +47,35 @@ namespace CityWeb.Tests
         {
         var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
         var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "houseBill1");
-        var houseBillDTO = new UpdateHouseBillModelDTO()
+            var houseBillDTO = new UpdateHouseBillModelDTO()
             {
                 Id = houseBillId.Id,
+                Description = "Bill for last mounth",
+                Address = new AddressModelDTO()
+                {
+                    StreetName = "Soborna",
+                    HouseNumber = "24",
+                    ApartmentNumber = "7"
+                    
+                },
             };
-
+            var houseBill = await houseBillService.UpdateHouseBill(houseBillDTO);
+            var housebillfromContext = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Id == houseBillDTO.Id);
         }
 
         [Test]
-        public void DeleteHouseBillTest()
+        public async Task DeleteHouseBillTest()
         {
-            var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _loggerMock.Object);
+            var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "HouseBill5");
             var dto = new DeleteHouseBillModelDTO()
             {
-                HouseBillId = "123456789",
+                HouseBillId = houseBillId.Id,
             };
 
-            var exept = Assert.ThrowsAsync<Exception>(async () => await housePayService.DeleteHouseBill(dto));
-            Assert.AreEqual(exept.Message, "HouseBill does not exist!");
+            await houseBillService.DeleteHouseBill(dto);
+            var houseBillFromContext = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Id == dto.HouseBillId);
+            Assert.IsNull(houseBillFromContext);
         }
     }
 }

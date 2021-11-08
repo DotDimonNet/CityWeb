@@ -50,23 +50,6 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
             }
 
-            if (!_context.HouseBillType.Any())
-            {
-                _context.AddRange(
-                    HouseBillType.Electricity,
-                    HouseBillType.WaterGet,
-                    HouseBillType.WaterOut,
-                    HouseBillType.Gas,
-                    HouseBillType.GasTransport,
-                    HouseBillType.Intercom,
-                    HouseBillType.Internet,
-                    HouseBillType.TV,
-                    HouseBillType.Trash,
-                    HouseBillType.Rent);
-
-                _context.SaveChanges();
-            }
-
             if (!_context.HotelRoomType.Any())
             {
                 _context.AddRange(
