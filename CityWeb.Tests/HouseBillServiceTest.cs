@@ -1,6 +1,7 @@
 ﻿using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.HouseBillDTO;
 using CityWeb.Infrastructure.Service;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -10,16 +11,18 @@ namespace CityWeb.Tests
 {
     public class HouseBillServiceTest
     {
+        private ILogger<HouseBillService> _logger;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
+            _logger = TestHelper.SetupTestLogger<HouseBillService>();
         }
 
         [Test]
         public async Task CreateHHouseBillTest()
         {
-            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new CreateHouseBillModelDTO()
             {
                 Title = "Payment for Gas",
@@ -37,7 +40,7 @@ namespace CityWeb.Tests
         [Test]
         public void DeleteHouseBillTest()
         {
-            var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new DeleteHouseBillModelDTO()
             {
                 Title = "HouseBill1",

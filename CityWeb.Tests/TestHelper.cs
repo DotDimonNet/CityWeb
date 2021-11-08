@@ -371,7 +371,7 @@ namespace CityWeb.Tests
                         new CounterModel()
                         {
                             Number = $"NA/000000{i+1}",
-                            Type = await ApplicationContext.HouseBillType.FirstOrDefaultAsync(),
+                            //Type = await ApplicationContext.HouseBillType.FirstOrDefaultAsync(),
                             CountPrice = new PriceModel()
                             {
                                 Value = i*10
