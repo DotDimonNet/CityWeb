@@ -193,7 +193,7 @@ namespace CityWeb.Tests
             CarSharingBuilderResult builder = new CarSharingBuilderResult();
             await carSharingService.GetAllCarsOfCarSharing(builder, TestHelper.ApplicationContext.CarSharings.FirstOrDefault().Id);
             Guid carId = TestHelper.ApplicationContext.RentCars.FirstOrDefault().Id;
-            IEnumerable<PeriodModelDTO> stepTwoResult = await carSharingService.GetCarResersedPeriods(builder, carId);
+            IEnumerable<PeriodModelDTO> stepTwoResult = await carSharingService.GetCarReservedPeriods(builder, carId);
             ICollection<PeriodModel> stepTwoResultFromComtext = TestHelper.ApplicationContext.RentCars.FirstOrDefault().RentPeriod;
 
             foreach (var item in stepTwoResult)
@@ -208,23 +208,18 @@ namespace CityWeb.Tests
         public async Task CheckRentTest()
         {
             var carSharingService = new CarSharingService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
-            var builder = new CarSharingBuilderResult();
-            await carSharingService.GetAllCarsOfCarSharing(builder, Guid.NewGuid());
-            await carSharingService.GetCarResersedPeriods(builder, Guid.NewGuid());
-
-            var period = new PeriodModelDTO()
+            CarSharingBuilderResult builder = new CarSharingBuilderResult();
+            await carSharingService.GetAllCarsOfCarSharing(builder, TestHelper.ApplicationContext.CarSharings.FirstOrDefault().Id);
+            Guid rentCarId = TestHelper.ApplicationContext.RentCars.FirstOrDefault().Id;
+            await carSharingService.GetCarReservedPeriods(builder, rentCarId);
+            CarSharingBuilderResult builder2 = builder;
+            PeriodModelDTO period = new PeriodModelDTO()
             {
                 StartTime = DateTime.Now.AddDays(5),
                 EndTime = DateTime.Now.AddDays(7)
             };
-            var builder2 = builder;
-            builder2.RentPeriod = new PeriodModelDTO()
-            {
-                StartTime = period.StartTime,
-                EndTime = period.EndTime
-            };
-            builder2.RentPeriod.EndTime = period.EndTime;
-            var car = await TestHelper.ApplicationContext.RentCars.FirstOrDefaultAsync(x => x.Id == Guid.NewGuid());
+            builder2.RentPeriod = period;
+            RentCarModel car = await TestHelper.ApplicationContext.RentCars.FirstOrDefaultAsync(x => x.Id == rentCarId);
             builder2.Price = (period.EndTime.Day - period.StartTime.Day) * car.Price.Total;
 
             var result = await carSharingService.CheckRent(builder, period);
