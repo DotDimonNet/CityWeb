@@ -25,7 +25,7 @@ namespace CityWeb.Infrastucture.Data
                 _context.SaveChanges();
             }
 
-            if (!_context.TransportTypes.Any())
+            /*if (!_context.TransportTypes.Any())
             {
                 _context.AddRange(
                     TransportType.Econom,
@@ -33,39 +33,39 @@ namespace CityWeb.Infrastucture.Data
                     TransportType.Business);
 
                 _context.SaveChanges();
-            }
+            }*/
 
-            if (!_context.EventTypes.Any())
+            //if (!_context.EventTypes.Any())
+            //{
+            //    _context.AddRange(
+            //        EntertainmentType.Cinema,
+            //        EntertainmentType.Circus,
+            //        EntertainmentType.Club,
+            //        EntertainmentType.Exhibition,
+            //        EntertainmentType.Fest,
+            //        EntertainmentType.Museum,
+            //        EntertainmentType.Theatre
+            //        );
+
+            //    _context.SaveChanges();
+            //}
+
+            /*if (!_context.HouseBillType.Any())
             {
                 _context.AddRange(
-                    EntertainmentType.Cinema,
-                    EntertainmentType.Circus,
-                    EntertainmentType.Club,
-                    EntertainmentType.Exhibition,
-                    EntertainmentType.Fest,
-                    EntertainmentType.Museum,
-                    EntertainmentType.Theatre
-                    );
+                    HouseBillType.Electricity,
+                    HouseBillType.WaterGet,
+                    HouseBillType.WaterOut,
+                    HouseBillType.Gas,
+                    HouseBillType.GasTransport,
+                    HouseBillType.Intercom,
+                    HouseBillType.Internet,
+                    HouseBillType.TV,
+                    HouseBillType.Trash,
+                    HouseBillType.Rent);
 
                 _context.SaveChanges();
-            }
-
-            if (!_context.HousePaymentType.Any())
-            {
-                _context.AddRange(
-                    HousePaymentType.Electricity,
-                    HousePaymentType.WaterGet,
-                    HousePaymentType.WaterOut,
-                    HousePaymentType.Gas,
-                    HousePaymentType.GasTransport,
-                    HousePaymentType.Intercom,
-                    HousePaymentType.Internet,
-                    HousePaymentType.TV,
-                    HousePaymentType.Trash,
-                    HousePaymentType.Rent);
-
-                _context.SaveChanges();
-            }
+            }*/
         }
 
         public static void SetupData(ApplicationContext _context)

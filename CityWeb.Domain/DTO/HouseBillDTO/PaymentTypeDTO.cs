@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using CityWeb.Domain.Enums;
 
 
-namespace CityWeb.Domain.DTO.HousePayDTO
+namespace CityWeb.Domain.DTO.HouseBillDTO
 {
     class PaymentTypeDTO
     {
         public string NameValue { get; set; }
-        public HousePaymentType Paymenttype { get; set; }
+        public HouseBillType PaymentType { get; set; }
     }
 }

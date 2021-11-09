@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CityWeb.Domain.DTO;
-using CityWeb.Domain.DTO.HousePayDTO;
+using CityWeb.Domain.DTO.HouseBillDTO;
 using CityWeb.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Mapping
 {
-    public class HousePayMappingProfile : Profile
+    public class HouseBillMappingProfile : Profile
     {
-        public HousePayMappingProfile()
+        public HouseBillMappingProfile()
         {
             //Address
             CreateMap<AddressModel,AddressModelDTO>();
@@ -26,15 +26,15 @@ namespace CityWeb.Mapping
             CreateMap<PriceModelDTO, PriceModel>();
 
             //HousePay
-            CreateMap<HousePayModel, HousePayModelDTO>();
-            CreateMap<HousePayModelDTO, HousePayModel>();
-            CreateMap<HousePayModel, CreateHousePayModelDTO>();
-            CreateMap<CreateHousePayModelDTO, HousePayModel>()
+            CreateMap<HouseBillModel, HouseBillModelDTO>();
+            CreateMap<HouseBillModelDTO, HouseBillModel>();
+            CreateMap<HouseBillModel, CreateHouseBillModelDTO>();
+            CreateMap<CreateHouseBillModelDTO, HouseBillModel>()
                 .ForMember(x => x.HouseHoldAdress, o => o.Ignore());
-            CreateMap<UpdateHousePayModelDTO, HousePayModel>()
+            CreateMap<UpdateHouseBillModelDTO, HouseBillModel>()
                 .ForMember(x => x.Title, o => o.Ignore())
                 .ForMember(x => x.HouseHoldAdress, o => o.Ignore());
-            CreateMap<HousePayModel, UpdateHousePayModelDTO>();
+            CreateMap<HouseBillModel, UpdateHouseBillModelDTO>();
 
             //Counter
             CreateMap<CounterModel, CounterModelDTO>();

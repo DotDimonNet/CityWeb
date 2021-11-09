@@ -14,7 +14,7 @@ namespace CityWeb.Tests
 {
     public class HotelServiceTests
     {
-        private Mock<ILogger<HotelService>> _logger;
+        private ILogger<HotelService> _logger;
 
         [SetUp]
         public async Task Setup()
@@ -26,7 +26,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddHotelTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new HotelDTO()
             {
                 Title = "Hotel Paradise",
@@ -53,7 +53,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddHotelExeptionTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new HotelDTO()
             {
                 Title = TestHelper.ApplicationContext.Hotels.Select(x => x.Title).FirstOrDefault(),
@@ -65,7 +65,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddRoomTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new RoomDTO()
             {
                 HotelTitle = "Hotel 2",
@@ -90,7 +90,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task AddRoomExeptionTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new RoomDTO()
             {
                 HotelTitle = String.Empty,
@@ -106,7 +106,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task FindHotelByIdTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var hotelIdFromContext = TestHelper.ApplicationContext.Hotels.Select(x => x.Id).FirstOrDefault();
 
             var hotel = await hotelService.FindHotelById(new HotelIdDTO { Id = hotelIdFromContext });
@@ -117,7 +117,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task FindHotelByIdExeptionTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.FindHotelById(new HotelIdDTO() { Id = Guid.NewGuid() }));
             Assert.AreEqual(exept.Message, "Hotel with this ID doesnt exist!");
         }
@@ -125,7 +125,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task FindHotelByTitleTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var hotelTitleFromContext = TestHelper.ApplicationContext.Hotels.Select(x => x.Title).FirstOrDefault();
 
             var hotel = await hotelService.FindHotelByTitle(new HotelTitleDTO { Title = hotelTitleFromContext });
@@ -136,14 +136,14 @@ namespace CityWeb.Tests
         [Test]
         public async Task FindHotelByTitleExeptionTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.FindHotelByTitle(new HotelTitleDTO() { Title = String.Empty }));
             Assert.AreEqual(exept.Message, "Hotel with this title doesnt exist!");
         }
         [Test]
         public async Task RemoveHotelTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object);
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var hotel = TestHelper.ApplicationContext.Hotels.FirstOrDefault();
             var dto = new DeleteHotelDTO()
             {
@@ -155,7 +155,7 @@ namespace CityWeb.Tests
         [Test]
         public async Task RemoveHotelExeptionTest()
         {
-            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object    );
+            var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger    );
             var dto = new DeleteHotelDTO()
             {
                 Title = "",

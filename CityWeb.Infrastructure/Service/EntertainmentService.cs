@@ -7,12 +7,14 @@ using AutoMapper;
 using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using CityWeb.Domain.ValueTypes;
 using CityWeb.Infrastructure.Extentions;
 using CityWeb.Infrastructure.Interfaces.Service;
 using CityWeb.Infrastucture.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CityWeb.Infrastructure.Service
 {
@@ -20,113 +22,137 @@ namespace CityWeb.Infrastructure.Service
     {
         private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<EntertainmentService> _logger;
 
-        public EntertainmentService(ApplicationContext context, IMapper mapper)
+        public EntertainmentService(ApplicationContext context, IMapper mapper, ILogger<EntertainmentService> logger)
         {
             _mapper = mapper;
             _context = context;
-            
+            _logger = logger;
         }
 
         public async Task<EntertainmentModelDTO> UpdadeEntertainmentModel(UpdateEntertainmentDTO updateData)
         {
-
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.EntertainmentTitle);
-            if (entertainment != null)
+            try
             {
-                _mapper.Map<UpdateEntertainmentDTO, EntertainmentModel>(updateData, entertainment);
-                _mapper.Map<AddressModelDTO, AddressModel>(updateData.Location, entertainment.Address);
-                entertainment.EntertainmentType = await _context.EventTypes.FirstOrDefaultAsync(x => x.Name == updateData.Type);
-                _context.Entertaiments.Update(entertainment);
-                await _context.SaveChangesAsync();
-                var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
-                result.Location = _mapper.Map<AddressModel, AddressModelDTO>(entertainment.Address);
-                result.Type = entertainment.EntertainmentType.Name.ToString();
-                return result;
+                var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateData.Title);
+                if (entertainment != null)
+                {
+                    _mapper.Map<UpdateEntertainmentDTO, EntertainmentModel>(updateData, entertainment);
+                    _context.Entertaiments.Update(entertainment);
+                    await _context.SaveChangesAsync();
+                    var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
+                    return result;
+                }
+                else
+                {
+                    _logger.LogError("You can't update Entertainment. Entertainment doesn't exist!");
+                    throw new Exception("You can't update Entertainment. Entertainment doesn't exist!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Entertainment Service is not exists");
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<EventModelDTO> UpdateEventModel(UpdateEventDTO updateEvent)
         {
-            var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.EventTitle);
-            if (eventModel != null)
+            try
             {
-                _mapper.Map<UpdateEventDTO, EventModel>(updateEvent, eventModel);
-                _mapper.Map<PriceModelDTO, PriceModel>(updateEvent.EventPrice, eventModel.EventPrice);
-
-                _context.Events.Update(eventModel);
-                await _context.SaveChangesAsync();
-                var result = _mapper.Map<EventModel, EventModelDTO>(eventModel);
-                result.EventPrice = _mapper.Map<PriceModel, PriceModelDTO>(eventModel.EventPrice);
-                return result;
+                var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.Title);
+                if (eventModel != null)
+                {
+                    _mapper.Map<UpdateEventDTO, EventModel>(updateEvent, eventModel);
+                    _context.Events.Update(eventModel);
+                    await _context.SaveChangesAsync();
+                    return _mapper.Map<EventModel, EventModelDTO>(eventModel);
+                }
+                else
+                {
+                    _logger.LogError("You can't update Event. Event doesn't exist!");
+                    throw new Exception("You can't update Event. Event doesn't exist!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Event was not created!");
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<bool> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
-            if (entertainment != null)
+            try
             {
-                _context.Remove(entertainment);
-                await _context.SaveChangesAsync();
-                return true;
+                var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
+                if (entertainment != null)
+                {
+                    _context.Remove(entertainment);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    _logger.LogError("You can't delete Entertainment. Entertainment doesn't exist");
+                    throw new Exception("You can't delete Entertainment. Entertainment doesn't exist");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Enterainment doesn't exists");
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<bool> DeleteEventModel(DeleteEventDTO deleteData)
         {
-            
-            var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == deleteData.EventTitle);
-            if(events != null)
+            try
             {
-                _context.Remove(events);
-                await _context.SaveChangesAsync();
-                return true;
+                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
+                if (events != null)
+                {
+                    _context.Remove(events);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    _logger.LogError("You can't delete Event. Event doesn't exist");
+                    return await DeleteEventModel(deleteData);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Event doesn't exist");
-            }
-           
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            } 
         }
 
         public async Task<EntertainmentModelDTO> AddEntertainmentModel(AddEntertainmentModelDTO addData)
         {
             try
             {
-                var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.EntertainmentTitle);
+                var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.Title);
                 if (entertainment == null)
                 {
                     entertainment = _mapper.Map<AddEntertainmentModelDTO, EntertainmentModel>(addData);
-                    entertainment.EntertainmentType = await _context.EventTypes.FirstOrDefaultAsync(x => x.Name == addData.Type);
-                    entertainment.Address = _mapper.Map<AddressModelDTO, AddressModel>(addData.Location);
                     entertainment.Service = new ServiceModel();
                     await _context.Entertaiments.AddAsync(entertainment);
                     await _context.SaveChangesAsync();
                     var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
-                    result.Type = entertainment.EntertainmentType.Name;
-                    result.Location = _mapper.Map<AddressModel, AddressModelDTO>(entertainment.Address); 
                     return result;
                 }
                 else
                 {
-                    throw new Exception("Entertainment Service was already created");
+                    _logger.LogError("You can't create Entertainment. Entertainment already exists");
+                    throw new Exception("You can't create Entertainment. Entertainment already exists");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 throw new Exception(ex.Message);
             }
             
@@ -139,35 +165,35 @@ namespace CityWeb.Infrastructure.Service
                 var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == addData.EntertainmentTitle);
                 if (entertainment != null)
                 {
-                    var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.EventTitle);
+                    var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == addData.Title);
                     if (eventModel == null)
                     {
                         eventModel = _mapper.Map<AddEventModelDTO, EventModel>(addData);
-                        eventModel.EventPrice = _mapper.Map<PriceModelDTO, PriceModel>(addData.EventPrice);
                         eventModel.Entertaiment = new EntertainmentModel();
                         eventModel.Entertaiment.Service = new ServiceModel();
                         await _context.Events.AddAsync(eventModel);
                         entertainment.Events.Add(eventModel);
                         await _context.SaveChangesAsync();
                         var result = _mapper.Map<EventModel, EventModelDTO>(eventModel);
-                        result.EventPrice = _mapper.Map<PriceModel, PriceModelDTO>(eventModel.EventPrice);
                         return result;
                     }
                     else
                     {
-                        throw new Exception("Event already exists");
+                        _logger.LogError("You can't create Event. Event already exists");
+                        throw new Exception("You can't create Event. Event already exists");
                     }
                     
                 }
                 else
                 {
-                    throw new Exception("Entertainment was not found");
+                    _logger.LogError("You can't create Event. Entertainment doesn't exist");
+                    throw new Exception("You can't create Event. Entertainment already exists");
                 }
                 
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex.Message);
                 throw new Exception(ex.Message);
             }
             
@@ -175,32 +201,44 @@ namespace CityWeb.Infrastructure.Service
 
         public async Task<IEnumerable<EventModelDTO>> GetEventsFromEntertainment(GetEventsFromEntertainmentsDTO entModel)
         {
-            var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.EntertainmentTitle == x.Title);
-            if(entertainment != null)
+            try
             {
-                return  entertainment.Events.Select(x => _mapper.Map<EventModel, EventModelDTO>(x));
-                
+                var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => entModel.Title == x.Title);
+                if (entertainment != null)
+                {
+                    return entertainment.Events.Select(x => _mapper.Map<EventModel, EventModelDTO>(x));
+
+                }
+                else
+                {
+                    _logger.LogError("You can't get Events. Entertainment doesn't exist");
+                    throw new Exception("You can't get Events. Entertainment doesn't exist");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Entertainment doesn't exists");
-            }
-            
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }  
         }
 
         public async Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO getEventModel)
         {
-            var eventModel = await _context.Events.FirstOrDefaultAsync(x => getEventModel.EventTitle == x.Title && x.isAvailable);
-            if(eventModel != null)
+            try
             {
-                return _mapper.Map<EventModel, EventModelDTO>(eventModel);
+                var eventModel = await _context.Events.FirstOrDefaultAsync(x => getEventModel.Title == x.Title && getEventModel.isAvailable);
+                if (eventModel != null)
+                {
+                    return _mapper.Map<EventModel, EventModelDTO>(eventModel);
+                }
+                _logger.LogError("You can't get Event. Event doesn't exist");
+                throw new Exception("You can't get Event. Event doesn't exist");
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Event doesn't exists");
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
             }
-           
         }
-
     }   
 }

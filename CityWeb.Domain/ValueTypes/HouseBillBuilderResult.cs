@@ -9,9 +9,9 @@ using CityWeb.Domain.DTO;
 
 namespace CityWeb.Domain.ValueTypes
 {
-    public class HousePayBuilderResult
+    public class HouseBillBuilderResult
     {
-        public string HousePaymentType { get; set; }
+        public string HouseBillType { get; set; }
         public  CounterModelDTO Counter{ get; set; }
         public int Number { get; set; }
         public double StartCount { get; set; }

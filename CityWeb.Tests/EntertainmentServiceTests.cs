@@ -9,27 +9,30 @@ using CityWeb.Domain.Entities;
 using CityWeb.Domain.Enums;
 using CityWeb.Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace CityWeb.Tests
 {
     public class EntertainmentServiceTests
     {
+        private ILogger<EntertainmentService> _logger;
         [SetUp]
         public async Task Setup()
         {
             await TestHelper.SetupDbContext();
+            _logger = TestHelper.SetupTestLogger<EntertainmentService>();
         }
         [Test]
         public async Task AddEntertainmentModelTest()
         {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper);
+            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new AddEntertainmentModelDTO()
             {
-                EntertainmentTitle = "asdasd",
+                Title = "asdasd",
                 Description = "Default description",
                 Type = "Club",
-                Location = new AddressModelDTO()
+                Address = new AddressModelDTO()
                 {
                     StreetName = "soborna",
                     HouseNumber = "43",
@@ -42,7 +45,7 @@ namespace CityWeb.Tests
             
 
             Assert.IsNotNull(entertainment);
-            Assert.AreEqual(dto.EntertainmentTitle, entertainment.EntertainmentTitle);
+            Assert.AreEqual(dto.Title, entertainment.Title);
             Assert.AreEqual(dto.Description, entertainment.Description);
             Assert.AreEqual(dto.Type, entertainment.Type);
 

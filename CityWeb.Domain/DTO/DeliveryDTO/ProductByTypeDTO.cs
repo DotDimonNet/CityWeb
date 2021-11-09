@@ -9,8 +9,6 @@ namespace CityWeb.Domain.DTO
 {
     public class ProductByTypeDTO
     {
-        public string ProductName { get; set; }
         public string TypeName { get; set; }
-
     }
 }

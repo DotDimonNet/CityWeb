@@ -3,6 +3,8 @@ using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.Transport.Car;
 using CityWeb.Domain.DTO.Transport.Taxi;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
+using System;
 
 namespace CityWeb.Mapping
 {
@@ -29,13 +31,13 @@ namespace CityWeb.Mapping
 
             //TaxiCar
             CreateMap<TaxiCarModel, TaxiCarModelDTO>()
-                .ForMember(x => x.Type, o => o.Ignore());
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.Type.ToString()));
             CreateMap<TaxiCarModelDTO, TaxiCarModel>()
-                .ForMember(x => x.Type, o => o.Ignore());
+                .ForMember(x => x.Type, o => o.MapFrom(z => Enum.Parse<TransportType>(z.Type)));
             CreateMap<AddTaxiCarDTO, TaxiCarModel>()
-                .ForMember(x => x.Type, o => o.Ignore());
+                .ForMember(x => x.Type, o => o.MapFrom(z => Enum.Parse<TransportType>(z.Type)));
             CreateMap<UpdateTaxiCarDTO, TaxiCarModel>()
-                .ForMember(x => x.Type, o => o.Ignore());
+                .ForMember(x => x.Type, o => o.MapFrom(z => Enum.Parse<TransportType>(z.Type)));
         }
     }
 }

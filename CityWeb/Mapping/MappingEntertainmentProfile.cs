@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.EnterteinmentDTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 
 namespace CityWeb.Mapping
 {
@@ -12,37 +14,31 @@ namespace CityWeb.Mapping
     {
         public MappingEntertainmentProfile()
         {
+
+            //Price
+            CreateMap<PriceModel, PriceModelDTO>();
+            CreateMap<PriceModelDTO, PriceModel>();
+
+            //Address
+            CreateMap<AddressModel, AddressModelDTO>();
+            CreateMap<AddressModelDTO, AddressModel>();
+
             CreateMap<EntertainmentModel, EntertainmentModelDTO>()
-                .ForMember(x => x.EntertainmentTitle, o => o.MapFrom(y => y.Title))
-                .ForMember(x => x.Type, o => o.Ignore())
-                .ForMember(x => x.Location, o => o.Ignore());
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.Type.ToString()));
 
-            CreateMap<EntertainmentModelDTO, EntertainmentModel>()
-                .ForMember(x => x.EntertainmentType, o => o.Ignore())
-                .ForMember(x => x.Address, o => o.Ignore());
+            CreateMap<EntertainmentModelDTO, EntertainmentModel>();
 
-            CreateMap<EventModel, EventModelDTO>()
-                .ForMember(x => x.EventTitle, o => o.MapFrom(y => y.Title))
-                .ForMember(x => x.EventPrice, o => o.Ignore());
+            CreateMap<EventModel, EventModelDTO>();
 
             CreateMap<UpdateEntertainmentDTO, EntertainmentModel>()
-                .ForMember(x => x.EntertainmentType, o => o.Ignore())
-                .ForMember(x => x.Address, o => o.Ignore())
-                .ForMember(x => x.Title, o => o.Ignore());
+                .ForMember(x => x.Type, o => o.MapFrom((z) => Enum.Parse<EntertainmentType>(z.Type)));
 
-            CreateMap<UpdateEventDTO, EventModel>()
-                .ForMember(x => x.Title, o => o.MapFrom(y => y.EventTitle))
-                .ForMember(x => x.EventPrice, o => o.Ignore());
+            CreateMap<UpdateEventDTO, EventModel>();
 
             CreateMap<AddEntertainmentModelDTO, EntertainmentModel>()
-                .ForMember(x => x.Title, o => o.MapFrom(y => y.EntertainmentTitle))
-                .ForMember(x => x.EntertainmentType, o => o.Ignore())
-                .ForMember(x => x.Address, o => o.Ignore());
+                .ForMember(x => x.Type, o => o.MapFrom((z) => Enum.Parse<EntertainmentType>(z.Type)));
 
-            CreateMap<AddEventModelDTO, EventModel>()
-                .ForMember(x => x.Title, o => o.MapFrom(y => y.EventTitle))
-                .ForMember(x => x.EventPrice, o => o.Ignore());
-            
+            CreateMap<AddEventModelDTO, EventModel>();
                 
 
 

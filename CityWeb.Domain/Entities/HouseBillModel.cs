@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Entities
 {
-    public class HousePayModel : Entity, IDescribe
+    public class HouseBillModel : Entity, IDescribe
     {
         public string Title { get; set; }
         public string Description { get; set; }

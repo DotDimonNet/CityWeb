@@ -13,7 +13,7 @@ namespace CityWeb.Domain.ValueTypes
     {
         public Guid Id { get; set; }
         public IEnumerable<AddressModelDTO> VisitedAddresses { get; set; }
-        public int TaxiType { get; set; }
+        public string TaxiType { get; set; }
         public double Price { get; set; }
     }
 }
