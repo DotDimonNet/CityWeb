@@ -71,7 +71,7 @@ namespace CityWeb.Tests
                 HotelTitle = "Hotel 2",
                 Number = 123,
                 Image = "Room_img97.png",
-                Type = HotelRoomType.Delux,
+                Type = HotelRoomType.Delux.ToString(),
                 Price = new PriceDTO
                 {
                     Value = 1234
@@ -147,7 +147,7 @@ namespace CityWeb.Tests
             var hotel = TestHelper.ApplicationContext.Hotels.FirstOrDefault();
             var dto = new DeleteHotelDTO()
             {
-                HotelTitle = hotel.Title,
+                Title = hotel.Title,
             };
             await hotelService.RemoveHotel(dto);
             Assert.IsNull(TestHelper.ApplicationContext.Hotels.FirstOrDefault(x => x.Id == hotel.Id));
@@ -158,7 +158,7 @@ namespace CityWeb.Tests
             var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger.Object    );
             var dto = new DeleteHotelDTO()
             {
-                HotelTitle = "",
+                Title = "",
             };
             var exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.RemoveHotel(dto));
             Assert.AreEqual(exept.Message, "Hotel with this title doesnt exist!");
