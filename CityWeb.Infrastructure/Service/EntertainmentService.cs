@@ -41,8 +41,9 @@ namespace CityWeb.Infrastructure.Service
                     _mapper.Map<UpdateEntertainmentDTO, EntertainmentModel>(updateData, entertainment);
                     _context.Entertaiments.Update(entertainment);
                     await _context.SaveChangesAsync();
-                    var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
-                    return result;
+                    return _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
+                    
+
                 }
                 else
                 {
@@ -61,18 +62,27 @@ namespace CityWeb.Infrastructure.Service
         {
             try
             {
-                var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.Title);
-                if (eventModel != null)
+                var entertainment = await _context.Entertaiments.FirstOrDefaultAsync(x => x.Title == updateEvent.EntertainmentTitle);
+                if (entertainment != null)
                 {
-                    _mapper.Map<UpdateEventDTO, EventModel>(updateEvent, eventModel);
-                    _context.Events.Update(eventModel);
-                    await _context.SaveChangesAsync();
-                    return _mapper.Map<EventModel, EventModelDTO>(eventModel);
+                    var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == updateEvent.Title);
+                    if (eventModel != null)
+                    {
+                        _mapper.Map<UpdateEventDTO, EventModel>(updateEvent, eventModel);
+                        _context.Events.Update(eventModel);
+                        await _context.SaveChangesAsync();
+                        return _mapper.Map<EventModel, EventModelDTO>(eventModel);
+                    }
+                    else
+                    {
+                        _logger.LogError("You can't update Event. Event doesn't exist!");
+                        throw new Exception("You can't update Event. Event doesn't exist!");
+                    }
                 }
                 else
                 {
-                    _logger.LogError("You can't update Event. Event doesn't exist!");
-                    throw new Exception("You can't update Event. Event doesn't exist!");
+                    _logger.LogError("You can't update Event. Entrertainment doesn't exist!");
+                    throw new Exception("You can't update Event. Entrertainment doesn't exist!");
                 }
             }
             catch (Exception ex)
@@ -80,6 +90,7 @@ namespace CityWeb.Infrastructure.Service
                 _logger.LogError(ex.Message);
                 throw new Exception(ex.Message);
             }
+                
         }
 
         public async Task<bool> DeleteEntertainmentModel(DeleteEntertainmentDTO deleteData)
@@ -110,17 +121,17 @@ namespace CityWeb.Infrastructure.Service
         {
             try
             {
-                var events = await _context.Events.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
-                if (events != null)
+                var eventModel = await _context.Events.FirstOrDefaultAsync(x => x.Title == deleteData.Title);
+                if (eventModel != null)
                 {
-                    _context.Remove(events);
+                    _context.Remove(eventModel);
                     await _context.SaveChangesAsync();
                     return true;
                 }
                 else
                 {
                     _logger.LogError("You can't delete Event. Event doesn't exist");
-                    return await DeleteEventModel(deleteData);
+                    throw new Exception("You can't delete Event. Event doesn't exist");
                 }
             }
             catch (Exception ex)
@@ -185,7 +196,7 @@ namespace CityWeb.Infrastructure.Service
                 else
                 {
                     _logger.LogError("You can't create Event. Entertainment doesn't exist");
-                    throw new Exception("You can't create Event. Entertainment already exists");
+                    throw new Exception("You can't create Event. Entertainment doesn't exists");
                 }
                 
             }
