@@ -43,8 +43,8 @@ namespace CityWeb.Tests
         [Test]
         public async Task UpdateHouseBillTest()
         {
-        var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
-        var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "houseBill1");
+            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
+            var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "houseBill1");
             var houseBillDTO = new UpdateHouseBillModelDTO()
             {
                 Id = houseBillId.Id,
@@ -54,14 +54,16 @@ namespace CityWeb.Tests
                     StreetName = "Soborna",
                     HouseNumber = "24",
                     ApartmentNumber = "7"
-                    
+
                 },
             };
             var houseBill = await houseBillService.UpdateHouseBill(houseBillDTO);
-            var housebillfromContext = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Id == houseBillDTO.Id);
+
+            Assert.IsNotNull(houseBill);
         }
 
-        [Test]
+
+            [Test]
         public async Task DeleteHouseBillTest()
         {
             var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
