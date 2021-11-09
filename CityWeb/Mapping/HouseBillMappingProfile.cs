@@ -33,22 +33,26 @@ namespace CityWeb.Mapping
             CreateMap<HouseBillModelDTO, HouseBillModel>();
             CreateMap<HouseBillModel, CreateHouseBillModelDTO>();
             CreateMap<CreateHouseBillModelDTO, HouseBillModel>()
-                .ForMember(x => x.Service, o => o.MapFrom(z => new ServiceModel()))
-                .ForMember(x => x.HouseHoldAdress, o => o.Ignore());
-            CreateMap<UpdateHouseBillModelDTO, HouseBillModel>()
-                .ForMember(x => x.Title, o => o.Ignore())
-                .ForMember(x => x.HouseHoldAdress, o => o.Ignore());
+                .ForMember(x => x.Service, o => o.MapFrom(z => new ServiceModel()));
+                
+            CreateMap<UpdateHouseBillModelDTO, HouseBillModel>();
+
             CreateMap<HouseBillModel, UpdateHouseBillModelDTO>();
 
             //Counter
             CreateMap<CounterModel, CounterModelDTO>();
+
             CreateMap<CounterModelDTO, CounterModel>()
                 .ForMember(x => x.BillType, o => o.MapFrom(z => Enum.Parse<HouseBillType>(z.Type)));
+
             CreateMap<CounterModel, CreateCounterModelDTO>()
                 .ForMember(x => x.Type, o => o.MapFrom(z => z.BillType.ToString()));
+
             CreateMap<CreateCounterModelDTO, CounterModel>()
                 .ForMember(x => x.BillType, o => o.MapFrom(z => Enum.Parse<HouseBillType>(z.Type)));
+
             CreateMap<CounterModel, UpdateCounterModelDTO>();
+
             CreateMap<UpdateCounterModelDTO, CounterModel>();
         }
     }

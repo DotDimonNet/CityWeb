@@ -11,10 +11,8 @@ namespace CityWeb.Domain.DTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public CounterModel Counter { get; set; }
-        public double Price { get; set; }
 
-        public AddressModelDTO HouseHoldAdress { get; set; }
+        public AddressModelDTO HouseHoldAddress { get; set; }
     }
     public class CreateHouseBillModelDTO
     {
@@ -24,7 +22,7 @@ namespace CityWeb.Domain.DTO
     }
     public class SelectHouseBillModelDTO
     {
-        public string Title { get; set; }
+        public Guid HouseBillId{ get; set; }
     }
     public class DeleteHouseBillModelDTO
     {
@@ -36,7 +34,7 @@ namespace CityWeb.Domain.DTO
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public AddressModelDTO Address { get; set; }
+        public AddressModelDTO HouseHoldAddress { get; set; }
     }
 
 }

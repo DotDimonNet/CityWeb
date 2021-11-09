@@ -361,7 +361,7 @@ namespace CityWeb.Tests
                     Description = $"Default description {i}",
                     Service = service,
                     ServiceId = service.Id,
-                    HouseHoldAdress = new AddressModel()
+                    HouseHoldAddress = new AddressModel()
                     {
                         StreetName = "Soborna",
                         HouseNumber = $"{i + 1}"

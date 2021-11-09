@@ -13,7 +13,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     public interface IHouseBillService
     {
         public HouseBillBuilderResult SetupHouseBillBuilderResult();
-        public Task<HouseBillModel> CreateHouseBill(CreateHouseBillModelDTO houseBillModel);
+        public Task<HouseBillModelDTO> CreateHouseBill(CreateHouseBillModelDTO houseBillModel);
         public Task<CounterModelDTO> CreateCounter(CreateCounterModelDTO createCounterDTO);
         public Task<bool> DeleteCounter(DeleteCounterModelDTO deleteCounterModel);
         public Task<ICollection<HouseBillModelDTO>> GetAllHouseBills();

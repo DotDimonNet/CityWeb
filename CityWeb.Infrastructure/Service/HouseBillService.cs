@@ -29,7 +29,7 @@ namespace CityWeb.Infrastructure.Service
             _mapper = mapper;
             _logger = logger;
         }
-        public async Task<HouseBillModel> CreateHouseBill(CreateHouseBillModelDTO houseBillModel)
+        public async Task<HouseBillModelDTO> CreateHouseBill(CreateHouseBillModelDTO houseBillModel)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace CityWeb.Infrastructure.Service
 
                     _logger.LogInformation($"HouseBill {houseBill.Title} was created");
 
-                    return houseBill;
+                    return _mapper.Map<HouseBillModel, HouseBillModelDTO>(houseBill);
                 }
                 throw new Exception($"HouseBill {houseBill.Title} already created");
             }
@@ -116,20 +116,21 @@ namespace CityWeb.Infrastructure.Service
                 var houseBill = await _context.HouseBills.FirstOrDefaultAsync(x => x.Id == createCounterDTO.HouseBillId);
                 if (houseBill != null)
                 {
-                    var counterNum = await _context.Counters.Select(x => x.Number).FirstOrDefaultAsync(x => x == createCounterDTO.Number);
-                    if (counterNum != createCounterDTO.Number)
+                    var counterNum = await _context.Counters.AnyAsync(x => x.Number == createCounterDTO.Number && x.HouseBillId == houseBill.Id);
+                    if (counterNum)
                     { 
                         var counterModel = _mapper.Map<CreateCounterModelDTO, CounterModel>(createCounterDTO);
+                        counterModel.HouseBill = houseBill;
                         await _context.Counters.AddAsync(counterModel);
                         await _context.SaveChangesAsync();
-                        _logger.LogInformation($"Counter {counterModel.Number} succsesfully created in {houseBill.Title} HouseBill");
+
+                        _logger.LogInformation($"Counter {createCounterDTO.Number} succsesfully created in {houseBill.Title} HouseBill");
 
                         return _mapper.Map<CounterModel,CounterModelDTO>(counterModel);
                     }
-                    _logger.LogWarning($"Counter{createCounterDTO.Number} already exist.");
-                    throw new Exception("Counter with this number already exist");
+                    throw new Exception($"Counter {createCounterDTO.Number} was already exist");
                 }
-                throw new Exception($"HouseBill {houseBill.Title} does not exist.");
+                throw new Exception($"HouseBill {houseBill.Id} does not exist.");
             }
             catch (Exception ex)
             {
@@ -139,15 +140,15 @@ namespace CityWeb.Infrastructure.Service
         }
         public async Task<bool> DeleteCounter(DeleteCounterModelDTO deleteCounterModel)
         {
-            var counter = await _context.Counters.FirstOrDefaultAsync(x => x.Number == deleteCounterModel.Number);
+            var counter = await _context.Counters.FirstOrDefaultAsync(x => x.Id == deleteCounterModel.Id);
             if (counter != null)
             {
                 _context.Remove(counter);
                 await _context.SaveChangesAsync();
-                _logger.LogInformation($"Counter {deleteCounterModel.Number} was deleted");
+                _logger.LogInformation($"Counter {deleteCounterModel.Id} was deleted");
                 return true;
             }
-            _logger.LogWarning($"Counter {deleteCounterModel.Number} does not exist");
+            _logger.LogWarning($"Counter {deleteCounterModel.Id} does not exist");
             throw new Exception("Counter does not exist!");
         }
         public async Task<CounterModelDTO> UpdateCounter(UpdateCounterModelDTO counterModel)
@@ -157,7 +158,7 @@ namespace CityWeb.Infrastructure.Service
                 var houseBill = await _context.HouseBills.FirstOrDefaultAsync(x => x.Title == counterModel.HouseBillTitle);
                 if (houseBill != null)
                 {
-                    var counter = await _context.Counters.FirstOrDefaultAsync(x => x.Number == counterModel.Number);
+                    var counter = await _context.Counters.FirstOrDefaultAsync(x => x.Id == counterModel.Id);
                     if (counter != null)
                     {
                         counter = _mapper.Map<UpdateCounterModelDTO, CounterModel>(counterModel, counter);
@@ -166,7 +167,7 @@ namespace CityWeb.Infrastructure.Service
                         var updateCounter = _mapper.Map<CounterModel, CounterModelDTO>(counter);
                         return updateCounter;
                     }
-                    _logger.LogWarning($"Counter {counterModel.Number} in HouseBill {counterModel.HouseBillTitle}  doesnt exist");
+                    _logger.LogWarning($"Counter {counterModel.Id} in HouseBill {counterModel.HouseBillTitle}  doesnt exist");
                     throw new Exception("Counter does not exist");
                 }
                 _logger.LogWarning($"HouseBill {counterModel.HouseBillTitle}  doesnt exist");

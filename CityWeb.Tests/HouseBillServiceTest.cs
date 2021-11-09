@@ -49,7 +49,7 @@ namespace CityWeb.Tests
             {
                 Id = houseBillId.Id,
                 Description = "Bill for last mounth",
-                Address = new AddressModelDTO()
+                HouseHoldAddress = new AddressModelDTO()
                 {
                     StreetName = "Soborna",
                     HouseNumber = "24",
