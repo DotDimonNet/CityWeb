@@ -9,6 +9,12 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
+import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
+import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
+import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
+import { CarSharingManagmentService } from './services/carSharingManagementService';
+import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 
 @NgModule({
   declarations: [
@@ -16,7 +22,11 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    CarSharingPageComponent,
+    CreateCarSharingPageComponent,
+    UpdateCarSharingPageComponent,
+    DeleteCarSharingPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,11 +34,18 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'car-sharing', component: CarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
-  providers: [],
+  providers: [
+    CarSharingManagmentService,
+    CarSharingManagmentDataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
