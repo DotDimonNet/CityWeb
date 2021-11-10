@@ -100,143 +100,147 @@ namespace CityWeb.Tests
             Assert.AreEqual(entertainment.Type, entertainmentFromContext.Type);
             Assert.AreEqual(dto.Address.ToString(), entertainment.Address.ToString());
         }
-    
+
+        //[Test]
+        //public async Task UpdateEventModelTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
+
+        //    var dto = new UpdateEventDTO()
+        //    {
+        //        EntertainmentTitle = "Entertainmnent65",
+        //        Title = "Event1",
+        //        Price = new PriceModelDTO()
+        //        {
+        //            Tax = 111,
+        //            Value = 11,
+        //            VAT = 1
+        //        },
+        //        isAvailable =true
+        //    };
+        //    var events = await entertainmentService.UpdateEventModel(dto);
+        //    var eventsFromContext = TestHelper.ApplicationContext.Events.FirstOrDefault(x => x.Title == dto.Title);
+
+
+        //    Assert.IsNotNull(events);
+        //    Assert.AreEqual(dto.Title, events.Title);
+        //    Assert.AreEqual(dto.Price.Total, events.Price.Total);
+        //}
         [Test]
-        public async Task UpdateEventModelTest()
+        public async Task DeleteEntertainmentModelTest()
         {
             var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
-
-            var dto = new UpdateEventDTO()
+            var dto = new DeleteEntertainmentDTO()
             {
-                Title = "Event1",
-                Price = new PriceModelDTO()
-                {
-                    Tax = 111,
-                    Value = 11,
-                    VAT = 1
-                },
-                isAvailable =true
+                Title = "Entertainment1",
             };
+            var entertainment = await entertainmentService.DeleteEntertainmentModel(dto);
+            var entertainmentFromContext = TestHelper.ApplicationContext.Entertaiments.FirstOrDefaultAsync(x => x.Title == dto.Title);
 
+            Assert.IsTrue(entertainment);
 
-            var events = await entertainmentService.UpdateEventModel(dto);
-            var eventsFromContext = TestHelper.ApplicationContext.Events.FirstOrDefault(x => x.Title == dto.Title);
-
-
-            Assert.IsNotNull(events);
-            Assert.AreEqual(dto.Title, events.Title);
-            Assert.AreEqual(dto.Price.Total, events.Price.Total);
         }
-    //[Test]
-    //public async Task DeleteEntertainmentModelTest()
-    //{
-    //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-    //    var dto = new DeleteEntertainmentDTO()
-    //    {
-    //        Title = "Entertainment1",
-    //    };
-    //    var entertainment = await entertainmentService.DeleteEntertainmentModel(dto);
-    //    var entertainmentFromContext = TestHelper.ApplicationContext.Entertaiments.FirstOrDefaultAsync(x => x.Title == dto.Title);
+        //[Test]
+        //public async Task DeleteEventModelTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
 
-    //    Assert.IsTrue(entertainment);
+        //    var dto = new DeleteEventDTO()
+        //    {
+        //        Title = "Event1"
+        //    };
 
-    //}
-    //[Test]
-    //public async Task DeleteEventModelTest()
-    //{
-    //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //    var events = await entertainmentService.DeleteEventModel(dto);
+        //    var eventFromContext = TestHelper.ApplicationContext.Events.FirstOrDefaultAsync(x => x.Title == dto.Title);
 
-    //    var dto = new DeleteEventDTO()
-    //    {
-    //        Title = "Entertainment1",
-    //        EventTitle = "Event1"
-    //    };
+        //    Assert.IsTrue(events);
+        //}
 
-    //    var events = await entertainmentService.DeleteEventModel(dto);
-    //    var eventFromContext = TestHelper.ApplicationContext.Events.FirstOrDefaultAsync(x => x.Title == dto.EventTitle);
+        //[Test]
+        //public void AddEventtModelEventExistsTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
+        //    var dto = new AddEventModelDTO()
+        //    {
 
-    //    Assert.IsTrue(events);
-    //}
+        //        EntertainmentTitle = "Entertainment1",
+        //        Title = "Event1",
+        //        Price = new PriceModelDTO()
+        //        {
+        //            Value = 100,
+        //            Tax = 10,
+        //            VAT = 1
+        //        },
+        //        Description = "desc1"
+        //    };
 
-    //[Test]
-    //public void AddEventtModelEventExistsTest()
-    //{
-    //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-    //    var dto = new AddEventModelDTO()
-    //    {
+        //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.AddEventModel(dto));
+        //    Assert.AreEqual(exept.Message, "You can't create Event. Event already exists");
+        //}
+        //[Test]
+        //public void UpdadeEntertainmentModelEntertainmentNotExistsTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
 
-    //        EventTitle = "Event1",
-    //        Value = 100.00,
-    //        Tax = 10.00,
-    //        VAT = 10.00
-    //    };
-
-    //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.AddEventModel(dto));
-    //    Assert.AreEqual(exept.Message, "Event already exists");
-    //}
-    //[Test]
-    //public void UpdadeEntertainmentModelEntertainmentNotExistsTest()
-    //{
-    //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-
-    //    var dto = new UpdateEntertainmentDTO()
-    //    {
-    //        EntertainmentTitle = " ",
-    //    };
+        //    var dto = new UpdateEntertainmentDTO()
+        //    {
+        //        Title = " ",
+        //    };
 
 
-    //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.UpdadeEntertainmentModel(dto));
-    //    Assert.AreEqual(exept.Message, "Entertainment Service is not exists");
-    //}
-    //[Test]
-    //public void UpdateEventModelEventNotExistsTest()
-    //{
-    //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.UpdadeEntertainmentModel(dto));
+        //    Assert.AreEqual(exept.Message, "Entertainment Service is not exists");
+        //}
+        //[Test]
+        //public void UpdateEventModelEventNotExistsTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
 
-    //    var dto = new UpdateEventDTO()
-    //    {
-    //        EventTitle = " ",
-    //        Value = 300,
-    //        Tax = 10,
-    //        VAT = 10,
-    //    };
+        //    var dto = new UpdateEventDTO()
+        //    {
+        //        EventTitle = " ",
+        //        Value = 300,
+        //        Tax = 10,
+        //        VAT = 10,
+        //    };
 
-    //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.UpdateEventModel(dto));
-    //    Assert.AreEqual(exept.Message, "Event was not created!");
-    //}
-    //[Test]
-    //public void DeleteEntertainmentModelEntertainmentNotExistTest()
-    //{
-    //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
-    //    var dto = new DeleteEntertainmentDTO()
-    //    {
-    //        Title = " ",
-    //    };
+        //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.UpdateEventModel(dto));
+        //    Assert.AreEqual(exept.Message, "Event was not created!");
+        //}
+        //[Test]
+        //public void DeleteEntertainmentModelEntertainmentNotExistTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //    var dto = new DeleteEntertainmentDTO()
+        //    {
+        //        Title = " ",
+        //    };
 
-    //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.DeleteEntertainmentModel(dto));
-    //    Assert.AreEqual(exept.Message, "Enterainment doesn't exists");
-    //}
+        //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.DeleteEntertainmentModel(dto));
+        //    Assert.AreEqual(exept.Message, "Enterainment doesn't exists");
+        //}
 
-    //[Test]
-    //public void DeleteEventModelEventNotExistTest()
-    //{
-    //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //[Test]
+        //public void DeleteEventModelEventNotExistTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
 
-    //    var dto = new DeleteEventDTO()
-    //    {
-    //        Title = "Entertainment1",
-    //        EventTitle = ""
-    //    };
+        //    var dto = new DeleteEventDTO()
+        //    {
+        //        Title = "Entertainment1",
+        //        EventTitle = ""
+        //    };
 
-    //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.DeleteEventModel(dto));
-    //    Assert.AreEqual(exept.Message, "Event doesn't exist");
-    //}
+        //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.DeleteEventModel(dto));
+        //    Assert.AreEqual(exept.Message, "Event doesn't exist");
+        //}
 
-    //[Test]
-    //public async Task SelectEntertainmentTest()
-    //{
+        //[Test]
+        //public async Task SelectEntertainmentTest()
+        //{
 
-    //}*/
+        //}*/
+
 
     }
 }
