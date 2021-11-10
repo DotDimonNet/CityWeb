@@ -1,42 +1,26 @@
 
 import { Component } from '@angular/core';
-import { ICarSharing, ICreateCarSharingModel } from 'src/app/models/carSharing.model';
+import { ICarSharing } from 'src/app/models/carSharing.model';
 import { CarSharingManagmentService } from 'src/app/services/carSharingManagementService';
 
 @Component({
-    selector: 'car-sharing-create',
-    templateUrl: './createCarSharingPage.component.html',
-    styleUrls: ['./createCarSharingPage.component.css']
+    selector: 'get-all-car-sharing',
+    templateUrl: './getAllCarSharingsPage.component.html',
+    styleUrls: ['./getAllCarSharingsPage.component.css']
 })
-export class CreateCarSharingPageComponent{
+export class GetAllCarSharingsPageComponent{
 
-    public carSharingInfo: ICarSharing = {
-        title: "",
-        description: "",
-        location: {
-            streetName: "",
-            appartmentNumber: "",
-            houseNumber: ""
-        }
-    } as ICarSharing;
-
-    public createInfo: ICreateCarSharingModel = {
-        title: "",
-        description: "",
-        location: {
-            streetName: "",
-            houseNumber: "",
-            appartmentNumber: ""
-        }
-    } as ICreateCarSharingModel
+    public carSharingsInfo: ICarSharing[] = [{
+        title: "sss",
+        description: "ddd"
+    }] as ICarSharing[];
 
     constructor(private service: CarSharingManagmentService){}
     
-    public createCarSharing()
-    {
-        this.service.createCarSharing(this.createInfo)
-            .subscribe((res: ICarSharing) => {
-                this.carSharingInfo = res;
-            });
+    ngOnInit() {
+        this.service.getAllCarSharings()
+        .subscribe((res: ICarSharing[]) => {
+            this.carSharingsInfo = res;
+        });
     }
 }

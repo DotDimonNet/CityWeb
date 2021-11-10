@@ -16,10 +16,8 @@ export class CarSharingManagmentDataService{
         }));
     }
 
-    getAllCarSharings():Observable<ICarSharing>{
-        return this.client.get(`/api/car-sharing/get-all-car-sharings`)
-        .pipe(first(), map((res: any) => {
-            return res as ICarSharing;
-        }));
+    getAllCarSharings():Observable<ICarSharing[]>{
+        return this.client.get(`/api/car-sharing/all`)
+        .pipe(first(), map((res: ICarSharing[]) => res));
     }
 }

@@ -4,7 +4,7 @@ import { ICarSharing, IDeleteCarSharingModel } from 'src/app/models/carSharing.m
 import { CarSharingManagmentService } from 'src/app/services/carSharingManagementService';
 
 @Component({
-    selector: 'car-sharing-update',
+    selector: 'car-sharing-delete',
     templateUrl: './deleteCarSharingPage.component.html',
     styleUrls: ['./deleteCarSharingPage.component.css']
 })

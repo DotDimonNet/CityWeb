@@ -161,7 +161,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpGet("get-all-car-sharings")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllCarSharings()
         {
             try

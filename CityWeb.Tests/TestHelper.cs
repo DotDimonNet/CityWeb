@@ -358,10 +358,10 @@ namespace CityWeb.Tests
                 var houseBill = new HouseBillModel()
                 {
                     Title = $"HouseBill{i + 1}",
-                    Description = $"Default description {i}",
+                    Description = $"Default description {i + 1}",
                     Service = service,
                     ServiceId = service.Id,
-                    HouseHoldAdress = new AddressModel()
+                    HouseHoldAddress = new AddressModel()
                     {
                         StreetName = "Soborna",
                         HouseNumber = $"{i + 1}"
@@ -371,7 +371,7 @@ namespace CityWeb.Tests
                         new CounterModel()
                         {
                             Number = $"NA/000000{i+1}",
-                            //Type = await ApplicationContext.HouseBillType.FirstOrDefaultAsync(),
+                            BillType = Domain.Enums.HouseBillType.Elrctricity,
                             CountPrice = new PriceModel()
                             {
                                 Value = i*10
@@ -384,6 +384,7 @@ namespace CityWeb.Tests
                 };
                 houseBills.Add(houseBill);
             }
+            await ApplicationContext.HouseBills.AddRangeAsync(houseBills);
             await ApplicationContext.SaveChangesAsync();
         }
     }

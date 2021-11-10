@@ -2,6 +2,7 @@
 using CityWeb.Domain.DTO;
 using CityWeb.Domain.DTO.HouseBillDTO;
 using CityWeb.Domain.Entities;
+using CityWeb.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace CityWeb.Mapping
     {
         public HouseBillMappingProfile()
         {
+
+
             //Address
             CreateMap<AddressModel,AddressModelDTO>();
             CreateMap<AddressModelDTO, AddressModel>();
@@ -25,26 +28,35 @@ namespace CityWeb.Mapping
             CreateMap<PriceModel, PriceModelDTO>();
             CreateMap<PriceModelDTO, PriceModel>();
 
-            //HousePay
+            //HouseBill
             CreateMap<HouseBillModel, HouseBillModelDTO>();
             CreateMap<HouseBillModelDTO, HouseBillModel>();
             CreateMap<HouseBillModel, CreateHouseBillModelDTO>();
             CreateMap<CreateHouseBillModelDTO, HouseBillModel>()
-                .ForMember(x => x.HouseHoldAdress, o => o.Ignore());
-            CreateMap<UpdateHouseBillModelDTO, HouseBillModel>()
-                .ForMember(x => x.Title, o => o.Ignore())
-                .ForMember(x => x.HouseHoldAdress, o => o.Ignore());
+                .ForMember(x => x.Service, o => o.MapFrom(z => new ServiceModel()));
+                
+            CreateMap<UpdateHouseBillModelDTO, HouseBillModel>();
+
             CreateMap<HouseBillModel, UpdateHouseBillModelDTO>();
 
             //Counter
-            CreateMap<CounterModel, CounterModelDTO>();
-            CreateMap<CounterModelDTO, CounterModel>();
+            CreateMap<CounterModel, CounterModelDTO>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.BillType.ToString()));
+
+            CreateMap<CounterModelDTO, CounterModel>()
+                .ForMember(x => x.BillType, o => o.MapFrom(z => Enum.Parse<HouseBillType>(z.Type)));
+
             CreateMap<CounterModel, CreateCounterModelDTO>()
-                .ForMember(x => x.Type, o => o.Ignore());
-            CreateMap<CreateCounterModelDTO, CounterModel>();
-             
-            CreateMap<CounterModelDTO, UpdateCounterModelDTO>();
-            CreateMap<UpdateCounterModelDTO, CounterModelDTO>();
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.BillType.ToString()));
+
+            CreateMap<CreateCounterModelDTO, CounterModel>()
+                .ForMember(x => x.BillType, o => o.MapFrom(z => Enum.Parse<HouseBillType>(z.Type)));
+
+            CreateMap<CounterModel, UpdateCounterModelDTO>();
+
+
+            CreateMap<UpdateCounterModelDTO, CounterModel>()
+                 .ForMember(x => x.BillType, o => o.MapFrom(z => Enum.Parse<HouseBillType>(z.Type)));
         }
     }
 }

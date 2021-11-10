@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace CityWeb.Domain.Enums
 {
-    public class HouseBillType : Enumeration
+    public enum HouseBillType
+    {
+        Elrctricity,
+        WaterIn,
+        WaterOut,
+        Gas,
+        GasTransport
+    }
+  /*  public class HouseBillType : Enumeration
     {
         public static readonly HouseBillType Electricity = new(1, "Electricity");
         public static readonly HouseBillType WaterGet = new(2, "WaterGet");
@@ -21,6 +29,6 @@ namespace CityWeb.Domain.Enums
 
         protected HouseBillType(int id, string name) : base(id, name) { }
 
-    }
+    }*/
 }
 
