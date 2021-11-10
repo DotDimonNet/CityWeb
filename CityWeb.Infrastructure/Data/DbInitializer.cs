@@ -26,8 +26,6 @@ namespace CityWeb.Infrastucture.Data
 
         public async Task Initialize()
         {
-            _context.Database.EnsureDeleted();
-            //_context.Database.Migrate();
             _context.Database.EnsureCreated();
 
             IdentityResult result;
@@ -95,10 +93,7 @@ namespace CityWeb.Infrastucture.Data
                 result = await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user.UserName), Roles.User);
                 if (!result.Succeeded) throw new DbInitializationException(result.Errors.Select(x => x.Description).Aggregate((x, y) => $"{x} {y}"));
 
-
-
                 _context.SaveChanges();
-
             }
         }
     }
