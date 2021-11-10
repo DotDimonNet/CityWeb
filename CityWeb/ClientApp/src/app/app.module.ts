@@ -15,6 +15,9 @@ import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarShari
 import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
+import { DeliveryPageComponent } from './pages/deliveryServicePages/deliveryServicePage.component';
+import { DeliveryManagementService } from './services/deliveryManagementService';
+import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
 
 @NgModule({
   declarations: [
@@ -27,12 +30,14 @@ import { CarSharingManagmentDataService } from './services/carSharingManagementS
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
     DeleteCarSharingPageComponent
+    DeliveryPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
+      { path: 'delivery-service', component: DeliveryPageComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-sharing', component: CarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
@@ -45,6 +50,8 @@ import { CarSharingManagmentDataService } from './services/carSharingManagementS
   providers: [
     CarSharingManagmentService,
     CarSharingManagmentDataService
+    DeliveryManagementService,
+    DeliveryManagementDataService
   ],
   bootstrap: [AppComponent]
 })

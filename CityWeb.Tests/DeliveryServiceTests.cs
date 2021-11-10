@@ -30,7 +30,6 @@ namespace CityWeb.Tests
             {
                 Title = "Delivery Company",
                 Description = "Default description",
-                DeliveryAdress = new AddressModelDTO(),
                 DeliveryPrice = new PriceModelDTO(),
                 WorkSchedule = new PeriodModelDTO(),
             };
@@ -271,7 +270,8 @@ namespace CityWeb.Tests
             };
 
             var deliveries = deliveryService.ShowWorkingCompany(dto);
-            var deliverysFromContext = TestHelper.ApplicationContext.Deliveries.Where(x => x.WorkSchedule.StartTime < dto.WorkTime && x.WorkSchedule.EndTime > dto.WorkTime).Count();
+            var count = deliveries;
+            var deliverysFromContext = TestHelper.ApplicationContext.Deliveries.Where(x => x.WorkSchedule.StartTime < dto.WorkTime && x.WorkSchedule.EndTime > dto.WorkTime).Count();     
             Assert.AreEqual(deliverysFromContext, deliveries.Count());
         }
 
