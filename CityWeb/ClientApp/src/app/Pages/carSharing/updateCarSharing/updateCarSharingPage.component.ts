@@ -1,0 +1,40 @@
+
+import { Component, OnInit } from '@angular/core';
+import { ICarSharing, ICreateCarSharingModel, IUpdateCarSharingModel } from 'src/app/models/carSharing.model';
+import { CarSharingManagmentService } from 'src/app/services/carSharingManagementService';
+
+@Component({
+    selector: 'car-sharing-update',
+    templateUrl: './updateCarSharingPage.component.html',
+    styleUrls: ['./updateCarSharingPage.component.css']
+})
+export class UpdateCarSharingPageComponent{
+
+    public carSharingInfo: ICarSharing = {
+        title: "",
+        description: "",
+        location: {
+            streetName: "",
+            appartmentNumber: "",
+            houseNumber: ""
+        }
+    } as ICarSharing;
+
+    public updateInfo: IUpdateCarSharingModel = {
+        id: "",
+        title: "Unknown",
+        description: "Unknown",
+        location: {
+            streetName: "Unknown",
+            houseNumber: "Unknown",
+            appartmentNumber: "Unknown"
+        }
+    } as IUpdateCarSharingModel
+
+    constructor(private service: CarSharingManagmentService){}
+    
+    public updateCarSharing()
+    {
+        
+    }
+}
