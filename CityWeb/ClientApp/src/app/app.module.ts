@@ -55,7 +55,6 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     HouseBillPageComponent,
     CreateHouseBillPageComponent,
     GetAllCarSharingsPageComponent,
-    CreateDeliveryComponent
     CreateDeliveryComponent,
     HotelPageComponent,
     CreateHotelComponent,
@@ -90,7 +89,7 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     DeliveryManagementService,
     DeliveryManagementDataService,
     HouseBillManagmentService,
-    HouseBillManagmentDataService
+    HouseBillManagmentDataService,
     HotelManagementService,
     HotelManagementDataService,
   ],
