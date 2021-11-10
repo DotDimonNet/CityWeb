@@ -4,13 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { DeliveryManagerPageComponent } from './pages/deliveryManagerPage/deliveryManagerPage.component';
-import { CreateDeliveryComponent } from './pages/createDeliveryPage/createDeliveryPage.component';
+import { DeliveryManagerPageComponent } from './pages/delivery/deliveryManagerPage/deliveryManagerPage.component';
+import { CreateDeliveryComponent } from './pages/delivery/createDeliveryPage/createDeliveryPage.component';
+import { UpdateDeliveryComponent } from './pages/delivery/updateDeliveryPage/updateDeliveryPage.component';
+import { DeleteDeliveryComponent } from './pages/delivery/deleteDeliveryPage/deleteDeliveryPage.component';
 import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
@@ -36,6 +40,8 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     FetchDataComponent,
     DeliveryManagerPageComponent,
     CreateDeliveryComponent,
+    UpdateDeliveryComponent,
+    DeleteDeliveryComponent,
     CarSharingPageComponent,
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
@@ -47,12 +53,15 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     CreateHotelComponent,
   ],
   imports: [
+    NgxMaterialTimepickerModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
       { path: 'delivery-manager', component: DeliveryManagerPageComponent, pathMatch: 'full' },
       { path: 'create', component: CreateDeliveryComponent, pathMatch: 'full' },
+      { path: 'update', component: UpdateDeliveryComponent, pathMatch: 'full' },
+      { path: 'delete', component: DeleteDeliveryComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-sharing', component: CarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
