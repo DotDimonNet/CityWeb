@@ -1,34 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IDeliveryModel } from 'src/app/models/delivery.models';
+import { IDeliveryModel,  ICreateDeliveryModel} from 'src/app/models/delivery.model';
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
 @Component({
-  selector: 'user-profile',
-  templateUrl: './userProfilePage.component.html',
-  styleUrls: ['./userProfilePage.component.css']
+  selector: 'delivery-service',
+  templateUrl: './deliveryServicePage.component.html',
+  styleUrls: ['./deliveryServicePage.component.css']
 })
-export class DeliveryPageComponent implements OnInit {
-  public userInfo: IDeliveryModel = {
-    title: "Rocket",
-    description: "ny take"
+
+export class DeliveryPageComponent {
+  
+  public createDelivery: ICreateDeliveryModel = {
+    title: "",
+    description: "",
     workSchedule:  {
-        startTime: new Date(2020,12,21),
-        endTime: new Date(2020,12,21),
+        startTime: new Date(),
+        endTime: new Date(),
     },
     deliveryPrice: {
-        value: 100, 
+        value: 0, 
+        tax: 0, 
+        vat: 0,
+    },
+  } as ICreateDeliveryModel;
+
+  public deliveryInfo: IDeliveryModel = {
+    title: "",
+    description: "",
+    workSchedule:  {
+        startTime: new Date(),
+        endTime: new Date(),
+    },
+    deliveryPrice: {
+        value: 0, 
         tax: 0, 
         vat: 0,
     },
   } as IDeliveryModel;
 
-  constructor(private service: DeliveryPageComponent) {}
 
-    ngOnInit() {
-        this.service.createDeliveryCompany(deliveryCompany: ICreateDeliveryModel)
+  constructor(private service: DeliveryManagementService) {}
+
+  public incrementDelivery() {
+        this.service.createDeliveryCompany(this.createDelivery)
         .subscribe((res: IDeliveryModel) => {
-            this.userInfo = res;
+            this.deliveryInfo = res;
         });
     }
+
 }
+
+
+
+
+
+
+  
+
+
