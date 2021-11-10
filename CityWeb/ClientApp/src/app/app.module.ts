@@ -17,7 +17,6 @@ import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarShari
 import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
-import { DeliveryPageComponent } from './pages/deliveryServicePages/deliveryServicePage.component';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
 
@@ -29,12 +28,12 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     CounterComponent,
     FetchDataComponent,
     DeliveryManagerPageComponent,
-    CreateDeliveryComponent
+    CreateDeliveryComponent,
     CarSharingPageComponent,
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
-    DeleteCarSharingPageComponent
-    DeliveryPageComponent
+    DeleteCarSharingPageComponent,
+    CreateDeliveryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -54,7 +53,7 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
   ],
   providers: [
     CarSharingManagmentService,
-    CarSharingManagmentDataService
+    CarSharingManagmentDataService,
     DeliveryManagementService,
     DeliveryManagementDataService
   ],
