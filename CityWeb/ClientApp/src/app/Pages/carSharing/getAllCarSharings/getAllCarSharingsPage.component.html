@@ -1,0 +1,12 @@
+<h2>Car Sharings</h2>
+<ul class="carSharings">
+  <li *ngFor="let item of carSharingsInfo;">
+    <span>
+      <div>
+        Title: {{item.title}} <br>
+        Description: {{item.description}} <br>
+        Location: {{item.location.streetName}}, {{item.location.houseNumber}}<br><br>
+      </div>
+    </span>
+  </li>
+</ul>

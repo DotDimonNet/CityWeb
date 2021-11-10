@@ -31,7 +31,8 @@ namespace CityWeb.Mapping
 
             CreateMap<DeliveryModel, DeliveryModelDTO>();
 
-            CreateMap<DeliveryModel, SelectDeliveryModelDTO>();
+            CreateMap<DeliveryModel, SelectDeliveryModelDTO>()
+                .ForMember(x => x.DeliveryId, o => o.MapFrom(z => z.Id));
 
             CreateMap<DeliveryModelDTO, DeliveryModel>()
                 .ForMember(x => x.Service, o => o.Ignore());

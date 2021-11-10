@@ -1,0 +1,42 @@
+
+import { Component } from '@angular/core';
+import { IHouseBillModel, ICreateHouseBillModel } from 'src/app/models/houseBill.model';
+import { HouseBillManagmentService } from 'src/app/services/houseBillManagementService';
+
+@Component({
+    selector: 'house-bill-create',
+    templateUrl: './createHouseBillPage.component.html',
+    styleUrls: ['./createHouseBillPage.component.css']
+})
+export class CreateHouseBillPageComponent{
+
+    public houseBillInfo: IHouseBillModel = {
+        title: "",
+        description: "",
+        address: {
+            streetName: "",
+            houseNumber: "",
+            appartmentNumber: ""
+        }
+    } as IHouseBillModel;
+
+    public createInfo: ICreateHouseBillModel = {
+        title: "",
+        description: "",
+        address: {
+            streetName: "",
+            houseNumber: "",
+            appartmentNumber: ""
+        }
+    } as ICreateHouseBillModel
+
+    constructor(private service: HouseBillManagmentService){}
+    
+    public createHouseBill()
+    {
+        this.service.createHouseBill(this.createInfo)
+            .subscribe((res: IHouseBillModel) => {
+                this.houseBillInfo = res;
+            });
+    }
+}

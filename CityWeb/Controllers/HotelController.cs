@@ -13,7 +13,7 @@ using CityWeb.Domain.Entities;
 namespace CityWeb.Controllers
 {
     [ApiController]
-    [Route("api/Hotel")]
+    [Route("api/hotel")]
     //[Authorize(Policy = Policies.RequireUserRole)]
     public class HotelController : Controller
     {
@@ -25,7 +25,7 @@ namespace CityWeb.Controllers
             _hotelService = hotelService;
         }
 
-        [HttpPost("hotel")]
+        [HttpPost("manage-hotel")]
         public async Task<IActionResult> CreateHotel([FromBody] HotelDTO request)
         {
             try
@@ -38,7 +38,7 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("hotel")]
+        [HttpPut("manage-hotel")]
         public async Task<IActionResult> UpdateHotel([FromBody] HotelDTO request)
         {
             try
@@ -51,7 +51,7 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("hotel")]
+        [HttpDelete("manage-hotel")]
         public async Task<IActionResult> RemoveHotel([FromBody] DeleteHotelDTO request)
         {
             try
@@ -118,7 +118,7 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-all-room-tybes")]
+        [HttpGet("get-all-room-typ  es")]
         public async Task<IActionResult> GetAllRoomTypesByHotelTitle([FromBody] HotelTitleDTO request)
         {
             try

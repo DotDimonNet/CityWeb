@@ -1,0 +1,12 @@
+<div class="delivery-manager">
+    Enter data to delete delivery company
+  </div>
+  <p class="title">
+    Enter Delivery company Id:
+    <input type="text" [(ngModel)] = "deleteDelivery.id">
+  </p>
+  <button class="number" (click)="delete()">Delete company</button>
+  <div class="result">
+    Deleting result
+    <div>{{resultInfo.result}}</div>
+  </div>

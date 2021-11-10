@@ -43,6 +43,7 @@ namespace CityWeb.Infrastructure.Service
                     if (roomNum != model.Number)
                     {
                         var room = _mapper.Map<RoomDTO, RoomModel>(model);
+                        room.HotelId = hotel.Id;
                         await _context.Rooms.AddAsync(room);
                         await _context.SaveChangesAsync();
                         _logger.LogInformation($"Room {room.Number} succsesfully added to {model.HotelTitle} hotel.");
@@ -148,7 +149,7 @@ namespace CityWeb.Infrastructure.Service
 
                 if (hotel != null)
                 {
-                    hotel = _mapper.Map<HotelModel>(model);
+                    _mapper.Map<HotelDTO,HotelModel>(model);
                     _context.Hotels.Update(hotel);
                     await _context.SaveChangesAsync();
                     _logger.LogInformation($"Hotel {hotel.Title} succsesfully updated.");
