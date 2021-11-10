@@ -15,10 +15,15 @@ import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.compo
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
 import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
+import { HouseBillPageComponent } from './Pages/HouseBill/houseBillPage.component';
+import { CreateHouseBillPageComponent } from './Pages/HouseBill/createHouseBill/createHouseBillPage.component';
+
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
+import { HouseBillManagmentService } from './services/houseBillManagementService';
+import { HouseBillManagmentDataService } from './services/houseBillManagementService.data'
 
 @NgModule({
   declarations: [
@@ -33,7 +38,10 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
     DeleteCarSharingPageComponent,
-    CreateDeliveryComponent
+    CreateDeliveryComponent,
+    HouseBillPageComponent,
+    CreateHouseBillPageComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -47,6 +55,8 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'house-bill', component: HouseBillPageComponent, pathMatch: 'full' },
+      { path: 'house-bill/create', component: CreateHouseBillPageComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
@@ -55,7 +65,9 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     CarSharingManagmentService,
     CarSharingManagmentDataService,
     DeliveryManagementService,
-    DeliveryManagementDataService
+    DeliveryManagementDataService,
+    HouseBillManagmentService,
+    HouseBillManagmentDataService
   ],
   bootstrap: [AppComponent]
 })

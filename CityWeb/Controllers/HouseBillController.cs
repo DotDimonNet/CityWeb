@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Taste.Web.Controllers
 {
     [ApiController]
-    [Route("api/housebill")]
+    [Route("api/house-bill")]
     public class HouseBillController : Controller
     {
         private readonly IHouseBillService _houseBillService;
