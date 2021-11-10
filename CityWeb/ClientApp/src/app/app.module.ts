@@ -19,11 +19,16 @@ import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.compo
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
 import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
+import { HouseBillPageComponent } from './Pages/HouseBill/houseBillPage.component';
+import { CreateHouseBillPageComponent } from './Pages/HouseBill/createHouseBill/createHouseBillPage.component';
 import { GetAllCarSharingsPageComponent } from './Pages/carSharing/getAllCarSharings/getAllCarSharingsPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
+
+import { HouseBillManagmentService } from './services/houseBillManagementService';
+import { HouseBillManagmentDataService } from './services/houseBillManagementService.data'
 //Hotel
 import { HotelManagementDataService } from './services/hotelManagementService.data';
 import { HotelManagementService } from './services/hotelManagementService';
@@ -46,6 +51,9 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
     DeleteCarSharingPageComponent,
+    CreateDeliveryComponent,
+    HouseBillPageComponent,
+    CreateHouseBillPageComponent,
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent
     CreateDeliveryComponent,
@@ -67,6 +75,8 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'house-bill', component: HouseBillPageComponent, pathMatch: 'full' },
+      { path: 'house-bill/create', component: CreateHouseBillPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
       { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
       { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
@@ -79,6 +89,8 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     CarSharingManagmentDataService,
     DeliveryManagementService,
     DeliveryManagementDataService,
+    HouseBillManagmentService,
+    HouseBillManagmentDataService
     HotelManagementService,
     HotelManagementDataService,
   ],
