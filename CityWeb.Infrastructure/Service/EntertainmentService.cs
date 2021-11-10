@@ -47,8 +47,8 @@ namespace CityWeb.Infrastructure.Service
                 }
                 else
                 {
-                    _logger.LogError("You can't update Entertainment. Entertainment doesn't exist!");
-                    throw new Exception("You can't update Entertainment. Entertainment doesn't exist!");
+                    _logger.LogError(ErrorModel.UpdateEntertainmentModelError);
+                    throw new Exception(ErrorModel.UpdateEntertainmentModelError);
                 }
             }
             catch (Exception ex)
@@ -75,14 +75,14 @@ namespace CityWeb.Infrastructure.Service
                     }
                     else
                     {
-                        _logger.LogError("You can't update Event. Event doesn't exist!");
-                        throw new Exception("You can't update Event. Event doesn't exist!");
+                        _logger.LogError(ErrorModel.UpdateEventModelError);
+                        throw new Exception(ErrorModel.UpdateEventModelError);
                     }
                 }
                 else
                 {
-                    _logger.LogError("You can't update Event. Entrertainment doesn't exist!");
-                    throw new Exception("You can't update Event. Entrertainment doesn't exist!");
+                    _logger.LogError(ErrorModel.UpdateEventModelEntertainmentError);
+                    throw new Exception(ErrorModel.UpdateEventModelEntertainmentError);
                 }
             }
             catch (Exception ex)
@@ -106,8 +106,8 @@ namespace CityWeb.Infrastructure.Service
                 }
                 else
                 {
-                    _logger.LogError("You can't delete Entertainment. Entertainment doesn't exist");
-                    throw new Exception("You can't delete Entertainment. Entertainment doesn't exist");
+                    _logger.LogError(ErrorModel.DeleteEntertainmentModelError);
+                    throw new Exception(ErrorModel.DeleteEntertainmentModelError);
                 }
             }
             catch (Exception ex)
@@ -130,8 +130,8 @@ namespace CityWeb.Infrastructure.Service
                 }
                 else
                 {
-                    _logger.LogError("You can't delete Event. Event doesn't exist");
-                    throw new Exception("You can't delete Event. Event doesn't exist");
+                    _logger.LogError(ErrorModel.DeleteEventModel);
+                    throw new Exception(ErrorModel.DeleteEventModel);
                 }
             }
             catch (Exception ex)
@@ -156,8 +156,8 @@ namespace CityWeb.Infrastructure.Service
                 }
                 else
                 {
-                    _logger.LogError("You can't create Entertainment. Entertainment already exists");
-                    throw new Exception("You can't create Entertainment. Entertainment already exists");
+                    _logger.LogError(ErrorModel.AddEntertainmentModelError);
+                    throw new Exception(ErrorModel.AddEntertainmentModelError);
                 }
             }
             catch (Exception ex)
@@ -188,15 +188,15 @@ namespace CityWeb.Infrastructure.Service
                     }
                     else
                     {
-                        _logger.LogError("You can't create Event. Event already exists");
-                        throw new Exception("You can't create Event. Event already exists");
+                        _logger.LogError(ErrorModel.AddEventModelError);
+                        throw new Exception(ErrorModel.AddEventModelError);
                     }
                     
                 }
                 else
                 {
-                    _logger.LogError("You can't create Event. Entertainment doesn't exist");
-                    throw new Exception("You can't create Event. Entertainment doesn't exists");
+                    _logger.LogError(ErrorModel.AddEventModelEntertainmentError);
+                    throw new Exception(ErrorModel.AddEventModelEntertainmentError);
                 }
                 
             }
@@ -220,8 +220,8 @@ namespace CityWeb.Infrastructure.Service
                 }
                 else
                 {
-                    _logger.LogError("You can't get Events. Entertainment doesn't exist");
-                    throw new Exception("You can't get Events. Entertainment doesn't exist");
+                    _logger.LogError(ErrorModel.GetEventsFromEntertainmentError);
+                    throw new Exception(ErrorModel.GetEventsFromEntertainmentError);
                 }
             }
             catch (Exception ex)
@@ -231,7 +231,7 @@ namespace CityWeb.Infrastructure.Service
             }  
         }
 
-        public async Task<EventModelDTO> GetEventFromEventTitles(GetEventFromEventsDTO getEventModel)
+        public async Task<EventModelDTO> GetEventFromEvents(GetEventFromEventsDTO getEventModel)
         {
             try
             {
@@ -240,8 +240,8 @@ namespace CityWeb.Infrastructure.Service
                 {
                     return _mapper.Map<EventModel, EventModelDTO>(eventModel);
                 }
-                _logger.LogError("You can't get Event. Event doesn't exist");
-                throw new Exception("You can't get Event. Event doesn't exist");
+                _logger.LogError(ErrorModel.GetEventFromEventsError);
+                throw new Exception(ErrorModel.GetEventFromEventsError);
             }
             catch (Exception ex)
             {

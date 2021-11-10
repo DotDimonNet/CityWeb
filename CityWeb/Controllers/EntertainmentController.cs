@@ -83,7 +83,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var eventModel = await _entertainmentService.GetEventFromEventTitles(request);
+                var eventModel = await _entertainmentService.GetEventFromEvents(request);
                 return Json(eventModel);
             }
             catch (Exception ex)

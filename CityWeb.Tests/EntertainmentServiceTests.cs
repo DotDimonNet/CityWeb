@@ -140,46 +140,51 @@ namespace CityWeb.Tests
             Assert.IsTrue(entertainment);
 
         }
-        [Test]
-        public async Task DeleteEventModelTest()
-        {
-            var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
+        //[Test]
+        //public async Task DeleteEventModelTest()
+        //{
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
 
-            var dto = new DeleteEventDTO()
-            {
-                Title = "Event1"
-            };
+        //    var dto = new DeleteEventDTO()
+        //    {
+        //        Title = "Event1"
+        //    };
 
-            var events = await entertainmentService.DeleteEventModel(dto);
-            var eventFromContext = TestHelper.ApplicationContext.Events.FirstOrDefaultAsync(x => x.Title == dto.Title);
+        //    var events = await entertainmentService.DeleteEventModel(dto);
+        //    var eventFromContext = TestHelper.ApplicationContext.Events.FirstOrDefaultAsync(x => x.Title == dto.Title);
 
-            Assert.IsTrue(events);
-        }
+        //    Assert.IsTrue(events);
+        //}
 
         //[Test]
         //public void AddEventtModelEventExistsTest()
         //{
-        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
         //    var dto = new AddEventModelDTO()
         //    {
 
-        //        EventTitle = "Event1",
-        //        Value = 100.00,
-        //        Tax = 10.00,
-        //        VAT = 10.00
+        //        EntertainmentTitle = "Entertainment1",
+        //        Title = "Event1",
+        //        Price = new PriceModelDTO()
+        //        {
+        //            Value = 100,
+        //            Tax = 10,
+        //            VAT = 1
+        //        },
+        //        Description = "desc1"
         //    };
 
         //    var exept = Assert.ThrowsAsync<Exception>(async () => await entertainmentService.AddEventModel(dto));
-        //    Assert.AreEqual(exept.Message, "Event already exists");
+        //    Assert.AreEqual(exept.Message, "You can't create Event. Event already exists");
         //}
         //[Test]
         //public void UpdadeEntertainmentModelEntertainmentNotExistsTest()
         //{
-        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext);
+        //    var entertainmentService = new EntertainmentService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
 
         //    var dto = new UpdateEntertainmentDTO()
         //    {
-        //        EntertainmentTitle = " ",
+        //        Title = " ",
         //    };
 
 
@@ -236,6 +241,6 @@ namespace CityWeb.Tests
 
         //}*/
 
-    
+
     }
 }
