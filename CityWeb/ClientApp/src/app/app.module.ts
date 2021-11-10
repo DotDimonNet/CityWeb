@@ -15,6 +15,7 @@ import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.compo
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
 import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
+import { GetAllCarSharingsPageComponent } from './Pages/carSharing/getAllCarSharings/getAllCarSharingsPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 import { DeliveryManagementService } from './services/deliveryManagementService';
@@ -33,6 +34,7 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
     DeleteCarSharingPageComponent,
+    GetAllCarSharingsPageComponent,
     CreateDeliveryComponent
   ],
   imports: [
@@ -47,6 +49,7 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])

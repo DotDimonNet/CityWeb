@@ -14,7 +14,7 @@ export class CarSharingManagmentService{
         return this.dataService.createCarSharing(createCarSharingData);
     };
 
-    getAllCarSharings():Observable<ICarSharing>{
+    getAllCarSharings():Observable<ICarSharing[]>{
         return this.dataService.getAllCarSharings();
     };
 }
