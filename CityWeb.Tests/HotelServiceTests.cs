@@ -44,8 +44,8 @@ namespace CityWeb.Tests
 
             Assert.IsNotNull(hotel);
             Assert.AreEqual(hotel.Image, hotelFromContext.Image);
-            Assert.AreEqual(hotel.RentAddress.StreetName, hotelFromContext.RentAddress.StreetName);
-            Assert.AreEqual(hotel.RentAddress.HouseNumber, hotelFromContext.RentAddress.HouseNumber);
+            Assert.AreEqual(hotel.Address.StreetName, hotelFromContext.Address.StreetName);
+            Assert.AreEqual(hotel.Address.HouseNumber, hotelFromContext.Address.HouseNumber);
             Assert.AreEqual(hotel.Description, hotelFromContext.Description);
             Assert.AreEqual(hotel.Title, hotelFromContext.Title);
         }

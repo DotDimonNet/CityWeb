@@ -143,7 +143,7 @@ namespace CityWeb.Tests
                     Title = $"Hotel {i}",
                     Description = $"Default descriotion {i}",
                     Image = $"Hotel_img{i}.png",
-                    RentAddress = new AddressModel
+                    Address = new AddressModel
                     {
                         StreetName = $"Street {i}",
                         HouseNumber = $"i",

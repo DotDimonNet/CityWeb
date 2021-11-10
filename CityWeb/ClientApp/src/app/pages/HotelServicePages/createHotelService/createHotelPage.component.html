@@ -1,0 +1,27 @@
+<div class="create">
+    <b>Enter data to create new Hotel:</b>
+    <p>Hotel title:
+      <input type="text" size="40" [(ngModel)] = "createInfo.title">
+    </p>
+    <p>Hotel description:
+      <input type="text" size="40" [(ngModel)] = "createInfo.description">
+    </p>
+    <p>Street name:
+      <input type="text" size="40" [(ngModel)] = "createInfo.address.streetName">
+    </p>
+    <p>House number:
+      <input type="text" size="40" [(ngModel)] = "createInfo.address.houseNumber">
+    </p>
+    <button class="createButton" (click)="createHotel()">Create Hotel</button><br><br>
+    
+    Created Hotel:
+    </div>
+    <div>
+      Title: "{{hotelInfo.title}}"
+    </div>
+    <div>
+      Description: "{{hotelInfo.description}}"
+    </div>
+    <div>
+      Address: "{{hotelInfo.address.streetName}}, {{hotelInfo.address.houseNumber}}"
+    </div>
