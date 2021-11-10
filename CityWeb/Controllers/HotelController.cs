@@ -13,7 +13,7 @@ using CityWeb.Domain.Entities;
 namespace CityWeb.Controllers
 {
     [ApiController]
-    [Route("api/Hotel")]
+    [Route("api/hotel")]
     //[Authorize(Policy = Policies.RequireUserRole)]
     public class HotelController : Controller
     {
