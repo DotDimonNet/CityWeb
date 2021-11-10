@@ -342,7 +342,7 @@ namespace CityWeb.Infrastucture.Data
             {
                 Title = "Hillton",
                 Description = "5 stars",
-                RentAddress = new AddressModel()
+                Address = new AddressModel()
                 {
                     StreetName = "Soborna",
                     HouseNumber = "1",
@@ -445,7 +445,7 @@ namespace CityWeb.Infrastucture.Data
             {
                 Title = "California",
                 Description = "4 stars",
-                RentAddress = new AddressModel()
+                Address = new AddressModel()
                 {
                     StreetName = "Vatytina",
                     HouseNumber = "23",

@@ -38,7 +38,6 @@ namespace CityWeb.Mapping
                  .ForMember(x => x.Type, o => o.MapFrom(z => z.Type.ToString()));
             CreateMap<RoomDTO, RoomModel>()
                 .ForMember(x => x.Type, o => o.MapFrom((z) => Enum.Parse<HotelRoomType>(z.Type)));
-            //.ForMember(x => x.HotelTitle, o => o.MapFrom(z => z.Hotel.Title));
 
 
             CreateMap<RoomModel, UpdateRoomDTO>()

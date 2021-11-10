@@ -20,6 +20,12 @@ import { CarSharingManagmentService } from './services/carSharingManagementServi
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
+//Hotel
+import { HotelManagementDataService } from './services/hotelManagementService.data';
+import { HotelManagementService } from './services/hotelManagementService';
+import { HotelPageComponent } from './pages/HotelServicePages/hotelPage.component';
+import { CreateHotelComponent } from './pages/HotelServicePages/createHotelService/createHotelPage.component';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +42,9 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     DeleteCarSharingPageComponent,
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent
+    CreateDeliveryComponent,
+    HotelPageComponent,
+    CreateHotelComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -50,6 +59,8 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
       { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
+      { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
+      { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
@@ -58,7 +69,9 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     CarSharingManagmentService,
     CarSharingManagmentDataService,
     DeliveryManagementService,
-    DeliveryManagementDataService
+    DeliveryManagementDataService,
+    HotelManagementService,
+    HotelManagementDataService,
   ],
   bootstrap: [AppComponent]
 })
