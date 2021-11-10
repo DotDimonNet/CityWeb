@@ -1,16 +1,24 @@
 <div class="create">
   
-  <b>Enter data to create CarSharing company:</b>
+  <b>Enter data to update CarSharing company:</b>
+  <p>Company id:
+    <input type="text" size="40" [(ngModel)] = "updateInfo.id">
+  </p>
   <p>Company title:
-    <input type="text" size="40" [(ngModel)] = "createInfo.title">
+    <input type="text" size="40" [(ngModel)] = "updateInfo.title">
   </p>
   <p>Company description:
-    <input type="text" size="40" [(ngModel)] = "createInfo.description">
+    <input type="text" size="40" [(ngModel)] = "updateInfo.description">
   </p>
-  <button class="createButton" (click)="createCarSharing()">Create CarSharingCompany</button><br><br>
+  <p>Street name:
+    <input type="text" size="40" [(ngModel)] = "createInfo.location.streetName">
+  </p>
+  <p>House number:
+    <input type="text" size="40" [(ngModel)] = "createInfo.location.houseNumber">
+  </p>
+  <button class="createButton" (click)="updateCarSharing()">Update CarSharingCompany</button><br><br>
   
   Car Sharing:
-  </div>
   <div>
     Title: "{{carSharingInfo.title}}"
   </div>
@@ -20,3 +28,5 @@
   <div>
     Location: "{{carSharingInfo.location.streetName}}, {{carSharingInfo.location.houseNumber}}"
   </div>
+</div>
+  
