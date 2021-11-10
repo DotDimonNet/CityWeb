@@ -4,12 +4,12 @@ import { IDeliveryModel,  ICreateDeliveryModel} from 'src/app/models/delivery.mo
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
 @Component({
-  selector: 'delivery-service',
-  templateUrl: './deliveryServicePage.component.html',
-  styleUrls: ['./deliveryServicePage.component.css']
+  selector: 'create',
+  templateUrl: './createDeliveryPage.component.html',
+  styleUrls: ['./createDeliveryPage.component.css']
 })
 
-export class DeliveryPageComponent {
+export class CreateDeliveryComponent {
   
   public createDelivery: ICreateDeliveryModel = {
     title: "",

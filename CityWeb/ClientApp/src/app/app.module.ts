@@ -9,6 +9,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { DeliveryManagerPageComponent } from './pages/deliveryManagerPage/deliveryManagerPage.component';
+import { CreateDeliveryComponent } from './pages/createDeliveryPage/createDeliveryPage.component';
 import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
@@ -26,6 +28,8 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
+    DeliveryManagerPageComponent,
+    CreateDeliveryComponent
     CarSharingPageComponent,
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
@@ -37,7 +41,8 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: 'delivery-service', component: DeliveryPageComponent, pathMatch: 'full' },
+      { path: 'delivery-manager', component: DeliveryManagerPageComponent, pathMatch: 'full' },
+      { path: 'create', component: CreateDeliveryComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-sharing', component: CarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
