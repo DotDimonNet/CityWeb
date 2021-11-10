@@ -10,7 +10,7 @@ namespace CityWeb.Domain.DTO
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public AddressModelDTO DeliveryAdress { get; set; }
+        public string DeliveryImage { get; set; }
         public PeriodModelDTO WorkSchedule { get; set; }
         public PriceModelDTO DeliveryPrice { get; set; }
     }

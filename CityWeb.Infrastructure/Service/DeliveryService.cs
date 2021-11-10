@@ -221,9 +221,12 @@ namespace CityWeb.Infrastructure.Service
             {
                 try
                 {
-                    var result = await _context.Products.Where(x => x.DeliveryId == priceFilter.DeliveryId && x.ProductPrice.Total >= priceFilter.MinPrice && x.ProductPrice.Total <= priceFilter.MaxPrice)
+                    var result = await _context.Products.Where(x => x.DeliveryId == priceFilter.DeliveryId && 
+                    x.ProductPrice.Value >= priceFilter.MinPrice && x.ProductPrice.Value <= priceFilter.MaxPrice)
                    .Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+
                     _logger.LogInformation($"Received all products for delivery company with id:{priceFilter.DeliveryId} using price filter");
+                    
                     return result;
                 }
                 catch (Exception ex)
@@ -237,16 +240,15 @@ namespace CityWeb.Infrastructure.Service
         }
 
         // Methods for steps
-        public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companyShedule)
+        public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companySchedule)
         {
             try
             {
                 var delivery = _context.Deliveries.Where(x =>
-                x.WorkSchedule.StartTime.TimeOfDay < companyShedule.WorkTime.TimeOfDay &&
-                x.WorkSchedule.EndTime.TimeOfDay > companyShedule.WorkTime.TimeOfDay);
+                x.WorkSchedule.StartTime.TimeOfDay <= companySchedule.WorkTime.TimeOfDay &&
+                x.WorkSchedule.EndTime.TimeOfDay >= companySchedule.WorkTime.TimeOfDay);
 
                 _logger.LogInformation("Show all working delivery company in this time");
-
                 return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
             }
             catch (Exception ex)
@@ -260,7 +262,7 @@ namespace CityWeb.Infrastructure.Service
         {
             try
             {
-                return await _context.Products.Where(x => x.DeliveryId == dtoModel.DeliveryId).Select(x => x.ProductType.ToString()).Distinct().ToListAsync();
+                return await _context.Products.Where(x => x.DeliveryId == dtoModel.DeliveryId).Select(x => x.ProductType.ToString()).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -273,9 +275,10 @@ namespace CityWeb.Infrastructure.Service
         {
             try
             {
-                var result = await _context.Products.Where(x => x.ProductType.ToString() == dtoModel.TypeName).
-                                Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+                var result = await _context.Products.Where(x => x.ProductType == Enum.Parse<ProductType>(dtoModel.TypeName)).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+               
                 _logger.LogInformation("Shown all product with carent product type");
+
                 return result;
             }
             catch (Exception ex)
@@ -292,6 +295,7 @@ namespace CityWeb.Infrastructure.Service
                 var productIds = busketModelDTO.Busket.Select(x => x.ProductId);
                 var products = _context.Products.Where(x => productIds.Contains(x.Id));
                 var price = await products.SumAsync(x => x.ProductPrice.Total * busketModelDTO.Busket.FirstOrDefault(z => z.ProductId == x.Id).Quantity);
+
                 _logger.LogInformation($"Product with id {busketModelDTO.Busket.Select(x => x.ProductId)} add to basket");
 
                 return new PaymentModelDTO()

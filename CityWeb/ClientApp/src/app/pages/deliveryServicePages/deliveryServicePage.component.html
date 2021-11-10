@@ -1,0 +1,45 @@
+<div class="delivery-service">
+  Enter data to create delivery company
+</div>
+<p class="title">
+  Enter Delivery company Title:
+  <input type="text" [(ngModel)] = "createDelivery.title">
+</p>
+<p class="title">
+  Enter Delivery company Description:
+  <input type="text" [(ngModel)] = "createDelivery.description">
+</p>
+<p class="title">
+  Enter start work time:
+  <input type="date" [(ngModel)] = "createDelivery.workSchedule.startTime">
+</p>
+<p class="title">
+  Enter end work time:
+  <input type="date" [(ngModel)] = "createDelivery.workSchedule.endTime">
+</p>
+<p class="title">
+  Enter delivery price value:
+  <input type="number" [(ngModel)] = "createDelivery.deliveryPrice.value">
+</p>
+<p class="title">
+  Enter delivery price tax:
+  <input type="number" [(ngModel)] = "createDelivery.deliveryPrice.tax">
+</p>
+<p class="title">
+  Enter delivery price vat:
+  <input type="number" [(ngModel)] = "createDelivery.deliveryPrice.vat">
+</p>
+
+<button class="number" (click)="incrementDelivery()">Enter company data</button>
+
+<div class="result">
+  Created company
+  <div>Title: {{deliveryInfo.title}}</div>
+  <div>Description: {{deliveryInfo.description}}</div>
+  <div>Start work time: {{deliveryInfo.workSchedule.startTime}}</div>
+  <div>End work time: {{deliveryInfo.workSchedule.endTime}}</div>
+  <div>Delivery price value: {{deliveryInfo.deliveryPrice.value}}</div>
+  <div>Delivery price tax: {{deliveryInfo.deliveryPrice.tax}}</div>
+  <div>Delivery price vat: {{deliveryInfo.deliveryPrice.vat}}</div>
+</div>
+
