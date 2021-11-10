@@ -11,6 +11,13 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { DeliveryManagerPageComponent } from './pages/deliveryManagerPage/deliveryManagerPage.component';
 import { CreateDeliveryComponent } from './pages/createDeliveryPage/createDeliveryPage.component';
+import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
+import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
+import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
+import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
+import { CarSharingManagmentService } from './services/carSharingManagementService';
+import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
+import { DeliveryPageComponent } from './pages/deliveryServicePages/deliveryServicePage.component';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
 
@@ -23,6 +30,11 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     FetchDataComponent,
     DeliveryManagerPageComponent,
     CreateDeliveryComponent
+    CarSharingPageComponent,
+    CreateCarSharingPageComponent,
+    UpdateCarSharingPageComponent,
+    DeleteCarSharingPageComponent
+    DeliveryPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,11 +44,17 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
       { path: 'delivery-manager', component: DeliveryManagerPageComponent, pathMatch: 'full' },
       { path: 'create', component: CreateDeliveryComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'car-sharing', component: CarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
   providers: [
+    CarSharingManagmentService,
+    CarSharingManagmentDataService
     DeliveryManagementService,
     DeliveryManagementDataService
   ],

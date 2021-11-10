@@ -162,11 +162,11 @@ namespace Taste.Web.Controllers
         }
 
         [HttpGet("get-all-car-sharings")]
-        public IActionResult GetAllCarSharings()
+        public async Task<IActionResult> GetAllCarSharings()
         {
             try
             {
-                var carSharings = _carSharingService.GetAllCarSharings();
+                var carSharings = await _carSharingService.GetAllCarSharings();
                 return Json(carSharings);
             }
             catch (Exception ex)

@@ -1,0 +1,22 @@
+<div class="create">
+  
+  <b>Enter data to create CarSharing company:</b>
+  <p>Company title:
+    <input type="text" size="40" [(ngModel)] = "createInfo.title">
+  </p>
+  <p>Company description:
+    <input type="text" size="40" [(ngModel)] = "createInfo.description">
+  </p>
+  <button class="createButton" (click)="createCarSharing()">Create CarSharingCompany</button><br><br>
+  
+  Car Sharing:
+  </div>
+  <div>
+    Title: "{{carSharingInfo.title}}"
+  </div>
+  <div>
+    Description: "{{carSharingInfo.description}}"
+  </div>
+  <div>
+    Location: "{{carSharingInfo.location.streetName}}, {{carSharingInfo.location.houseNumber}}"
+  </div>

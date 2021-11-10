@@ -71,7 +71,7 @@ namespace CityWeb.Tests
                 HotelTitle = "Hotel 2",
                 Number = 123,
                 Image = "Room_img97.png",
-                //Type = HotelRoomType.Delux,
+                Type = HotelRoomType.Delux.ToString(),
                 Price = new PriceDTO
                 {
                     Value = 1234
@@ -97,10 +97,10 @@ namespace CityWeb.Tests
                 Number = TestHelper.ApplicationContext.Rooms.Select(x => x.Number).FirstOrDefault(),
             };
             var exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.AddRoom(dto));
-            Assert.AreEqual(exept.Message, "Hotel does not exist!");
+            Assert.AreEqual(exept.Message, $"Hotel {dto.HotelTitle} does not exist.");
             dto.HotelTitle = TestHelper.ApplicationContext.Hotels.Select(x => x.Title).FirstOrDefault();
             exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.AddRoom(dto));
-            Assert.AreEqual(exept.Message, "Room with this number already exist!");
+            Assert.AreEqual(exept.Message, $"Room {dto.Number} in hotel {dto.HotelTitle} already exist.");
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace CityWeb.Tests
             var hotel = TestHelper.ApplicationContext.Hotels.FirstOrDefault();
             var dto = new DeleteHotelDTO()
             {
-                //HotelTitle = hotel.Title,
+                Title = hotel.Title,
             };
             await hotelService.RemoveHotel(dto);
             Assert.IsNull(TestHelper.ApplicationContext.Hotels.FirstOrDefault(x => x.Id == hotel.Id));
@@ -158,10 +158,10 @@ namespace CityWeb.Tests
             var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger    );
             var dto = new DeleteHotelDTO()
             {
-                //HotelTitle = "",
+                Title = "",
             };
             var exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.RemoveHotel(dto));
-            Assert.AreEqual(exept.Message, "Hotel with this title doesnt exist!");
+            Assert.AreEqual(exept.Message, $"Hotel {dto.Title} doesnt exist!");
         }
     }
 }
