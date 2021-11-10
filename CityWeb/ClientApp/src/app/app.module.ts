@@ -19,10 +19,17 @@ import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.compo
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
 import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
+import { GetAllCarSharingsPageComponent } from './Pages/carSharing/getAllCarSharings/getAllCarSharingsPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
+//Hotel
+import { HotelManagementDataService } from './services/hotelManagementService.data';
+import { HotelManagementService } from './services/hotelManagementService';
+import { HotelPageComponent } from './pages/HotelServicePages/hotelPage.component';
+import { CreateHotelComponent } from './pages/HotelServicePages/createHotelService/createHotelPage.component';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +46,11 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
     DeleteCarSharingPageComponent,
+    GetAllCarSharingsPageComponent,
+    CreateDeliveryComponent
+    CreateDeliveryComponent,
+    HotelPageComponent,
+    CreateHotelComponent,
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -55,6 +67,9 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
+      { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
+      { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
@@ -63,7 +78,9 @@ import { DeliveryManagementDataService } from './services/deliveryManagementServ
     CarSharingManagmentService,
     CarSharingManagmentDataService,
     DeliveryManagementService,
-    DeliveryManagementDataService
+    DeliveryManagementDataService,
+    HotelManagementService,
+    HotelManagementDataService,
   ],
   bootstrap: [AppComponent]
 })

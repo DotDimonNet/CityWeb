@@ -11,7 +11,7 @@ namespace CityWeb.Domain.ValueTypes
 {
     public class HouseBillBuilderResult
     {
-        public string HouseBillType { get; set; }
+        public string HouseBillTitle { get; set; }
         public  CounterModelDTO Counter{ get; set; }
         public int Number { get; set; }
         public double StartCount { get; set; }

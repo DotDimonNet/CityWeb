@@ -24,7 +24,7 @@ namespace CityWeb.Tests
         }
 
         [Test]
-        public async Task AddHotelTest()
+            public async Task AddHotelTest()
         {
             var hotelService = new HotelService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
             var dto = new HotelDTO()
@@ -44,8 +44,8 @@ namespace CityWeb.Tests
 
             Assert.IsNotNull(hotel);
             Assert.AreEqual(hotel.Image, hotelFromContext.Image);
-            Assert.AreEqual(hotel.RentAddress.StreetName, hotelFromContext.RentAddress.StreetName);
-            Assert.AreEqual(hotel.RentAddress.HouseNumber, hotelFromContext.RentAddress.HouseNumber);
+            Assert.AreEqual(hotel.Address.StreetName, hotelFromContext.Address.StreetName);
+            Assert.AreEqual(hotel.Address.HouseNumber, hotelFromContext.Address.HouseNumber);
             Assert.AreEqual(hotel.Description, hotelFromContext.Description);
             Assert.AreEqual(hotel.Title, hotelFromContext.Title);
         }
@@ -59,7 +59,7 @@ namespace CityWeb.Tests
                 Title = TestHelper.ApplicationContext.Hotels.Select(x => x.Title).FirstOrDefault(),
             };
             var exept = Assert.ThrowsAsync<Exception>(async () => await hotelService.AddHotel(dto));
-            Assert.AreEqual(exept.Message, "Hotel with this title already exist!");
+            Assert.AreEqual(exept.Message, $"Hotel {dto.Title} already exist.");
         }
 
         [Test]
