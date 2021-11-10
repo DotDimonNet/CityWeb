@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map, take } from "rxjs/operators";
-import { IDeliveryModel, ICreateDeliveryModel } from "../models/delivery.model";
+import { IDeliveryModel, ICreateDeliveryModel, IUpdateDeliveryModel, IDeleteDeliveryModel, IResultModel } from "../models/delivery.model";
 
 @Injectable()
 export class DeliveryManagementDataService {
@@ -13,6 +13,20 @@ export class DeliveryManagementDataService {
         return this.client.post(`/api/delivery`, deliveryCompany)
         .pipe(first(), map((res: any) => {
             return res as  IDeliveryModel;
+        }));
+    }
+
+    updateDeliveryCompany(updateDelivery: IUpdateDeliveryModel) : Observable<IDeliveryModel> {
+        return this.client.put('/api/delivery', updateDelivery)
+        .pipe(first(), map((res: any) => {
+            return res as IDeliveryModel;
+        }));
+    }
+
+    deleteDeliveryCompany(deleteDelivery: IDeleteDeliveryModel) : Observable<IResultModel> {
+        return this.client.delete('/api/delivery')
+        .pipe(first(), map((res: any) => {
+            return res as IResultModel;
         }));
     }
 }

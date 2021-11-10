@@ -11,9 +11,11 @@ import { DeliveryManagementService } from 'src/app/services/deliveryManagementSe
 
 export class CreateDeliveryComponent {
   
+  public picker: any;
   public createDelivery: ICreateDeliveryModel = {
     title: "",
     description: "",
+    deliveryImage: "",
     workSchedule:  {
         startTime: new Date(),
         endTime: new Date(),
@@ -42,7 +44,7 @@ export class CreateDeliveryComponent {
 
   constructor(private service: DeliveryManagementService) {}
 
-  public incrementDelivery() {
+  public create() {
         this.service.createDeliveryCompany(this.createDelivery)
         .subscribe((res: IDeliveryModel) => {
             this.deliveryInfo = res;

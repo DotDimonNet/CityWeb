@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ICreateDeliveryModel, IDeliveryModel } from "../models/delivery.model";
+import { ICreateDeliveryModel, IDeliveryModel, IUpdateDeliveryModel, IResultModel, IDeleteDeliveryModel } from "../models/delivery.model";
 import { DeliveryManagementDataService } from "./deliveryManagementService.data";
 
 @Injectable()
@@ -12,5 +12,13 @@ export class DeliveryManagementService {
 
     createDeliveryCompany(deliveryModel: ICreateDeliveryModel) : Observable<IDeliveryModel> {
         return this.dataService.createDeliveryCompany(deliveryModel);
+    }
+
+    updateDeliveryCompany(updateDelivery: IUpdateDeliveryModel) : Observable<IDeliveryModel> {
+        return this.dataService.updateDeliveryCompany(updateDelivery);
+    }
+
+    deleteDeliveryCompany(deleteDelivery: IDeleteDeliveryModel) : Observable<IResultModel> {
+        return this.dataService.deleteDeliveryCompany(deleteDelivery);
     }
 }
