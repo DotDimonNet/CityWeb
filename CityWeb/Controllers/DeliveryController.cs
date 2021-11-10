@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CityWeb.Controllers
 {
     [ApiController]
-    [Route("api/Delivery")]
+    [Route("api/delivery")]
     public class DeliveryController : Controller
     {
         private readonly IDeliveryService _deliveryService;
@@ -19,7 +19,7 @@ namespace CityWeb.Controllers
             _deliveryService = deliveryService;
         }
 
-        [HttpPost("delivery")]
+        [HttpPost]
         public async Task<IActionResult> CreateDelivery([FromBody] CreateDeliveryModelDTO request)
         {
             try
@@ -33,7 +33,7 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpPut("delivery")]
+        [HttpPut]
         public async Task<IActionResult> UpdateDelivery([FromBody] UpdateDeliveryModelDTO request)
         {
             try
@@ -47,7 +47,7 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpDelete("delivery")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteDelivery([FromBody] DeleteCompanyDTO request)
         {
             try

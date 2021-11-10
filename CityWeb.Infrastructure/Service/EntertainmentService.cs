@@ -141,8 +141,7 @@ namespace CityWeb.Infrastructure.Service
                     entertainment.Service = new ServiceModel();
                     await _context.Entertaiments.AddAsync(entertainment);
                     await _context.SaveChangesAsync();
-                    var result = _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
-                    return result;
+                    return _mapper.Map<EntertainmentModel, EntertainmentModelDTO>(entertainment);
                 }
                 else
                 {
@@ -174,8 +173,7 @@ namespace CityWeb.Infrastructure.Service
                         await _context.Events.AddAsync(eventModel);
                         entertainment.Events.Add(eventModel);
                         await _context.SaveChangesAsync();
-                        var result = _mapper.Map<EventModel, EventModelDTO>(eventModel);
-                        return result;
+                        return _mapper.Map<EventModel, EventModelDTO>(eventModel);
                     }
                     else
                     {
