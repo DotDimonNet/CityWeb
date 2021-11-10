@@ -358,7 +358,7 @@ namespace CityWeb.Tests
                 var houseBill = new HouseBillModel()
                 {
                     Title = $"HouseBill{i + 1}",
-                    Description = $"Default description {i}",
+                    Description = $"Default description {i + 1}",
                     Service = service,
                     ServiceId = service.Id,
                     HouseHoldAddress = new AddressModel()
@@ -384,6 +384,7 @@ namespace CityWeb.Tests
                 };
                 houseBills.Add(houseBill);
             }
+            await ApplicationContext.HouseBills.AddRangeAsync(houseBills);
             await ApplicationContext.SaveChangesAsync();
         }
     }

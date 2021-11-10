@@ -35,7 +35,7 @@ namespace Taste.Web.Controllers
         }
 
         [HttpPut("housebill-update")]
-        public IActionResult UpdateHouseBill([FromBody] UpdateHouseBillModelDTO request)
+        public async Task<IActionResult> UpdateHouseBill([FromBody] UpdateHouseBillModelDTO request)
         {
             try
             {
@@ -62,13 +62,13 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPost("counter-create")]
-        public async Task<IActionResult> CreateCounterModel([FromBody] CreateCounterModelDTO request)
+        [HttpPost("counter")]
+        public async Task<IActionResult> CreateCounter([FromBody] CreateCounterModelDTO request)
         {
             try
             {
-                var houseBill = await _houseBillService.CreateCounter(request);
-                return Json(houseBill);
+                var counter = await _houseBillService.CreateCounter(request);
+                return Json(counter);
             }
             catch (Exception ex)
             {
@@ -76,13 +76,13 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("counter-update")]
-        public IActionResult UpdateCounterModel([FromBody] UpdateCounterModelDTO request)
+        [HttpPut("counter")]
+        public async Task<IActionResult> UpdateCounter([FromBody] UpdateCounterModelDTO request)
         {
             try
             {
-                var houseBill = _houseBillService.UpdateCounter(request);
-                return Json(houseBill.Result);
+                var counter = _houseBillService.UpdateCounter(request);
+                return Json(counter);
             }
             catch (Exception ex)
             {
@@ -90,7 +90,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("delete-counter")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteCounterModel([FromBody] DeleteCounterModelDTO request)
         {
             try
@@ -105,12 +105,12 @@ namespace Taste.Web.Controllers
         }
 
         [HttpGet("get-all-counters")]
-        public IActionResult GetAllCounters([FromQuery] HouseBillIdDTO request)
+        public IActionResult GetAllCountersbyHouseBillId([FromQuery] HouseBillIdDTO reqest)
         {
             try
             {
-                var houseBills = _houseBillService.GetAllCountersbyHouseBillId(request);
-                return Json(houseBills.Result);
+                var counters = _houseBillService.GetAllCountersbyHouseBillId(reqest);
+                return Json(counters.Result);
             }
             catch (Exception ex)
             {
@@ -118,7 +118,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpGet("get-all-house-pays")]
+        [HttpGet("get-all-house-bills")]
         public async Task<IActionResult> GetAllHousePays()
         {
             try

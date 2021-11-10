@@ -40,7 +40,8 @@ namespace CityWeb.Mapping
             CreateMap<HouseBillModel, UpdateHouseBillModelDTO>();
 
             //Counter
-            CreateMap<CounterModel, CounterModelDTO>();
+            CreateMap<CounterModel, CounterModelDTO>()
+                .ForMember(x => x.Type, o => o.MapFrom(z => z.BillType.ToString()));
 
             CreateMap<CounterModelDTO, CounterModel>()
                 .ForMember(x => x.BillType, o => o.MapFrom(z => Enum.Parse<HouseBillType>(z.Type)));
@@ -53,7 +54,9 @@ namespace CityWeb.Mapping
 
             CreateMap<CounterModel, UpdateCounterModelDTO>();
 
-            CreateMap<UpdateCounterModelDTO, CounterModel>();
+
+            CreateMap<UpdateCounterModelDTO, CounterModel>()
+                 .ForMember(x => x.BillType, o => o.MapFrom(z => Enum.Parse<HouseBillType>(z.Type)));
         }
     }
 }

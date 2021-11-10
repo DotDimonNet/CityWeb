@@ -44,35 +44,32 @@ namespace CityWeb.Tests
         public async Task UpdateHouseBillTest()
         {
             var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
-            var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "houseBill1");
-            var houseBillDTO = new UpdateHouseBillModelDTO()
+            UpdateHouseBillModelDTO houseBillDTO = new UpdateHouseBillModelDTO()
             {
-                Id = houseBillId.Id,
-                Description = "Bill for last mounth",
-                HouseHoldAddress = new AddressModelDTO()
-                {
-                    StreetName = "Soborna",
-                    HouseNumber = "24",
-                    ApartmentNumber = "7"
-
-                },
+                Id = TestHelper.ApplicationContext.HouseBills.FirstOrDefault().Id,
+                Title = "HouseBill2",
+                Description = "new Bill for last mounth",
+                
             };
             var houseBill = await houseBillService.UpdateHouseBill(houseBillDTO);
+            HouseBillModel houseBillContext = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Id == houseBillDTO.Id);
 
-            Assert.IsNotNull(houseBill);
+            Assert.AreEqual(houseBill.Title, houseBillContext.Title);
+            Assert.AreEqual(houseBill.Description, houseBillContext.Description);
         }
 
 
             [Test]
         public async Task DeleteHouseBillTest()
         {
-            var housePayService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
+            var houseBillService = new HouseBillService(TestHelper.ApplicationContext, TestHelper.TestMapper, _logger);
+            var houseBillId = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Title == "HouseBill2");
             var dto = new DeleteHouseBillModelDTO()
             {
-                //HouseBillId = houseBillId.Id,
+                HouseBillId = houseBillId.Id
             };
 
-            //await houseBillService.DeleteHouseBill(dto);
+            await houseBillService.DeleteHouseBill(dto);
             var houseBillFromContext = TestHelper.ApplicationContext.HouseBills.FirstOrDefault(x => x.Id == dto.HouseBillId);
             Assert.IsNull(houseBillFromContext);
         }
