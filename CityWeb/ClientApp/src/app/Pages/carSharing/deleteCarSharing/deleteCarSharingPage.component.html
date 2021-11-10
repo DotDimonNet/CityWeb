@@ -1,22 +1,11 @@
 <div class="create">
   
   <b>Enter data to create CarSharing company:</b>
-  <p>Company title:
-    <input type="text" size="40" [(ngModel)] = "createInfo.title">
+  <p>Company id:
+    <input type="text" size="40" [(ngModel)] = "deleteCarSharing.id">
   </p>
-  <p>Company description:
-    <input type="text" size="40" [(ngModel)] = "createInfo.description">
-  </p>
-  <button class="createButton" (click)="createCarSharing()">Create CarSharingCompany</button><br><br>
+  <button class="deleteButton" [disabled] = "isDeleteButtonDisabled" (click)="deleteCarSharing()">Delete CarSharingCompany</button><br><br>
+
+  <button class="findCarSharingById" (click)="findById()"></button><br><br>
   
-  Car Sharing:
-  </div>
-  <div>
-    Title: "{{carSharingInfo.title}}"
-  </div>
-  <div>
-    Description: "{{carSharingInfo.description}}"
-  </div>
-  <div>
-    Location: "{{carSharingInfo.location.streetName}}, {{carSharingInfo.location.houseNumber}}"
-  </div>
+</div>>

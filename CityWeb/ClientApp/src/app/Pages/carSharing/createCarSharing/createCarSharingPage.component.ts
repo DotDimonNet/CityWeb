@@ -38,5 +38,14 @@ export class CreateCarSharingPageComponent{
             .subscribe((res: ICarSharing) => {
                 this.carSharingInfo = res;
             });
+        this.createInfo = {
+            title: "",
+            description: "",
+            location: {
+                streetName: "",
+                houseNumber: "",
+                appartmentNumber: ""
+            }
+        } as ICreateCarSharingModel
     }
 }

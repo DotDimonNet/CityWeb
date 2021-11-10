@@ -4,7 +4,7 @@ import { ICarSharing, IDeleteCarSharingModel } from 'src/app/models/carSharing.m
 import { CarSharingManagmentService } from 'src/app/services/carSharingManagementService';
 
 @Component({
-    selector: 'car-sharing-update',
+    selector: 'car-sharing-delete',
     templateUrl: './deleteCarSharingPage.component.html',
     styleUrls: ['./deleteCarSharingPage.component.css']
 })
@@ -20,7 +20,10 @@ export class DeleteCarSharingPageComponent{
         }
     } as ICarSharing;
 
-    public updateInfo: IDeleteCarSharingModel = {
+    public isDeleteButtonDisabled = false;
+    public isSucess: boolean;
+
+    public deleteInfo: IDeleteCarSharingModel = {
         id: ""
     } as IDeleteCarSharingModel
 
@@ -28,6 +31,9 @@ export class DeleteCarSharingPageComponent{
     
     public deleteCarSharing()
     {
-        
+        this.service.deleteCarSharing(this.deleteInfo)
+        .subscribe((res: boolean) => {
+            this.isSucess = res;
+        });
     }
 }

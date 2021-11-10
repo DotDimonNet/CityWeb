@@ -1,3 +1,4 @@
+
 <div class="delivery-manager">
   Enter data to create delivery company
 </div>
@@ -10,9 +11,16 @@
   <input type="text" [(ngModel)] = "createDelivery.description">
 </p>
 <p class="title">
-  Enter start work time:
-  <input type="date" [(ngModel)] = "createDelivery.workSchedule.startTime">
+  Enter Delivery company Image:
+  <input type="file" [(ngModel)] = "createDelivery.deliveryImage">
 </p>
+<p class="title">
+  Enter start work time:
+</p>
+<div class="12hr-example" >
+  <input placeholder="12hr format (default settings)" aria-label="12hr format" [ngxTimepicker]="default" readonly>
+  <ngx-material-timepicker #picker></ngx-material-timepicker>
+</div>
 <p class="title">
   Enter end work time:
   <input type="date" [(ngModel)] = "createDelivery.workSchedule.endTime">
@@ -30,7 +38,7 @@
   <input type="number" [(ngModel)] = "createDelivery.deliveryPrice.vat">
 </p>
 
-<button class="number" (click)="incrementDelivery()">Enter company data</button>
+<button class="number" (click)="create()">Enter company data</button>
 
 <div class="result">
   Created company
@@ -42,4 +50,6 @@
   <div>Delivery price tax: {{deliveryInfo.deliveryPrice.tax}}</div>
   <div>Delivery price vat: {{deliveryInfo.deliveryPrice.vat}}</div>
 </div>
+
+<a class="back_button" [routerLink] = "['/delivery-manager']">Back to Main</a>
 

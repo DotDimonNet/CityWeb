@@ -35,6 +35,9 @@ export class UpdateCarSharingPageComponent{
     
     public updateCarSharing()
     {
-        
+        this.service.updateCarSharing(this.updateInfo)
+            .subscribe((res: ICarSharing) => {
+                this.carSharingInfo = res;
+            });
     }
 }

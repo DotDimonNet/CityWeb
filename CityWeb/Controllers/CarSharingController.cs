@@ -20,7 +20,7 @@ namespace Taste.Web.Controllers
         {
             _carSharingService = carSharingService;
         }
-
+        
         [HttpPost("manage-car-sharing")]
         public async Task<IActionResult> CreateCarSharing([FromBody] CreateCarSharingModelDTO request)
         {
@@ -50,7 +50,7 @@ namespace Taste.Web.Controllers
         }
 
         [HttpDelete("manage-car-sharing")]
-        public async Task<IActionResult> DeleteCarSharing([FromBody] DeleteCarSharingModelDTO request)
+        public async Task<IActionResult> DeleteCarSharing([FromQuery] DeleteCarSharingModelDTO request)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace Taste.Web.Controllers
         }
 
         [HttpDelete("rent-car")]
-        public async Task<IActionResult> DeleteRentCar([FromBody] DeleteRentCarDTO request)
+        public async Task<IActionResult> DeleteRentCar([FromQuery] DeleteRentCarDTO request)
         {
             try
             {
@@ -161,7 +161,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpGet("get-all-car-sharings")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllCarSharings()
         {
             try
