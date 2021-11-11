@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ITaxi, IUpdateTaxiModel } from 'src/app/models/taxi.model';
 import { TaxiManagmentService } from 'src/app/services/taxiManagementService';
 
@@ -8,7 +8,6 @@ import { TaxiManagmentService } from 'src/app/services/taxiManagementService';
     styleUrls: ['./updateTaxiPage.component.css']
 })
 export class UpdateTaxiPageComponent{
-
     public taxiInfo: ITaxi = {
         title: "",
         description: ""

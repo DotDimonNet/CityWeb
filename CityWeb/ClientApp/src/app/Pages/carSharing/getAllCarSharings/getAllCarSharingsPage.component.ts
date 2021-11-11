@@ -15,7 +15,7 @@ export class GetAllCarSharingsPageComponent{
     constructor(private service: CarSharingManagmentService, private router: Router){}
 
     navigateToCarSharing(id: string) {
-        this.router.navigateByUrl(`/car-sharing/update?id=${id}`);
+        this.router.navigateByUrl(`/car-sharing/company?id=${id}`);
     }
 
     ngOnInit() {

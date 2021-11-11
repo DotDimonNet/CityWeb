@@ -20,6 +20,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<RentCarModelDTO> UpdateRentCar(UpdateRentCarDTO updateCarDTO);
         public Task<bool> DeleteRentCar(DeleteRentCarDTO deleteCarDTO);
         public Task<IEnumerable<CarSharingModelDTO>> GetAllCarSharings();
+        public Task<CarSharingModelDTO> GetCarSharingById(Guid id);
         public Task<IEnumerable<RentCarModelDTO>> GetAllRentCars();
         public CarSharingBuilderResult SetupCarSharingBuilderResult();
         

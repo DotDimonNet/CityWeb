@@ -175,6 +175,20 @@ namespace Taste.Web.Controllers
             }
         }
 
+        [HttpGet("by-id")]
+        public async Task<IActionResult> GetCarSharingById([FromQuery] Guid id)
+        {
+            try
+            {
+                var carSharings = await _carSharingService.GetCarSharingById(id);
+                return Json(carSharings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("get-all-rent-cars")]
         public IActionResult GetAllRentCars()
         {

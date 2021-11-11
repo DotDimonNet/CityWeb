@@ -23,8 +23,8 @@ export class CarSharingManagmentDataService{
         }));
     }
 
-    deleteCarSharing(deleteCarSharing:IDeleteCarSharingModel):Observable<boolean>{
-        return this.client.delete(`/api/car-sharing/delete/?id=${deleteCarSharing.id}`)
+    deleteCarSharing(carSharingId:string):Observable<boolean>{
+        return this.client.delete(`/api/car-sharing/delete/?id=${carSharingId}`)
         .pipe(first(), map((res: any) => {
             return res as boolean;
         }));
@@ -33,5 +33,10 @@ export class CarSharingManagmentDataService{
     getAllCarSharings():Observable<ICarSharing[]>{
         return this.client.get(`/api/car-sharing/all`)
         .pipe(first(), map((res: ICarSharing[]) => res));
+    }
+
+    getCarSharingById(carSharingId: string):Observable<ICarSharing>{
+        return this.client.get(`/api/car-sharing/by-id`)
+        .pipe(first(), map((res: ICarSharing) => res));
     }
 }

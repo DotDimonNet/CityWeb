@@ -20,6 +20,7 @@ import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarShari
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
 import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
 import { GetAllCarSharingsPageComponent } from './Pages/carSharing/getAllCarSharings/getAllCarSharingsPage.component';
+import { CarSharingCompanyPageComponent } from './Pages/carSharing/carSharingCompany/carSharingCompanyPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 import { TaxiPageComponent } from './Pages/taxi/taxiPage.component';
@@ -59,6 +60,7 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
     DeleteCarSharingPageComponent,
+    CarSharingCompanyPageComponent,
     TaxiPageComponent,
     CreateTaxiPageComponent,
     UpdateTaxiPageComponent,
@@ -88,6 +90,7 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
       { path: 'car-sharing/update', component: UpdateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/delete', component: DeleteCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/company', component: CarSharingCompanyPageComponent, pathMatch: 'full' },
       { path: 'taxi', component: TaxiPageComponent, pathMatch: 'full' },
       { path: 'taxi/create', component: CreateTaxiPageComponent, pathMatch: 'full' },
       { path: 'taxi/update', component: UpdateTaxiPageComponent, pathMatch: 'full' },

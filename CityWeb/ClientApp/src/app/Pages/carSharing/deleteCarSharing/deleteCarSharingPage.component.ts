@@ -28,12 +28,4 @@ export class DeleteCarSharingPageComponent{
     } as IDeleteCarSharingModel
 
     constructor(private service: CarSharingManagmentService){}
-    
-    public deleteCarSharing()
-    {
-        this.service.deleteCarSharing(this.deleteInfo)
-        .subscribe((res: boolean) => {
-            this.isSucess = res;
-        });
-    }
 }

@@ -29,6 +29,11 @@ namespace CityWeb.Infrastructure.Service.Transport
             _logger = logger;
         }
 
+        public async Task<CarSharingModelDTO> GetCarSharingById(Guid id)
+        {
+            return _mapper.Map<CarSharingModel,CarSharingModelDTO>(await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == id));
+        }
+
         public async Task<IEnumerable<CarSharingModelDTO>> GetAllCarSharings()
         {
             return await _context.CarSharings.Select(x => _mapper.Map<CarSharingModel, CarSharingModelDTO>(x)).ToListAsync();
