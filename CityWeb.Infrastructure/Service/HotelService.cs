@@ -38,9 +38,9 @@ namespace CityWeb.Infrastructure.Service
                 var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == model.HotelTitle);
                 if (hotel != null)
                 {
-                    var roomNum = await _context.Rooms.Select(x => x.Number).FirstOrDefaultAsync(x => x == model.Number);
+                    var roomNum = await _context.Rooms.FirstOrDefaultAsync(x => x.Number == model.Number);//
 
-                    if (roomNum != model.Number)
+                    if (roomNum.Number != model.Number)
                     {
                         var room = _mapper.Map<RoomDTO, RoomModel>(model);
                         room.HotelId = hotel.Id;
@@ -182,8 +182,7 @@ namespace CityWeb.Infrastructure.Service
             {
                 _logger.LogError(ex.Message);
                 throw new Exception(ex.Message);
-            }
-            
+            }            
         }
         public async Task<HotelModel> FindHotelById(HotelIdDTO model)
         {

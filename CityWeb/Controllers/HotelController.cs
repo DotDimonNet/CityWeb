@@ -64,7 +64,7 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("room")]
+        [HttpPost("manage-room")]
         public async Task<IActionResult> CreateRoom([FromBody] RoomDTO request)
         {
             try
@@ -77,7 +77,7 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("room")]
+        [HttpPut("manage-room")]
         public async Task<IActionResult> UpdateRoom([FromBody] UpdateRoomDTO request)
         {
             try
@@ -90,7 +90,7 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("room")]
+        [HttpDelete("manage-room")]
         public async Task<IActionResult> RemoveRoom([FromBody] DeleteRoomDTO request)
         {
             try
@@ -104,7 +104,7 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-free-rooms")]
+        [HttpGet("free-rooms")]
         public async Task<IActionResult> GetFreeRoomsInHotel([FromBody] HotelTitleDTO request)
         {
             try
@@ -118,7 +118,7 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-all-room-typ  es")]
+        [HttpGet("all-room-types")]
         public async Task<IActionResult> GetAllRoomTypesByHotelTitle([FromBody] HotelTitleDTO request)
         {
             try
