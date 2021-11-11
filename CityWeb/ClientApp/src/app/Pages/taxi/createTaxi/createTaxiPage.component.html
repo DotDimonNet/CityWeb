@@ -1,0 +1,18 @@
+<div class="createTaxi">
+  <b>Enter data to create taxi company:</b>
+  <p>Company title:
+    <input type="text" size="40" [(ngModel)] = "createInfo.title">
+  </p>
+  <p>Company description:
+    <input type="text" size="40" [(ngModel)] = "createInfo.description">
+  </p>
+  <button class="createButton" (click)="createTaxi()">Create taxi company</button><br><br>
+  
+  Created taxi:
+  <div>
+    Title: "{{taxiInfo.title}}"
+  </div>
+  <div>
+    Description: "{{taxiInfo.description}}"
+  </div>
+</div>

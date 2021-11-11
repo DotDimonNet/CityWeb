@@ -10,21 +10,21 @@ export class CarSharingManagmentDataService{
     constructor(private client:HttpClient){}
 
     createCarSharing(createCarSharing:ICreateCarSharingModel):Observable<ICarSharing>{
-        return this.client.post(`/api/car-sharing/manage-car-sharing`, createCarSharing)
+        return this.client.post(`/api/car-sharing/create`, createCarSharing)
         .pipe(first(), map((res: any) => {
             return res as ICarSharing;
         }));
     }
 
     updateCarSharing(updateCarSharing:IUpdateCarSharingModel):Observable<ICarSharing>{
-        return this.client.put(`/api/car-sharing/manage-car-sharing`, updateCarSharing)
+        return this.client.put(`/api/car-sharing/update`, updateCarSharing)
         .pipe(first(), map((res: any) => {
             return res as ICarSharing;
         }));
     }
 
     deleteCarSharing(deleteCarSharing:IDeleteCarSharingModel):Observable<boolean>{
-        return this.client.delete(`/api/car-sharing/manage-car-sharing/?request=${deleteCarSharing}`)
+        return this.client.delete(`/api/car-sharing/delete/?id=${deleteCarSharing.id}`)
         .pipe(first(), map((res: any) => {
             return res as boolean;
         }));

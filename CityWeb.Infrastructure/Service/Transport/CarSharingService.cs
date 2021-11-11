@@ -59,11 +59,11 @@ namespace CityWeb.Infrastructure.Service.Transport
             }
         }
 
-        public async Task<CarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO)
+        public async Task<CarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO, Guid id)
         {
             try
             {
-                CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == updateCarSharingDTO.Id);
+                CarSharingModel carSharing = await _context.CarSharings.FirstOrDefaultAsync(x => x.Id == id);
                 if (carSharing != null)
                 {
                     _mapper.Map<UpdateCarSharingModelDTO, CarSharingModel>(updateCarSharingDTO, carSharing);
@@ -72,7 +72,7 @@ namespace CityWeb.Infrastructure.Service.Transport
                     _logger.LogInformation($"CarSharing {carSharing.Id} was updated.");
                     return _mapper.Map<CarSharingModel, CarSharingModelDTO>(carSharing);
                 }
-                throw new Exception($"CarSharing {updateCarSharingDTO.Id} does not exist!");
+                throw new Exception($"CarSharing {id} does not exist!");
             }
             catch (Exception ex)
             {

@@ -7,8 +7,7 @@ import { CarSharingManagmentDataService } from "./carSharingManagementService.da
 export class CarSharingManagmentService{
 
     constructor(private dataService: CarSharingManagmentDataService){
-
-    }
+    };
     
     createCarSharing(createCarSharingData:ICreateCarSharingModel):Observable<ICarSharing>{
         return this.dataService.createCarSharing(createCarSharingData);
@@ -16,7 +15,7 @@ export class CarSharingManagmentService{
 
     updateCarSharing(updateCarSharing:IUpdateCarSharingModel):Observable<ICarSharing>{
         return this.dataService.updateCarSharing(updateCarSharing);
-    }
+    };
 
     deleteCarSharing(deleteCarSharing:IDeleteCarSharingModel):Observable<boolean>{
         return this.dataService.deleteCarSharing(deleteCarSharing);

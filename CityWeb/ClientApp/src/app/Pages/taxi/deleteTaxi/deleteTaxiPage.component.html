@@ -1,0 +1,11 @@
+<div class="deleteTaxi">
+  
+  <b>Enter taxi company id:</b>
+  <p>Company id:
+    <input type="text" size="40" [(ngModel)] = "deleteTaxi.id">
+  </p>
+  <button class="deleteButton" [disabled] = "isDeleteButtonDisabled" (click)="deleteTaxi()">Delete taxi company</button><br><br>
+
+  <button class="findTaxiById" (click)="findById()"></button><br><br>
+  
+</div>>

@@ -14,7 +14,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     public interface ICarSharingService
     {
         public Task<CarSharingModelDTO> CreateCarSharing(CreateCarSharingModelDTO createCarSharingDTO);
-        public Task<CarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO);
+        public Task<CarSharingModelDTO> UpdateCarSharing(UpdateCarSharingModelDTO updateCarSharingDTO, Guid id);
         public Task<bool> DeleteCarSharing(DeleteCarSharingModelDTO deleteCarSharingDTO);
         public Task<RentCarModelDTO> AddRentCar(AddRentCarDTO addRentCarDTO);
         public Task<RentCarModelDTO> UpdateRentCar(UpdateRentCarDTO updateCarDTO);
