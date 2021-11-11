@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IHouseBillModel, ICreateHouseBillModel } from "src/app/models/houseBill.model";
-import { HouseBillManagmentService } from "src/app/services/houseBillManagementService";
+import { HouseBillManagementService } from "src/app/services/houseBillManagementService";
 
 
 @Component({
