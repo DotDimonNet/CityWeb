@@ -20,8 +20,8 @@ namespace Taste.Web.Controllers
             _houseBillService = houseBillService;
         }
 
-        [HttpPost("housebill-create")]
-        public async Task<IActionResult> CreateHouseBillModel([FromBody] CreateHouseBillModelDTO request)
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateHouseBill([FromBody] CreateHouseBillModelDTO request)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("housebill-update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateHouseBill([FromBody] UpdateHouseBillModelDTO request)
         {
             try
@@ -48,7 +48,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("delete-housebill")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteHousBill([FromBody] DeleteHouseBillModelDTO request)
         {
             try
@@ -81,7 +81,7 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var counter = _houseBillService.UpdateCounter(request);
+                var counter = await _houseBillService.UpdateCounter(request);
                 return Json(counter);
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete-counter")]
         public async Task<IActionResult> DeleteCounterModel([FromBody] DeleteCounterModelDTO request)
         {
             try

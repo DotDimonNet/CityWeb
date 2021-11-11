@@ -1,7 +1,6 @@
-
 import { Component } from '@angular/core';
 import { IHouseBillModel, ICreateHouseBillModel } from 'src/app/models/houseBill.model';
-import { HouseBillManagmentService } from 'src/app/services/houseBillManagementService';
+import { HouseBillManagementService } from 'src/app/services/houseBillManagementService';
 
 @Component({
     selector: 'house-bill-create',
@@ -13,7 +12,7 @@ export class CreateHouseBillPageComponent{
     public houseBillInfo: IHouseBillModel = {
         title: "",
         description: "",
-        address: {
+        houseHoldAddress: {
             streetName: "",
             houseNumber: "",
             appartmentNumber: ""
@@ -23,14 +22,14 @@ export class CreateHouseBillPageComponent{
     public createInfo: ICreateHouseBillModel = {
         title: "",
         description: "",
-        address: {
+        houseHoldAddress: {
             streetName: "",
             houseNumber: "",
             appartmentNumber: ""
         }
     } as ICreateHouseBillModel
 
-    constructor(private service: HouseBillManagmentService){}
+    constructor(private service: HouseBillManagementService){}
     
     public createHouseBill()
     {

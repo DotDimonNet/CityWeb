@@ -49,7 +49,7 @@ namespace CityWeb.Infrastructure.Service
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
