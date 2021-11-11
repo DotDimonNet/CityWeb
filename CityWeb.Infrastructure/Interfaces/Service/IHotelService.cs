@@ -15,7 +15,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<IEnumerable<HotelDTO>> GetAllHotels();
         public Task<IEnumerable<RoomDTO>> GetAllRooms();
         public Task<RoomModel> UpdateRoom(UpdateRoomDTO DTO);
-        public Task<HotelModel> UpdateHotel(HotelDTO DTO);
+        public Task<HotelModel> UpdateHotel(UpdateHotelDTO DTO);
         public Task<bool> RemoveHotel(DeleteHotelDTO hotelDTO);
         public Task<HotelModel> AddHotel(HotelDTO hotelDTO);
         public Task<bool> RemoveRoom(DeleteRoomDTO room);

@@ -34,6 +34,7 @@ import { HotelManagementDataService } from './services/hotelManagementService.da
 import { HotelManagementService } from './services/hotelManagementService';
 import { HotelPageComponent } from './pages/HotelServicePages/hotelPage.component';
 import { CreateHotelComponent } from './pages/HotelServicePages/createHotelService/createHotelPage.component';
+import { UpdateHotelPageComponent } from './pages/HotelServicePages/updateHotelService/updateHotelPage.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     CreateDeliveryComponent,
     HotelPageComponent,
     CreateHotelComponent,
+    UpdateHotelPageComponent,
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -79,6 +81,7 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
       { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
       { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
       { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
+      { path: 'hotel/update', component: UpdateHotelPageComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])

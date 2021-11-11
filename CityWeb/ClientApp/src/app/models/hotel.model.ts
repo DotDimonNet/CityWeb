@@ -11,7 +11,12 @@ export interface ICreateHotelModel {
     image: string;
     address: IHotelAddressModel;
 }
-
+export interface IUpdateHotelModel{
+    id: string,
+    title: string,
+    description: string,
+    address: IHotelAddressModel
+}
 export interface IHotelAddressModel {
     streetName: string;
     houseNumber: string;

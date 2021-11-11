@@ -39,7 +39,7 @@ namespace CityWeb.Controllers
             }
         }
         [HttpPut("manage-hotel")]
-        public async Task<IActionResult> UpdateHotel([FromBody] HotelDTO request)
+        public async Task<IActionResult> UpdateHotel([FromBody] UpdateHotelDTO request)
         {
             try
             {

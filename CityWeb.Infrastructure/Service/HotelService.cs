@@ -141,22 +141,21 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<HotelModel> UpdateHotel(HotelDTO model)
+        public async Task<HotelModel> UpdateHotel(UpdateHotelDTO model)
         {
             try
             {
-                var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == model.Title);
+                var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Id == model.Id);
 
                 if (hotel != null)
                 {
-                    _mapper.Map<HotelDTO,HotelModel>(model);
+                    _mapper.Map<UpdateHotelDTO,HotelModel>(model);
                     _context.Hotels.Update(hotel);
                     await _context.SaveChangesAsync();
                     _logger.LogInformation($"Hotel {hotel.Title} succsesfully updated.");
                     return hotel;
                 }
-                _logger.LogWarning($"Hotel {model.Title} doesnt exist.");
-                throw new Exception("Hotel with this title doesnt exist!");
+                throw new Exception($"Hotel {model.Title} doesnt exist.");
             }
             catch(Exception ex)
             {

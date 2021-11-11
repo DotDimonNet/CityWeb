@@ -1,1 +1,32 @@
+<div class="create">
+  
+    <b>Enter data to update CarSharing company:</b>
+    <p>Company id:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.id">
+    </p>
+    <p>Company title:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.title">
+    </p>
+    <p>Company description:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.description">
+    </p>
+    <p>Street name:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.address.streetName">
+    </p>
+    <p>House number:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.address.houseNumber">
+    </p>
+    <button class="createButton" (click)="updateHotel()">Update Hotel</button><br><br>
     
+    Car Sharing:
+    <div>
+      Title: "{{hotelInfo.title}}"
+    </div>
+    <div>
+      Description: "{{hotelInfo.description}}"
+    </div>
+    <div>
+      Location: "{{hotelInfo.location.streetName}}, {{hotelInfo.location.houseNumber}}"
+    </div>
+  </div>
+        
