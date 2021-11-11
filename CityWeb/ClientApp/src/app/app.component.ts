@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EntertainmentType } from './models/entertainment.model';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  keys = Object.keys;
+  types = EntertainmentType;
 }

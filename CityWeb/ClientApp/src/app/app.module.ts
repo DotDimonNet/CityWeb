@@ -36,6 +36,12 @@ import { HotelManagementDataService } from './services/hotelManagementService.da
 import { HotelManagementService } from './services/hotelManagementService';
 import { HotelPageComponent } from './pages/HotelServicePages/hotelPage.component';
 import { CreateHotelComponent } from './pages/HotelServicePages/createHotelService/createHotelPage.component';
+//Entertainment
+import { EntertainmentManagementService } from './services/entertainmentManagementService';
+import { EntertainmentManagementDataService } from './services/entertainmentManagementService.data';
+import { AddEntertainmentComponent } from './pages/Entertainment/addEntertainment/addEntertainmentPage.component';
+import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentPage.component';
+
 
 
 @NgModule({
@@ -62,6 +68,9 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     CreateDeliveryComponent,
     HotelPageComponent,
     CreateHotelComponent,
+    EntertainmentPageComponent,
+    AddEntertainmentComponent,
+    
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -87,6 +96,8 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
       { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'entertainment', component: EntertainmentPageComponent, pathMatch: 'full' },
+      { path: 'entertainment/add', component: AddEntertainmentComponent, pathMatch: 'full' },
     ])
   ],
   providers: [
@@ -98,6 +109,8 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     HouseBillManagementDataService,
     HotelManagementService,
     HotelManagementDataService,
+    EntertainmentManagementService,
+    EntertainmentManagementDataService
   ],
   bootstrap: [AppComponent]
 })
