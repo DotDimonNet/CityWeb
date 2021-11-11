@@ -35,6 +35,7 @@ namespace CityWeb.Mapping
 
             CreateMap<HotelModel, UpdateHotelDTO>();
             CreateMap<UpdateHotelDTO, HotelModel>();
+
             CreateMap<PriceDTO, PriceModel>();      
 
             CreateMap<RoomModel, RoomDTO>()

@@ -149,9 +149,10 @@ namespace CityWeb.Infrastructure.Service
 
                 if (hotel != null)
                 {
-                    _mapper.Map<UpdateHotelDTO,HotelModel>(model);
+                    _mapper.Map<UpdateHotelDTO,HotelModel>(model,hotel);
                     _context.Hotels.Update(hotel);
                     await _context.SaveChangesAsync();
+                    //hotel = _mapper.Map<UpdateHotelDTO, HotelModel>(model);//
                     _logger.LogInformation($"Hotel {hotel.Title} succsesfully updated.");
                     return hotel;
                 }

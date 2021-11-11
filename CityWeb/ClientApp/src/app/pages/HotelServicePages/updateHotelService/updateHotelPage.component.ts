@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { IHotelModel, ICreateHotelModel, IUpdateHotelModel } from 'src/app/models/hotel.model';
+import { IHotelModel, IUpdateHotelModel } from 'src/app/models/hotel.model';
 import { HotelManagementService } from 'src/app/services/hotelManagementService';
 
 @Component({
@@ -9,6 +9,16 @@ import { HotelManagementService } from 'src/app/services/hotelManagementService'
     styleUrls: ['./updateHotelPage.component.css']
 })
 export class UpdateHotelPageComponent{
+
+    public updateInfo: IUpdateHotelModel = {
+        id: "",
+        title: "",
+        description: "",
+        address: {
+            streetName: "",
+            houseNumber: "",
+        }
+    } as IUpdateHotelModel;
 
     public hotelInfo: IHotelModel = {
         title: "",
@@ -19,15 +29,7 @@ export class UpdateHotelPageComponent{
         }
     } as IHotelModel;
 
-    public updateInfo: IUpdateHotelModel = {
-        id: "",
-        title: "Unknown",
-        description: "Unknown",
-        address: {
-            streetName: "Unknown",
-            houseNumber: "Unknown",
-        }
-    } as IUpdateHotelModel
+    
 
     constructor(private service: HotelManagementService){}
     
