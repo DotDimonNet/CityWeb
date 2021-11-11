@@ -3,7 +3,7 @@ import { IDeliveryModel, IDeleteDeliveryModel, IResultModel } from 'src/app/mode
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
 @Component({
-  selector: 'delete',
+  selector: 'delivery/delete',
   templateUrl: './deleteDeliveryPage.component.html',
   styleUrls: ['./deleteDeliveryPage.component.css']
 })

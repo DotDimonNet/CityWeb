@@ -4,7 +4,7 @@ import { IDeliveryModel,  IUpdateDeliveryModel} from 'src/app/models/delivery.mo
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
 @Component({
-  selector: 'update',
+  selector: 'delete/update',
   templateUrl: './updateDeliveryPage.component.html',
   styleUrls: ['./updateDeliveryPage.component.css']
 })

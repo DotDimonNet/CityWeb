@@ -17,6 +17,7 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<ProductModelDTO> CreateProduct(CreateProductModelDTO createProductDTO);
         public Task<bool> DeleteDeliveryCompany(DeleteCompanyDTO dtoModel);
         public Task<bool> DeleteProduct(DeleteProductDTO dtoModel);
+        public Task<DeliveryModelDTO> GetDeliveryById(DeliveryIdDTO deliveryIdDTO);
         public Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(DeliveryIdDTO deliveryName);
         public Task<ICollection<ProductModelDTO>> GetAllProductByPriceFilter(ProductPriceFilterDTO priceFilter, int skip = 0, int take = 10);
         // Methods for steps

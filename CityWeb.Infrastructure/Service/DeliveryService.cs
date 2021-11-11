@@ -167,7 +167,9 @@ namespace CityWeb.Infrastructure.Service
                 {
                     _context.Products.Remove(product);
                     _context.SaveChanges();
+
                     _logger.LogInformation($"Product {deleteProductDTO.ProductId} was deleted");
+
                     return true;
                 }
                 catch (Exception ex)
@@ -193,6 +195,20 @@ namespace CityWeb.Infrastructure.Service
             } 
         }
 
+        public async Task<DeliveryModelDTO> GetDeliveryById(DeliveryIdDTO deliveryIdDTO)
+        {
+            try
+            {
+                var result = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryIdDTO.DeliveryId);
+                return _mapper.Map<DeliveryModel, DeliveryModelDTO>(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(DeliveryIdDTO deliveryIdDTO)
         {
             var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryIdDTO.DeliveryId);
@@ -201,7 +217,9 @@ namespace CityWeb.Infrastructure.Service
                 if (delivery != null)
                 {
                     var result = await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
+                    
                     _logger.LogInformation($"Received all products for delivery company with id:{deliveryIdDTO.DeliveryId}");
+                    
                     return result;
                 }
             }
@@ -249,6 +267,7 @@ namespace CityWeb.Infrastructure.Service
                 x.WorkSchedule.EndTime.TimeOfDay >= companySchedule.WorkTime.TimeOfDay);
 
                 _logger.LogInformation("Show all working delivery company in this time");
+
                 return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
             }
             catch (Exception ex)

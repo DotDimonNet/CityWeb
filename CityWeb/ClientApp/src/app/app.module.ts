@@ -9,12 +9,13 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { DeliveryManagerPageComponent } from './pages/delivery/deliveryManagerPage/deliveryManagerPage.component';
+//Delivery
+import { DeliveryStartPageComponent } from './Pages/Delivery/DeliveryStartPage/deliveryStartPage.component';
+import { DeliveryManagementComponent } from './Pages/Delivery/DeliveryManagementPage/deliveryManagementPage.component';
 import { CreateDeliveryComponent } from './pages/delivery/createDeliveryPage/createDeliveryPage.component';
 import { UpdateDeliveryComponent } from './pages/delivery/updateDeliveryPage/updateDeliveryPage.component';
 import { DeleteDeliveryComponent } from './pages/delivery/deleteDeliveryPage/deleteDeliveryPage.component';
+import { GetAllDeliveryComponent } from './pages/delivery/getAllDeliveryPage/getAllDeliveryPage.component';
 import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
@@ -41,12 +42,12 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
-    DeliveryManagerPageComponent,
+    DeliveryStartPageComponent,
+    DeliveryManagementComponent,
     CreateDeliveryComponent,
     UpdateDeliveryComponent,
     DeleteDeliveryComponent,
+    GetAllDeliveryComponent,
     CarSharingPageComponent,
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
@@ -65,10 +66,12 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: 'delivery-manager', component: DeliveryManagerPageComponent, pathMatch: 'full' },
-      { path: 'create', component: CreateDeliveryComponent, pathMatch: 'full' },
-      { path: 'update', component: UpdateDeliveryComponent, pathMatch: 'full' },
-      { path: 'delete', component: DeleteDeliveryComponent, pathMatch: 'full' },
+      { path: 'delivery', component: DeliveryStartPageComponent, pathMatch: 'full' },
+      { path: 'all-deliveries/delivery-management', component: DeliveryManagementComponent, pathMatch: 'full'},
+      { path: 'delivery/create', component: CreateDeliveryComponent, pathMatch: 'full' },
+      { path: 'delivery/update', component: UpdateDeliveryComponent, pathMatch: 'full' },
+      { path: 'delivery/delete', component: DeleteDeliveryComponent, pathMatch: 'full' },
+      { path: 'all-deliveries', component: GetAllDeliveryComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-sharing', component: CarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
@@ -79,8 +82,6 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
       { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
       { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
       { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
   providers: [

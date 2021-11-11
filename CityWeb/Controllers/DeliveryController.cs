@@ -159,13 +159,13 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-all")]
+        [HttpGet("deliveries")]
         public IActionResult GetAllDelivery()
         {
             try
             {
-                var deliverys = _deliveryService.GetAllDelivery();
-                return Json(deliverys.Result);
+                var deliveries = _deliveryService.GetAllDelivery();
+                return Json(deliveries.Result);
             }
             catch (Exception ex)
             {
@@ -173,13 +173,13 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-all-product")]
-        public IActionResult GetAllProductByDeliveryName([FromQuery] DeliveryIdDTO request)
+        [HttpGet("by-id")]
+        public IActionResult GetDeliveryById([FromQuery] DeliveryIdDTO request)
         {
             try
             {
-                var deliverys = _deliveryService.GetAllProductByDeliveryId(request);
-                return Json(deliverys.Result);
+                var delivery = _deliveryService.GetDeliveryById(request);
+                return Json(delivery.Result);
             }
             catch (Exception ex)
             {
@@ -187,13 +187,27 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-all-product-by-price-filter")]
-        public IActionResult GetAllProductByDeliveryName([FromQuery] ProductPriceFilterDTO request)
+        [HttpGet("products")]
+        public IActionResult GetAllProductByDeliveryId([FromQuery] DeliveryIdDTO request)
         {
             try
             {
-                var deliverys = _deliveryService.GetAllProductByPriceFilter(request);
-                return Json(deliverys.Result);
+                var products = _deliveryService.GetAllProductByDeliveryId(request);
+                return Json(products.Result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("products-by-price-filter")]
+        public IActionResult GetAllProductByPriceFilter([FromQuery] ProductPriceFilterDTO request)
+        {
+            try
+            {
+                var products = _deliveryService.GetAllProductByPriceFilter(request);
+                return Json(products.Result);
             }
             catch (Exception ex)
             {

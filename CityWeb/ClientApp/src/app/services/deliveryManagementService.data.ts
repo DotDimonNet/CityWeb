@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map, take } from "rxjs/operators";
-import { IDeliveryModel, ICreateDeliveryModel, IUpdateDeliveryModel, IDeleteDeliveryModel, IResultModel } from "../models/delivery.model";
+import { IDeliveryModel, ICreateDeliveryModel, IUpdateDeliveryModel, IDeleteDeliveryModel, IResultModel, IDelivery } from "../models/delivery.model";
 
 @Injectable()
 export class DeliveryManagementDataService {
@@ -28,5 +28,15 @@ export class DeliveryManagementDataService {
         .pipe(first(), map((res: any) => {
             return res as IResultModel;
         }));
+    }
+
+    getAllDeliveryCompany():Observable<IDelivery[]>{
+        return this.client.get(`api/delivery/deliveries`)
+        .pipe(first(), map((res: IDelivery[]) => res));
+    }
+
+    showDeliveryCompany():Observable<IDeliveryModel>{
+        return this.client.get(`api/delivery/by-id`)
+        .pipe(first(), map((res: IDeliveryModel) => res));
     }
 }

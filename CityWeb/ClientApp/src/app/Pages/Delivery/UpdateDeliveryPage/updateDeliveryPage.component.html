@@ -2,15 +2,15 @@
     Enter data to update delivery company
   </div>
   <p class="title">
-    Enter Delivery company Id:
+    Enter company Id:
     <input type="test" [(ngModel)] = "updateDelivery.id">
   </p>
   <p class="title">
-    Enter Delivery company Description:
+    Enter company description:
     <input type="text" [(ngModel)] = "updateDelivery.description">
   </p>
   <p class="title">
-    Enter Delivery company Image:
+    Enter company image:
     <input type="file" [(ngModel)] = "updateDelivery.deliveryImage">
   </p>
   <p class="title">
@@ -34,10 +34,11 @@
     <input type="number" [(ngModel)] = "updateDelivery.deliveryPrice.vat">
   </p>
   
-  <button class="number" (click)="update()">Update company data</button>
+  <button class="Enter_data" (click)="update()">Update company data</button>
   
   <div class="result">
-    Updated company
+    Updated company:
+    <br>
     <div>Description: {{deliveryInfo.description}}</div>
     <div>Start work time: {{deliveryInfo.workSchedule.startTime}}</div>
     <div>End work time: {{deliveryInfo.workSchedule.endTime}}</div>
@@ -45,4 +46,6 @@
     <div>Delivery price tax: {{deliveryInfo.deliveryPrice.tax}}</div>
     <div>Delivery price vat: {{deliveryInfo.deliveryPrice.vat}}</div>
   </div>
+
+<a class="back_button" [routerLink] = "['/delivery-manager']">Back to Main</a>
   

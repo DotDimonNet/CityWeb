@@ -39,3 +39,8 @@ export interface IDeleteDeliveryModel {
 export interface IResultModel {
     result: boolean,
 }
+
+export interface IDelivery {
+    title: string,
+    description: string,
+}

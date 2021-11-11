@@ -1,0 +1,13 @@
+<h2>Delivery company</h2>
+<ul class="deliveries">
+  <li *ngFor="let item of deliveryInfo;">
+    <span>
+      <div>
+          <a [routerLink] = "['delivery-management']">
+            Title: {{item.title}} <br>
+            Description: {{item.description}} <br>
+          </a>
+      </div>
+    </span>
+  </li>
+</ul>

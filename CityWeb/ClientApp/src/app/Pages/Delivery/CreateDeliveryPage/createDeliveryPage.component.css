@@ -4,6 +4,11 @@
     color: red;
 }
 
+.title{
+    padding: 0 20px 0 0;
+    font-weight: 700;
+}
+
 .button{
     display: block;
     margin: 20px auto;

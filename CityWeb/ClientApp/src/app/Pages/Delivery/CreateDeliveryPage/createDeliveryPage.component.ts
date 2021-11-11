@@ -4,7 +4,7 @@ import { IDeliveryModel,  ICreateDeliveryModel} from 'src/app/models/delivery.mo
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
 @Component({
-  selector: 'create',
+  selector: 'delivery/create',
   templateUrl: './createDeliveryPage.component.html',
   styleUrls: ['./createDeliveryPage.component.css']
 })
