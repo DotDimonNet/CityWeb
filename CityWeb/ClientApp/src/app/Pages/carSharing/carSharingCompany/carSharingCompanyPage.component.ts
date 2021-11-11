@@ -14,7 +14,11 @@ export class CarSharingCompanyPageComponent{
     public carSharingInfo: ICarSharing;
     public isSuccess: boolean;
 
-    constructor(private service: CarSharingManagmentService, private activatedRoute: ActivatedRoute){}
+    constructor(
+        private service: CarSharingManagmentService, 
+        private activatedRoute: ActivatedRoute,
+        private router: Router
+        ){}
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe(params => {
@@ -32,5 +36,6 @@ export class CarSharingCompanyPageComponent{
             .subscribe((res: boolean) => {
                 this.isSuccess = res;
             });
+        this.router.navigateByUrl(`/car-sharing/get-all`);
     }
 }
