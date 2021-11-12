@@ -5,6 +5,7 @@ export interface IAddress{
 }
 
 export interface ICarSharing{
+    id: string,
     title: string,
     description: string,
     location: IAddress

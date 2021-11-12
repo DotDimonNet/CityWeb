@@ -7,8 +7,7 @@ import { CarSharingManagmentDataService } from "./carSharingManagementService.da
 export class CarSharingManagmentService{
 
     constructor(private dataService: CarSharingManagmentDataService){
-
-    }
+    };
     
     createCarSharing(createCarSharingData:ICreateCarSharingModel):Observable<ICarSharing>{
         return this.dataService.createCarSharing(createCarSharingData);
@@ -16,13 +15,17 @@ export class CarSharingManagmentService{
 
     updateCarSharing(updateCarSharing:IUpdateCarSharingModel):Observable<ICarSharing>{
         return this.dataService.updateCarSharing(updateCarSharing);
-    }
+    };
 
-    deleteCarSharing(deleteCarSharing:IDeleteCarSharingModel):Observable<boolean>{
-        return this.dataService.deleteCarSharing(deleteCarSharing);
+    deleteCarSharing(carSharingId:string):Observable<boolean>{
+        return this.dataService.deleteCarSharing(carSharingId);
     };
 
     getAllCarSharings():Observable<ICarSharing[]>{
         return this.dataService.getAllCarSharings();
+    };
+
+    getCarSharingById(carSharingId:string):Observable<ICarSharing>{
+        return this.dataService.getCarSharingById(carSharingId);
     };
 }

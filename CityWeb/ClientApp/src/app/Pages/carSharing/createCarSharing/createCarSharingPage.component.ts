@@ -20,15 +20,7 @@ export class CreateCarSharingPageComponent{
         }
     } as ICarSharing;
 
-    public createInfo: ICreateCarSharingModel = {
-        title: "",
-        description: "",
-        location: {
-            streetName: "",
-            houseNumber: "",
-            appartmentNumber: ""
-        }
-    } as ICreateCarSharingModel
+    public createInfo: ICreateCarSharingModel
 
     constructor(private service: CarSharingManagmentService){}
     

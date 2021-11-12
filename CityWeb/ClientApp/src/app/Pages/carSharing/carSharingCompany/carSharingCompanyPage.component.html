@@ -1,0 +1,16 @@
+<div class="create">
+  <p>Company title:
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.title">
+  </p>
+  <p>Company description:
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.description">
+  </p>
+  <p>Street name:
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.location.streetName">
+  </p>
+  <p>House number:
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.location.houseNumber">
+  </p>
+  <button class="deleteButton" (click)="deleteCarSharing()">Delete company</button><br><br>
+</div>
+  
