@@ -1,14 +1,14 @@
 import { TypeScriptEmitter } from '@angular/compiler';
 import { Component } from '@angular/core';
-import { IEntertainmentModel, IAddEntertainment} from 'src/app/models/entertainment.model';
+import { IEntertainmentModel, IUpdateEntertainmentModel} from 'src/app/models/entertainment.model';
 import { EntertainmentManagementService } from 'src/app/services/entertainmentManagementService';
 
 @Component({
-  selector: 'entertainment/add',
-  templateUrl: './addEntertainmentPage.component.html',
-  styleUrls: ['./addEntertainmentPage.component.css']
+  selector: 'entertainment/update',
+  templateUrl: './updateEntertainmentPage.component.html',
+  styleUrls: ['./updateEntertainmentPage.component.css']
 })
-export class AddEntertainmentComponent {
+export class UpdateEntertainmentComponent {
   public types = [
     {id: 1, name: "Cinema"},
     {id: 2, name: "Fest"},
@@ -20,7 +20,7 @@ export class AddEntertainmentComponent {
   ];
   //public types: EntertainmentType;
   public entertainmnentInfo: IEntertainmentModel;
-  public createInfo: IAddEntertainment = {
+  public updateInfo: IUpdateEntertainmentModel = {
     title: "",
     description: "",
     type: "",
@@ -29,12 +29,12 @@ export class AddEntertainmentComponent {
             houseNumber: "",
             streetName: "",
         }
-    } as IAddEntertainment
+    } as IUpdateEntertainmentModel
 
   constructor(private service: EntertainmentManagementService) { }
 
-  public addEntertainment() {
-    this.service.addEntertainment(this.createInfo)
+  public updateEntertainment() {
+    this.service.updateEntertainment(this.updateInfo)
       .subscribe((res: IEntertainmentModel) => {
         this.entertainmnentInfo = res;
       });
