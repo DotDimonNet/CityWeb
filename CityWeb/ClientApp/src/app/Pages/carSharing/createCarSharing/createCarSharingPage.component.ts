@@ -1,4 +1,4 @@
-
+import {Router} from '@angular/router';
 import { Component } from '@angular/core';
 import { ICarSharing, ICreateCarSharingModel } from 'src/app/models/carSharing.model';
 import { CarSharingManagmentService } from 'src/app/services/carSharingManagementService';
@@ -10,19 +10,22 @@ import { CarSharingManagmentService } from 'src/app/services/carSharingManagemen
 })
 export class CreateCarSharingPageComponent{
 
-    public carSharingInfo: ICarSharing = {
+    public carSharingInfo: ICarSharing;
+
+    public createInfo: ICreateCarSharingModel = {
         title: "",
         description: "",
         location: {
             streetName: "",
-            appartmentNumber: "",
-            houseNumber: ""
+            houseNumber: "",
+            appartmentNumber: ""
         }
-    } as ICarSharing;
+    } as ICreateCarSharingModel;
 
-    public createInfo: ICreateCarSharingModel
-
-    constructor(private service: CarSharingManagmentService){}
+    constructor(
+        private service: CarSharingManagmentService, 
+        private router: Router
+        ){}
     
     public createCarSharing()
     {
@@ -30,14 +33,6 @@ export class CreateCarSharingPageComponent{
             .subscribe((res: ICarSharing) => {
                 this.carSharingInfo = res;
             });
-        this.createInfo = {
-            title: "",
-            description: "",
-            location: {
-                streetName: "",
-                houseNumber: "",
-                appartmentNumber: ""
-            }
-        } as ICreateCarSharingModel
+        this.router.navigateByUrl(`/car-sharing`);
     }
 }

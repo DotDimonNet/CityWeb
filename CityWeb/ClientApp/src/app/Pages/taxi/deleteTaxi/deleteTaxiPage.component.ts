@@ -1,8 +1,6 @@
 
 import { Component } from '@angular/core';
-import { ICarSharing, IDeleteCarSharingModel } from 'src/app/models/carSharing.model';
 import { IDeleteTaxiModel, ITaxi } from 'src/app/models/taxi.model';
-import { CarSharingManagmentService } from 'src/app/services/carSharingManagementService';
 import { TaxiManagmentService } from 'src/app/services/taxiManagementService';
 
 @Component({

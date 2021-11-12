@@ -1,16 +1,35 @@
-<div class="create">
-  <p>Company title:
-    <input type="text" size="40" [(ngModel)] = "carSharingInfo.title">
+<div class="carSharingCompany">
+  <p>Title:
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.title" disabled>
   </p>
-  <p>Company description:
-    <input type="text" size="40" [(ngModel)] = "carSharingInfo.description">
+  <p>Description:
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.description" disabled>
   </p>
   <p>Street name:
-    <input type="text" size="40" [(ngModel)] = "carSharingInfo.location.streetName">
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.location.streetName" disabled>
   </p>
   <p>House number:
-    <input type="text" size="40" [(ngModel)] = "carSharingInfo.location.houseNumber">
+    <input type="text" size="40" [(ngModel)] = "carSharingInfo.location.houseNumber" disabled>
   </p>
-  <button class="deleteButton" (click)="deleteCarSharing()">Delete company</button><br><br>
+  <p>
+    <button class="updateButton" (click)="updateCarSharing()">Update</button>
+    <button class="deleteButton" (click)="deleteCarSharing()">Delete</button>
+    <button class="getAllCars" (click)="getAllCars()">Cars</button>
+  </p>
+  <div [ngClass] = "{invisible: isVisible}">
+    <b>Enter data to update CarSharing company:</b>
+    <p>New title:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.title">
+    </p>
+    <p>New description:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.description">
+    </p>
+    <p>New street name:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.location.streetName">
+    </p>
+    <p>New house number:
+      <input type="text" size="40" [(ngModel)] = "updateInfo.location.houseNumber">
+    </p>
+    <button class="confirmButton" (click)="ConfirmUpdateCarSharing()">Confirm</button>
+  </div>
 </div>
-  

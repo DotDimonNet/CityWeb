@@ -1,0 +1,34 @@
+<div class="update-housebill">
+    <b>Enter data to update HouseBill:</b>
+    <p>HouseBill Id:
+        <input type="text" size="40" [(ngModel)] = "updateHouseBill.id">
+      </p>
+    <p>HouseBill title:
+      <input type="text" size="40" [(ngModel)] = "updateHouseBill.title">
+    </p>
+    <p>HouseBill description:
+      <input type="text" size="40" [(ngModel)] = "updateHouseBill.description">
+    </p>
+    <p>Street name:
+      <input type="text" size="40" [(ngModel)] = "updateHouseBill.houseHoldAddress.streetName">
+    </p>
+    <p>House number:
+      <input type="text" size="40" [(ngModel)] = "updateHouseBill.houseHoldAddress.houseNumber">
+    </p>
+    <p>Appartment number:
+      <input type="text" size="40" [(ngModel)] = "updateHouseBill.houseHoldAddress.appartmentNumber">
+    </p>
+    <button class="createButton" (click)="update()">Update HouseBill</button><br><br>
+    
+House Bill:
+</div>
+    <div>
+        Title: "{{houseBillInfo.title}}"
+      </div>
+      <div>
+        Description: "{{houseBillInfo.description}}"
+      </div>
+      <div>
+        houseHoldAddress: "{{houseBillInfo.houseHoldAddress.streetName}}, {{houseBillInfo.houseHoldAddress.houseNumber}}, {{houseBillInfo.houseHoldAddress.appartmentNumber}}"
+    </div>
+    

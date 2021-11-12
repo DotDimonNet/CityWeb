@@ -1,28 +1,36 @@
 import { Component} from '@angular/core';
-import { IDeliveryModel, IDeleteDeliveryModel, IResultModel } from 'src/app/models/delivery.model';
+import {Router, ActivatedRoute } from '@angular/router';
+import { IDeliveryModel, IResultModel } from 'src/app/models/delivery.model';
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
 @Component({
-  selector: 'delete',
+  selector: 'delivery/delete',
   templateUrl: './deleteDeliveryPage.component.html',
   styleUrls: ['./deleteDeliveryPage.component.css']
 })
 
 export class DeleteDeliveryComponent {
-  public deleteDelivery : IDeleteDeliveryModel = {
-    id: "",
-  };
+  public deliveryId: string;
+  public deliveryInfo: IDeliveryModel;
+  public result: boolean;
+  
 
-  public resultInfo: IResultModel = {
-    result: null,
-   } as IResultModel;
+   constructor(
+     private service: DeliveryManagementService,
+     private activatedRoute: ActivatedRoute,
+     private router: Router
+    ) {}
 
-   constructor(private service: DeliveryManagementService) {}
+   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+        this.deliveryId = params['id'];            
+      });
+    }
 
    public delete() {
-    this.service.deleteDeliveryCompany(this.deleteDelivery)
-    .subscribe((res: IResultModel) => {
-        this.resultInfo = res;
+    this.service.deleteDeliveryCompany(this.deliveryId)
+    .subscribe((res: boolean) => {
+        this.result = res;
     });
   }
 }

@@ -180,8 +180,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var carSharings = await _carSharingService.GetCarSharingById(id);
-                return Json(carSharings);
+                var carSharing = await _carSharingService.GetCarSharingById(id);
+                return Json(carSharing);
             }
             catch (Exception ex)
             {
@@ -189,12 +189,12 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpGet("get-all-rent-cars")]
-        public IActionResult GetAllRentCars()
+        [HttpGet("all-cars")]
+        public async Task<IActionResult> GetAllRentCars()
         {
             try
             {
-                var rentCars = _carSharingService.GetAllRentCars();
+                var rentCars = await _carSharingService.GetAllRentCars();
                 return Json(rentCars);
             }
             catch (Exception ex)
