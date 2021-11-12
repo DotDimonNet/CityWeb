@@ -31,23 +31,23 @@ namespace CityWeb.Infrastructure.Service
             _logger = logger;
         }
 
-        public async Task<RoomModel> AddRoom(RoomDTO model)
+        public async Task<RoomDTO> AddRoom(RoomDTO model)
         {
             try
             {
                 var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == model.HotelTitle);
                 if (hotel != null)
                 {
-                    var roomNum = await _context.Rooms.FirstOrDefaultAsync(x => x.Number == model.Number);//
+                    var roomNum = await _context.Rooms.FirstOrDefaultAsync(x => x.Number == model.Number);
 
-                    if (roomNum.Number != model.Number)
+                        if (roomNum.Number != model.Number)
                     {
                         var room = _mapper.Map<RoomDTO, RoomModel>(model);
                         room.HotelId = hotel.Id;
                         await _context.Rooms.AddAsync(room);
                         await _context.SaveChangesAsync();
                         _logger.LogInformation($"Room {room.Number} succsesfully added to {model.HotelTitle} hotel.");
-                        return room;
+                        return _mapper.Map<RoomModel, RoomDTO>(room);
                     }
                     throw new Exception($"Room {model.Number} in hotel {model.HotelTitle} already exist.");
                 }
@@ -60,7 +60,7 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<RoomModel> UpdateRoom(UpdateRoomDTO model)
+        public async Task<UpdateRoomDTO> UpdateRoom(UpdateRoomDTO model)
         {
             try
             {
@@ -72,11 +72,11 @@ namespace CityWeb.Infrastructure.Service
 
                     if (room != null)
                     {
-                        room = _mapper.Map<UpdateRoomDTO, RoomModel>(model);
+                        _mapper.Map<UpdateRoomDTO, RoomModel>(model, room);
                         _context.Hotels.Update(hotel);
                         await _context.SaveChangesAsync();
                         _logger.LogInformation($"Room {room.Number} in hotel {room.Hotel.Title} succsesfully updated.");
-                        return room;
+                        return _mapper.Map<RoomModel, UpdateRoomDTO>(room); 
                     }
                     throw new Exception($"Room {model.Number} in hotel {model.HotelTitle} doesnt exist.");
                 }
@@ -117,7 +117,7 @@ namespace CityWeb.Infrastructure.Service
             }           
         }
 
-        public async Task<HotelModel> AddHotel(HotelDTO hotelDTO)
+        public async Task<HotelDTO> AddHotel(HotelDTO hotelDTO)
         {
             try 
             {
@@ -130,7 +130,7 @@ namespace CityWeb.Infrastructure.Service
                     await _context.Hotels.AddAsync(hotel);
                     await _context.SaveChangesAsync();
                     _logger.LogInformation($"Hotel {hotel.Title} succsesfully added.");
-                    return hotel;
+                    return _mapper.Map<HotelModel,HotelDTO>(hotel);
                 }
                 throw new Exception($"Hotel {hotel.Title} already exist.");
             }
@@ -141,7 +141,7 @@ namespace CityWeb.Infrastructure.Service
             }
         }
 
-        public async Task<HotelModel> UpdateHotel(UpdateHotelDTO model)
+        public async Task<UpdateHotelDTO> UpdateHotel(UpdateHotelDTO model)
         {
             try
             {
@@ -152,9 +152,8 @@ namespace CityWeb.Infrastructure.Service
                     _mapper.Map<UpdateHotelDTO,HotelModel>(model,hotel);
                     _context.Hotels.Update(hotel);
                     await _context.SaveChangesAsync();
-                    //hotel = _mapper.Map<UpdateHotelDTO, HotelModel>(model);//
                     _logger.LogInformation($"Hotel {hotel.Title} succsesfully updated.");
-                    return hotel;
+                    return _mapper.Map< HotelModel, UpdateHotelDTO>( hotel);
                 }
                 throw new Exception($"Hotel {model.Title} doesnt exist.");
             }

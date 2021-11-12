@@ -14,12 +14,12 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     {
         public Task<IEnumerable<HotelDTO>> GetAllHotels();
         public Task<IEnumerable<RoomDTO>> GetAllRooms();
-        public Task<RoomModel> UpdateRoom(UpdateRoomDTO DTO);
-        public Task<HotelModel> UpdateHotel(UpdateHotelDTO DTO);
+        public Task<UpdateRoomDTO> UpdateRoom(UpdateRoomDTO DTO);
+        public Task<UpdateHotelDTO> UpdateHotel(UpdateHotelDTO DTO);
         public Task<bool> RemoveHotel(DeleteHotelDTO hotelDTO);
-        public Task<HotelModel> AddHotel(HotelDTO hotelDTO);
+        public Task<HotelDTO> AddHotel(HotelDTO hotelDTO);
         public Task<bool> RemoveRoom(DeleteRoomDTO room);
-        public Task<RoomModel> AddRoom(RoomDTO DTO);
+        public Task<RoomDTO> AddRoom(RoomDTO DTO);
         public Task<HotelModel> FindHotelById(HotelIdDTO DTO);
         public Task<HotelModel> FindHotelByTitle(HotelTitleDTO DTO);
         public Task<List<HotelRoomType>> GetAllRoomTypesByHotelTitle(HotelTitleDTO DTO);
