@@ -8,13 +8,13 @@ namespace CityWeb.Domain.Enums
 {
     public enum EntertainmentType 
     {
-        Cinema = 1,
-        Fest = 2,
-        Exhibition = 3,
-        Circus = 4,
-        Theatre = 5,
-        Club = 6,
-        Museum = 7
+        Cinema,
+        Fest,
+        Exhibition,
+        Circus,
+        Theatre,
+        Club,
+        Museum
         //public static readonly EntertainmentType Cinema = new(1, "Cinema");
         //public static readonly EntertainmentType Fest = new(2, "Fest");
         //public static readonly EntertainmentType Exhibition = new(3, "Exhibition");

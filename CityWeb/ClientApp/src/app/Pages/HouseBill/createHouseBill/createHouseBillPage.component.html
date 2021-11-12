@@ -1,16 +1,19 @@
 <div class="create-bill">
-    <b>Enter data to create HouseBill company:</b>
-    <p>Company title:
+    <b>Enter data to create HouseBill:</b>
+    <p>HouseBill title:
       <input type="text" size="40" [(ngModel)] = "createInfo.title">
     </p>
-    <p>Company description:
+    <p>HouseBill description:
       <input type="text" size="40" [(ngModel)] = "createInfo.description">
     </p>
     <p>Street name:
-      <input type="text" size="40" [(ngModel)] = "createInfo.address.streetName">
+      <input type="text" size="40" [(ngModel)] = "createInfo.houseHoldAddress.streetName">
     </p>
     <p>House number:
-      <input type="text" size="40" [(ngModel)] = "createInfo.address.houseNumber">
+      <input type="text" size="40" [(ngModel)] = "createInfo.houseHoldAddress.houseNumber">
+    </p>
+    <p>Appartment number:
+      <input type="text" size="40" [(ngModel)] = "createInfo.houseHoldAddress.appartmentNumber">
     </p>
     <button class="createButton" (click)="createHouseBill()">Create HouseBill</button><br><br>
     
@@ -23,6 +26,6 @@
         Description: "{{houseBillInfo.description}}"
       </div>
       <div>
-        Location: "{{houseBillInfo.address.streetName}}, {{houseBillInfo.address.houseNumber}}"
+        houseHoldAddress: "{{houseBillInfo.houseHoldAddress.streetName}}, {{houseBillInfo.houseHoldAddress.houseNumber}}, {{houseBillInfo.houseHoldAddress.appartmentNumber}}"
     </div>
     
