@@ -22,22 +22,14 @@ export class UpdateCarSharingPageComponent{
 
     public updateInfo: IUpdateCarSharingModel = {
         id: "",
-        title: "Unknown",
-        description: "Unknown",
+        title: "",
+        description: "",
         location: {
-            streetName: "Unknown",
-            houseNumber: "Unknown",
-            appartmentNumber: "Unknown"
+            streetName: "",
+            houseNumber: "",
+            appartmentNumber: ""
         }
     } as IUpdateCarSharingModel
 
     constructor(private service: CarSharingManagmentService){}
-    
-    public updateCarSharing()
-    {
-        this.service.updateCarSharing(this.updateInfo)
-            .subscribe((res: ICarSharing) => {
-                this.carSharingInfo = res;
-            });
-    }
 }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Taste.Web.Controllers
 {
     [ApiController]
-    [Route("api/Taxi")]
+    [Route("api/taxi")]
     public class TaxiController : Controller
     {
         private readonly ITaxiService _taxiService;
@@ -23,7 +23,7 @@ namespace Taste.Web.Controllers
             _taxiService = taxiService;
         }
 
-        [HttpPost("manage-taxi")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateTaxi([FromBody] CreateTaxiModelDTO request)
         {
             try
@@ -37,7 +37,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("manage-taxi")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateTaxi([FromBody] UpdateTaxiModelDTO request)
         {
             try
@@ -51,7 +51,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("manage-taxi")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteTaxi([FromBody] DeleteTaxiModelDTO request)
         {
             try
@@ -107,7 +107,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpGet("get-all-taxis")]
+        [HttpGet("all")]
         public IActionResult GetAllTaxis()
         {
             try

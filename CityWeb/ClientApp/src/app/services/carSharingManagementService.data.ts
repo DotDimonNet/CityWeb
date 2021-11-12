@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map, take } from "rxjs/operators";
-import { ICarSharing, ICreateCarSharingModel, IDeleteCarSharingModel, IUpdateCarSharingModel } from "../models/carSharing.model";
+import { ICarSharing, ICreateCarSharingModel, IUpdateCarSharingModel } from "../models/carSharing.model";
 
 @Injectable()
 export class CarSharingManagmentDataService{
@@ -10,21 +10,21 @@ export class CarSharingManagmentDataService{
     constructor(private client:HttpClient){}
 
     createCarSharing(createCarSharing:ICreateCarSharingModel):Observable<ICarSharing>{
-        return this.client.post(`/api/car-sharing/manage-car-sharing`, createCarSharing)
+        return this.client.post(`/api/car-sharing/create`, createCarSharing)
         .pipe(first(), map((res: any) => {
             return res as ICarSharing;
         }));
     }
 
-    updateCarSharing(updateCarSharing:IUpdateCarSharingModel):Observable<ICarSharing>{
-        return this.client.put(`/api/car-sharing/manage-car-sharing`, updateCarSharing)
+    updateCarSharing(updateCarSharing:IUpdateCarSharingModel, carSharingId:string):Observable<ICarSharing>{
+        return this.client.put(`/api/car-sharing/update?id=${carSharingId}`, updateCarSharing)
         .pipe(first(), map((res: any) => {
             return res as ICarSharing;
         }));
     }
 
-    deleteCarSharing(deleteCarSharing:IDeleteCarSharingModel):Observable<boolean>{
-        return this.client.delete(`/api/car-sharing/manage-car-sharing/?request=${deleteCarSharing}`)
+    deleteCarSharing(carSharingId:string):Observable<boolean>{
+        return this.client.delete(`/api/car-sharing/delete?id=${carSharingId}`)
         .pipe(first(), map((res: any) => {
             return res as boolean;
         }));
@@ -34,4 +34,15 @@ export class CarSharingManagmentDataService{
         return this.client.get(`/api/car-sharing/all`)
         .pipe(first(), map((res: ICarSharing[]) => res));
     }
+
+    getCarSharingById(carSharingId:string):Observable<ICarSharing>{
+        return this.client.get(`/api/car-sharing/by-id/?id=${carSharingId}`)
+        .pipe(first(), map((res: ICarSharing) => res));
+    }
+
+    getAllRentCars():Observable<ICarSharing[]>{
+        return this.client.get(`/api/car-sharing/all-cars`)
+        .pipe(first(), map((res: ICarSharing[]) => res));
+    }
+
 }

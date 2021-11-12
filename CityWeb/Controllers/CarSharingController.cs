@@ -21,7 +21,7 @@ namespace Taste.Web.Controllers
             _carSharingService = carSharingService;
         }
         
-        [HttpPost("manage-car-sharing")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateCarSharing([FromBody] CreateCarSharingModelDTO request)
         {
             try
@@ -35,12 +35,12 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpPut("manage-car-sharing")]
-        public async Task<IActionResult> UpdateCarSharing([FromBody] UpdateCarSharingModelDTO request)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateCarSharing([FromBody] UpdateCarSharingModelDTO request, [FromQuery] Guid id)
         {
             try
             {
-                var carSharing = await _carSharingService.UpdateCarSharing(request);
+                var carSharing = await _carSharingService.UpdateCarSharing(request, id);
                 return Json(carSharing);
             }
             catch (Exception ex)
@@ -49,7 +49,7 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpDelete("manage-car-sharing")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteCarSharing([FromQuery] DeleteCarSharingModelDTO request)
         {
             try
@@ -175,12 +175,26 @@ namespace Taste.Web.Controllers
             }
         }
 
-        [HttpGet("get-all-rent-cars")]
-        public IActionResult GetAllRentCars()
+        [HttpGet("by-id")]
+        public async Task<IActionResult> GetCarSharingById([FromQuery] Guid id)
         {
             try
             {
-                var rentCars = _carSharingService.GetAllRentCars();
+                var carSharing = await _carSharingService.GetCarSharingById(id);
+                return Json(carSharing);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("all-cars")]
+        public async Task<IActionResult> GetAllRentCars()
+        {
+            try
+            {
+                var rentCars = await _carSharingService.GetAllRentCars();
                 return Json(rentCars);
             }
             catch (Exception ex)

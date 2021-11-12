@@ -5,6 +5,7 @@ export interface IAddress{
 }
 
 export interface ICarSharing{
+    id: string,
     title: string,
     description: string,
     location: IAddress
@@ -17,12 +18,7 @@ export interface ICreateCarSharingModel{
 }
 
 export interface IUpdateCarSharingModel{
-    id: string,
     title: string,
     description: string,
     location: IAddress
-}
-
-export interface IDeleteCarSharingModel{
-    id: string
 }

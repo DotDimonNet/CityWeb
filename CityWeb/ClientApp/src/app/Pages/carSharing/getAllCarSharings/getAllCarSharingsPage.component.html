@@ -1,8 +1,12 @@
-<h2>Car Sharings</h2>
+<h2>Car Sharings</h2> 
+<a [routerLink]="['/car-sharing/create']">
+  Create
+</a>
+
 <ul class="carSharings">
   <li *ngFor="let item of carSharingsInfo;">
     <span>
-      <div>
+      <div (click)="navigateToCarSharing(item.id)">
         Title: {{item.title}} <br>
         Description: {{item.description}} <br>
         Location: {{item.location.streetName}}, {{item.location.houseNumber}}<br><br>
