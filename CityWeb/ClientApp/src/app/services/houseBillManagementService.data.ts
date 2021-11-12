@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map, take } from "rxjs/operators";
 import { IHouseBillModel, ICreateHouseBillModel, IUpdateHouseBillModel, IDeleteHouseBillModel } from "src/app/models/houseBill.model";
+import { IResultModel } from "../models/delivery.model";
 
 
 @Injectable()
@@ -25,10 +26,10 @@ export class HouseBillManagementDataService{
         })); 
     }
 
-    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<boolean>{
-        return this.client.delete('/api/house-bill/delete/?request=${deleteHouseBill}')
+    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<IResultModel>{
+        return this.client.delete('/api/house-bill/delete')
         .pipe(first(),map((res: any) => {
-            return res as boolean;
+            return res as IResultModel;
         }));
     }
 }

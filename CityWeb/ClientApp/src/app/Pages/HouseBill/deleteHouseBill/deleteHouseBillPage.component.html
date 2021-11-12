@@ -1,0 +1,12 @@
+<div class="houseBill-manager">
+    Enter data to delete HouseBill 
+  </div>
+  <p class="title">
+    Enter HouseBill Id:
+    <input type="text" [(ngModel)] = "deletehouseBill.id">
+  </p>
+  <button class="number" (click)="delete()">Delete Bill</button>
+  <div class="result">
+    Deleting result
+    <div>{{resultInfo.result}}</div>
+  </div>

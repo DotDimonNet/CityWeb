@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { IHouseBillModel, IDeleteHouseBillModel } from 'src/app/models/houseBill.model';
+import { IHouseBillModel, IDeleteHouseBillModel, IResultModel } from 'src/app/models/houseBill.model';
 import { HouseBillManagementService } from 'src/app/services/houseBillManagementService';
 
 @Component({
@@ -10,30 +10,22 @@ import { HouseBillManagementService } from 'src/app/services/houseBillManagement
 })
 export class DeleteHouseBillPageComponent{
 
-    public HouseBillInfo: IHouseBillModel = {
-        title: "",
-        description: "",
-        houseHoldAddress: {
-            streetName: "",
-            appartmentNumber: "",
-            houseNumber: ""
-        }
-    } as IHouseBillModel;
+    public deleteHouseBill: IDeleteHouseBillModel = {
+        id: "",
+        
+    };
 
-    public isDeleteButtonDisabled = false;
-    public isSucess: boolean;
-
-    public deleteInfo: IDeleteHouseBillModel = {
-        id: ""
-    } as IDeleteHouseBillModel
+    public deleteInfo: IResultModel = {
+        result: null,
+    } as IResultModel;
 
     constructor(private service: HouseBillManagementService){}
     
-    public deleteHouseBill()
+    public delete()
     {
-        this.service.deleteHouseBill(this.deleteInfo)
-        .subscribe((res: boolean) => {
-            this.isSucess = res;
+        this.service.deleteHouseBill(this.deleteHouseBill)
+        .subscribe((res: IResultModel) => {
+            this.deleteInfo = res;
         });
     }
 }

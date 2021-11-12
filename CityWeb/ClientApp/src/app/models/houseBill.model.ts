@@ -28,3 +28,6 @@ export interface IDeleteHouseBillModel{
     id: string
 }
 
+export interface IResultModel {
+    result: boolean,
+}
