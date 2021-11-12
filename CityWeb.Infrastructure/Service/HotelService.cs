@@ -164,11 +164,11 @@ namespace CityWeb.Infrastructure.Service
             }           
         }
                     
-        public async Task<bool> RemoveHotel(DeleteHotelDTO model)
+        public async Task<bool> RemoveHotel(HotelIdDTO model)
         {
             try
             {
-                var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Title == model.Title);
+                var hotel = await _context.Hotels.FirstOrDefaultAsync(x => x.Id == model.Id);
 
                 if (hotel != null)
                 {
@@ -176,7 +176,7 @@ namespace CityWeb.Infrastructure.Service
                     await _context.SaveChangesAsync();
                     return true;
                 }
-                throw new Exception($"Hotel {model.Title} doesnt exist!");
+                throw new Exception($"Hotel with this ID doesnt exist!");
             }
             catch (Exception ex)
             {

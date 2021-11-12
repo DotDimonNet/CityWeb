@@ -29,9 +29,8 @@ namespace CityWeb.Controllers
         public async Task<IActionResult> CreateHotel([FromBody] HotelDTO request)
         {
             try
-            {
-                var hotel = await _hotelService.AddHotel(request);                
-                return Json(hotel);
+            {             
+                return Json(await _hotelService.AddHotel(request));
             }
             catch(Exception ex)
             {
@@ -43,8 +42,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var hotel = await _hotelService.UpdateHotel(request);
-                return Json(hotel);
+                return Json(await _hotelService.UpdateHotel(request));
             }
             catch (Exception ex)
             {
@@ -52,12 +50,11 @@ namespace CityWeb.Controllers
             }
         }
         [HttpDelete("manage-hotel")]
-        public async Task<IActionResult> RemoveHotel([FromBody] DeleteHotelDTO request)
+        public async Task<IActionResult> RemoveHotel([FromBody] HotelIdDTO request)
         {
             try
-            {
-                var isRemoved = await _hotelService.RemoveHotel(request);
-                return Ok(isRemoved);
+            {               
+                return Ok(await _hotelService.RemoveHotel(request));
             }
             catch(Exception ex)
             {
@@ -69,8 +66,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var hotel = await _hotelService.AddRoom(request);
-                return Json(hotel);
+                return Json(await _hotelService.AddRoom(request));
             }
             catch (Exception ex)
             {
@@ -82,8 +78,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var room = await _hotelService.UpdateRoom(request);
-                return Json(room);
+                return Json(await _hotelService.UpdateRoom(request));
             }
             catch (Exception ex)
             {
@@ -95,8 +90,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var isRemoved = await _hotelService.RemoveRoom(request);
-                return Ok(isRemoved);
+                return Ok(await _hotelService.RemoveRoom(request));
             }
             catch (Exception ex)
             {
@@ -109,8 +103,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var freeRooms = await _hotelService.GetAllFreeRooms(request);
-                return Json(freeRooms);
+                return Json(await _hotelService.GetAllFreeRooms(request));
             }
             catch (Exception ex)
             {
@@ -123,8 +116,7 @@ namespace CityWeb.Controllers
         {
             try
             {
-                var roomTypes = await _hotelService.GetAllRoomTypesByHotelTitle(request);
-                return Json(roomTypes);
+                return Json(await _hotelService.GetAllRoomTypesByHotelTitle(request));
             }
             catch (Exception ex)
             {
