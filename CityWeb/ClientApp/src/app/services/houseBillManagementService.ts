@@ -19,7 +19,7 @@ export class HouseBillManagementService {
     }
 
 
-    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<IResultModel>{
+    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<boolean>{
 
         return this.dataService.deleteHouseBill(deleteHouseBill);
     }

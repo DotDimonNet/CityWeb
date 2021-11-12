@@ -9,9 +9,7 @@ import { HouseBillManagementService } from 'src/app/services/houseBillManagement
     styleUrls: ['./updateHouseBillPage.component.css']
 })
 export class UpdateHouseBillPageComponent{
-
-
-    public updateHouseBill: IUpdateHouseBillModel = {
+    public houseBillInfo: IHouseBillModel = {
         id: "",
         title: "",
         description: "",
@@ -33,12 +31,12 @@ export class UpdateHouseBillPageComponent{
         }
     } as IUpdateHouseBillModel
 
-    constructor(private service: HouseBillManagementService){}
+    /*constructor(private service: HouseBillManagementService){}
     
     public updateHouseBill()
     {
         this.service.updateHouseBill(this.updateInfo)
-    } as IUpdateHouseBillModel;
+    };
 
     public houseBillInfo: IHouseBillModel = {
         title: "",
@@ -58,5 +56,5 @@ export class UpdateHouseBillPageComponent{
             .subscribe((res: IHouseBillModel) => {
                 this.houseBillInfo = res;
             });
-    }
+    }*/
 }

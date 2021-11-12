@@ -21,13 +21,6 @@ export class HouseBillManagementDataService{
         })); 
     }
 
-    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<IResultModel>{
-        return this.client.delete('/api/house-bill/delete')
-        .pipe(first(),map((res: any) => {
-            return res as IResultModel;
-        }));
-    }
-
     updateHouseBill(updateHouseBill:IUpdateHouseBillModel):Observable<IHouseBillModel>{
         return this.client.put('/api/house-bill/update', updateHouseBill)
         .pipe(first(), map((res: any) => {
@@ -36,7 +29,7 @@ export class HouseBillManagementDataService{
     }
 
     deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<boolean>{
-        return this.client.delete('/api/house-bill/delete/?request=${deleteHouseBill}')
+        return this.client.delete(`/api/house-bill/delete/?request=${deleteHouseBill}`)
         .pipe(first(),map((res: any) => {
             return res as boolean;
         }));

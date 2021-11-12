@@ -19,17 +19,13 @@ import { DeleteDeliveryComponent } from './pages/delivery/deleteDeliveryPage/del
 import { GetAllDeliveryComponent } from './pages/delivery/getAllDeliveryPage/getAllDeliveryPage.component';
 import { CreateProductComponent } from './pages/delivery/createProductPage/createProductPage.component';
 import { GetAllProductsComponent } from './pages/delivery/getAllProductsPage/getAllProductsPage.component';
-
-import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
+import { CarSharingCompanyPageComponent } from './Pages/carSharing/carSharingCompany/carSharingCompanyPage.component';
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
-import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
-import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
 import { HouseBillPageComponent } from './Pages/HouseBill/houseBillPage.component';
 import { CreateHouseBillPageComponent } from './Pages/HouseBill/createHouseBill/createHouseBillPage.component';
 import { UpdateHouseBillPageComponent } from './Pages/HouseBill/updateHouseBill/updateHouseBillPage.component';
 import { DeleteHouseBillPageComponent } from './Pages/HouseBill/deleteHouseBill/deleteHouseBillPage.component';
 import { GetAllCarSharingsPageComponent } from './Pages/carSharing/getAllCarSharings/getAllCarSharingsPage.component';
-import { CarSharingCompanyPageComponent } from './Pages/carSharing/carSharingCompany/carSharingCompanyPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
 import { CarSharingManagmentDataService } from './services/carSharingManagementService.data';
 import { TaxiPageComponent } from './Pages/taxi/taxiPage.component';
@@ -70,7 +66,6 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     GetAllDeliveryComponent,
     CreateProductComponent,
     GetAllProductsComponent,
-    CarSharingPageComponent,
     CreateCarSharingPageComponent,
     CarSharingCompanyPageComponent,
     TaxiPageComponent,
@@ -79,12 +74,14 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     DeleteTaxiPageComponent,
     GetAllTaxiPageComponent,
     CreateDeliveryComponent,
-    HouseBillPageComponent,
+    /*HouseBillPageComponent,
     CreateHouseBillPageComponent,
     UpdateHouseBillPageComponent,
-    DeleteHouseBillPageComponent,
+    DeleteHouseBillPageComponent,*/
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent,
+    EntertainmentPageComponent,
+    AddEntertainmentComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -95,6 +92,13 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-sharing', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/company', component: CarSharingCompanyPageComponent, pathMatch: 'full' },
+      { path: 'taxi', component: TaxiPageComponent, pathMatch: 'full' },
+      { path: 'taxi/create', component: CreateTaxiPageComponent, pathMatch: 'full' },
+      { path: 'taxi/update', component: UpdateTaxiPageComponent, pathMatch: 'full' },
+      { path: 'taxi/delete', component: DeleteTaxiPageComponent, pathMatch: 'full' },
+      { path: 'taxi/get-all', component: GetAllTaxiPageComponent, pathMatch: 'full' },
       { path: 'delivery', component: DeliveryStartPageComponent, pathMatch: 'full' },
       { path: 'delivery-management', component: DeliveryManagementComponent, pathMatch: 'full'},
       { path: 'delivery/create', component: CreateDeliveryComponent, pathMatch: 'full' },
@@ -103,18 +107,10 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
       { path: 'all-deliveries', component: GetAllDeliveryComponent, pathMatch: 'full' },
       { path: 'product/create', component: CreateProductComponent, pathMatch: 'full' },
       { path: 'all-products', component: GetAllProductsComponent, pathMatch: 'full' },
-      { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
-      { path: 'car-sharing/company', component: CarSharingCompanyPageComponent, pathMatch: 'full' },
-      { path: 'taxi', component: TaxiPageComponent, pathMatch: 'full' },
-      { path: 'taxi/create', component: CreateTaxiPageComponent, pathMatch: 'full' },
-      { path: 'taxi/update', component: UpdateTaxiPageComponent, pathMatch: 'full' },
-      { path: 'taxi/delete', component: DeleteTaxiPageComponent, pathMatch: 'full' },
-      { path: 'taxi/get-all', component: GetAllTaxiPageComponent, pathMatch: 'full' },
-      { path: 'house-bill', component: HouseBillPageComponent, pathMatch: 'full' },
+      /*{ path: 'house-bill', component: HouseBillPageComponent, pathMatch: 'full' },
       { path: 'house-bill/create', component: CreateHouseBillPageComponent, pathMatch: 'full' },
       { path: 'house-bill/update', component: UpdateHouseBillPageComponent, pathMatch: 'full' },
-      { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },
-      { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
+      { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },*/
       { path: 'entertainment', component: EntertainmentPageComponent, pathMatch: 'full' },
       { path: 'entertainment/add', component: AddEntertainmentComponent, pathMatch: 'full' },
     ])
@@ -126,8 +122,8 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     TaxiManagmentDataService,
     DeliveryManagementService,
     DeliveryManagementDataService,
-    HouseBillManagementService,
-    HouseBillManagementDataService,
+    //HouseBillManagementService,
+    //HouseBillManagementDataService,
     EntertainmentManagementService,
     EntertainmentManagementDataService
   ],

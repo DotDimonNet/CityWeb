@@ -10,6 +10,8 @@ import { HouseBillManagementService } from 'src/app/services/houseBillManagement
 })
 export class DeleteHouseBillPageComponent{
 
+    public isSuccess: boolean;
+
     public deleteHouseBill: IDeleteHouseBillModel = {
         id: "",
         
@@ -24,8 +26,8 @@ export class DeleteHouseBillPageComponent{
     public delete()
     {
         this.service.deleteHouseBill(this.deleteHouseBill)
-        .subscribe((res: IResultModel) => {
-            this.deleteInfo = res;
+        .subscribe((res: boolean) => {
+            this.isSuccess = res;
         });
     }
 }
