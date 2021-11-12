@@ -1,0 +1,31 @@
+<div class="create-bill">
+    <b>Enter data to create HouseBill:</b>
+    <p>HouseBill title:
+      <input type="text" size="40" [(ngModel)] = "createInfo.title">
+    </p>
+    <p>HouseBill description:
+      <input type="text" size="40" [(ngModel)] = "createInfo.description">
+    </p>
+    <p>Street name:
+      <input type="text" size="40" [(ngModel)] = "createInfo.houseHoldAddress.streetName">
+    </p>
+    <p>House number:
+      <input type="text" size="40" [(ngModel)] = "createInfo.houseHoldAddress.houseNumber">
+    </p>
+    <p>Appartment number:
+      <input type="text" size="40" [(ngModel)] = "createInfo.houseHoldAddress.appartmentNumber">
+    </p>
+    <button class="createButton" (click)="createHouseBill()">Create HouseBill</button><br><br>
+    
+    Created House Bill:
+</div>
+    <div>
+        Title: "{{houseBillInfo.title}}"
+      </div>
+      <div>
+        Description: "{{houseBillInfo.description}}"
+      </div>
+      <div>
+        houseHoldAddress: "{{houseBillInfo.houseHoldAddress.streetName}}, {{houseBillInfo.houseHoldAddress.houseNumber}}, {{houseBillInfo.houseHoldAddress.appartmentNumber}}"
+    </div>
+    

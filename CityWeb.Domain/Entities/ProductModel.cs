@@ -11,9 +11,12 @@ namespace CityWeb.Domain.Entities
     {
         
         public string ProductName { get; set; }
+        public virtual ProductType ProductType { get; set; }
         public int ProductCount { get; set; }
+        public string ProductImage { get; set; }
         public virtual PriceModel ProductPrice { get; set; }
         public virtual DeliveryModel Delivery { get; set; }
-        public virtual Guid DeliveryId { get; set; } = Guid.NewGuid();
+        public virtual Guid DeliveryId { get; set; } 
+
     }
 }

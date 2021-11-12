@@ -1,0 +1,48 @@
+<div class="delivery-manager">
+    Enter data to update delivery company
+  </div>
+  <p class="title">
+    Enter Delivery company Id:
+    <input type="test" [(ngModel)] = "updateDelivery.id">
+  </p>
+  <p class="title">
+    Enter Delivery company Description:
+    <input type="text" [(ngModel)] = "updateDelivery.description">
+  </p>
+  <p class="title">
+    Enter Delivery company Image:
+    <input type="file" [(ngModel)] = "updateDelivery.deliveryImage">
+  </p>
+  <p class="title">
+    Enter start work time:
+    <input type="date" [(ngModel)] = "updateDelivery.workSchedule.startTime">
+  </p>
+  <p class="title">
+    Enter end work time:
+    <input type="date" [(ngModel)] = "updateDelivery.workSchedule.endTime">
+  </p>
+  <p class="title">
+    Enter delivery price value:
+    <input type="number" [(ngModel)] = "updateDelivery.deliveryPrice.value">
+  </p>
+  <p class="title">
+    Enter delivery price tax:
+    <input type="number" [(ngModel)] = "updateDelivery.deliveryPrice.tax">
+  </p>
+  <p class="title">
+    Enter delivery price vat:
+    <input type="number" [(ngModel)] = "updateDelivery.deliveryPrice.vat">
+  </p>
+  
+  <button class="number" (click)="update()">Update company data</button>
+  
+  <div class="result">
+    Updated company
+    <div>Description: {{deliveryInfo.description}}</div>
+    <div>Start work time: {{deliveryInfo.workSchedule.startTime}}</div>
+    <div>End work time: {{deliveryInfo.workSchedule.endTime}}</div>
+    <div>Delivery price value: {{deliveryInfo.deliveryPrice.value}}</div>
+    <div>Delivery price tax: {{deliveryInfo.deliveryPrice.tax}}</div>
+    <div>Delivery price vat: {{deliveryInfo.deliveryPrice.vat}}</div>
+  </div>
+  

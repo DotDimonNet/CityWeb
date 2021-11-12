@@ -1,7 +1,12 @@
-﻿using CityWeb.Domain.Entities;
+using CityWeb.Domain.Entities;
 using CityWeb.Infrastructure.Authorization;
+using CityWeb.Infrastructure.Interfaces;
+using CityWeb.Infrastructure.Interfaces.Service;
+using CityWeb.Infrastructure.Service;
+using CityWeb.Infrastructure.Service.Transport;
 using CityWeb.Infrastructure.Settings;
 using CityWeb.Infrastucture.Data;
+using CityWeb.Mapping;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -67,7 +72,7 @@ namespace CityWeb
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = options.User.AllowedUserNameCharacters + "åæøÅÆØ";
+                options.User.AllowedUserNameCharacters = options.User.AllowedUserNameCharacters;
                 options.Tokens.PasswordResetTokenProvider = nameof(PasswordResetTokenProvider);
             });
 
@@ -100,14 +105,39 @@ namespace CityWeb
                 options.AddPolicy(Policies.RequireContentManagerRole, policy => policy.RequireClaim(ClaimTypes.Role, Roles.ContentManager));
                 options.AddPolicy(Policies.RequireUserRole, policy => policy.RequireClaim(ClaimTypes.Role, Roles.User));
             });
+
+            services.AddAutoMapper(x =>
+            {
+                x.AddProfile<MappingProfile>();
+                x.AddProfile<CarSharingMappingProfile>();
+                x.AddProfile<TaxiMappingProfile>();
+                x.AddProfile<HouseBillMappingProfile>();
+                x.AddProfile<HotelMappingProfile>();
+                x.AddProfile<HouseBillMappingProfile>();
+                x.AddProfile<DeliveryMappingProfile>();
+                x.AddProfile<AccountMappingProfile>();
+                x.AddProfile<MappingEntertainmentProfile>();
+                x.AddProfile<MappingNewsProfile>();
+                
+            });
             services.AddOptions();
             services.AddScoped<DbInitializer>();
+            services.AddTransient<IHotelService, HotelService>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IDeliveryService, DeliveryService>();
+            services.AddTransient<IHouseBillService, HouseBillService>();
+            services.AddTransient<ICarSharingService, CarSharingService>();
+            services.AddTransient<ITaxiService, TaxiService>();
+            services.AddTransient<IEntertainmentService, EntertainmentService>();
+            services.AddTransient<INewsService, NewsService>();
             services.Configure<AuthSettings>(Configuration.GetSection("Auth"));
             services.AddMvc();
             services.AddControllers(options =>
             {
                 options.EnableEndpointRouting = false;
-            }).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
+            }).AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
 
 
 
@@ -121,6 +151,7 @@ namespace CityWeb
             {
                 document.Info.Version = "v1";
                 document.Info.Title = "CityWeb API";
+                document.DocumentPath = "/swagger";
             });
         }
 

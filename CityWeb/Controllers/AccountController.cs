@@ -1,9 +1,10 @@
-﻿using CityWeb.Domain.Entities;
+﻿using CityWeb.Domain.DTO;
+using CityWeb.Domain.Entities;
+using CityWeb.Infrastructure.Authorization;
+using CityWeb.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Threading.Tasks;
 
@@ -13,21 +14,20 @@ namespace Taste.Web.Controllers
     [Route("api/account")]
     public class AccountController : Controller
     {
-        private readonly SignInManager<ApplicationUserModel> _signInManager;
+        private readonly IAccountService _accountService;
 
-        public AccountController(SignInManager<ApplicationUserModel> signInManager)
+        public AccountController(IAccountService accountService)
         {
-            _signInManager = signInManager;
+            _accountService = accountService;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] string request)
+        public async Task<IActionResult> Login([FromBody] LoginModelDTO request)
         {
             try
             {
-                var user = await _signInManager.UserManager.FindByEmailAsync(request);
-                await _signInManager.SignInAsync(user, true);
-                return Ok();
+                var user = await _accountService.LoginUser(request);
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -37,11 +37,12 @@ namespace Taste.Web.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] string request)
+        public async Task<IActionResult> Register([FromBody] RegisterModelDTO request)
         {
             try
             {
-                return Ok();
+                var user = await _accountService.RegisterUser(request);
+                return Json(user);
             }
             catch (Exception ex)
             {
@@ -49,13 +50,95 @@ namespace Taste.Web.Controllers
             }
         }
 
+        [HttpPut("update-account")]
+        public async Task<IActionResult> UpdateData([FromBody] UpdateUserDataDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserData(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserPasswordDTO request)
+        {
+            try
+            {
+                var user = await _accountService.UpdateUserPassword(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("change-email")]
+        public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailDTO request)
+        {
+            try
+            {
+                var user = await _accountService.ChangeEmail(request);
+                return Json(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _accountService.SignOut();
             return NoContent();
+        }
+        
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = await _accountService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-user-by-user-name")]
+        public async Task<IActionResult> GetByName([FromQuery] GetUserByUserNameDTO request)
+        {
+            try
+            {
+                var user = await _accountService.GetUserByUserName(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-user-by-id")]
+        public async Task<IActionResult> GetById([FromQuery] GetUserByIdDTO request)
+        {
+            try
+            {
+                var user = await _accountService.GetUserById(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

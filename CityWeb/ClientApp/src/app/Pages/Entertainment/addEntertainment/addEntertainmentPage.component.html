@@ -1,0 +1,40 @@
+<div class="add">
+  <b>Enter data to add Entertainment:</b>
+  <p>
+    Title:
+    <input type="text" size="40" [(ngModel)]="createInfo.title">
+  </p>
+  <p>
+    Entertainment description:
+    <input type="text" size="40" [(ngModel)]="createInfo.description">
+  </p>
+  <p>Entertainment Type:
+  <select> 
+    <option *ngFor="let type of keys(types);" [ngValue]="types[type]" [(ngModel)]="createInfo.type">{{type}}</option>
+  </select>
+  </p>
+  <p>
+    Street name:
+    <input type="text" size="40" [(ngModel)]="createInfo.address.streetName">
+  </p>
+  <p>
+    House number:
+    <input type="text" size="40" [(ngModel)]="createInfo.address.houseNumber">
+  </p>
+  <button class="createButton" (click)="addEntertainment()">Add Entertainment</button><br><br>
+
+  Created  Entertainment:
+</div>
+<div>
+  Title: "{{entertainmnentInfo.title}}"
+</div>
+<div>
+  Type: "{{entertainmnentInfo.type}}"
+</div>
+<div>
+  Description: "{{entertainmnentInfo.description}}"
+</div>
+<div>
+  Address: "{{entertainmnentInfo.address.streetName}}, {{entertainmnentInfo.address.houseNumber}}"
+</div>
+
