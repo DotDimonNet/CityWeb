@@ -39,23 +39,19 @@ import { DeleteTaxiPageComponent } from './Pages/taxi/deleteTaxi/deleteTaxiPage.
 import { GetAllTaxiPageComponent } from './Pages/taxi/getAllTaxi/getAllTaxiPage.component';
 import { TaxiManagmentDataService } from './services/taxiManagementService.data';
 import { TaxiManagmentService } from './services/taxiManagementService';
-import { HouseBillPageComponent } from './Pages/HouseBill/houseBillPage.component';
-import { CreateHouseBillPageComponent } from './Pages/HouseBill/createHouseBill/createHouseBillPage.component';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
 
 import { HouseBillManagementService } from './services/houseBillManagementService';
 import { HouseBillManagementDataService } from './services/houseBillManagementService.data'
-//Hotel
-import { HotelManagementDataService } from './services/hotelManagementService.data';
-import { HotelManagementService } from './services/hotelManagementService';
-import { HotelPageComponent } from './pages/HotelServicePages/hotelPage.component';
-import { CreateHotelComponent } from './pages/HotelServicePages/createHotelService/createHotelPage.component';
+import { HotelModule } from './pages/HotelServicePages/hotel.module';
+
 //Entertainment
 import { EntertainmentManagementService } from './services/entertainmentManagementService';
 import { EntertainmentManagementDataService } from './services/entertainmentManagementService.data';
 import { AddEntertainmentComponent } from './pages/Entertainment/addEntertainment/addEntertainmentPage.component';
 import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentPage.component';
+
 
 
 
@@ -89,16 +85,12 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     DeleteHouseBillPageComponent,
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent,
-    HotelPageComponent,
-    CreateHotelComponent,
-    EntertainmentPageComponent,
-    AddEntertainmentComponent,
-    
   ],
   imports: [
     NgxMaterialTimepickerModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    HotelModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -123,9 +115,6 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
       { path: 'house-bill/update', component: UpdateHouseBillPageComponent, pathMatch: 'full' },
       { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
-      { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
-      { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
-
       { path: 'entertainment', component: EntertainmentPageComponent, pathMatch: 'full' },
       { path: 'entertainment/add', component: AddEntertainmentComponent, pathMatch: 'full' },
     ])
@@ -139,8 +128,6 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     DeliveryManagementDataService,
     HouseBillManagementService,
     HouseBillManagementDataService,
-    HotelManagementService,
-    HotelManagementDataService,
     EntertainmentManagementService,
     EntertainmentManagementDataService
   ],

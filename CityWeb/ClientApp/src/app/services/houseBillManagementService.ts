@@ -18,7 +18,9 @@ export class HouseBillManagementService {
         return this.dataService.updateHouseBill(updateHouseBill);
     }
 
+
     deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<IResultModel>{
+
         return this.dataService.deleteHouseBill(deleteHouseBill);
     }
 

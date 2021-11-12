@@ -1,3 +1,4 @@
+
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
@@ -14,8 +15,16 @@ export class HouseBillManagementDataService{
 
     createHouseBill(createHouseBill:ICreateHouseBillModel):Observable<IHouseBillModel>{
         return this.client.post(`/api/house-bill/create`, createHouseBill)
+
         .pipe(first(), map((res: any) => {
             return res as IHouseBillModel;
+        })); 
+    }
+
+    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<IResultModel>{
+        return this.client.delete('/api/house-bill/delete')
+        .pipe(first(),map((res: any) => {
+            return res as IResultModel;
         }));
     }
 
@@ -26,10 +35,10 @@ export class HouseBillManagementDataService{
         })); 
     }
 
-    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<IResultModel>{
-        return this.client.delete('/api/house-bill/delete')
+    deleteHouseBill(deleteHouseBill:IDeleteHouseBillModel):Observable<boolean>{
+        return this.client.delete('/api/house-bill/delete/?request=${deleteHouseBill}')
         .pipe(first(),map((res: any) => {
-            return res as IResultModel;
+            return res as boolean;
         }));
     }
 }

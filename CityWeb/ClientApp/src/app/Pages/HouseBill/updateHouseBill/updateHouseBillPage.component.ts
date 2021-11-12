@@ -10,6 +10,7 @@ import { HouseBillManagementService } from 'src/app/services/houseBillManagement
 })
 export class UpdateHouseBillPageComponent{
 
+
     public updateHouseBill: IUpdateHouseBillModel = {
         id: "",
         title: "",
@@ -19,6 +20,24 @@ export class UpdateHouseBillPageComponent{
             appartmentNumber: "",
             houseNumber: ""
         }
+    } as IHouseBillModel;
+
+    public updateInfo: IUpdateHouseBillModel = {
+        id: "",
+        title: "Unknown",
+        description: "Unknown",
+        houseHoldAddress: {
+            streetName: "Unknown",
+            houseNumber: "Unknown",
+            appartmentNumber: "Unknown"
+        }
+    } as IUpdateHouseBillModel
+
+    constructor(private service: HouseBillManagementService){}
+    
+    public updateHouseBill()
+    {
+        this.service.updateHouseBill(this.updateInfo)
     } as IUpdateHouseBillModel;
 
     public houseBillInfo: IHouseBillModel = {

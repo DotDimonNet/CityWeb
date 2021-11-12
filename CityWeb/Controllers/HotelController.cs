@@ -29,9 +29,8 @@ namespace CityWeb.Controllers
         public async Task<IActionResult> CreateHotel([FromBody] HotelDTO request)
         {
             try
-            {
-                var hotel = await _hotelService.AddHotel(request);                
-                return Json(hotel);
+            {             
+                return Json(await _hotelService.AddHotel(request));
             }
             catch(Exception ex)
             {
@@ -39,12 +38,11 @@ namespace CityWeb.Controllers
             }
         }
         [HttpPut("manage-hotel")]
-        public async Task<IActionResult> UpdateHotel([FromBody] HotelDTO request)
+        public async Task<IActionResult> UpdateHotel([FromBody] UpdateHotelDTO request)
         {
             try
             {
-                var hotel = await _hotelService.UpdateHotel(request);
-                return Json(hotel);
+                return Json(await _hotelService.UpdateHotel(request));
             }
             catch (Exception ex)
             {
@@ -52,51 +50,47 @@ namespace CityWeb.Controllers
             }
         }
         [HttpDelete("manage-hotel")]
-        public async Task<IActionResult> RemoveHotel([FromBody] DeleteHotelDTO request)
+        public async Task<IActionResult> RemoveHotel([FromBody] HotelIdDTO request)
         {
             try
-            {
-                var isRemoved = await _hotelService.RemoveHotel(request);
-                return Ok(isRemoved);
+            {               
+                return Ok(await _hotelService.RemoveHotel(request));
             }
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("room")]
+        [HttpPost("manage-room")]
         public async Task<IActionResult> CreateRoom([FromBody] RoomDTO request)
         {
             try
             {
-                var hotel = await _hotelService.AddRoom(request);
-                return Json(hotel);
+                return Json(await _hotelService.AddRoom(request));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("room")]
+        [HttpPut("manage-room")]
         public async Task<IActionResult> UpdateRoom([FromBody] UpdateRoomDTO request)
         {
             try
             {
-                var room = await _hotelService.UpdateRoom(request);
-                return Json(room);
+                return Json(await _hotelService.UpdateRoom(request));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("room")]
+        [HttpDelete("manage-room")]
         public async Task<IActionResult> RemoveRoom([FromBody] DeleteRoomDTO request)
         {
             try
             {
-                var isRemoved = await _hotelService.RemoveRoom(request);
-                return Ok(isRemoved);
+                return Ok(await _hotelService.RemoveRoom(request));
             }
             catch (Exception ex)
             {
@@ -104,13 +98,12 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-free-rooms")]
+        [HttpGet("free-rooms")]
         public async Task<IActionResult> GetFreeRoomsInHotel([FromBody] HotelTitleDTO request)
         {
             try
             {
-                var freeRooms = await _hotelService.GetAllFreeRooms(request);
-                return Json(freeRooms);
+                return Json(await _hotelService.GetAllFreeRooms(request));
             }
             catch (Exception ex)
             {
@@ -118,13 +111,24 @@ namespace CityWeb.Controllers
             }
         }
 
-        [HttpGet("get-all-room-typ  es")]
+        [HttpGet("all-room-types")]
         public async Task<IActionResult> GetAllRoomTypesByHotelTitle([FromBody] HotelTitleDTO request)
         {
             try
             {
-                var roomTypes = await _hotelService.GetAllRoomTypesByHotelTitle(request);
-                return Json(roomTypes);
+                return Json(await _hotelService.GetAllRoomTypesByHotelTitle(request));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("hotels")]
+        public async Task<IActionResult> GetAllHotels()
+        {
+            try
+            {
+                return Json(await _hotelService.GetAllHotels());
             }
             catch (Exception ex)
             {
