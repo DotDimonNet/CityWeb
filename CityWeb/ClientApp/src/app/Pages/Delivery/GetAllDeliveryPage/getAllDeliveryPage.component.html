@@ -2,11 +2,9 @@
 <ul class="deliveries">
   <li *ngFor="let item of deliveryInfo;">
     <span>
-      <div>
-          <a [routerLink] = "['delivery-management']">
+      <div (click)="navigateToDelivery(item.id)">
             Title: {{item.title}} <br>
             Description: {{item.description}} <br>
-          </a>
       </div>
     </span>
   </li>

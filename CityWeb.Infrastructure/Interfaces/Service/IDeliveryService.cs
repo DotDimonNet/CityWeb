@@ -12,13 +12,13 @@ namespace CityWeb.Infrastructure.Interfaces.Service
     {
         public Task<DeliveryModelDTO> CreateDeliveryCompany(CreateDeliveryModelDTO deliveryModel);
         public Task<ICollection<DeliveryModelDTO>> GetAllDelivery(int skip = 0, int take = 10);
-        public Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel);
+        public Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel, Guid id);
         public Task<ProductModelDTO> UpdateProduct(UpdateProductModelDTO updateProduct);
-        public Task<ProductModelDTO> CreateProduct(CreateProductModelDTO createProductDTO);
-        public Task<bool> DeleteDeliveryCompany(DeleteCompanyDTO dtoModel);
+        public Task<ProductModelDTO> CreateProduct(CreateProductModelDTO createProductDTO, Guid deliveryId);
+        public Task<bool> DeleteDeliveryCompany(Guid id);
         public Task<bool> DeleteProduct(DeleteProductDTO dtoModel);
-        public Task<DeliveryModelDTO> GetDeliveryById(DeliveryIdDTO deliveryIdDTO);
-        public Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(DeliveryIdDTO deliveryName);
+        public Task<DeliveryModelDTO> GetDeliveryById(Guid id);
+        public Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(Guid deliveryId);
         public Task<ICollection<ProductModelDTO>> GetAllProductByPriceFilter(ProductPriceFilterDTO priceFilter, int skip = 0, int take = 10);
         // Methods for steps
         public IEnumerable<SelectDeliveryModelDTO> ShowWorkingCompany(DeliveryCompanySheduleDTO companyShedule);

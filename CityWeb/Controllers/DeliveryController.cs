@@ -34,11 +34,11 @@ namespace CityWeb.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateDelivery([FromBody] UpdateDeliveryModelDTO request)
+        public async Task<IActionResult> UpdateDelivery([FromBody] UpdateDeliveryModelDTO request, [FromQuery] Guid id)
         {
             try
             {
-                var delivery = await _deliveryService.UpdateDeliveryCompany(request);
+                var delivery = await _deliveryService.UpdateDeliveryCompany(request, id);
                 return Json(delivery);
             }
             catch (Exception ex)
@@ -48,11 +48,11 @@ namespace CityWeb.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteDelivery([FromBody] DeleteCompanyDTO request)
+        public async Task<IActionResult> DeleteDelivery([FromQuery] Guid id)
         {
             try
             {
-                var isDeleted = await _deliveryService.DeleteDeliveryCompany(request);
+                var isDeleted = await _deliveryService.DeleteDeliveryCompany(id);
                 return Ok(isDeleted);
             }
             catch (Exception ex)
@@ -62,11 +62,11 @@ namespace CityWeb.Controllers
         }
 
         [HttpPost("product")]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductModelDTO request)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductModelDTO request, [FromQuery] Guid deliveryId)
         {
             try
             {
-                var product = await _deliveryService.CreateProduct(request);
+                var product = await _deliveryService.CreateProduct(request, deliveryId);
                 return Json(product);
             }
             catch (Exception ex)
@@ -174,11 +174,11 @@ namespace CityWeb.Controllers
         }
 
         [HttpGet("by-id")]
-        public IActionResult GetDeliveryById([FromQuery] DeliveryIdDTO request)
+        public IActionResult GetDeliveryById([FromQuery] Guid id )
         {
             try
             {
-                var delivery = _deliveryService.GetDeliveryById(request);
+                var delivery = _deliveryService.GetDeliveryById(id);
                 return Json(delivery.Result);
             }
             catch (Exception ex)
@@ -188,11 +188,11 @@ namespace CityWeb.Controllers
         }
 
         [HttpGet("products")]
-        public IActionResult GetAllProductByDeliveryId([FromQuery] DeliveryIdDTO request)
+        public IActionResult GetAllProductByDeliveryId([FromQuery] Guid id)
         {
             try
             {
-                var products = _deliveryService.GetAllProductByDeliveryId(request);
+                var products = _deliveryService.GetAllProductByDeliveryId(id);
                 return Json(products.Result);
             }
             catch (Exception ex)

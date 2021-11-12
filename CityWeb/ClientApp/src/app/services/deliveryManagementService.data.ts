@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map, take } from "rxjs/operators";
-import { IDeliveryModel, ICreateDeliveryModel, IUpdateDeliveryModel, IDeleteDeliveryModel, IResultModel, IDelivery } from "../models/delivery.model";
+import { IDeliveryModel, ICreateDeliveryModel, IUpdateDeliveryModel, IProductModel, IDelivery, ICreateProduct, IProduct } from "../models/delivery.model";
 
 @Injectable()
 export class DeliveryManagementDataService {
@@ -16,27 +16,37 @@ export class DeliveryManagementDataService {
         }));
     }
 
-    updateDeliveryCompany(updateDelivery: IUpdateDeliveryModel) : Observable<IDeliveryModel> {
-        return this.client.put('/api/delivery', updateDelivery)
+    updateDeliveryCompany(updateDelivery: IUpdateDeliveryModel, deliveryId: string) : Observable<IDeliveryModel> {
+        return this.client.put(`/api/delivery?id=${deliveryId}`, updateDelivery)
         .pipe(first(), map((res: any) => {
             return res as IDeliveryModel;
         }));
     }
 
-    deleteDeliveryCompany(deleteDelivery: IDeleteDeliveryModel) : Observable<IResultModel> {
-        return this.client.delete('/api/delivery')
+    deleteDeliveryCompany(deliveryId: string) : Observable<boolean> {
+        return this.client.delete(`/api/delivery?id=${deliveryId}`)
         .pipe(first(), map((res: any) => {
-            return res as IResultModel;
+            return res as boolean;
         }));
     }
 
     getAllDeliveryCompany():Observable<IDelivery[]>{
-        return this.client.get(`api/delivery/deliveries`)
+        return this.client.get(`/api/delivery/deliveries`)
         .pipe(first(), map((res: IDelivery[]) => res));
     }
 
-    showDeliveryCompany():Observable<IDeliveryModel>{
-        return this.client.get(`api/delivery/by-id`)
+    showDeliveryCompany(deliveryId: string):Observable<IDeliveryModel>{
+        return this.client.get(`/api/delivery/by-id?id=${deliveryId}`)
         .pipe(first(), map((res: IDeliveryModel) => res));
+    }
+
+    createProduct(createProduct: ICreateProduct, deliveryId: string):Observable<IProductModel>{
+        return this.client.post(`/api/delivery/product/?id=${deliveryId}`,createProduct)
+        .pipe(first(),map((res: IProductModel) => res));
+    }
+
+    getAllProducts(deliveryId: string):Observable<IProduct[]>{
+        return this.client.get(`/api/delivery/products?id=${deliveryId}`)
+        .pipe(first(), map((res: IProduct[]) => res));
     }
 }

@@ -16,6 +16,9 @@ import { CreateDeliveryComponent } from './pages/delivery/createDeliveryPage/cre
 import { UpdateDeliveryComponent } from './pages/delivery/updateDeliveryPage/updateDeliveryPage.component';
 import { DeleteDeliveryComponent } from './pages/delivery/deleteDeliveryPage/deleteDeliveryPage.component';
 import { GetAllDeliveryComponent } from './pages/delivery/getAllDeliveryPage/getAllDeliveryPage.component';
+import { CreateProductComponent } from './pages/delivery/createProductPage/createProductPage.component';
+import { GetAllProductsComponent } from './pages/delivery/getAllProductsPage/getAllProductsPage.component';
+
 import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
 import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
@@ -42,12 +45,16 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+
     DeliveryStartPageComponent,
     DeliveryManagementComponent,
     CreateDeliveryComponent,
     UpdateDeliveryComponent,
     DeleteDeliveryComponent,
     GetAllDeliveryComponent,
+    CreateProductComponent,
+    GetAllProductsComponent,
+
     CarSharingPageComponent,
     CreateCarSharingPageComponent,
     UpdateCarSharingPageComponent,
@@ -67,11 +74,13 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     FormsModule,
     RouterModule.forRoot([
       { path: 'delivery', component: DeliveryStartPageComponent, pathMatch: 'full' },
-      { path: 'all-deliveries/delivery-management', component: DeliveryManagementComponent, pathMatch: 'full'},
+      { path: 'delivery-management', component: DeliveryManagementComponent, pathMatch: 'full'},
       { path: 'delivery/create', component: CreateDeliveryComponent, pathMatch: 'full' },
       { path: 'delivery/update', component: UpdateDeliveryComponent, pathMatch: 'full' },
       { path: 'delivery/delete', component: DeleteDeliveryComponent, pathMatch: 'full' },
       { path: 'all-deliveries', component: GetAllDeliveryComponent, pathMatch: 'full' },
+      { path: 'product/create', component: CreateProductComponent, pathMatch: 'full' },
+      { path: 'all-products', component: GetAllProductsComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-sharing', component: CarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },

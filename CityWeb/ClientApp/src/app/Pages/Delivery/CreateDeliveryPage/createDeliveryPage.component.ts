@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { IDeliveryModel,  ICreateDeliveryModel} from 'src/app/models/delivery.model';
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
@@ -41,8 +40,8 @@ export class CreateDeliveryComponent {
     },
   } as IDeliveryModel;
 
-
-  constructor(private service: DeliveryManagementService) {}
+  constructor(private service: DeliveryManagementService,
+    ) {}
 
   public create() {
         this.service.createDeliveryCompany(this.createDelivery)

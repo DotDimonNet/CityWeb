@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router, ActivatedRoute } from '@angular/router';
 import { IDelivery } from 'src/app/models/delivery.model';
 import { DeliveryManagementService } from 'src/app/services/deliveryManagementService';
 
@@ -9,12 +10,13 @@ import { DeliveryManagementService } from 'src/app/services/deliveryManagementSe
 })
 export class GetAllDeliveryComponent{
 
-    public deliveryInfo: IDelivery[] = [{
-        title: "",
-        description: ""
-    }] as IDelivery[];
+    public deliveryInfo: IDelivery[];
 
-    constructor(private service: DeliveryManagementService){}
+    constructor(private service: DeliveryManagementService, private router: Router){}
+
+    navigateToDelivery(id: string) {
+        this.router.navigateByUrl(`/delivery-management?id=${id}`);
+    }
     
     ngOnInit() {
         this.service.getAllDeliveryCompany()
