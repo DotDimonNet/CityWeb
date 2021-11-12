@@ -9,13 +9,25 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { DeliveryManagerPageComponent } from './pages/delivery/deliveryManagerPage/deliveryManagerPage.component';
+//Delivery
+import { DeliveryStartPageComponent } from './Pages/Delivery/DeliveryStartPage/deliveryStartPage.component';
+import { DeliveryManagementComponent } from './Pages/Delivery/DeliveryManagementPage/deliveryManagementPage.component';
 import { CreateDeliveryComponent } from './pages/delivery/createDeliveryPage/createDeliveryPage.component';
 import { UpdateDeliveryComponent } from './pages/delivery/updateDeliveryPage/updateDeliveryPage.component';
 import { DeleteDeliveryComponent } from './pages/delivery/deleteDeliveryPage/deleteDeliveryPage.component';
+
+import { GetAllDeliveryComponent } from './pages/delivery/getAllDeliveryPage/getAllDeliveryPage.component';
+import { CreateProductComponent } from './pages/delivery/createProductPage/createProductPage.component';
+import { GetAllProductsComponent } from './pages/delivery/getAllProductsPage/getAllProductsPage.component';
+
+import { CarSharingPageComponent } from './Pages/carSharing/carSharingPage.component';
 import { CreateCarSharingPageComponent } from './Pages/carSharing/createCarSharing/createCarSharingPage.component';
+import { UpdateCarSharingPageComponent } from './Pages/carSharing/updateCarSharing/updateCarSharingPage.component';
+import { DeleteCarSharingPageComponent } from './Pages/carSharing/deleteCarSharing/deleteCarSharingPage.component';
+import { HouseBillPageComponent } from './Pages/HouseBill/houseBillPage.component';
+import { CreateHouseBillPageComponent } from './Pages/HouseBill/createHouseBill/createHouseBillPage.component';
+import { UpdateHouseBillPageComponent } from './Pages/HouseBill/updateHouseBill/updateHouseBillPage.component';
+import { DeleteHouseBillPageComponent } from './Pages/HouseBill/deleteHouseBill/deleteHouseBillPage.component';
 import { GetAllCarSharingsPageComponent } from './Pages/carSharing/getAllCarSharings/getAllCarSharingsPage.component';
 import { CarSharingCompanyPageComponent } from './Pages/carSharing/carSharingCompany/carSharingCompanyPage.component';
 import { CarSharingManagmentService } from './services/carSharingManagementService';
@@ -32,13 +44,19 @@ import { CreateHouseBillPageComponent } from './Pages/HouseBill/createHouseBill/
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
 
-import { HouseBillManagmentService } from './services/houseBillManagementService';
-import { HouseBillManagmentDataService } from './services/houseBillManagementService.data'
+import { HouseBillManagementService } from './services/houseBillManagementService';
+import { HouseBillManagementDataService } from './services/houseBillManagementService.data'
 //Hotel
 import { HotelManagementDataService } from './services/hotelManagementService.data';
 import { HotelManagementService } from './services/hotelManagementService';
 import { HotelPageComponent } from './pages/HotelServicePages/hotelPage.component';
 import { CreateHotelComponent } from './pages/HotelServicePages/createHotelService/createHotelPage.component';
+//Entertainment
+import { EntertainmentManagementService } from './services/entertainmentManagementService';
+import { EntertainmentManagementDataService } from './services/entertainmentManagementService.data';
+import { AddEntertainmentComponent } from './pages/Entertainment/addEntertainment/addEntertainmentPage.component';
+import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentPage.component';
+
 
 
 
@@ -47,12 +65,16 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
-    DeliveryManagerPageComponent,
+
+    DeliveryStartPageComponent,
+    DeliveryManagementComponent,
     CreateDeliveryComponent,
     UpdateDeliveryComponent,
     DeleteDeliveryComponent,
+    GetAllDeliveryComponent,
+    CreateProductComponent,
+    GetAllProductsComponent,
+    CarSharingPageComponent,
     CreateCarSharingPageComponent,
     CarSharingCompanyPageComponent,
     TaxiPageComponent,
@@ -63,10 +85,15 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     CreateDeliveryComponent,
     HouseBillPageComponent,
     CreateHouseBillPageComponent,
+    UpdateHouseBillPageComponent,
+    DeleteHouseBillPageComponent,
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent,
     HotelPageComponent,
     CreateHotelComponent,
+    EntertainmentPageComponent,
+    AddEntertainmentComponent,
+    
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -75,11 +102,15 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'delivery-manager', component: DeliveryManagerPageComponent, pathMatch: 'full' },
-      { path: 'create', component: CreateDeliveryComponent, pathMatch: 'full' },
-      { path: 'update', component: UpdateDeliveryComponent, pathMatch: 'full' },
-      { path: 'delete', component: DeleteDeliveryComponent, pathMatch: 'full' },
       { path: 'car-sharing', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
+      { path: 'delivery', component: DeliveryStartPageComponent, pathMatch: 'full' },
+      { path: 'delivery-management', component: DeliveryManagementComponent, pathMatch: 'full'},
+      { path: 'delivery/create', component: CreateDeliveryComponent, pathMatch: 'full' },
+      { path: 'delivery/update', component: UpdateDeliveryComponent, pathMatch: 'full' },
+      { path: 'delivery/delete', component: DeleteDeliveryComponent, pathMatch: 'full' },
+      { path: 'all-deliveries', component: GetAllDeliveryComponent, pathMatch: 'full' },
+      { path: 'product/create', component: CreateProductComponent, pathMatch: 'full' },
+      { path: 'all-products', component: GetAllProductsComponent, pathMatch: 'full' },
       { path: 'car-sharing/create', component: CreateCarSharingPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/company', component: CarSharingCompanyPageComponent, pathMatch: 'full' },
       { path: 'taxi', component: TaxiPageComponent, pathMatch: 'full' },
@@ -89,8 +120,14 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
       { path: 'taxi/get-all', component: GetAllTaxiPageComponent, pathMatch: 'full' },
       { path: 'house-bill', component: HouseBillPageComponent, pathMatch: 'full' },
       { path: 'house-bill/create', component: CreateHouseBillPageComponent, pathMatch: 'full' },
+      { path: 'house-bill/update', component: UpdateHouseBillPageComponent, pathMatch: 'full' },
+      { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },
+      { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
       { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
       { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
+
+      { path: 'entertainment', component: EntertainmentPageComponent, pathMatch: 'full' },
+      { path: 'entertainment/add', component: AddEntertainmentComponent, pathMatch: 'full' },
     ])
   ],
   providers: [
@@ -100,10 +137,12 @@ import { CreateHotelComponent } from './pages/HotelServicePages/createHotelServi
     TaxiManagmentDataService,
     DeliveryManagementService,
     DeliveryManagementDataService,
-    HouseBillManagmentService,
-    HouseBillManagmentDataService,
+    HouseBillManagementService,
+    HouseBillManagementDataService,
     HotelManagementService,
     HotelManagementDataService,
+    EntertainmentManagementService,
+    EntertainmentManagementDataService
   ],
   bootstrap: [AppComponent]
 })

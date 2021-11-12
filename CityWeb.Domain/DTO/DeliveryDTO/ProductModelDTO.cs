@@ -9,6 +9,7 @@ namespace CityWeb.Domain.DTO
 {
     public class ProductModelDTO
     {
+        public Guid DeliveryId { get; set; }
         public string ProductName { get; set; }
         public string ProductType { get; set; }
         public string ProductImage { get; set; }

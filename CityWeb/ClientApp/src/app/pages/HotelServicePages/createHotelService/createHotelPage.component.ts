@@ -39,5 +39,15 @@ export class CreateHotelComponent{
             .subscribe((res: IHotelModel) => {
                 this.hotelInfo = res;
             });
+            this.createInfo = {
+                title: "",
+                description: "",
+                image: "",
+                address:
+                {
+                    houseNumber: "",
+                    streetName: "",
+                }
+            }
     }
 }
