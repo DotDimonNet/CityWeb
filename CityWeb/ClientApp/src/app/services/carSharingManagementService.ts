@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ICarSharing, ICreateCarSharingModel, IDeleteCarSharingModel, IUpdateCarSharingModel } from "../models/carSharing.model";
+import { ICarSharing, ICreateCarSharingModel, IUpdateCarSharingModel } from "../models/carSharing.model";
 import { CarSharingManagmentDataService } from "./carSharingManagementService.data";
 
 @Injectable()
@@ -13,8 +13,8 @@ export class CarSharingManagmentService{
         return this.dataService.createCarSharing(createCarSharingData);
     };
 
-    updateCarSharing(updateCarSharing:IUpdateCarSharingModel):Observable<ICarSharing>{
-        return this.dataService.updateCarSharing(updateCarSharing);
+    updateCarSharing(updateCarSharing:IUpdateCarSharingModel, carSharingId:string):Observable<ICarSharing>{
+        return this.dataService.updateCarSharing(updateCarSharing, carSharingId);
     };
 
     deleteCarSharing(carSharingId:string):Observable<boolean>{

@@ -4,7 +4,7 @@ import { ICarSharing } from 'src/app/models/carSharing.model';
 import { CarSharingManagmentService } from 'src/app/services/carSharingManagementService';
 
 @Component({
-    selector: 'all-car-sharings',
+    selector: 'car-sharing',
     templateUrl: './getAllCarSharingsPage.component.html',
     styleUrls: ['./getAllCarSharingsPage.component.css']
 })

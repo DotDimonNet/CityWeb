@@ -32,12 +32,4 @@ export class UpdateCarSharingPageComponent{
     } as IUpdateCarSharingModel
 
     constructor(private service: CarSharingManagmentService){}
-    
-    public updateCarSharing()
-    {
-        this.service.updateCarSharing(this.updateInfo)
-            .subscribe((res: ICarSharing) => {
-                this.carSharingInfo = res;
-            });
-    }
 }
