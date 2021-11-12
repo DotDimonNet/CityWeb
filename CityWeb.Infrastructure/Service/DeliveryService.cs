@@ -52,9 +52,9 @@ namespace CityWeb.Infrastructure.Service
             throw new Exception("Company was already created");
         }
 
-        public async Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel)
+        public async Task<DeliveryModelDTO> UpdateDeliveryCompany(UpdateDeliveryModelDTO deliveryModel, Guid id)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryModel.Id);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == id);
             if (delivery != null)
             {
                 try
@@ -73,13 +73,13 @@ namespace CityWeb.Infrastructure.Service
                     throw new Exception(ex.Message);
                 } 
             }
-            _logger.LogError($"Company {deliveryModel.Id} does not exist!");
+            _logger.LogError($"Company {id} does not exist!");
             throw new Exception("Company does not exist!");
         }
 
-        public async Task<bool> DeleteDeliveryCompany(DeleteCompanyDTO deleteModel)
+        public async Task<bool> DeleteDeliveryCompany(Guid id)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deleteModel.DeliveryId);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == id);
             if (delivery != null)
             {
                 try
@@ -97,16 +97,16 @@ namespace CityWeb.Infrastructure.Service
                     throw new Exception(ex.Message);
                 }
             }
-            _logger.LogError($"Company {deleteModel.DeliveryId} does not exist!");
+            _logger.LogError($"Company {id} does not exist!");
             throw new Exception("Company does not exist!");
         }
 
-        public async Task<ProductModelDTO> CreateProduct(CreateProductModelDTO createProductDTO)
+        public async Task<ProductModelDTO> CreateProduct(CreateProductModelDTO createProductDTO, Guid deliveryId)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == createProductDTO.DeliveryId);
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryId);
             if (delivery != null)
             {
-                var isExistProduct = await _context.Products.AnyAsync(x => x.ProductName == createProductDTO.ProductName && x.DeliveryId == delivery.Id);
+                var isExistProduct = await _context.Products.AnyAsync(x => x.ProductName == createProductDTO.ProductName && x.DeliveryId == deliveryId);
                 if (!isExistProduct)
                 {
                     try
@@ -129,7 +129,7 @@ namespace CityWeb.Infrastructure.Service
                 _logger.LogError($"Product {createProductDTO.ProductName} was already created!");
                 throw new Exception("Product was already created!");
             }
-            _logger.LogError($"Company {createProductDTO.DeliveryId} does not exist!");
+            _logger.LogError($"Company {deliveryId} does not exist!");
             throw new Exception("Company does not exist!");
         }
 
@@ -167,7 +167,9 @@ namespace CityWeb.Infrastructure.Service
                 {
                     _context.Products.Remove(product);
                     _context.SaveChanges();
+
                     _logger.LogInformation($"Product {deleteProductDTO.ProductId} was deleted");
+
                     return true;
                 }
                 catch (Exception ex)
@@ -193,15 +195,31 @@ namespace CityWeb.Infrastructure.Service
             } 
         }
 
-        public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(DeliveryIdDTO deliveryIdDTO)
+        public async Task<DeliveryModelDTO> GetDeliveryById(Guid id)
         {
-            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryIdDTO.DeliveryId);
+            try
+            {
+                var result = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == id);
+                return _mapper.Map<DeliveryModel, DeliveryModelDTO>(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<ICollection<ProductModelDTO>> GetAllProductByDeliveryId(Guid deliveryId)
+        {
+            var delivery = await _context.Deliveries.FirstOrDefaultAsync(x => x.Id == deliveryId);
             try
             {
                 if (delivery != null)
                 {
                     var result = await _context.Products.Where(x => x.DeliveryId == delivery.Id).Select(x => _mapper.Map<ProductModel, ProductModelDTO>(x)).ToListAsync();
-                    _logger.LogInformation($"Received all products for delivery company with id:{deliveryIdDTO.DeliveryId}");
+                    
+                    _logger.LogInformation($"Received all products for delivery company with id:{deliveryId}");
+                    
                     return result;
                 }
             }
@@ -249,6 +267,7 @@ namespace CityWeb.Infrastructure.Service
                 x.WorkSchedule.EndTime.TimeOfDay >= companySchedule.WorkTime.TimeOfDay);
 
                 _logger.LogInformation("Show all working delivery company in this time");
+
                 return delivery.Select(x => _mapper.Map<DeliveryModel, SelectDeliveryModelDTO>(x));
             }
             catch (Exception ex)

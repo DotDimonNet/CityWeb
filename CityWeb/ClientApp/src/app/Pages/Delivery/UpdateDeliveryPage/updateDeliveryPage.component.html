@@ -2,42 +2,40 @@
     Enter data to update delivery company
   </div>
   <p class="title">
-    Enter Delivery company Id:
-    <input type="test" [(ngModel)] = "updateDelivery.id">
+    Enter company description:
+    <input type="text" [(ngModel)] = "deliveryInfo.description">
   </p>
   <p class="title">
-    Enter Delivery company Description:
-    <input type="text" [(ngModel)] = "updateDelivery.description">
-  </p>
-  <p class="title">
-    Enter Delivery company Image:
-    <input type="file" [(ngModel)] = "updateDelivery.deliveryImage">
+    Enter company image:
+    <input type="file" [(ngModel)] = "deliveryInfo.deliveryImage">
   </p>
   <p class="title">
     Enter start work time:
-    <input type="date" [(ngModel)] = "updateDelivery.workSchedule.startTime">
+    <input type="date" [(ngModel)] = "deliveryInfo.workSchedule.startTime">
   </p>
   <p class="title">
     Enter end work time:
-    <input type="date" [(ngModel)] = "updateDelivery.workSchedule.endTime">
+    <input type="date" [(ngModel)] = "deliveryInfo.workSchedule.endTime">
   </p>
   <p class="title">
     Enter delivery price value:
-    <input type="number" [(ngModel)] = "updateDelivery.deliveryPrice.value">
+    <input type="number" [(ngModel)] = "deliveryInfo.deliveryPrice.value">
   </p>
   <p class="title">
     Enter delivery price tax:
-    <input type="number" [(ngModel)] = "updateDelivery.deliveryPrice.tax">
+    <input type="number" [(ngModel)] = "deliveryInfo.deliveryPrice.tax">
   </p>
   <p class="title">
     Enter delivery price vat:
-    <input type="number" [(ngModel)] = "updateDelivery.deliveryPrice.vat">
+    <input type="number" [(ngModel)] = "deliveryInfo.deliveryPrice.vat">
   </p>
   
-  <button class="number" (click)="update()">Update company data</button>
+  <button class="Enter_data" (click)="update()">Update company data</button>
   
   <div class="result">
-    Updated company
+    Updated company:
+    <br>
+    <div>Title: {{deliveryInfo.title}}</div>
     <div>Description: {{deliveryInfo.description}}</div>
     <div>Start work time: {{deliveryInfo.workSchedule.startTime}}</div>
     <div>End work time: {{deliveryInfo.workSchedule.endTime}}</div>
@@ -45,4 +43,6 @@
     <div>Delivery price tax: {{deliveryInfo.deliveryPrice.tax}}</div>
     <div>Delivery price vat: {{deliveryInfo.deliveryPrice.vat}}</div>
   </div>
+
+<a class="back_button" [routerLink] = "['/delivery-manager']">Back to Main</a>
   

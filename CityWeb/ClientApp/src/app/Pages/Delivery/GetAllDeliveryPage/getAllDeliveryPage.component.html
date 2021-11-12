@@ -1,0 +1,11 @@
+<h2>Delivery company</h2>
+<ul class="deliveries">
+  <li *ngFor="let item of deliveryInfo;">
+    <span>
+      <div (click)="navigateToDelivery(item.id)">
+            Title: {{item.title}} <br>
+            Description: {{item.description}} <br>
+      </div>
+    </span>
+  </li>
+</ul>
