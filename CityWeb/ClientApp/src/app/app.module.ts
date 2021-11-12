@@ -34,20 +34,12 @@ import { DeleteTaxiPageComponent } from './Pages/taxi/deleteTaxi/deleteTaxiPage.
 import { GetAllTaxiPageComponent } from './Pages/taxi/getAllTaxi/getAllTaxiPage.component';
 import { TaxiManagmentDataService } from './services/taxiManagementService.data';
 import { TaxiManagmentService } from './services/taxiManagementService';
-import { HouseBillPageComponent } from './Pages/HouseBill/houseBillPage.component';
-import { CreateHouseBillPageComponent } from './Pages/HouseBill/createHouseBill/createHouseBillPage.component';
 import { DeliveryManagementService } from './services/deliveryManagementService';
 import { DeliveryManagementDataService } from './services/deliveryManagementService.data';
 
 import { HouseBillManagementService } from './services/houseBillManagementService';
 import { HouseBillManagementDataService } from './services/houseBillManagementService.data'
-//Hotel
-import { HotelManagementDataService } from './services/hotelManagementService.data';
-import { HotelManagementService } from './services/hotelManagementService';
-import { HotelPageComponent } from './pages/HotelServicePages/hotelPage.component';
-import { CreateHotelComponent } from './pages/HotelServicePages/createHotelService/createHotelPage.component';
-import { UpdateHotelPageComponent } from './pages/HotelServicePages/updateHotelService/updateHotelPage.component';
-
+import { HotelModule } from './pages/HotelServicePages/hotel.module';
 
 
 @NgModule({
@@ -78,14 +70,12 @@ import { UpdateHotelPageComponent } from './pages/HotelServicePages/updateHotelS
     DeleteHouseBillPageComponent,
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent,
-    HotelPageComponent,
-    CreateHotelComponent,
-    UpdateHotelPageComponent,
   ],
   imports: [
     NgxMaterialTimepickerModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    HotelModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -109,9 +99,6 @@ import { UpdateHotelPageComponent } from './pages/HotelServicePages/updateHotelS
       { path: 'house-bill/update', component: UpdateHouseBillPageComponent, pathMatch: 'full' },
       { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },
       { path: 'car-sharing/get-all', component: GetAllCarSharingsPageComponent, pathMatch: 'full' },
-      { path: 'hotel', component: HotelPageComponent, pathMatch: 'full' },
-      { path: 'hotel/create', component: CreateHotelComponent, pathMatch: 'full' },
-      { path: 'hotel/update', component: UpdateHotelPageComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
@@ -125,8 +112,6 @@ import { UpdateHotelPageComponent } from './pages/HotelServicePages/updateHotelS
     DeliveryManagementDataService,
     HouseBillManagementService,
     HouseBillManagementDataService,
-    HotelManagementService,
-    HotelManagementDataService,
   ],
   bootstrap: [AppComponent]
 })

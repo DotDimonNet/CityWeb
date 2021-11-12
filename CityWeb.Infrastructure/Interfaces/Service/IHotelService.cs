@@ -23,6 +23,8 @@ namespace CityWeb.Infrastructure.Interfaces.Service
         public Task<HotelModel> FindHotelById(HotelIdDTO DTO);
         public Task<HotelModel> FindHotelByTitle(HotelTitleDTO DTO);
         public Task<List<HotelRoomType>> GetAllRoomTypesByHotelTitle(HotelTitleDTO DTO);
+
+     
         // Methods for steps    
         public Task<ICollection<RoomModel>> GetAllFreeRooms(HotelTitleDTO DTO);
         public Task<RoomModel> GetSelectedRoom(int roomNum);

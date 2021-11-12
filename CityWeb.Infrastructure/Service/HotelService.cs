@@ -184,6 +184,7 @@ namespace CityWeb.Infrastructure.Service
                 throw new Exception(ex.Message);
             }            
         }
+
         public async Task<HotelModel> FindHotelById(HotelIdDTO model)
         {
             return await _context.Hotels.FirstOrDefaultAsync(x => x.Id == model.Id);

@@ -123,5 +123,17 @@ namespace CityWeb.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("hotels")]
+        public async Task<IActionResult> GetAllHotels()
+        {
+            try
+            {
+                return Json(await _hotelService.GetAllHotels());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
