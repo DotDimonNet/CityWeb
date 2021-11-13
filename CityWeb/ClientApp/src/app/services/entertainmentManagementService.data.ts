@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { first, map, take } from "rxjs/operators";
-import { IEntertainmentModel, IAddEntertainment, IUpdateEntertainmentModel, IDeleteEntertainmentModel } from "../models/entertainment.model";
+import { IEntertainmentModel, IAddEntertainment, IUpdateEntertainmentModel } from "../models/entertainment.model";
 
 @Injectable()
 export class EntertainmentManagementDataService {
@@ -21,11 +21,6 @@ export class EntertainmentManagementDataService {
         return res as IEntertainmentModel;
       }));
   }
-  deleteEntertainment(entertainment: IDeleteEntertainmentModel): Observable<IEntertainmentModel> {
-    return this.client.delete(`/api/entertainment/delete`, entertainment)
-      .pipe(first(), map((res: any) => {
-        return res as IEntertainmentModel;
-      }));
-  }
+  
 
 }

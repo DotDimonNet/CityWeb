@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { IAddEntertainment, IEntertainmentModel,IUpdateEntertainmentModel, IDeleteEntertainmentModel} from "../models/entertainment.model";
+import { IAddEntertainment, IEntertainmentModel,IUpdateEntertainmentModel} from "../models/entertainment.model";
 import { EntertainmentManagementDataService } from "./entertainmentManagementService.data";
 
 @Injectable()
@@ -15,8 +15,5 @@ export class EntertainmentManagementService {
     }
     updateEntertainment(entertainmentModel: IUpdateEntertainmentModel): Observable<IEntertainmentModel> {
       return this.dataService.updateEntertainment(entertainmentModel);
-    }
-    deleteEntertainment(entertainmentModel: IDeleteEntertainmentModel): Observable<IEntertainmentModel> {
-      return this.dataService.deleteEntertainment(entertainmentModel);
     }
 }

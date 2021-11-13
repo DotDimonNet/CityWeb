@@ -45,7 +45,6 @@ import { UpdateEntertainmentComponent } from './pages/Entertainment/updateEntert
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
