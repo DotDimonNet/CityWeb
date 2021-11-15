@@ -9,8 +9,8 @@
     <input type="text" size="40" [(ngModel)]="createInfo.description">
   </p>
   <p>Entertainment Type:
-  <select> 
-    <option *ngFor="let type of keys(types);" [ngValue]="types[type]" [(ngModel)]="createInfo.type">{{type}}</option>
+  <select  [(ngModel)]="createInfo.type"> 
+    <option *ngFor="let type of types;" [ngValue]="type.name">{{type.name}}</option>
   </select>
   </p>
   <p>

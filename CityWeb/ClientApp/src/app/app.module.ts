@@ -47,6 +47,7 @@ import { EntertainmentManagementService } from './services/entertainmentManageme
 import { EntertainmentManagementDataService } from './services/entertainmentManagementService.data';
 import { AddEntertainmentComponent } from './pages/Entertainment/addEntertainment/addEntertainmentPage.component';
 import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentPage.component';
+import { UpdateEntertainmentComponent } from './pages/Entertainment/updateEntertainment/updateEntertainmentPage.component';
 
 
 
@@ -81,7 +82,8 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent,
     EntertainmentPageComponent,
-    AddEntertainmentComponent
+    AddEntertainmentComponent,
+    UpdateEntertainmentComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -113,6 +115,7 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
       { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },*/
       { path: 'entertainment', component: EntertainmentPageComponent, pathMatch: 'full' },
       { path: 'entertainment/add', component: AddEntertainmentComponent, pathMatch: 'full' },
+      { path: 'entertainment/update', component: UpdateEntertainmentComponent, pathMatch: 'full' },
     ])
   ],
   providers: [
