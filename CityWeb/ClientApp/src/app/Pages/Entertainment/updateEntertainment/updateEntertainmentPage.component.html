@@ -1,0 +1,40 @@
+<div class="update">
+    <b>Enter data to update Entertainment:</b>
+    <p>
+      Title:
+      <input type="text" size="40" [(ngModel)]="updateInfo.title">
+    </p>
+    <p>
+      Entertainment description:
+      <input type="text" size="40" [(ngModel)]="updateInfo.description">
+    </p>
+    <p>Entertainment Type:
+    <select  [(ngModel)]="updateInfo.type"> 
+      <option *ngFor="let type of types;" [ngValue]="type.name">{{type.name}}</option>
+    </select>
+    </p>
+    <p>
+      Street name:
+      <input type="text" size="40" [(ngModel)]="updateInfo.address.streetName">
+    </p>
+    <p>
+      House number:
+      <input type="text" size="40" [(ngModel)]="updateInfo.address.houseNumber">
+    </p>
+    <button class="updateButton" (click)="updateEntertainment()">Update Entertainment</button><br><br>
+  
+    Updated  Entertainment:
+  </div>
+  <div>
+    Title: "{{entertainmnentInfo.title}}"
+  </div>
+  <div>
+    Type: "{{entertainmnentInfo.type}}"
+  </div>
+  <div>
+    Description: "{{entertainmnentInfo.description}}"
+  </div>
+  <div>
+    Address: "{{entertainmnentInfo.address.streetName}}, {{entertainmnentInfo.address.houseNumber}}"
+  </div>
+  
