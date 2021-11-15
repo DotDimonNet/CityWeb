@@ -30,31 +30,19 @@ export class UpdateHouseBillPageComponent{
             appartmentNumber: "Unknown"
         }
     } as IUpdateHouseBillModel
-
-    /*constructor(private service: HouseBillManagementService){}
     
     public updateHouseBill()
     {
         this.service.updateHouseBill(this.updateInfo)
     };
 
-    public houseBillInfo: IHouseBillModel = {
-        title: "",
-        description: "",
-        houseHoldAddress: {
-            streetName: "",
-            houseNumber: "",
-            appartmentNumber: ""
-        }
-    } as IHouseBillModel;
-
     constructor(private service: HouseBillManagementService) {}
     
     public update()
     {
-        this.service.updateHouseBill(this.updateHouseBill)
+        this.service.updateHouseBill(this.updateInfo)
             .subscribe((res: IHouseBillModel) => {
                 this.houseBillInfo = res;
             });
-    }*/
+    }
 }

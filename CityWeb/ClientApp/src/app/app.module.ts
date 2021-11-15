@@ -57,7 +57,6 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-
     DeliveryStartPageComponent,
     DeliveryManagementComponent,
     CreateDeliveryComponent,
@@ -74,10 +73,10 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     DeleteTaxiPageComponent,
     GetAllTaxiPageComponent,
     CreateDeliveryComponent,
-    /*HouseBillPageComponent,
+    HouseBillPageComponent,
     CreateHouseBillPageComponent,
     UpdateHouseBillPageComponent,
-    DeleteHouseBillPageComponent,*/
+    DeleteHouseBillPageComponent,
     GetAllCarSharingsPageComponent,
     CreateDeliveryComponent,
     EntertainmentPageComponent,
@@ -107,10 +106,10 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
       { path: 'all-deliveries', component: GetAllDeliveryComponent, pathMatch: 'full' },
       { path: 'product/create', component: CreateProductComponent, pathMatch: 'full' },
       { path: 'all-products', component: GetAllProductsComponent, pathMatch: 'full' },
-      /*{ path: 'house-bill', component: HouseBillPageComponent, pathMatch: 'full' },
+      { path: 'house-bill', component: HouseBillPageComponent, pathMatch: 'full' },
       { path: 'house-bill/create', component: CreateHouseBillPageComponent, pathMatch: 'full' },
       { path: 'house-bill/update', component: UpdateHouseBillPageComponent, pathMatch: 'full' },
-      { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },*/
+      { path: 'house-bill/delete', component: DeleteHouseBillPageComponent, pathMatch: 'full' },
       { path: 'entertainment', component: EntertainmentPageComponent, pathMatch: 'full' },
       { path: 'entertainment/add', component: AddEntertainmentComponent, pathMatch: 'full' },
     ])
@@ -122,8 +121,8 @@ import { EntertainmentPageComponent } from './Pages/Entertainment/entertainmentP
     TaxiManagmentDataService,
     DeliveryManagementService,
     DeliveryManagementDataService,
-    //HouseBillManagementService,
-    //HouseBillManagementDataService,
+    HouseBillManagementService,
+    HouseBillManagementDataService,
     EntertainmentManagementService,
     EntertainmentManagementDataService
   ],
