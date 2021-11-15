@@ -1,0 +1,12 @@
+<button class="Enter_data" (click) = "navigateToCreateProduct(deliveryId)">Add product</button>
+<h2>Products:</h2>
+<ul class="products">
+  <li *ngFor="let item of productInfo;">
+    <span>
+      <div (click)="navigateToProductManager(item.id)">
+            Product name: {{item.productName}} <br>
+            Product type: {{item.productType}} <br>
+      </div>
+    </span>
+  </li>
+</ul>

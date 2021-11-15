@@ -39,8 +39,8 @@ namespace Taste.Web.Controllers
         {
             try
             {
-                var houseBill = _houseBillService.UpdateHouseBill(request);
-                return Json(houseBill.Result);
+                var houseBill = await _houseBillService.UpdateHouseBill(request);
+                return Json(houseBill);
             }
             catch (Exception ex)
             {

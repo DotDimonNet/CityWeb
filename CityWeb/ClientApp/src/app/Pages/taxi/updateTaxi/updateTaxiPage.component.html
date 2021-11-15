@@ -1,0 +1,23 @@
+<div class="create">
+  
+  <b>Enter data to update taxi company:</b>
+  <p>Company id:
+    <input type="text" size="40" [(ngModel)] = "updateInfo.id">
+  </p>
+  <p>Company title:
+    <input type="text" size="40" [(ngModel)] = "updateInfo.title">
+  </p>
+  <p>Company description:
+    <input type="text" size="40" [(ngModel)] = "updateInfo.description">
+  </p>
+  <button class="createButton" (click)="updateCarSharing()">Update CarSharingCompany</button><br><br>
+  
+  Taxi:
+  <div>
+    Title: "{{taxiInfo.title}}"
+  </div>
+  <div>
+    Description: "{{taxiInfo.description}}"
+  </div>
+</div>
+  

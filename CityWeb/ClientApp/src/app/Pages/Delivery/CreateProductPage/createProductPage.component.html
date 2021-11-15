@@ -1,0 +1,41 @@
+<div class="delivery-manager">
+    Enter data to add product:
+  </div>
+  <p class="title">
+    Enter product name:
+    <input type="text" [(ngModel)] = "createProduct.productName">
+  </p>
+  <p class="title">
+    Enter product type:
+    <input type="text" [(ngModel)] = "createProduct.productType">
+  </p>
+  <p class="title">
+    Enter product image:
+    <input type="file" [(ngModel)] = "createProduct.productImage">
+  </p>
+  <p class="title">
+    Enter price price value:
+    <input type="number" [(ngModel)] = "createDelivery.deliveryPrice.value">
+  </p>
+  <p class="title">
+    Enter price price tax:
+    <input type="number" [(ngModel)] = "createDelivery.deliveryPrice.tax">
+  </p>
+  <p class="title">
+    Enter price price vat:
+    <input type="number" [(ngModel)] = "createDelivery.deliveryPrice.vat">
+  </p>
+  
+  <button class="Enter_data" (click)="create()">Add product</button>
+  
+  <div class="result">
+    Created product:
+    <div>Product name: {{productInfo.productName}}</div>
+    <div>Description: {{productInfo.productType}}</div>
+    <div>Product price value: {{productInfo.productPrice.value}}</div>
+    <div>Delivery price tax: {{productInfo.productPrice.tax}}</div>
+    <div>Delivery price vat: {{productInfo.productPrice.vat}}</div>
+  </div>
+  
+
+  

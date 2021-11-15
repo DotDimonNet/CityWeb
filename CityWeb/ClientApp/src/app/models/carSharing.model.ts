@@ -1,3 +1,5 @@
+import * as internal from "assert";
+
 export interface IAddress{
     streetName: string,
     houseNumber: string,
@@ -5,6 +7,7 @@ export interface IAddress{
 }
 
 export interface ICarSharing{
+    id: string,
     title: string,
     description: string,
     location: IAddress
@@ -17,12 +20,22 @@ export interface ICreateCarSharingModel{
 }
 
 export interface IUpdateCarSharingModel{
-    id: string,
     title: string,
     description: string,
     location: IAddress
 }
 
-export interface IDeleteCarSharingModel{
-    id: string
+export interface IRentCar{
+    nubmer: string,
+    mark: string,
+    color: string,
+    seats: string,
+    type: TransportType,
+    
+}
+
+export enum TransportType{
+    Econom,
+    Standart,
+    Business
 }

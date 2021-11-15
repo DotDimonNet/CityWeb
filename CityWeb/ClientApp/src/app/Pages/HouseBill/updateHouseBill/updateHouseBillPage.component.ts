@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { IHouseBillModel, ICreateHouseBillModel, IUpdateHouseBillModel } from 'src/app/models/houseBill.model';
+import { IHouseBillModel, IUpdateHouseBillModel } from 'src/app/models/houseBill.model';
 import { HouseBillManagementService } from 'src/app/services/houseBillManagementService';
 
 @Component({
@@ -9,8 +9,8 @@ import { HouseBillManagementService } from 'src/app/services/houseBillManagement
     styleUrls: ['./updateHouseBillPage.component.css']
 })
 export class UpdateHouseBillPageComponent{
-
     public houseBillInfo: IHouseBillModel = {
+        id: "",
         title: "",
         description: "",
         houseHoldAddress: {
@@ -31,13 +31,30 @@ export class UpdateHouseBillPageComponent{
         }
     } as IUpdateHouseBillModel
 
-    constructor(private service: HouseBillManagementService){}
+    /*constructor(private service: HouseBillManagementService){}
     
     public updateHouseBill()
     {
         this.service.updateHouseBill(this.updateInfo)
+    };
+
+    public houseBillInfo: IHouseBillModel = {
+        title: "",
+        description: "",
+        houseHoldAddress: {
+            streetName: "",
+            houseNumber: "",
+            appartmentNumber: ""
+        }
+    } as IHouseBillModel;
+
+    constructor(private service: HouseBillManagementService) {}
+    
+    public update()
+    {
+        this.service.updateHouseBill(this.updateHouseBill)
             .subscribe((res: IHouseBillModel) => {
                 this.houseBillInfo = res;
             });
-    }
+    }*/
 }

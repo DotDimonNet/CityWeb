@@ -1,0 +1,13 @@
+<div>
+    <div>Title: {{deliveryInfo.title}}</div>
+    <div>Description: {{deliveryInfo.description}}</div>
+    <div>Start work time: {{deliveryInfo.workSchedule.startTime}}</div>
+    <div>End work time: {{deliveryInfo.workSchedule.endTime}}</div>
+    <div>Delivery price value: {{deliveryInfo.deliveryPrice.value}}</div>
+    <div>Delivery price tax: {{deliveryInfo.deliveryPrice.tax}}</div>
+    <div>Delivery price vat: {{deliveryInfo.deliveryPrice.vat}}</div>
+</div>
+
+<button class="Enter_data" (click) = "navigateToUpdate(deliveryId)">Update company data</button>
+<button class="Enter_data" (click)= "navigateToDelete(deliveryId)">Delete company data</button>
+<button class="Enter_data" (click) = "navigateToProducts(deliveryId)">Go to products</button>
